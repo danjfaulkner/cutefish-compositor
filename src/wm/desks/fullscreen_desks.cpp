@@ -108,10 +108,6 @@ void FullscreenDesks::applyFill(Window *window)
         return;
     it->second.fill = true;
     const base::AutoReset changing(m_changing, true);
-    // A client drawing its own frame keeps its controls in it; asked to let the server draw the
-    // frame (Chromium's "system title bar"), it drops them, and the frame itself is hidden while
-    // the window fills its desk: the top bar's title bar row stands in for it.
-    window->setDecorationOverride(true);
     if (window->stateType() == WindowStateType::Maximized)
         window->state()->onEvent(WMEvent(WMEventType::WorkAreaChanged));
     else
@@ -122,7 +118,6 @@ void FullscreenDesks::applyFill(Window *window)
 void FullscreenDesks::restoreState(Window *window, const Entry &entry)
 {
     const base::AutoReset changing(m_changing, true);
-    window->setDecorationOverride(std::nullopt);
     if (!entry.fill) {
         if (window->stateType() == WindowStateType::Fullscreen)
             window->state()->onEvent(WMEvent(WMEventType::Restore));
@@ -244,6 +239,7 @@ bool FullscreenDesks::enter(Window *window)
     controller->setDeskName(desk, name);
     controller->reorderDesk(controller->deskIndex(desk), controller->deskIndex(origin) + 1);
 
+    CF_INFO(cfCompositor) << window->applicationId() << "goes fullscreen on desk" << desk->id();
     m_entries[window] = {desk->id(), origin->id(), false, window->stateType(),
                          std::chrono::steady_clock::now()};
     window->addObserver(this);
@@ -319,6 +315,7 @@ void FullscreenDesks::exit(Window *window)
         return;
     const Entry entry = it->second;
     forget(window);
+    CF_INFO(cfCompositor) << window->applicationId() << "leaves fullscreen on desk" << entry.desk;
 
     DesksController *controller = desks();
     Desk *desk = controller->deskById(entry.desk);

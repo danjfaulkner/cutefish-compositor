@@ -228,16 +228,16 @@ TEST(WindowVisualPolicy, AWindowFillingItsOwnDeskIsSquareWithoutAFrameOrOutline)
 
     ASSERT_TRUE(manager.fullscreenDesks()->enter(window));
     ASSERT_TRUE(manager.fullscreenDesks()->fills(window));
-    // Chromium's "system title bar": the server draws the frame, the client drops its controls.
-    EXPECT_EQ(std::optional<bool>(true), window->decorationOverride());
-    // Hidden while it fills: the top bar's title bar row stands in for it.
+    // A frame of its own, if it has one, is hidden while it fills: the top bar's title bar row
+    // stands in for it.
+    window->setDecorated(true);
     EXPECT_TRUE(window->frameInsets().isNull());
+    window->setDecorated(false);
     EXPECT_EQ(base::Rect(0, 0, 1200, 900), window->bounds());
     EXPECT_EQ(state().shape.radius, 0);
     EXPECT_FALSE(state().drawOutline);
 
     manager.fullscreenDesks()->exit(window);
-    EXPECT_EQ(std::nullopt, window->decorationOverride());
     EXPECT_EQ(normal, window->bounds());
     EXPECT_EQ(state().shape.radius, 14);
     EXPECT_TRUE(state().drawOutline);
