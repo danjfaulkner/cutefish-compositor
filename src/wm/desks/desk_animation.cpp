@@ -249,10 +249,27 @@ bool DeskRemovalAnimation::startNode()
 
 void DeskRemovalAnimation::onStartingDeskScreenshotTakenInternal(int endingDesk)
 {
+    Desk *desk = m_controller->deskAt(endingDesk);
+    if (!desk)
+        return;
+    // A fullscreen desk's window goes home before the desk it lands on is copied: the
+    // slide ends on it rather than on whatever else is there, and it keeps activation
+    // instead of lending it to another window for the length of the slide.
+    Desk *removed = m_controller->deskAt(m_deskToRemove);
+    if (removed && removed != desk && removed->isFullscreenDesk()) {
+        // On every desk for the hand-over, so the window is never hidden and activation
+        // never leaves it; then it belongs to the desk that is now active.
+        const std::vector<Window *> windows = removed->windows();
+        for (Window *window : windows)
+            m_controller->setVisibleOnAllDesks(window, true);
+        activateDeskDuringAnimation(desk, /*updateWindowActivation=*/false);
+        for (Window *window : windows)
+            m_controller->setVisibleOnAllDesks(window, false);
+        return;
+    }
     // The next phase copies the desk being activated before the removed desk's
     // windows move to it.
-    if (Desk *desk = m_controller->deskAt(endingDesk))
-        activateDeskDuringAnimation(desk, /*updateWindowActivation=*/false);
+    activateDeskDuringAnimation(desk, /*updateWindowActivation=*/false);
 }
 
 void DeskRemovalAnimation::onDeskSwitchAnimationFinishedInternal()

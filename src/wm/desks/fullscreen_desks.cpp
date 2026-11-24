@@ -185,16 +185,23 @@ bool FullscreenDesks::enter(Window *window)
     controller->setDeskName(desk, name);
     controller->reorderDesk(controller->deskIndex(desk), controller->deskIndex(origin) + 1);
 
-    if (origin == controller->activeDesk())
-        controller->moveWindowFromActiveDeskTo(window, desk);
-    else
-        controller->sendToDeskAtIndex(window, controller->deskIndex(desk));
-    window->state()->onEvent(WMEvent(WMEventType::Fullscreen));
-
     m_entries[window] = {desk->id(), origin->id()};
     window->addObserver(this);
-    // The full slide of a desk switch by keyboard, not the quick fade an API switch gets.
-    controller->activateDesk(desk, DesksSwitchSource::DeskSwitchShortcut);
+    if (origin == controller->activeDesk()) {
+        // On every desk while the desks switch, so the window is never hidden and
+        // activation never passes to another window on the way; then it belongs to the
+        // fullscreen desk, which is active by then. The full slide of a desk switch by
+        // keyboard, not the quick fade an API switch gets.
+        controller->setVisibleOnAllDesks(window, true);
+        controller->activateDesk(desk, DesksSwitchSource::DeskSwitchShortcut);
+        controller->setVisibleOnAllDesks(window, false);
+        if (controller->deskOf(window) != desk)
+            controller->moveWindowFromActiveDeskTo(window, desk);
+    } else {
+        controller->sendToDeskAtIndex(window, controller->deskIndex(desk));
+        controller->activateDesk(desk, DesksSwitchSource::DeskSwitchShortcut);
+    }
+    window->state()->onEvent(WMEvent(WMEventType::Fullscreen));
     changed.emit();
     return true;
 }

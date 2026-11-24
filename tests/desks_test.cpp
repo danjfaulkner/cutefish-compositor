@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <chrono>
+#include <iostream>
 #include <cstdlib>
 #include <deque>
 #include <filesystem>
@@ -1551,4 +1552,63 @@ TEST_F(FullscreenDesksAnimatedTest, TheClientLeavingWhileTheDeskSlidesInKeepsThe
     window->restore();
     settle();
     expectTheThreeDesks();
+}
+
+TEST_F(FullscreenDesksAnimatedTest, LeavingSlidesStraightToTheWindowWhichKeepsActivation)
+{
+    Window *other = makeWindow("files");
+    Window *window = makeWindow("claude");
+    ASSERT_EQ(desk(1), desks->deskOf(other));
+    ASSERT_TRUE(fullscreen->toggle(window));
+    settle();
+    ASSERT_EQ(window, active());
+
+    std::vector<Window *> activated;
+    struct Recorder : ActivationObserver {
+        std::vector<Window *> *seen;
+        void onWindowActivating(Window *, Window *) override { }
+        void onWindowActivated(Window *gained, Window *) override { seen->push_back(gained); }
+    } recorder;
+    recorder.seen = &activated;
+    manager.activation()->addObserver(&recorder);
+
+    ASSERT_TRUE(fullscreen->toggle(window));
+    flush();
+    ASSERT_NE(nullptr, desks->animation());
+    // Mid-slide the window is already home, shown and active.
+    EXPECT_EQ(desk(1), desks->deskOf(window));
+    EXPECT_TRUE(window->isVisible());
+    EXPECT_EQ(window, active());
+    settle();
+    manager.activation()->removeObserver(&recorder);
+
+    expectTheThreeDesks();
+    EXPECT_EQ(window, active());
+    for (Window *gained : activated)
+        EXPECT_NE(other, gained) << "another window held activation during the slide";
+}
+
+TEST_F(FullscreenDesksAnimatedTest, EnteringKeepsActivationOnTheWindow)
+{
+    Window *other = makeWindow("files");
+    Window *window = makeWindow("claude");
+    std::vector<Window *> activated;
+    struct Recorder : ActivationObserver {
+        std::vector<Window *> *seen;
+        void onWindowActivated(Window *gained, Window *) override { seen->push_back(gained); }
+    } recorder;
+    recorder.seen = &activated;
+    manager.activation()->addObserver(&recorder);
+
+    ASSERT_TRUE(fullscreen->toggle(window));
+    flush();
+    EXPECT_EQ(window, active());
+    EXPECT_TRUE(window->isVisible());
+    settle();
+    manager.activation()->removeObserver(&recorder);
+
+    EXPECT_EQ(window, active());
+    EXPECT_TRUE(activated.empty()) << "activation moved " << activated.size() << " times while entering";
+    for (Window *gained : activated)
+        EXPECT_NE(other, gained);
 }
