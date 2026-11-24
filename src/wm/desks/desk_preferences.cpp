@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/auto_reset.h"
+#include "core/logging.h"
 #include "core/preferences.h"
 #include "wm/desks/desk.h"
 
@@ -48,6 +49,7 @@ void DeskPreferences::restore()
 {
     const base::AutoReset restoring(m_restoring, true);
     const int count = std::clamp(int(m_settings.intValue(kCount, 1)), 1, DesksController::kMaxDesks);
+    CF_INFO(cfCompositor) << "restoring" << count << "desks";
     const std::vector<std::string> names = m_settings.stringListValue(kNames);
     while (int(m_desks->desks().size()) < count)
         m_desks->newDesk(DesksCreationRemovalSource::DesksRestore);

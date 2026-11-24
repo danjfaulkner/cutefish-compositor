@@ -1458,3 +1458,97 @@ TEST_F(DeskAnimationTest, LeavingFullscreenKeepsTheOtherDesks)
         EXPECT_EQ(WindowStateType::Maximized, window->stateType());
     }
 }
+
+namespace {
+
+class FullscreenDesksAnimatedTest : public DeskAnimationTest
+{
+protected:
+    FullscreenDesks *fullscreen = manager.fullscreenDesks();
+    std::vector<uint32_t> ids;
+
+    void SetUp() override
+    {
+        DeskAnimationTest::SetUp();
+        addDesks(2);
+        desks->activateDesk(desk(1), DesksSwitchSource::DeskSwitchShortcut);
+        settle();
+        for (const auto &each : desks->desks())
+            ids.push_back(each->id());
+    }
+
+    void settle()
+    {
+        for (int i = 0; i < 4; ++i) {
+            flush();
+            finish();
+        }
+        flush();
+    }
+
+    void expectTheThreeDesks()
+    {
+        ASSERT_EQ(3u, desks->desks().size());
+        for (int i = 0; i < 3; ++i) {
+            EXPECT_EQ(ids[size_t(i)], desk(i)->id()) << "desk " << i;
+            EXPECT_FALSE(desk(i)->isFullscreenDesk());
+        }
+    }
+};
+
+} // namespace
+
+TEST_F(FullscreenDesksAnimatedTest, TheClientLeavingFullscreenKeepsTheOtherDesks)
+{
+    Window *window = makeWindow("terminal");
+    ASSERT_TRUE(fullscreen->toggle(window));
+    settle();
+    ASSERT_EQ(4u, desks->desks().size());
+    window->restore();
+    settle();
+    expectTheThreeDesks();
+    EXPECT_EQ(desk(1), desks->deskOf(window));
+    EXPECT_TRUE(desk(1)->isActive());
+}
+
+TEST_F(FullscreenDesksAnimatedTest, LeavingDuringTheSlideInKeepsTheOtherDesks)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->toggle(window));
+    paint();
+    ASSERT_TRUE(fullscreen->toggle(window));
+    settle();
+    expectTheThreeDesks();
+    EXPECT_EQ(desk(1), desks->deskOf(window));
+}
+
+TEST_F(FullscreenDesksAnimatedTest, ClosingAFullscreenAppKeepsTheOtherDesks)
+{
+    Window *terminal = makeWindow("terminal");
+    Window *claude = makeWindow("claude");
+    manager.activation()->activate(terminal);
+    ASSERT_TRUE(fullscreen->toggle(terminal));
+    settle();
+    manager.destroyWindow(terminal);
+    settle();
+    expectTheThreeDesks();
+
+    manager.activation()->activate(claude);
+    settle();
+    ASSERT_TRUE(fullscreen->toggle(claude));
+    settle();
+    ASSERT_EQ(4u, desks->desks().size());
+    ASSERT_TRUE(fullscreen->toggle(claude));
+    settle();
+    expectTheThreeDesks();
+    EXPECT_EQ(desk(1), desks->deskOf(claude));
+}
+
+TEST_F(FullscreenDesksAnimatedTest, TheClientLeavingWhileTheDeskSlidesInKeepsTheOtherDesks)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->toggle(window));
+    window->restore();
+    settle();
+    expectTheThreeDesks();
+}

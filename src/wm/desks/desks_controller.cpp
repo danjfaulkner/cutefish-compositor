@@ -138,6 +138,9 @@ void DesksController::removeDesk(Desk *desk, DesksCreationRemovalSource source)
 {
     if (!canRemoveDesks() || deskIndex(desk) < 0)
         return;
+    // Desks are few and removing one is rare: worth a line in the journal, to tell what removed one.
+    CF_INFO(cfCompositor) << "removing desk" << deskIndex(desk) << "of" << int(m_desks.size()) << "id" << desk->id()
+                          << (desk->isFullscreenDesk() ? "(fullscreen)" : "") << "source" << int(source);
     // A running switch knows its desks by index, which the removal shifts, so it lands first.
     if (m_animation) {
         m_animation->finishNow();
@@ -487,6 +490,8 @@ void DesksController::removeDeskInternal(Desk *desk, bool deskSwitched)
         return;
 
     const base::AutoReset modifying(m_modifying, true);
+    CF_INFO(cfCompositor) << "desk" << index << "id" << desk->id() << (desk->isFullscreenDesk() ? "(fullscreen)" : "")
+                          << "removed," << int(m_desks.size()) - 1 << "left";
     const bool wasActive = desk->isActive() || deskSwitched;
     std::unique_ptr<Desk> removed = std::move(m_desks[index]);
     m_desks.erase(m_desks.begin() + index);
