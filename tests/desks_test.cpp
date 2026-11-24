@@ -1425,3 +1425,36 @@ TEST_F(DeskAnimationTest, FullscreenDeskSlidesInAndBackOut)
     EXPECT_EQ(window, active());
     EXPECT_NE(WindowStateType::Fullscreen, window->stateType());
 }
+
+TEST_F(DeskAnimationTest, LeavingFullscreenKeepsTheOtherDesks)
+{
+    FullscreenDesks *fullscreen = manager.fullscreenDesks();
+    addDesks(2);
+    desks->activateDesk(desk(1), DesksSwitchSource::DeskSwitchShortcut);
+    finish();
+    Window *window = makeWindow("claude");
+    window->maximize();
+    ASSERT_EQ(desk(1), desks->deskOf(window));
+    const uint32_t first = desk(0)->id(), second = desk(1)->id(), third = desk(2)->id();
+
+    for (int round = 0; round < 3; ++round) {
+        ASSERT_TRUE(fullscreen->toggle(window));
+        finish();
+        flush();
+        ASSERT_EQ(4u, desks->desks().size()) << "round " << round;
+        EXPECT_TRUE(desk(2)->isFullscreenDesk());
+        ASSERT_TRUE(fullscreen->toggle(window));
+        flush();
+        finish();
+        flush();
+        finish();
+        flush();
+        ASSERT_EQ(3u, desks->desks().size()) << "round " << round;
+        EXPECT_EQ(first, desk(0)->id());
+        EXPECT_EQ(second, desk(1)->id());
+        EXPECT_EQ(third, desk(2)->id());
+        EXPECT_TRUE(desk(1)->isActive());
+        EXPECT_EQ(desk(1), desks->deskOf(window));
+        EXPECT_EQ(WindowStateType::Maximized, window->stateType());
+    }
+}

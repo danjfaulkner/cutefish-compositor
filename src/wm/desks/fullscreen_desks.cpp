@@ -193,7 +193,8 @@ bool FullscreenDesks::enter(Window *window)
 
     m_entries[window] = {desk->id(), origin->id()};
     window->addObserver(this);
-    controller->activateDesk(desk, DesksSwitchSource::ApiSwitch);
+    // The full slide of a desk switch by keyboard, not the quick fade an API switch gets.
+    controller->activateDesk(desk, DesksSwitchSource::DeskSwitchShortcut);
     changed.emit();
     return true;
 }

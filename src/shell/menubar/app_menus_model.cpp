@@ -156,10 +156,6 @@ wm::Window *AppMenusModel::fullscreenTarget() const
     if (m_desktop || !manager || !manager->fullscreenDesks())
         return nullptr;
     wm::Window *window = manager->windowById(m_shell->taskWindows().activeWindow());
-    // TEMPORARY diagnostics for the fullscreen desks bring-up.
-    CF_WARNING(cfCompositor) << "fullscreen-debug: target task" << m_shell->taskWindows().activeWindow()
-                             << "window" << (window ? window->applicationId() : std::string("<none>"))
-                             << "refusal" << (window ? manager->fullscreenDesks()->refusal(window) : std::string("-"));
     if (!window)
         return nullptr;
     const wm::FullscreenDesks *desks = manager->fullscreenDesks();

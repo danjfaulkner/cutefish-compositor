@@ -94,10 +94,10 @@ void DeskSwitchNode::start(Type type, int desks, int startingDesk, int endingDes
 }
 
 void DeskSwitchNode::startRemoval(int desks, int removedDesk, int endingDesk, Frames stillFrames,
-                                  std::set<std::string> outputs, int width)
+                                  std::set<std::string> outputs, int width, Type type)
 {
     stop();
-    m_type = Type::Quick;
+    m_type = type;
     m_desks = desks;
     m_startingDesk = removedDesk;
     m_endingDesk = endingDesk;

@@ -128,9 +128,6 @@ void hideOtherApplications(const CommandContext &context)
 
 void toggleFullscreen(const CommandContext &context)
 {
-    // TEMPORARY diagnostics for the fullscreen desks bring-up.
-    CF_WARNING(cfCompositor) << "fullscreen-debug: shortcut, target"
-                             << (targetWindow(context) ? targetWindow(context)->applicationId() : std::string("<none>"));
     if (wm::Window *window = targetWindow(context)) {
         if (wm::FullscreenDesks *desks = context.windowManager->fullscreenDesks();
             desks && desks->toggle(window))

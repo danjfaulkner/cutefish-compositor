@@ -62,7 +62,8 @@ public:
     void start(Type type, int desks, int startingDesk, int endingDesk, Frames frames, int width);
 
     void startRemoval(int desks, int removedDesk, int endingDesk, Frames stillFrames,
-                      std::set<std::string> outputs, int width);
+                      std::set<std::string> outputs, int width,
+                      Type type = Type::Quick);
 
     // Phase (2): the ending desk is active, copy it.
     void takeEndingScreenshot(int endingDesk);

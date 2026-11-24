@@ -15,6 +15,7 @@
 #include "cutefish/accounts/user_account.h"
 #include "shell/common/task_windows.h"
 #include "shell/shell.h"
+#include "shell/shell_data.h"
 #include "shell/menubar/bar_item.h"
 #include "shell/menubar/menu_bar.h"
 #include "ui/image_view.h"
@@ -141,7 +142,11 @@ public:
 
     void setFullscreen(bool fullscreen)
     {
-        m_icon->setGlyph(fullscreen ? "view-restore-symbolic" : "view-fullscreen-symbolic");
+        // Shipped with the shell, like the other bar icons: the theme's symbolic icons are
+        // not found by name here.
+        m_icon->setSource(shellDataFile(fullscreen ? "menubar/view-restore-symbolic.svg"
+                                                   : "menubar/view-fullscreen-symbolic.svg"),
+                          true);
     }
 
     void updateLook()
@@ -247,10 +252,6 @@ void AppMenusView::updateFullscreenButton()
     if (!m_fullscreen || !m_model)
         return;
     const bool shown = m_model->fullscreenTarget() != nullptr;
-    // TEMPORARY diagnostics for the fullscreen desks bring-up.
-    CF_WARNING(cfCompositor) << "fullscreen-debug: button" << (shown ? "shown" : "hidden") << "desktop"
-                             << m_model->isDesktop() << "visible-now" << m_fullscreen->isVisible()
-                             << "geometry" << m_fullscreen->geometry().x << m_fullscreen->geometry().width;
     m_fullscreen->setFullscreen(m_model->isTargetFullscreen());
     if (shown != m_fullscreen->isVisible()) {
         m_fullscreen->setVisible(shown);
