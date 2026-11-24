@@ -331,6 +331,34 @@ TEST_F(DockLayoutTest, YieldingZoneLeavesTheWorkAreaToMaximizedWindows)
     EXPECT_EQ(reserved, manager.workAreaForOutput(kOutput));
 }
 
+TEST_F(DockLayoutTest, MaximizedWindowKeepsItsSizeWhileHidden)
+{
+    layout.setBehavior(DockAutoHideBehavior::WhenObstructed);
+    manager.setExclusiveZone(dock, ScreenEdge::Bottom, 80, {}, true);
+    const base::Rect reserved(0, 0, 1000, 720);
+    Window *window = makeWindow(base::Rect(100, 100, 300, 200));
+    window->maximize();
+    ASSERT_EQ(kOutput, window->bounds());
+
+    // On another desk nothing maximized is on screen, so the dock takes its strip back...
+    window->setDeskHidden(true);
+    EXPECT_EQ(reserved, manager.workAreaForOutput(kOutput));
+    // ...but the hidden window keeps its size: shrinking it here and growing it on the way back
+    // left the dock's strip empty until the client redrew at the new size.
+    EXPECT_EQ(kOutput, window->bounds());
+
+    window->setDeskHidden(false);
+    EXPECT_EQ(kOutput, manager.workAreaForOutput(kOutput));
+    EXPECT_EQ(kOutput, window->bounds());
+
+    window->minimize();
+    EXPECT_EQ(reserved, manager.workAreaForOutput(kOutput));
+    EXPECT_EQ(kOutput, window->bounds());
+    window->restore();
+    EXPECT_EQ(WindowStateType::Maximized, window->stateType());
+    EXPECT_EQ(kOutput, window->bounds());
+}
+
 TEST_F(DockLayoutTest, FixedZoneStaysUnderMaximizedWindows)
 {
     manager.setExclusiveZone(dock, ScreenEdge::Bottom, 80);

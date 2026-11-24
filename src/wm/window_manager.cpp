@@ -360,6 +360,22 @@ base::Rect WindowManager::workAreaFor(const Window *window, const base::Rect &bo
     return m_workArea;
 }
 
+base::Rect WindowManager::maximizedWorkAreaFor(const Window *window) const
+{
+    // Once shown, a maximized window makes the yielding zones yield, so it is sized for that even
+    // while hidden (inactive desk, minimized, show desktop). Following the resting work area
+    // instead shrank it while hidden and grew it on the way back, leaving the dock's strip empty
+    // until the client redrew at the new size.
+    if (!window || window->isShellWindow() || window->isAboveDock())
+        return workAreaFor(window);
+    if (m_displayManager) {
+        if (const auto *logical = m_displayManager->displayForRect(window->bounds()))
+            return m_exclusiveZones.apply(logical->workArea, logical->waylandName,
+                                          logical->primary, true);
+    }
+    return m_exclusiveZones.apply(m_outputBounds, {}, true, true);
+}
+
 base::Rect WindowManager::visibleAreaFor(const Window *window) const
 {
     return visibleAreaFor(window, window ? window->bounds() : base::Rect());

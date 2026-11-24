@@ -288,6 +288,9 @@ public:
 
     base::Rect workAreaFor(const Window *window) const;
     base::Rect workAreaFor(const Window *window, const base::Rect &bounds) const;
+    // The area a maximized window fills: zones that yield to maximized windows (the auto-hiding
+    // dock) always yield here, whether or not a maximized window is on screen right now.
+    base::Rect maximizedWorkAreaFor(const Window *window) const;
     base::Rect visibleAreaFor(const Window *window) const;
     base::Rect visibleAreaFor(const Window *window, const base::Rect &bounds) const;
     void setWorkArea(const base::Rect &bounds);

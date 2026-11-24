@@ -279,7 +279,7 @@ void WindowState::updateBoundsFromState(WindowStateType previous)
                                    workArea));
         break;
     case WindowStateType::Maximized:
-        setBoundsDirect(workArea);
+        setBoundsDirect(manager->maximizedWorkAreaFor(m_window));
         break;
     case WindowStateType::Fullscreen:
         setBoundsDirect(manager->outputBoundsFor(m_window));
