@@ -16,6 +16,7 @@
 #include "scene/window_animation.h"
 #include "wm/activation.h"
 #include "wm/transient_manager.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window_manager.h"
 #include "wm/window_observer.h"
 #include "wm/window_state.h"
@@ -244,6 +245,9 @@ Insets Window::frameInsets() const
 {
     if (!m_frame || m_state->isFullscreen())
         return Insets();
+    // Filling its own desk, the frame is the top bar's title bar row instead.
+    if (m_manager && m_manager->fullscreenDesks() && m_manager->fullscreenDesks()->fills(this))
+        return Insets();
     return m_frame->extents();
 }
 
@@ -267,6 +271,16 @@ void Window::setDecorated(bool decorated)
     m_decorated = decorated;
     updateFrame();
     m_visual->update();
+}
+
+void Window::setDecorationOverride(std::optional<bool> serverSide)
+{
+    if (serverSide == m_decorationOverride)
+        return;
+    m_decorationOverride = serverSide;
+    forEachObserver(this, m_observers, [this](WindowObserver *observer) {
+        observer->onWindowDecorationOverrideChanged(this);
+    });
 }
 
 void Window::updateFrame()

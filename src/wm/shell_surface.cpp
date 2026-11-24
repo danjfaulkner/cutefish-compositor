@@ -352,7 +352,19 @@ ShellSurface::decorationModeFor(std::optional<DecorationMode> requested) const
 {
     if (!m_hasDecorationObject)
         return DecorationMode::ClientSide;
+    if (m_window && m_window->decorationOverride())
+        return *m_window->decorationOverride() ? DecorationMode::ServerSide : DecorationMode::ClientSide;
     return requested.value_or(kPreferredDecorationMode);
+}
+
+void ShellSurface::onWindowDecorationOverrideChanged(Window *window)
+{
+    if (window != m_window || !m_hasDecorationObject)
+        return;
+    // The decoration configure first, then the toplevel configure applying it closes the sequence.
+    if (m_decorationConfigureSender)
+        m_decorationConfigureSender(decorationMode());
+    applyDecorationMode();
 }
 
 void ShellSurface::applyDecorationMode()

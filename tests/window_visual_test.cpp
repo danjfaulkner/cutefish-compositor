@@ -7,6 +7,7 @@
 #include "decoration/decoration.h"
 #include "decoration/decoration_theme.h"
 #include "scene/window_visual_node.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window.h"
 #include "wm/window_manager.h"
 #include "wm/window_visual_controller.h"
@@ -207,5 +208,38 @@ TEST(WindowVisualPolicy, ReapplyingTheSameStateLeavesTheNodeUnchanged)
     moved.shape.bounds.translate(10, 0);
     node.setState(moved);
     EXPECT_NE(revision, node.revision());
+    manager.destroyWindow(window);
+}
+
+TEST(WindowVisualPolicy, AWindowFillingItsOwnDeskIsSquareWithoutAFrameOrOutline)
+{
+    decoration::Theme theme;
+    decoration::DecorationProvider frames(&theme);
+    wm::WindowManager manager(nullptr, nullptr);
+    manager.setFrameProvider(&frames);
+    manager.setOutputBounds({0, 0, 1200, 900});
+    auto *window = manager.createWindow(nullptr, {.requestedSize = {400, 300}, .applicationId = "helium"});
+    window->activate();
+    auto state = [&] {
+        return wm::WindowVisualController::evaluate(*window, theme.visualStyle());
+    };
+    ASSERT_EQ(state().shape.radius, 14);
+    const base::Rect normal = window->bounds();
+
+    ASSERT_TRUE(manager.fullscreenDesks()->enter(window));
+    ASSERT_TRUE(manager.fullscreenDesks()->fills(window));
+    // Chromium's "system title bar": the server draws the frame, the client drops its controls.
+    EXPECT_EQ(std::optional<bool>(true), window->decorationOverride());
+    // Hidden while it fills: the top bar's title bar row stands in for it.
+    EXPECT_TRUE(window->frameInsets().isNull());
+    EXPECT_EQ(base::Rect(0, 0, 1200, 900), window->bounds());
+    EXPECT_EQ(state().shape.radius, 0);
+    EXPECT_FALSE(state().drawOutline);
+
+    manager.fullscreenDesks()->exit(window);
+    EXPECT_EQ(std::nullopt, window->decorationOverride());
+    EXPECT_EQ(normal, window->bounds());
+    EXPECT_EQ(state().shape.radius, 14);
+    EXPECT_TRUE(state().drawOutline);
     manager.destroyWindow(window);
 }

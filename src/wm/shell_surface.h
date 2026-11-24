@@ -133,6 +133,12 @@ public:
     // So the decoration configure can be sent before the toplevel configure.
     DecorationMode decorationModeFor(std::optional<DecorationMode> requested) const;
 
+    // How the decoration object tells the client a mode the window manager decided.
+    void setDecorationConfigureSender(std::function<void(DecorationMode)> sender)
+    {
+        m_decorationConfigureSender = std::move(sender);
+    }
+
     bool hasDialogObject() const { return m_hasDialogObject; }
 
     void setHasDialogObject(bool has) { m_hasDialogObject = has; }
@@ -202,6 +208,7 @@ public:
     void onWindowActivationChanged(Window *window, bool active) override;
     void onWindowResizingChanged(Window *window, bool resizing) override;
     void onWindowFrameChanged(Window *window) override;
+    void onWindowDecorationOverrideChanged(Window *window) override;
     void onWindowHiddenChanged(Window *window) override;
     void onWindowDeskHiddenChanged(Window *window) override;
     void onWindowDestroying(Window *window) override;
@@ -330,6 +337,7 @@ private:
     bool m_decorationRemovalPending = false;
     std::optional<CommittedState> m_committed;
     std::optional<DecorationMode> m_requestedMode;
+    std::function<void(DecorationMode)> m_decorationConfigureSender;
     bool m_hasDialogObject = false;
     bool m_modal = false;
     base::Rect m_configuredContentBounds;

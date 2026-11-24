@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window_visual_controller.h"
 
 #include <algorithm>
@@ -89,7 +90,10 @@ WindowVisualController::evaluate(const Window &window, const decoration::WindowV
     state.shape.bounds = state.shape.bounds.adjusted(exterior.left, exterior.top, -exterior.right,
                                                      -exterior.bottom);
     state.clipContent = !exterior.isNull();
-    if (isRoundedStateType(window.stateType())) {
+    // On a desk of its own it fills the output: square, with no outline.
+    const bool ownDesk = window.manager() && window.manager()->fullscreenDesks()
+            && window.manager()->fullscreenDesks()->owns(&window);
+    if (isRoundedStateType(window.stateType()) && !ownDesk) {
         state.shape.radius = style.radiusFor(state.shape.bounds.size().toSize());
         state.clipContent = true;
         state.drawOutline = true;

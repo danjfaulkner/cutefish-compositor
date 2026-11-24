@@ -561,3 +561,26 @@ TEST_F(XdgDecorationProtocolTest, ANewWindowMappedWhileAnotherIsTornDownIsFine)
 }
 
 } // namespace
+
+TEST_F(XdgDecorationProtocolTest, TheWindowManagerCanTakeTheFrameOverAndGiveItBack)
+{
+    run([&](Client& c) {
+        XdgWindow* window = c.makeDecoratedToplevel(base::Size(400, 300), /*serverSide=*/false);
+        ASSERT_EQ(uint32_t(ZXDG_TOPLEVEL_DECORATION_V1_MODE_CLIENT_SIDE), window->lastMode());
+
+        check([&] { onlyWindow()->setDecorationOverride(true); });
+        c.sync();
+        EXPECT_EQ(uint32_t(ZXDG_TOPLEVEL_DECORATION_V1_MODE_SERVER_SIDE), window->lastMode());
+        check([&] { EXPECT_NE(nullptr, onlyWindow()->frame()); });
+
+        // The client's own request still loses while the override holds.
+        zxdg_toplevel_decoration_v1_set_mode(window->decoration, ZXDG_TOPLEVEL_DECORATION_V1_MODE_CLIENT_SIDE);
+        c.sync();
+        EXPECT_EQ(uint32_t(ZXDG_TOPLEVEL_DECORATION_V1_MODE_SERVER_SIDE), window->lastMode());
+
+        check([&] { onlyWindow()->setDecorationOverride(std::nullopt); });
+        c.sync();
+        EXPECT_EQ(uint32_t(ZXDG_TOPLEVEL_DECORATION_V1_MODE_CLIENT_SIDE), window->lastMode());
+        check([&] { EXPECT_EQ(nullptr, onlyWindow()->frame()); });
+    });
+}

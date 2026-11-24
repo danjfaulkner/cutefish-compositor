@@ -65,8 +65,10 @@ public:
         wl_client_add_destroy_listener(wl_resource_get_client(resource),
                                        &m_clientDestroy.listener);
 
-        if (ShellSurface* shellSurface = this->shellSurface())
+        if (ShellSurface* shellSurface = this->shellSurface()) {
+            shellSurface->setDecorationConfigureSender([this](DecorationMode mode) { sendConfigure(mode); });
             shellSurface->setHasDecorationObject(true);
+        }
     }
 
     WaylandXdgToplevelDecoration(const WaylandXdgToplevelDecoration&) = delete;
@@ -80,8 +82,10 @@ public:
             wl_list_remove(&m_toplevelDestroy.listener.link);
             // Destroying the decoration object takes the negotiated mode with
             // it: the client decorates itself again from the next commit.
-            if (ShellSurface* shellSurface = this->shellSurface())
+            if (ShellSurface* shellSurface = this->shellSurface()) {
+                shellSurface->setDecorationConfigureSender(nullptr);
                 shellSurface->setHasDecorationObject(false);
+            }
         }
     }
 
@@ -123,6 +127,8 @@ private:
     {
         auto* self = reinterpret_cast<DestroyListener*>(listener)->owner;
         wl_list_remove(&self->m_toplevelDestroy.listener.link);
+        if (ShellSurface* shellSurface = self->shellSurface())
+            shellSurface->setDecorationConfigureSender(nullptr);
         self->m_toplevel = nullptr;
         if (self->m_clientGone)
             return;

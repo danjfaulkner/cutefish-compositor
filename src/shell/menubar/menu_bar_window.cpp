@@ -303,13 +303,9 @@ MenuBarWindow::MenuBarWindow(Shell *shell, std::unique_ptr<MenuBar> menuBar)
                     const bool over = window && window->isVisible()
                             && (window->stateType() == wm::WindowStateType::Fullscreen
                                 || (manager->fullscreenDesks() && manager->fullscreenDesks()->owns(window)));
-                    // A title bar row for a window fullscreen on its own desk; one that fills its
-                    // desk shows its own.
+                    // A title bar row for a window fullscreen on, or filling, its own desk.
                     wm::FullscreenDesks *desks = manager->fullscreenDesks();
-                    setFrameWindow(over && desks && desks->owns(window) && !desks->fills(window)
-                                           && window->stateType() == wm::WindowStateType::Fullscreen
-                                           ? window
-                                           : nullptr);
+                    setFrameWindow(over && desks && desks->owns(window) ? window : nullptr);
                     if (over == m_overFullscreen)
                         return;
                     m_overFullscreen = over;
@@ -482,10 +478,7 @@ void MenuBarWindow::updateFrameWindow()
     wm::WindowManager *manager = m_shell->windowManager();
     wm::FullscreenDesks *desks = manager ? manager->fullscreenDesks() : nullptr;
     wm::Window *active = manager ? manager->activation()->activeWindow() : nullptr;
-    setFrameWindow(active && desks && desks->owns(active) && !desks->fills(active)
-                                   && active->stateType() == wm::WindowStateType::Fullscreen
-                           ? active
-                           : nullptr);
+    setFrameWindow(active && desks && desks->owns(active) ? active : nullptr);
 }
 
 void MenuBarWindow::updateStatusItemLimits()

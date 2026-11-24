@@ -46,6 +46,7 @@ public:
     virtual void onWindowClientDecorationChanged(Window* window) { }
 
     virtual void onWindowFrameChanged(Window* window) { }
+    virtual void onWindowDecorationOverrideChanged(Window* window) { }
 
     // Called at the top of the window's destructor.
     virtual void onWindowDestroying(Window* window) { }

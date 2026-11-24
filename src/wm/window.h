@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -184,6 +185,11 @@ public:
 
     void setDecorated(bool decorated);
 
+    // The window manager's say over who draws the frame, above the client's request: true for
+    // the server, false for the client, nothing to leave it to the client.
+    std::optional<bool> decorationOverride() const { return m_decorationOverride; }
+    void setDecorationOverride(std::optional<bool> serverSide);
+
     bool isDecorated() const { return m_decorated; }
 
     // Null unless decorated and a frame provider is installed.
@@ -335,6 +341,7 @@ private:
     bool m_castsShadow = true;
     std::unique_ptr<WindowFrame> m_frame;
     bool m_decorated = false;
+    std::optional<bool> m_decorationOverride;
 
     base::Rect m_bounds;
     base::Point m_surfaceOrigin;

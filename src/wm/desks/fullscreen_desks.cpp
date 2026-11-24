@@ -108,6 +108,10 @@ void FullscreenDesks::applyFill(Window *window)
         return;
     it->second.fill = true;
     const base::AutoReset changing(m_changing, true);
+    // A client drawing its own frame keeps its controls in it; asked to let the server draw the
+    // frame (Chromium's "system title bar"), it drops them, and the frame itself is hidden while
+    // the window fills its desk: the top bar's title bar row stands in for it.
+    window->setDecorationOverride(true);
     if (window->stateType() == WindowStateType::Maximized)
         window->state()->onEvent(WMEvent(WMEventType::WorkAreaChanged));
     else
@@ -118,6 +122,7 @@ void FullscreenDesks::applyFill(Window *window)
 void FullscreenDesks::restoreState(Window *window, const Entry &entry)
 {
     const base::AutoReset changing(m_changing, true);
+    window->setDecorationOverride(std::nullopt);
     if (!entry.fill) {
         if (window->stateType() == WindowStateType::Fullscreen)
             window->state()->onEvent(WMEvent(WMEventType::Restore));
