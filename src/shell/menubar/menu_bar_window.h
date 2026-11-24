@@ -22,6 +22,10 @@ namespace cutefish::ui {
 class Menu;
 }
 
+namespace cutefish::wm {
+class Window;
+}
+
 namespace cutefish::shell {
 
 class ClockItem;
@@ -39,6 +43,8 @@ class MenuBarWindow : public Component, public BarContext
 {
 public:
     static constexpr int kHeight = 32;
+    // The title bar row the bar carries over a window fullscreen on its own desk.
+    static constexpr int kFrameHeight = 36;
 
     MenuBarWindow(Shell *shell, std::unique_ptr<MenuBar> menuBar);
     ~MenuBarWindow() override;
@@ -79,6 +85,8 @@ public:
     ClockItem *clock() const { return m_clock; }
     ui::Menu *controlMenu() const { return m_controlMenu.get(); }
     bool lightContents() const override;
+    // The window the title bar row stands for, null when the bar has none.
+    wm::Window *frameWindow() const;
     ui::Color fill() const { return m_fill; }
     bool panelOpen() const;
     void platePainted() override;
@@ -86,6 +94,12 @@ public:
 
 private:
     class Root;
+    class Content;
+    class FullscreenFrame;
+
+    void setFrameWindow(wm::Window *window);
+    // The active window when it is fullscreen on its own desk, before the bar is revealed.
+    void updateFrameWindow();
 
     void updateGeometry();
     void updateLook();
@@ -110,6 +124,8 @@ private:
     base::Subscription m_deviceUsageChanged;
     std::unique_ptr<ShellWindow> m_window;
     Root *m_root = nullptr;
+    FullscreenFrame *m_frame = nullptr;
+    uint64_t m_frameWindow = 0;
     ui::View *m_menuSlot = nullptr;
     MenuBarAppMenus *m_appMenus = nullptr;
     StopItem *m_recording = nullptr;

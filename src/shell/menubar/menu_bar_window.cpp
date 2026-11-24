@@ -34,7 +34,10 @@
 #include "ui/path.h"
 #include "render/renderer.h"
 #include "ui/theme.h"
+#include "ui/window_controls.h"
+#include "ui/painter.h"
 #include "wm/status_items.h"
+#include "wm/activation.h"
 #include "wm/desks/fullscreen_desks.h"
 #include "wm/window.h"
 #include "wm/window_manager.h"
@@ -84,6 +87,163 @@ protected:
 private:
     MenuBarWindow *m_bar;
     uint64_t m_themeGeneration = 0;
+};
+
+// A Cutefish title bar for a fullscreen window: its title and window controls in the style the
+// settings pick, the green one leaving fullscreen.
+class MenuBarWindow::FullscreenFrame final : public ui::View
+{
+public:
+    explicit FullscreenFrame(MenuBarWindow *bar)
+        : m_bar(bar)
+    {
+        setName("fullscreen-frame");
+        m_title = addChild<BarLabel>();
+        m_title->setWeight(600);
+    }
+
+    void setTitle(const std::string &title)
+    {
+        m_title->setText(title);
+        requestLayout();
+    }
+
+    bool acceptsPointer() const override { return true; }
+
+    void updateLook()
+    {
+        const bool dark = ui::Theme::current().darkMode;
+        m_title->setTextColor(dark ? ui::Color::rgb(0xCACBCE) : ui::Color::rgb(0x383838));
+        requestPaint();
+    }
+
+protected:
+    static constexpr const char *kArtwork[] = {"close", "minimize", "restore"};
+
+    ui::RectF buttonRect(int index) const
+    {
+        const bool colored = ui::Theme::current().coloredWindowControls;
+        const double size = ui::window_controls::kButton;
+        const double spacing = colored ? ui::window_controls::kColoredSpacing : ui::window_controls::kSpacing;
+        const double margin = (kFrameHeight - size) / 2;
+        return {margin + index * (size + spacing), margin, size, size};
+    }
+
+    int buttonAt(const ui::PointF &point) const
+    {
+        for (int i = 0; i < 3; ++i) {
+            if (buttonRect(i).contains(point))
+                return i;
+        }
+        return -1;
+    }
+
+    void paint(ui::Painter &painter) override
+    {
+        const ui::Theme &theme = ui::Theme::current();
+        painter.fillRect(localRect(), theme.darkMode ? ui::Color::rgb(0x2C2C2D) : ui::Color::rgb(0xFFFFFF));
+        const bool rowHovered = m_hovered >= 0;
+        for (int i = 0; i < 3; ++i) {
+            ui::window_controls::State state;
+            state.artwork = kArtwork[i];
+            state.colored = theme.coloredWindowControls;
+            state.dark = theme.darkMode;
+            state.active = true;
+            state.hovered = m_hovered == i || (state.colored && rowHovered);
+            state.pressed = m_pressed == i;
+            ui::window_controls::paint(painter, buttonRect(i), state);
+        }
+    }
+
+    void layout() override
+    {
+        // Centred on the bar, kept clear of the controls.
+        const ui::SizeF size = m_title->sizeHint();
+        const double clear = buttonRect(2).right() + 12;
+        double x = (localRect().width - size.width) / 2;
+        x = std::max(x, clear);
+        m_title->setGeometry({x, (kFrameHeight - size.height) / 2,
+                              std::min(size.width, std::max(0.0, localRect().width - x - 12)), size.height});
+    }
+
+    void pointerMove(const ui::PointerEvent &event) override { setHovered(buttonAt(event.position)); }
+    void pointerLeave() override
+    {
+        setHovered(-1);
+        m_pressed = -1;
+        requestPaint();
+    }
+    void pointerPress(const ui::PointerEvent &event) override
+    {
+        m_bar->closePopups();
+        if (event.button != ui::MouseButton::Left)
+            return;
+        m_pressed = buttonAt(event.position);
+        requestPaint();
+    }
+    void pointerRelease(const ui::PointerEvent &event) override
+    {
+        const int pressed = std::exchange(m_pressed, -1);
+        requestPaint();
+        if (pressed < 0 || pressed != buttonAt(event.position))
+            return;
+        wm::Window *window = m_bar->frameWindow();
+        wm::WindowManager *manager = m_bar->m_shell->windowManager();
+        if (!window || !manager)
+            return;
+        switch (pressed) {
+        case 0:
+            window->requestClose();
+            break;
+        case 1:
+            // Leaves fullscreen on the way: it is minimized on the desk it came from.
+            window->minimize();
+            break;
+        case 2:
+            if (manager->fullscreenDesks())
+                manager->fullscreenDesks()->exit(window);
+            break;
+        }
+    }
+
+private:
+    void setHovered(int index)
+    {
+        if (index == m_hovered)
+            return;
+        m_hovered = index;
+        requestPaint();
+    }
+
+    MenuBarWindow *m_bar;
+    BarLabel *m_title = nullptr;
+    int m_hovered = -1;
+    int m_pressed = -1;
+};
+
+// The bar's row on top and, over a window fullscreen on its own desk, a title bar row for that
+// window under it: they slide in together and push the window down by both.
+class MenuBarWindow::Content final : public ui::View
+{
+public:
+    Content(MenuBarWindow *bar)
+        : m_bar(bar)
+    {
+        setName("menubar-content");
+    }
+
+protected:
+    void layout() override
+    {
+        const ui::RectF bounds = localRect();
+        if (m_bar->m_root)
+            m_bar->m_root->setGeometry({0, 0, bounds.width, double(kHeight)});
+        if (m_bar->m_frame)
+            m_bar->m_frame->setGeometry({0, double(kHeight), bounds.width, double(kFrameHeight)});
+    }
+
+private:
+    MenuBarWindow *m_bar;
 };
 
 class MenuSlot final : public ui::View
@@ -143,6 +303,13 @@ MenuBarWindow::MenuBarWindow(Shell *shell, std::unique_ptr<MenuBar> menuBar)
                     const bool over = window && window->isVisible()
                             && (window->stateType() == wm::WindowStateType::Fullscreen
                                 || (manager->fullscreenDesks() && manager->fullscreenDesks()->owns(window)));
+                    // A title bar row for a window fullscreen on its own desk; one that fills its
+                    // desk shows its own.
+                    wm::FullscreenDesks *desks = manager->fullscreenDesks();
+                    setFrameWindow(over && desks && desks->owns(window) && !desks->fills(window)
+                                           && window->stateType() == wm::WindowStateType::Fullscreen
+                                           ? window
+                                           : nullptr);
                     if (over == m_overFullscreen)
                         return;
                     m_overFullscreen = over;
@@ -155,8 +322,12 @@ MenuBarWindow::MenuBarWindow(Shell *shell, std::unique_ptr<MenuBar> menuBar)
                         || (manager->fullscreenDesks() && manager->fullscreenDesks()->owns(active)))))
                 return;
             m_overFullscreen = false;
+            setFrameWindow(nullptr);
             updateLook();
         }));
+        m_subscriptions.push_back(manager->activeWindowChanged.connect([this](wm::Window *) { updateFrameWindow(); }));
+        if (wm::FullscreenDesks *desks = manager->fullscreenDesks())
+            m_subscriptions.push_back(desks->changed.connect([this] { updateFrameWindow(); }));
     }
 
     m_statusItems = m_root->addChild<StatusItemsView>(
@@ -209,7 +380,11 @@ MenuBarWindow::MenuBarWindow(Shell *shell, std::unique_ptr<MenuBar> menuBar)
     m_clock->onClicked = [this](const ui::PointerEvent &) { togglePanel(Panel::NotificationCenter); };
     m_clock->onPreferredWidthChanged = [this] { layoutRow(); };
 
-    m_window->setContentView(std::move(root));
+    auto content = std::make_unique<Content>(this);
+    content->addChild(std::move(root));
+    m_frame = content->addChild<FullscreenFrame>(this);
+    m_frame->setVisible(false);
+    m_window->setContentView(std::move(content));
 
     m_clockFd = timerfd_create(CLOCK_REALTIME, TFD_CLOEXEC | TFD_NONBLOCK);
     if (m_clockFd >= 0) {
@@ -277,9 +452,40 @@ void MenuBarWindow::updateGeometry()
     if (!output)
         return;
     m_window->setOutput(output->name);
-    m_window->setGeometry(base::Rect(output->bounds.x(), output->bounds.y(), output->bounds.width(), kHeight));
+    const int height = kHeight + (m_frameWindow ? kFrameHeight : 0);
+    m_window->setGeometry(base::Rect(output->bounds.x(), output->bounds.y(), output->bounds.width(), height));
     m_window->setExclusiveZone(wm::ScreenEdge::Top, kHeight);
     updateStatusItemLimits();
+}
+
+wm::Window *MenuBarWindow::frameWindow() const
+{
+    wm::WindowManager *manager = m_shell->windowManager();
+    return manager && m_frameWindow ? manager->windowById(m_frameWindow) : nullptr;
+}
+
+void MenuBarWindow::setFrameWindow(wm::Window *window)
+{
+    const uint64_t id = window ? window->id() : 0;
+    if (window && m_frame)
+        m_frame->setTitle(window->title());
+    if (id == m_frameWindow)
+        return;
+    m_frameWindow = id;
+    if (m_frame)
+        m_frame->setVisible(id != 0);
+    updateGeometry();
+}
+
+void MenuBarWindow::updateFrameWindow()
+{
+    wm::WindowManager *manager = m_shell->windowManager();
+    wm::FullscreenDesks *desks = manager ? manager->fullscreenDesks() : nullptr;
+    wm::Window *active = manager ? manager->activation()->activeWindow() : nullptr;
+    setFrameWindow(active && desks && desks->owns(active) && !desks->fills(active)
+                                   && active->stateType() == wm::WindowStateType::Fullscreen
+                           ? active
+                           : nullptr);
 }
 
 void MenuBarWindow::updateStatusItemLimits()
@@ -340,6 +546,8 @@ void MenuBarWindow::updateLook()
     for (StatusIcon *icon : {m_volume, m_bluetooth, m_network, m_battery, m_control})
         icon->updateLook();
     m_clock->updateLook();
+    if (m_frame)
+        m_frame->updateLook();
     m_recording->updateLook();
     m_agentControl->updateLook();
 }

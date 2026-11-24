@@ -43,6 +43,9 @@
 #include "temporary_directory.h"
 #include "ui/bitmap.h"
 #include "ui/embedded_window.h"
+#include "ui/window_controls.h"
+#include "wm/window_state.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "ui/menu.h"
 #include "ui/theme.h"
 #include "wm/status_items.h"
@@ -729,4 +732,50 @@ TEST(MenuPopupTest, LabelsLoseTheirMnemonics)
     EXPECT_EQ("File", compositor::plainMenuLabel("_File"));
     EXPECT_EQ("Save_As", compositor::plainMenuLabel("Save__As"));
     EXPECT_EQ("Tom & Jerry", compositor::plainMenuLabel("Tom & Jerry"));
+}
+
+TEST_F(MenuBarViewTest, OverAWindowFullscreenOnItsOwnDeskTheBarIsBlackAndCarriesItsTitleBar)
+{
+    std::shared_ptr<compositor::ShmPool> pool = testsupport::makePool(1 << 20);
+    std::unique_ptr<compositor::Surface> surface = compositor.createSurface();
+    surface->attach(pool->createBuffer({300, 200}, 0, 300 * 4, render::PixelFormat::Bgrx8888, nullptr), {});
+    surface->commit();
+    frame();
+    wm::Window *app = manager.createWindow(surface.get(), {.requestedSize = {300, 200}, .applicationId = "claude"});
+    app->activate();
+    wm::Window *barWindow = bar->window()->wmWindow();
+    ASSERT_EQ(base::Rect(0, 0, 1440, 32), barWindow->bounds());
+
+    ASSERT_TRUE(manager.fullscreenDesks()->enter(app));
+    test::processPendingEvents();
+    frame();
+    // A title bar row under the bar's own, before anything is revealed.
+    EXPECT_EQ(base::Rect(0, 0, 1440, 32 + shell::MenuBarWindow::kFrameHeight), barWindow->bounds());
+    EXPECT_EQ(app, bar->frameWindow());
+
+    // Revealed over it, the bar is solid black with light contents.
+    manager.fullscreenRevealChanged.emit(app, 68, 200);
+    frame();
+    EXPECT_EQ(ui::Color::rgb(0x000000), bar->fill());
+    EXPECT_TRUE(bar->lightContents());
+
+    // The green control leaves fullscreen.
+    const double margin = (shell::MenuBarWindow::kFrameHeight - ui::window_controls::kButton) / 2;
+    const double x = margin + 2 * (ui::window_controls::kButton + ui::window_controls::kSpacing)
+            + ui::window_controls::kButton / 2;
+    click(x, 32 + shell::MenuBarWindow::kFrameHeight / 2.0);
+    test::processPendingEvents();
+    frame();
+    EXPECT_FALSE(manager.fullscreenDesks()->owns(app));
+    EXPECT_NE(wm::WindowStateType::Fullscreen, app->stateType());
+    EXPECT_EQ(nullptr, bar->frameWindow());
+    EXPECT_EQ(base::Rect(0, 0, 1440, 32), barWindow->bounds());
+
+    // Told the window is no longer under it, the bar is itself again.
+    manager.fullscreenRevealChanged.emit(app, 0, 200);
+    frame();
+    EXPECT_NE(ui::Color::rgb(0x000000), bar->fill());
+
+    manager.destroyWindow(app);
+    test::processPendingEvents();
 }
