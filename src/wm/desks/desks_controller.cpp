@@ -385,7 +385,12 @@ void DesksController::updateWindow(Window *window)
         if (m_windowDesks.count(window))
             assignWindow(window, nullptr);
     } else if (!m_windowDesks.count(window) && !m_visibleOnAllDesks.count(window)) {
-        assignWindow(window, m_deskToActivate ? m_deskToActivate : m_activeDesk);
+        Desk *desk = m_deskToActivate ? m_deskToActivate : m_activeDesk;
+        if (m_newWindowDeskOverride) {
+            if (Desk *override = m_newWindowDeskOverride(window, desk))
+                desk = override;
+        }
+        assignWindow(window, desk);
         return;
     }
     updateDeskVisibility(window);

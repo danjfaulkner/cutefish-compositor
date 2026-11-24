@@ -125,6 +125,13 @@ public:
 
     void setDeskName(Desk *desk, const std::string &name);
 
+    // Picks the desk a new window goes to instead of `desk`; returning null keeps `desk`.
+    using NewWindowDeskOverride = std::function<Desk *(Window *window, Desk *desk)>;
+    void setNewWindowDeskOverride(NewWindowDeskOverride override)
+    {
+        m_newWindowDeskOverride = std::move(override);
+    }
+
     void performHitTheWallAnimation(bool goingLeft);
 
     void addObserver(DesksObserver *observer);
@@ -198,6 +205,7 @@ private:
     scene::DeskSwitchNode *m_switchNode = nullptr;
     scene::SlideOutNode *m_windowMoveNode = nullptr;
     Screenshotter m_screenshotter;
+    NewWindowDeskOverride m_newWindowDeskOverride;
     std::vector<DesksObserver *> m_observers;
 };
 

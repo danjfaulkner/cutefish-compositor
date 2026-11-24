@@ -510,6 +510,8 @@ add_library(cutefish-wm STATIC
     src/wm/desks/desks_controller.h
     src/wm/desks/desk_preferences.cpp
     src/wm/desks/desk_preferences.h
+    src/wm/desks/fullscreen_desks.cpp
+    src/wm/desks/fullscreen_desks.h
     src/wm/gestures/wm_gesture_handler.cpp
     src/wm/gestures/wm_gesture_handler.h
     src/wm/overview/overview_controller.cpp

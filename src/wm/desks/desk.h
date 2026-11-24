@@ -42,6 +42,11 @@ public:
 
     bool isActive() const { return m_active; }
 
+    // Made for one window's own-desk fullscreen (FullscreenDesks): never saved, and left out
+    // of the default "Desk N" numbering.
+    bool isFullscreenDesk() const { return m_fullscreenDesk; }
+    void setFullscreenDesk(bool fullscreenDesk) { m_fullscreenDesk = fullscreenDesk; }
+
     void activate(bool updateWindowActivation);
 
     void deactivate(bool updateWindowActivation);
@@ -63,6 +68,7 @@ private:
     std::string m_name;
     bool m_nameSetByUser = false;
     bool m_active = false;
+    bool m_fullscreenDesk = false;
 };
 
 } // namespace cutefish::wm

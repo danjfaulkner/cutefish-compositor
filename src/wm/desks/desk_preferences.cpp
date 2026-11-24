@@ -64,10 +64,21 @@ void DeskPreferences::save()
     if (m_restoring)
         return;
     std::vector<std::string> names;
-    for (const auto &desk : m_desks->desks())
+    // A full-screen desk lives only as long as its window: it is left out, and while it is
+    // active the desk it came from (the one before it) is saved as active.
+    int active = 0;
+    for (const auto &desk : m_desks->desks()) {
+        if (desk->isFullscreenDesk()) {
+            if (desk->isActive())
+                active = std::max(0, int(names.size()) - 1);
+            continue;
+        }
+        if (desk->isActive())
+            active = int(names.size());
         names.push_back(desk->isNameSetByUser() ? desk->name() : std::string());
-    m_settings.setValue(kCount, int(m_desks->desks().size()));
-    m_settings.setValue(kActive, m_desks->activeDeskIndex());
+    }
+    m_settings.setValue(kCount, int(names.size()));
+    m_settings.setValue(kActive, active);
     m_settings.setValue(kNames, names);
     m_settings.sync();
 }

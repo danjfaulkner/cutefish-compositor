@@ -12,6 +12,7 @@
 #include "core/main_loop.h"
 #include "cutefish/accounts/account_picture.h"
 #include "cutefish/accounts/user_account.h"
+#include "shell/common/task_windows.h"
 #include "shell/shell.h"
 #include "shell/menubar/bar_item.h"
 #include "shell/menubar/menu_bar.h"
@@ -19,6 +20,8 @@
 #include "ui/menu.h"
 #include "ui/painter.h"
 #include "ui/window.h"
+#include "wm/desks/fullscreen_desks.h"
+#include "wm/window_manager.h"
 
 namespace cutefish::shell {
 
@@ -116,6 +119,47 @@ private:
     ui::ImageView *m_avatar = nullptr;
 };
 
+// Enters or leaves fullscreen on a desk of its own for the active window.
+class AppMenusView::FullscreenButton final : public BarItem
+{
+public:
+    explicit FullscreenButton(BarContext *bar)
+        : BarItem(bar)
+    {
+        setInsets(BarContext::kHighlightGap / 2, BarContext::kHighlightGap / 2);
+        setGlyphWidth(BarContext::kIconSize);
+        m_icon = addChild<BarIcon>();
+        setFullscreen(false);
+        updateLook();
+    }
+
+    double preferredWidth() const
+    {
+        return BarContext::kItemGap + BarContext::kIconSize + BarContext::kSmallSpacing * 2;
+    }
+
+    void setFullscreen(bool fullscreen)
+    {
+        m_icon->setGlyph(fullscreen ? "view-restore-symbolic" : "view-fullscreen-symbolic");
+    }
+
+    void updateLook()
+    {
+        m_icon->setColor(bar()->menuTextColor());
+        m_icon->setDropShadow(bar()->lightContents());
+        barChanged();
+    }
+
+protected:
+    void layout() override
+    {
+        m_icon->setGeometry(centred({BarContext::kIconSize, BarContext::kIconSize}));
+    }
+
+private:
+    BarIcon *m_icon = nullptr;
+};
+
 AppMenusView::AppMenusView(Shell *shell, MenuBarAppMenusHost host)
     : m_host(std::move(host))
 {
@@ -132,6 +176,21 @@ AppMenusView::AppMenusView(Shell *shell, MenuBarAppMenusHost host)
     m_subscriptions.push_back(
             m_model->activationRequested.connect([this](size_t row) { open(int(row), true); }));
     m_subscriptions.push_back(m_model->menuClosed.connect([this] { onMenuClosed(); }));
+
+    m_fullscreen = addChild<FullscreenButton>(m_host.bar);
+    m_fullscreen->setName("fullscreen");
+    m_fullscreen->onClicked = [this](const ui::PointerEvent &event) {
+        if (event.button != ui::MouseButton::Left)
+            return;
+        close();
+        m_model->toggleFullscreen();
+    };
+    m_subscriptions.push_back(m_model->switched.connect([this] { updateFullscreenButton(); }));
+    m_subscriptions.push_back(
+            shell->taskWindows().activeWindowChanged.connect([this](uint64_t) { updateFullscreenButton(); }));
+    if (wm::WindowManager *manager = shell->windowManager(); manager && manager->fullscreenDesks())
+        m_subscriptions.push_back(
+                manager->fullscreenDesks()->changed.connect([this] { updateFullscreenButton(); }));
 
     if (const passwd *entry = getpwuid(getuid()))
         m_userColor = ui::Color::rgb(accounts::pictureColor(entry->pw_name));
@@ -172,7 +231,21 @@ void AppMenusView::barChanged()
 {
     for (Entry *entry : m_entries)
         entry->updateLook();
+    if (m_fullscreen)
+        m_fullscreen->updateLook();
     requestLayout();
+}
+
+void AppMenusView::updateFullscreenButton()
+{
+    if (!m_fullscreen || !m_model)
+        return;
+    const bool shown = m_model->fullscreenTarget() != nullptr;
+    m_fullscreen->setFullscreen(m_model->isTargetFullscreen());
+    if (shown != m_fullscreen->isVisible()) {
+        m_fullscreen->setVisible(shown);
+        requestLayout();
+    }
 }
 
 void AppMenusView::rebuildEntries()
@@ -225,6 +298,7 @@ void AppMenusView::rebuildEntries()
     }
     for (size_t i = 0; i < m_entries.size(); ++i)
         m_entries[i]->setChecked(int(i) == m_currentIndex);
+    updateFullscreenButton();
     requestLayout();
 }
 
@@ -237,6 +311,8 @@ void AppMenusView::layout()
         entry->setGeometry({x, 0, width, height});
         x += width;
     }
+    if (m_fullscreen && m_fullscreen->isVisible())
+        m_fullscreen->setGeometry({x, 0, m_fullscreen->preferredWidth(), height});
 }
 
 void AppMenusView::open(int index, bool keyboard)

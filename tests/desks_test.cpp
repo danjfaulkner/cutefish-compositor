@@ -31,6 +31,8 @@
 #include "wm/desks/desk_animation.h"
 #include "wm/desks/desk_preferences.h"
 #include "wm/desks/desks_controller.h"
+#include "wm/desks/fullscreen_desks.h"
+#include "wm/overview/overview_controller.h"
 #include "wm/gestures/wm_gesture_handler.h"
 #include "wm/mru_window_tracker.h"
 #include "wm/toplevel_event_handler.h"
@@ -1226,4 +1228,200 @@ TEST_F(DeskAnimationTest, RandomRunsKeepEveryInvariant)
         scene.root()->collectRetired();
     }
     input.setGestureFilter(nullptr);
+}
+
+namespace {
+
+class FullscreenDesksTest : public DesksTest
+{
+protected:
+    FullscreenDesks *fullscreen = manager.fullscreenDesks();
+
+    void SetUp() override
+    {
+        DesksTest::SetUp();
+        fullscreen->setNameResolver([](const Window *window) {
+            return window->applicationId() == "claude" ? std::string("Claude") : std::string();
+        });
+    }
+};
+
+} // namespace
+
+TEST_F(FullscreenDesksTest, EnteringGivesTheWindowADeskOfItsOwnNamedAfterTheApp)
+{
+    addDesks(1);
+    Window *window = makeWindow("claude");
+    const base::Rect normal = window->bounds();
+    ASSERT_TRUE(fullscreen->canEnter(window));
+
+    EXPECT_TRUE(fullscreen->toggle(window));
+    ASSERT_EQ(3u, desks->desks().size());
+    Desk *own = desk(1);
+    EXPECT_TRUE(own->isFullscreenDesk());
+    EXPECT_EQ("Claude", own->name());
+    EXPECT_TRUE(own->isActive());
+    EXPECT_EQ(own, desks->deskOf(window));
+    EXPECT_TRUE(fullscreen->owns(window));
+    EXPECT_EQ(WindowStateType::Fullscreen, window->stateType());
+    EXPECT_EQ(kOutput, window->bounds());
+    EXPECT_TRUE(window->isVisible());
+    EXPECT_EQ(window, active());
+    EXPECT_EQ(desk(0), fullscreen->originOf(own));
+
+    EXPECT_TRUE(fullscreen->toggle(window));
+    flush();
+    ASSERT_EQ(2u, desks->desks().size());
+    EXPECT_FALSE(desk(0)->isFullscreenDesk());
+    EXPECT_FALSE(desk(1)->isFullscreenDesk());
+    EXPECT_TRUE(desk(0)->isActive());
+    EXPECT_EQ(desk(0), desks->deskOf(window));
+    EXPECT_FALSE(fullscreen->owns(window));
+    EXPECT_EQ(WindowStateType::Normal, window->stateType());
+    EXPECT_EQ(normal, window->bounds());
+    EXPECT_TRUE(window->isVisible());
+}
+
+TEST_F(FullscreenDesksTest, LeavingGoesBackToTheDeskOfOriginAndItsState)
+{
+    addDesks(2);
+    desks->activateDesk(desk(2), DesksSwitchSource::DeskSwitchShortcut);
+    Window *window = makeWindow("claude");
+    window->maximize();
+    ASSERT_EQ(desk(2), desks->deskOf(window));
+
+    ASSERT_TRUE(fullscreen->enter(window));
+    ASSERT_EQ(4u, desks->desks().size());
+    EXPECT_TRUE(desk(3)->isFullscreenDesk());
+
+    fullscreen->exit(window);
+    flush();
+    ASSERT_EQ(3u, desks->desks().size());
+    EXPECT_TRUE(desk(2)->isActive());
+    EXPECT_EQ(desk(2), desks->deskOf(window));
+    EXPECT_EQ(WindowStateType::Maximized, window->stateType());
+}
+
+TEST_F(FullscreenDesksTest, ClosingTheAppRemovesItsDesk)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+    ASSERT_EQ(2u, desks->desks().size());
+
+    manager.destroyWindow(window);
+    flush();
+    ASSERT_EQ(1u, desks->desks().size());
+    EXPECT_TRUE(desk(0)->isActive());
+    EXPECT_FALSE(desk(0)->isFullscreenDesk());
+}
+
+TEST_F(FullscreenDesksTest, TheClientLeavingFullscreenTakesItHomeToo)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+
+    window->restore();
+    flush();
+    ASSERT_EQ(1u, desks->desks().size());
+    EXPECT_EQ(desk(0), desks->deskOf(window));
+    EXPECT_FALSE(fullscreen->owns(window));
+    EXPECT_TRUE(window->isVisible());
+}
+
+TEST_F(FullscreenDesksTest, AppsOpenedFromAFullscreenDeskOpenOnItsDeskOfOrigin)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+
+    Window *other = makeWindow("files");
+    EXPECT_EQ(desk(0), desks->deskOf(other));
+    EXPECT_TRUE(desk(0)->isActive());
+    EXPECT_TRUE(other->isVisible());
+    // The fullscreen window stays where it is.
+    ASSERT_EQ(2u, desks->desks().size());
+    EXPECT_EQ(desk(1), desks->deskOf(window));
+    EXPECT_TRUE(fullscreen->owns(window));
+
+    // Its own dialogs stay with it.
+    desks->activateDesk(desk(1), DesksSwitchSource::DeskSwitchShortcut);
+    Window *dialog = makeWindow("claude", window);
+    EXPECT_EQ(desk(1), desks->deskOf(dialog));
+}
+
+TEST_F(FullscreenDesksTest, SecondDeskOfTheSameAppIsNumbered)
+{
+    Window *first = makeWindow("claude");
+    Window *second = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(first));
+    manager.activation()->activate(second);
+    ASSERT_TRUE(desk(0)->isActive());
+    ASSERT_TRUE(fullscreen->enter(second));
+    EXPECT_EQ("Claude (2)", desks->deskOf(second)->name());
+    EXPECT_EQ("Claude", desks->deskOf(first)->name());
+}
+
+TEST_F(FullscreenDesksTest, WithEveryDeskTakenItGoesFullscreenInPlace)
+{
+    addDesks(DesksController::kMaxDesks - 1);
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->toggle(window));
+    EXPECT_EQ(size_t(DesksController::kMaxDesks), desks->desks().size());
+    EXPECT_FALSE(fullscreen->owns(window));
+    EXPECT_EQ(WindowStateType::Fullscreen, window->stateType());
+}
+
+TEST_F(FullscreenDesksTest, FullscreenTheClientAskedForStaysInPlace)
+{
+    Window *window = makeWindow("video");
+    window->setFullscreen(true);
+    ASSERT_EQ(WindowStateType::Fullscreen, window->stateType());
+    EXPECT_FALSE(fullscreen->canEnter(window));
+    EXPECT_EQ(1u, desks->desks().size());
+
+    // The shortcut just takes it out of fullscreen.
+    EXPECT_TRUE(fullscreen->toggle(window));
+    EXPECT_NE(WindowStateType::Fullscreen, window->stateType());
+    EXPECT_EQ(1u, desks->desks().size());
+}
+
+TEST_F(FullscreenDesksTest, RemovingTheDeskElsewhereEndsFullscreen)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+    desks->removeDesk(desk(1), DesksCreationRemovalSource::Button);
+    flush();
+    ASSERT_EQ(1u, desks->desks().size());
+    EXPECT_FALSE(fullscreen->owns(window));
+    EXPECT_NE(WindowStateType::Fullscreen, window->stateType());
+    EXPECT_EQ(desk(0), desks->deskOf(window));
+}
+
+TEST_F(DeskAnimationTest, FullscreenDeskSlidesInAndBackOut)
+{
+    FullscreenDesks *fullscreen = manager.fullscreenDesks();
+    addDesks(1);
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+    ASSERT_NE(nullptr, desks->animation());
+    EXPECT_TRUE(desk(1)->isFullscreenDesk());
+    EXPECT_TRUE(desk(1)->isActive());
+    finish();
+    EXPECT_EQ(nullptr, desks->animation());
+    EXPECT_TRUE(window->isVisible());
+
+    fullscreen->exit(window);
+    flush();
+    // The fullscreen desk slides away to the desk the window came from.
+    ASSERT_NE(nullptr, desks->animation());
+    finish();
+    flush();
+    EXPECT_EQ(nullptr, desks->animation());
+    ASSERT_EQ(2u, desks->desks().size());
+    EXPECT_FALSE(desk(0)->isFullscreenDesk());
+    EXPECT_FALSE(desk(1)->isFullscreenDesk());
+    EXPECT_TRUE(desk(0)->isActive());
+    EXPECT_EQ(desk(0), desks->deskOf(window));
+    EXPECT_TRUE(window->isVisible());
+    EXPECT_EQ(window, active());
+    EXPECT_NE(WindowStateType::Fullscreen, window->stateType());
 }

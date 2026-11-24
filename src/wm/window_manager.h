@@ -52,6 +52,7 @@ class Node;
 namespace cutefish::wm {
 
 class DesksController;
+class FullscreenDesks;
 class MruWindowTracker;
 class OverviewController;
 class ShowDesktopController;
@@ -145,6 +146,8 @@ public:
     MruWindowTracker *mruWindowTracker() const { return m_mruTracker.get(); }
 
     DesksController *desks() const { return m_desks.get(); }
+
+    FullscreenDesks *fullscreenDesks() const { return m_fullscreenDesks.get(); }
 
     OverviewController *overview() const { return m_overview.get(); }
 
@@ -400,6 +403,7 @@ private:
     std::unique_ptr<TransientManager> m_transientManager;
     std::unique_ptr<MruWindowTracker> m_mruTracker;
     std::unique_ptr<DesksController> m_desks;
+    std::unique_ptr<FullscreenDesks> m_fullscreenDesks;
     std::unique_ptr<OverviewController> m_overview;
     std::unique_ptr<ShowDesktopController> m_showDesktop;
     std::unique_ptr<StatusItems> m_statusItems;

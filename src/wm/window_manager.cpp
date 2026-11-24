@@ -33,6 +33,7 @@
 #include "scene/window_animation.h"
 #include "wm/anchored_placement.h"
 #include "wm/desks/desks_controller.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/mru_window_tracker.h"
 #include "wm/overview/overview_controller.h"
 #include "wm/resize_cursor.h"
@@ -147,6 +148,7 @@ WindowManager::WindowManager(compositor::Compositor *compositor, input::Seat *se
     m_activation.addObserver(this);
     m_mruTracker = std::make_unique<MruWindowTracker>(this);
     m_desks = std::make_unique<DesksController>(this);
+    m_fullscreenDesks = std::make_unique<FullscreenDesks>(this);
     m_overview = std::make_unique<OverviewController>(this);
     m_showDesktop = std::make_unique<ShowDesktopController>(this);
     m_statusItems = std::make_unique<StatusItems>(this);
@@ -161,6 +163,7 @@ WindowManager::~WindowManager()
     // Tear down through destroyWindow so activation and drags unwind cleanly.
     while (!m_stackingOrder.empty())
         destroyWindow(m_stackingOrder.back());
+    m_fullscreenDesks.reset();
     m_desks.reset();
     m_mruTracker.reset();
 }
@@ -811,6 +814,7 @@ void WindowManager::destroyWindow(Window *window)
     });
 
     m_eventHandler->onWindowRemoving(window);
+    m_fullscreenDesks->onWindowRemoving(window);
     m_desks->onWindowRemoving(window);
     m_transientManager->windowDestroying(window);
     if (m_popupKeyboardRoot == window) {

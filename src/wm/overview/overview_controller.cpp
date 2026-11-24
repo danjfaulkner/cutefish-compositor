@@ -121,8 +121,15 @@ std::string OverviewController::deskName(int index) const
     const Desk *desk = m_manager->desks()->deskAt(index);
     if (desk && !desk->name().empty())
         return desk->name();
+    // Full-screen desks carry their application's name and do not take a number.
+    int number = 0;
+    for (int i = 0; i <= index; ++i) {
+        const Desk *each = m_manager->desks()->deskAt(i);
+        if (!each || !each->isFullscreenDesk())
+            ++number;
+    }
     // TRANSLATORS: the name of a desk that has none of its own, such as "Desk 2".
-    return format(tr("Desk {number}"), {{"number", std::to_string(index + 1)}});
+    return format(tr("Desk {number}"), {{"number", std::to_string(number)}});
 }
 
 bool OverviewController::canCloseDesks() const

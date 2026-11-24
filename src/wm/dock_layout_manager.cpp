@@ -18,6 +18,7 @@
 #include "wm/activation.h"
 #include "wm/overview/overview_controller.h"
 #include "wm/window.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window_manager.h"
 
 namespace cutefish::wm {
@@ -317,14 +318,20 @@ DockAutoHideState DockLayoutManager::computeAutoHideState(const Window *dock, co
 
     if (isTopBar(dock, entry, output)) {
         const Window *fullscreen = fullscreenWindowFor(output);
-        if (!fullscreen || !fullscreen->rootSurface() || !fullscreen->rootSurface()->hasFullscreenBars())
+        const bool ownDesk = fullscreen && m_manager->fullscreenDesks()
+                && m_manager->fullscreenDesks()->owns(fullscreen);
+        if (!fullscreen || (!ownDesk && (!fullscreen->rootSurface()
+                                         || !fullscreen->rootSurface()->hasFullscreenBars())))
             return DockAutoHideState::Hidden;
     }
 
     if (m_pointer) {
         base::Rect region = shownRegion(reachedBounds(dock, entry.edge), output, entry.edge);
-        if (isTopBar(dock, entry, output))
-            region.setBottom(region.bottom() + fullscreenWindowFor(output)->rootSurface()->fullscreenBarsHeight());
+        if (isTopBar(dock, entry, output)) {
+            const Window *fullscreen = fullscreenWindowFor(output);
+            if (fullscreen && fullscreen->rootSurface())
+                region.setBottom(region.bottom() + fullscreen->rootSurface()->fullscreenBarsHeight());
+        }
         if (revealing && region.contains(m_pointer->toPoint()))
             return DockAutoHideState::Shown;
         if (revealStrip(output, entry.edge).contains(m_pointer->toPoint()))

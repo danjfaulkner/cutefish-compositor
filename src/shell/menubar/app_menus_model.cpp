@@ -17,6 +17,7 @@
 #include "shell/menubar/power_actions.h"
 #include "ui/application.h"
 #include "ui/menu.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
@@ -138,9 +139,41 @@ void AppMenusModel::fillApplicationMenu()
                                      [application] { application->hideApplication(); });
     menu.addItem(tr("Hide Others"), [application] { application->hideOtherApplications(); });
     menu.addSeparator();
+    const size_t fullscreen =
+            menu.addItem(isTargetFullscreen() ? tr("Exit Full Screen") : tr("Enter Full Screen"),
+                         [this] { toggleFullscreen(); });
+    menu.setItemEnabled(fullscreen, fullscreenTarget() != nullptr);
+    menu.addSeparator();
     const size_t quit = menu.addItem(tr("Quit"), [application] { application->quitApplication(); });
     menu.setItemEnabled(hide, !m_desktop);
     menu.setItemEnabled(quit, !m_desktop);
+}
+
+wm::Window *AppMenusModel::fullscreenTarget() const
+{
+    wm::WindowManager *manager = m_shell->windowManager();
+    if (m_desktop || !manager || !manager->fullscreenDesks())
+        return nullptr;
+    wm::Window *window = manager->windowById(m_shell->taskWindows().activeWindow());
+    if (!window)
+        return nullptr;
+    const wm::FullscreenDesks *desks = manager->fullscreenDesks();
+    if (desks->owns(window) || desks->canEnter(window)
+        || window->stateType() == wm::WindowStateType::Fullscreen)
+        return window;
+    return nullptr;
+}
+
+bool AppMenusModel::isTargetFullscreen() const
+{
+    const wm::Window *window = fullscreenTarget();
+    return window && window->stateType() == wm::WindowStateType::Fullscreen;
+}
+
+void AppMenusModel::toggleFullscreen()
+{
+    if (wm::Window *window = fullscreenTarget())
+        m_shell->windowManager()->fullscreenDesks()->toggle(window);
 }
 
 void AppMenusModel::updateDesktop()

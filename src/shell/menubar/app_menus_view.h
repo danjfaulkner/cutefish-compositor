@@ -55,14 +55,18 @@ protected:
 
 private:
     class Entry;
+    class FullscreenButton;
 
     void rebuildEntries();
     void onMenuClosed();
+    // Shown after the menus while the active window can go fullscreen.
+    void updateFullscreenButton();
 
     MenuBarAppMenusHost m_host;
     std::unique_ptr<AppMenusModel> m_model;
     std::unique_ptr<accounts::UserAccount> m_account;
     std::vector<Entry *> m_entries;
+    FullscreenButton *m_fullscreen = nullptr;
     std::string m_userIcon;
     ui::Color m_userColor;
     int m_currentIndex = -1;

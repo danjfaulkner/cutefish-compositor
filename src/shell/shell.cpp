@@ -28,6 +28,7 @@
 #include "ui/theme.h"
 #include "wm/overview/overview_controller.h"
 #include "wm/window.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window_manager.h"
 
 namespace cutefish::shell {
@@ -138,8 +139,11 @@ Shell::~Shell()
     m_languageChanged.reset();
     m_badges.reset();
     m_launcher.reset();
-    if (m_tasks)
+    if (m_tasks) {
         windowManager()->setApplicationResolver({});
+        if (wm::FullscreenDesks *desks = windowManager()->fullscreenDesks())
+            desks->setNameResolver({});
+    }
     m_tasks.reset();
     m_taskWindows.reset();
     m_applications.reset();
@@ -193,6 +197,12 @@ TaskManager &Shell::tasks()
         windowManager()->setApplicationResolver([tasks = m_tasks.get()](const wm::Window *window) {
             return tasks->applicationOf(window->id());
         });
+        if (wm::FullscreenDesks *desks = windowManager()->fullscreenDesks()) {
+            desks->setNameResolver([tasks = m_tasks.get()](const wm::Window *window) {
+                const DesktopEntryPtr entry = tasks->entryForWindow(window->id());
+                return entry ? entry->name : std::string();
+            });
+        }
     }
     return *m_tasks;
 }

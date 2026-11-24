@@ -20,6 +20,10 @@ namespace cutefish::ui {
 class Menu;
 }
 
+namespace cutefish::wm {
+class Window;
+}
+
 namespace cutefish::compositor {
 class MenuModel;
 }
@@ -70,6 +74,12 @@ public:
     void trigger(size_t row);
 
     bool isDesktop() const { return m_desktop; }
+
+    // The active application window the fullscreen button and menu item act on; null on the
+    // desktop or for a window that cannot go fullscreen.
+    wm::Window *fullscreenTarget() const;
+    bool isTargetFullscreen() const;
+    void toggleFullscreen();
 
     base::Signal<> rowsChanged;
     // Comes before rowsChanged.

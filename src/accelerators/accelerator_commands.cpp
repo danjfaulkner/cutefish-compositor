@@ -15,6 +15,7 @@
 #include "display/display_manager.h"
 #include "session/screen_saver_service.h"
 #include "session/session_controller.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/activation.h"
 #include "wm/desks/desk.h"
 #include "wm/desks/desks_controller.h"
@@ -127,6 +128,9 @@ void hideOtherApplications(const CommandContext &context)
 void toggleFullscreen(const CommandContext &context)
 {
     if (wm::Window *window = targetWindow(context)) {
+        if (wm::FullscreenDesks *desks = context.windowManager->fullscreenDesks();
+            desks && desks->toggle(window))
+            return;
         const wm::WMEvent event(wm::WMEventType::ToggleFullscreen);
         window->state()->onEvent(event);
     }

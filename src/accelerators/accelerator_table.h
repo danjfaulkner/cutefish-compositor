@@ -164,11 +164,13 @@ inline constexpr auto kCommandAcceleratorData = std::to_array<AcceleratorData>({
 });
 
 // Switching applications always switches, over a fullscreen game too, and
-// the overview comes up over one.
+// the overview comes up over one. The fullscreen shortcut also has to reach the
+// compositor from inside fullscreen, or it could not take a window back out.
 inline constexpr std::array kPreferredActions = {
         AcceleratorAction::CycleBackwardMru,
         AcceleratorAction::CycleForwardMru,
         AcceleratorAction::ToggleOverview,
+        AcceleratorAction::ToggleFullscreen,
 };
 
 inline constexpr std::array kReservedActions = {
