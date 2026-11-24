@@ -779,3 +779,30 @@ TEST_F(MenuBarViewTest, OverAWindowFullscreenOnItsOwnDeskTheBarIsBlackAndCarries
     manager.destroyWindow(app);
     test::processPendingEvents();
 }
+
+TEST_F(MenuBarViewTest, ACutefishApplicationFullscreenOnItsOwnDeskGetsTheTitleBarRowToo)
+{
+    std::shared_ptr<compositor::ShmPool> pool = testsupport::makePool(1 << 20);
+    std::unique_ptr<compositor::Surface> surface = compositor.createSurface();
+    surface->attach(pool->createBuffer({300, 200}, 0, 300 * 4, render::PixelFormat::Bgrx8888, nullptr), {});
+    surface->commit();
+    frame();
+    // Its header slides in with the bar by itself.
+    surface->setFullscreenBars(40, /*push=*/false);
+    wm::Window *app = manager.createWindow(surface.get(), {.requestedSize = {300, 200}, .applicationId = "cutefish-files"});
+    app->activate();
+
+    ASSERT_TRUE(manager.fullscreenDesks()->enter(app));
+    test::processPendingEvents();
+    manager.fullscreenRevealChanged.emit(app, 68, 200);
+    frame();
+    // Its header hides its own controls while fullscreen; the row brings them.
+    EXPECT_EQ(app, bar->frameWindow());
+    EXPECT_EQ(base::Rect(0, 0, 1440, 32 + shell::MenuBarWindow::kFrameHeight), bar->window()->wmWindow()->bounds());
+    // Still black over it.
+    EXPECT_EQ(ui::Color::rgb(0x000000), bar->fill());
+
+    manager.fullscreenDesks()->exit(app);
+    manager.destroyWindow(app);
+    test::processPendingEvents();
+}

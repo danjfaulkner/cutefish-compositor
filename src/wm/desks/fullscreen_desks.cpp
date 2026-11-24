@@ -9,6 +9,7 @@
 #include <set>
 
 #include "base/auto_reset.h"
+#include "compositor/surface.h"
 #include "core/logging.h"
 #include "wm/desks/desk.h"
 #include "wm/desks/desk_animation.h"
@@ -85,6 +86,24 @@ bool FullscreenDesks::fills(const Window *window) const
     return it != m_entries.end() && it->second.fill;
 }
 
+bool FullscreenDesks::wantsTitleBar(const Window *window) const
+{
+    if (!window)
+        return false;
+    if (owns(window))
+        return true;
+    const compositor::Surface *root = window->rootSurface();
+    return window->stateType() == WindowStateType::Fullscreen && root && root->hasFullscreenBars();
+}
+
+bool FullscreenDesks::isPushedByReveal(const Window *window) const
+{
+    const compositor::Surface *root = window ? window->rootSurface() : nullptr;
+    if (root && root->hasFullscreenBars())
+        return root->fullscreenBarsPush();
+    return owns(window);
+}
+
 bool FullscreenDesks::prefersFill(const Window *window) const
 {
     std::string id = window->applicationId();
@@ -123,7 +142,10 @@ void FullscreenDesks::restoreState(Window *window, const Entry &entry)
             window->state()->onEvent(WMEvent(WMEventType::Restore));
         return;
     }
-    // Filling, it is maximized: back to the area a maximized window has, or out of maximized.
+    // Filling, it is maximized, or fullscreen for a video of its own: out of that first.
+    if (window->stateType() == WindowStateType::Fullscreen)
+        window->state()->onEvent(WMEvent(WMEventType::Restore));
+    // Back to the area a maximized window has, or out of maximized.
     if (window->stateType() != WindowStateType::Maximized)
         return;
     if (entry.previous == WindowStateType::Maximized)
@@ -432,6 +454,10 @@ void FullscreenDesks::onWindowStateTypeChanged(Window *window, WindowStateType o
         return;
     const Entry &entry = it->second;
     if (window->stateType() == (entry.fill ? WindowStateType::Maximized : WindowStateType::Fullscreen))
+        return;
+    // Filling its desk, the client's own fullscreen (a video, F11) happens on that desk, and
+    // leaving it brings the window back to filling the desk.
+    if (entry.fill && window->stateType() == WindowStateType::Fullscreen)
         return;
     const uint64_t id = window->id();
     if (!entry.fill && oldType == WindowStateType::Fullscreen

@@ -489,14 +489,13 @@ void DockLayoutManager::updateReveal(Window *dock, Dock &entry)
     }
 
     // A window fullscreen on its own desk is pushed down rather than covered, like a client
-    // that asks for it: moved, not resized, so the reveal costs the client no redraw.
-    const bool ownDesk = fullscreen && m_manager->fullscreenDesks()
-            && m_manager->fullscreenDesks()->owns(fullscreen);
-    Window *pushing = fullscreen
-                    && (ownDesk
-                        || (fullscreen->rootSurface() && fullscreen->rootSurface()->fullscreenBarsPush()))
-            ? fullscreen
-            : nullptr;
+    // that asks for it: moved, not resized, so the reveal costs the client no redraw. A client
+    // with bars of its own decides for itself.
+    const bool pushesWindow = fullscreen
+            && (m_manager->fullscreenDesks()
+                        ? m_manager->fullscreenDesks()->isPushedByReveal(fullscreen)
+                        : fullscreen->rootSurface() && fullscreen->rootSurface()->fullscreenBarsPush());
+    Window *pushing = pushesWindow ? fullscreen : nullptr;
     Window *pushed = m_manager->windowById(entry.pushed);
     if (pushed == pushing)
         return;

@@ -1654,3 +1654,75 @@ TEST_F(FullscreenDesksAnimatedTest, EnteringKeepsActivationOnTheWindow)
     for (Window *gained : recorder.seen)
         EXPECT_NE(other, gained);
 }
+
+TEST_F(FullscreenDesksTest, AVideoGoingFullscreenInAFilledDeskStaysOnIt)
+{
+    Window *window = makeWindow("helium");
+    const base::Rect normal = window->bounds();
+    ASSERT_TRUE(fullscreen->enter(window));
+    settle();
+    ASSERT_TRUE(fullscreen->fills(window));
+    ASSERT_EQ(desk(1), desks->deskOf(window));
+
+    // The page asks for fullscreen, then leaves it.
+    window->setFullscreen(true);
+    flush();
+    EXPECT_TRUE(fullscreen->owns(window));
+    EXPECT_EQ(WindowStateType::Fullscreen, window->stateType());
+    EXPECT_EQ(desk(1), desks->deskOf(window));
+    window->setFullscreen(false);
+    flush();
+    EXPECT_TRUE(fullscreen->owns(window));
+    EXPECT_TRUE(fullscreen->fills(window));
+    EXPECT_EQ(WindowStateType::Maximized, window->stateType());
+    EXPECT_EQ(kOutput, window->bounds());
+    EXPECT_EQ(2u, desks->desks().size());
+
+    // Leaving its desk mid-video takes it all the way back.
+    window->setFullscreen(true);
+    flush();
+    fullscreen->exit(window);
+    flush();
+    EXPECT_EQ(1u, desks->desks().size());
+    EXPECT_EQ(desk(0), desks->deskOf(window));
+    EXPECT_EQ(WindowStateType::Normal, window->stateType());
+    EXPECT_EQ(normal, window->bounds());
+}
+
+TEST_F(FullscreenDesksTest, AClientWithBarsOfItsOwnGetsTheTitleBarRowAndDecidesOnThePush)
+{
+    Window *plain = makeWindow("claude");
+    Window *cutefish = makeWindow("cutefish-calendar");
+    cutefish->rootSurface()->setFullscreenBars(40, /*push=*/false);
+
+    manager.activation()->activate(plain);
+    ASSERT_TRUE(fullscreen->enter(plain));
+    EXPECT_TRUE(fullscreen->wantsTitleBar(plain));
+    EXPECT_TRUE(fullscreen->isPushedByReveal(plain));
+    settle();
+
+    manager.activation()->activate(cutefish);
+    settle();
+    ASSERT_TRUE(fullscreen->enter(cutefish));
+    EXPECT_TRUE(fullscreen->owns(cutefish));
+    EXPECT_TRUE(fullscreen->wantsTitleBar(cutefish));
+    EXPECT_FALSE(fullscreen->isPushedByReveal(cutefish));
+    cutefish->rootSurface()->setFullscreenBars(40, /*push=*/true);
+    EXPECT_TRUE(fullscreen->isPushedByReveal(cutefish));
+}
+
+TEST_F(FullscreenDesksTest, ACutefishApplicationFullscreenInPlaceGetsTheTitleBarRow)
+{
+    addDesks(DesksController::kMaxDesks - 1);
+    Window *cutefish = makeWindow("cutefish-video-player");
+    cutefish->rootSurface()->setFullscreenBars(40, /*push=*/false);
+    EXPECT_FALSE(fullscreen->wantsTitleBar(cutefish));
+    // Every desk taken: fullscreen where it is.
+    ASSERT_TRUE(fullscreen->toggle(cutefish));
+    ASSERT_FALSE(fullscreen->owns(cutefish));
+    EXPECT_TRUE(fullscreen->wantsTitleBar(cutefish));
+    // Another application fullscreen in place has its own controls, if any.
+    Window *other = makeWindow("mpv");
+    other->setFullscreen(true);
+    EXPECT_FALSE(fullscreen->wantsTitleBar(other));
+}

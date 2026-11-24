@@ -200,8 +200,9 @@ protected:
             window->minimize();
             break;
         case 2:
+            // Leaves its own desk, or fullscreen where it is.
             if (manager->fullscreenDesks())
-                manager->fullscreenDesks()->exit(window);
+                manager->fullscreenDesks()->toggle(window);
             break;
         }
     }
@@ -305,7 +306,7 @@ MenuBarWindow::MenuBarWindow(Shell *shell, std::unique_ptr<MenuBar> menuBar)
                                 || (manager->fullscreenDesks() && manager->fullscreenDesks()->owns(window)));
                     // A title bar row for a window fullscreen on, or filling, its own desk.
                     wm::FullscreenDesks *desks = manager->fullscreenDesks();
-                    setFrameWindow(over && desks && desks->owns(window) ? window : nullptr);
+                    setFrameWindow(over && desks && desks->wantsTitleBar(window) ? window : nullptr);
                     if (over == m_overFullscreen)
                         return;
                     m_overFullscreen = over;
@@ -478,7 +479,7 @@ void MenuBarWindow::updateFrameWindow()
     wm::WindowManager *manager = m_shell->windowManager();
     wm::FullscreenDesks *desks = manager ? manager->fullscreenDesks() : nullptr;
     wm::Window *active = manager ? manager->activation()->activeWindow() : nullptr;
-    setFrameWindow(active && desks && desks->owns(active) ? active : nullptr);
+    setFrameWindow(active && desks && desks->wantsTitleBar(active) ? active : nullptr);
 }
 
 void MenuBarWindow::updateStatusItemLimits()

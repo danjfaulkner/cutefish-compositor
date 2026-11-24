@@ -50,6 +50,12 @@ public:
     // for clients that do not take fullscreen they did not ask for (Chromium browsers leave it
     // again by themselves), which keep their own toolbars that way, as on macOS.
     bool fills(const Window *window) const;
+    // Gets the top bar's title bar row when revealed over it: owned windows, and Cutefish
+    // applications fullscreen where they are, whose headers leave the window controls to it.
+    bool wantsTitleBar(const Window *window) const;
+    // Pushed down by the revealed top bar rather than covered: owned windows, unless they show
+    // bars of their own, which then decide.
+    bool isPushedByReveal(const Window *window) const;
     bool isFullscreenDesk(const Desk *desk) const;
     // The desk a fullscreen desk's window came from; null when `desk` is not one.
     Desk *originOf(const Desk *desk) const;
