@@ -371,6 +371,8 @@ base::Rect WindowManager::maximizedWorkAreaFor(const Window *window) const
     // until the client redrew at the new size.
     if (!window || window->isShellWindow() || window->isAboveDock())
         return workAreaFor(window);
+    if (m_fullscreenDesks && m_fullscreenDesks->fills(window))
+        return outputBoundsFor(window);
     if (m_displayManager) {
         if (const auto *logical = m_displayManager->displayForRect(window->bounds()))
             return m_exclusiveZones.apply(logical->workArea, logical->waylandName,

@@ -105,6 +105,10 @@ public:
 
     void activateDesk(Desk *desk, DesksSwitchSource source);
 
+    // No slide, and activation passed on only when `updateWindowActivation`; a running
+    // switch lands first.
+    void activateDeskAtOnce(Desk *desk, bool updateWindowActivation);
+
     // False only while the session is blocked.
     bool activateAdjacentDesk(bool goingLeft, DesksSwitchSource source);
 

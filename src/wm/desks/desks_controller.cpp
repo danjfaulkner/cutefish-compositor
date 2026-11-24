@@ -190,6 +190,15 @@ void DesksController::activateDesk(Desk *desk, DesksSwitchSource source)
     launchActivationAnimation(desk, source);
 }
 
+void DesksController::activateDeskAtOnce(Desk *desk, bool updateWindowActivation)
+{
+    if (deskIndex(desk) < 0)
+        return;
+    if (m_animation)
+        m_animation->finishNow();
+    activateDeskInternal(desk, updateWindowActivation);
+}
+
 void DesksController::launchActivationAnimation(Desk *desk, DesksSwitchSource source)
 {
     Window *active = m_manager->activation()->activeWindow();

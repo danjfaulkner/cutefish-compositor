@@ -1233,6 +1233,9 @@ TEST_F(DeskAnimationTest, RandomRunsKeepEveryInvariant)
 
 namespace {
 
+// Long enough for a window that never draws at its new size to go to its own desk anyway.
+constexpr std::chrono::milliseconds kPastSettle {FullscreenDesks::kSettleTimeout.count() + 200};
+
 class FullscreenDesksTest : public DesksTest
 {
 protected:
@@ -1245,11 +1248,17 @@ protected:
             return window->applicationId() == "claude" ? std::string("Claude") : std::string();
         });
     }
+
+    void settle()
+    {
+        test::runFor(kPastSettle);
+        flush();
+    }
 };
 
 } // namespace
 
-TEST_F(FullscreenDesksTest, EnteringGivesTheWindowADeskOfItsOwnNamedAfterTheApp)
+TEST_F(FullscreenDesksTest, GoesFullscreenInPlaceThenToADeskOfItsOwnNamedAfterTheApp)
 {
     addDesks(1);
     Window *window = makeWindow("claude");
@@ -1257,29 +1266,36 @@ TEST_F(FullscreenDesksTest, EnteringGivesTheWindowADeskOfItsOwnNamedAfterTheApp)
     ASSERT_TRUE(fullscreen->canEnter(window));
 
     EXPECT_TRUE(fullscreen->toggle(window));
+    // Fullscreen where it is first, its desk made but not yet switched to.
     ASSERT_EQ(3u, desks->desks().size());
     Desk *own = desk(1);
     EXPECT_TRUE(own->isFullscreenDesk());
     EXPECT_EQ("Claude", own->name());
-    EXPECT_TRUE(own->isActive());
-    EXPECT_EQ(own, desks->deskOf(window));
-    EXPECT_TRUE(fullscreen->owns(window));
+    EXPECT_TRUE(desk(0)->isActive());
+    EXPECT_EQ(desk(0), desks->deskOf(window));
     EXPECT_EQ(WindowStateType::Fullscreen, window->stateType());
     EXPECT_EQ(kOutput, window->bounds());
+    EXPECT_TRUE(fullscreen->owns(window));
+
+    settle();
+    EXPECT_TRUE(own->isActive());
+    EXPECT_EQ(own, desks->deskOf(window));
     EXPECT_TRUE(window->isVisible());
     EXPECT_EQ(window, active());
     EXPECT_EQ(desk(0), fullscreen->originOf(own));
 
     EXPECT_TRUE(fullscreen->toggle(window));
+    // Home at once, then out of fullscreen there.
+    EXPECT_TRUE(desk(0)->isActive());
+    EXPECT_EQ(desk(0), desks->deskOf(window));
+    EXPECT_EQ(WindowStateType::Normal, window->stateType());
+    EXPECT_EQ(normal, window->bounds());
+    EXPECT_EQ(window, active());
     flush();
     ASSERT_EQ(2u, desks->desks().size());
     EXPECT_FALSE(desk(0)->isFullscreenDesk());
     EXPECT_FALSE(desk(1)->isFullscreenDesk());
-    EXPECT_TRUE(desk(0)->isActive());
-    EXPECT_EQ(desk(0), desks->deskOf(window));
     EXPECT_FALSE(fullscreen->owns(window));
-    EXPECT_EQ(WindowStateType::Normal, window->stateType());
-    EXPECT_EQ(normal, window->bounds());
     EXPECT_TRUE(window->isVisible());
 }
 
@@ -1292,8 +1308,10 @@ TEST_F(FullscreenDesksTest, LeavingGoesBackToTheDeskOfOriginAndItsState)
     ASSERT_EQ(desk(2), desks->deskOf(window));
 
     ASSERT_TRUE(fullscreen->enter(window));
+    settle();
     ASSERT_EQ(4u, desks->desks().size());
     EXPECT_TRUE(desk(3)->isFullscreenDesk());
+    EXPECT_TRUE(desk(3)->isActive());
 
     fullscreen->exit(window);
     flush();
@@ -1307,7 +1325,9 @@ TEST_F(FullscreenDesksTest, ClosingTheAppRemovesItsDesk)
 {
     Window *window = makeWindow("claude");
     ASSERT_TRUE(fullscreen->enter(window));
+    settle();
     ASSERT_EQ(2u, desks->desks().size());
+    ASSERT_TRUE(desk(1)->isActive());
 
     manager.destroyWindow(window);
     flush();
@@ -1316,10 +1336,23 @@ TEST_F(FullscreenDesksTest, ClosingTheAppRemovesItsDesk)
     EXPECT_FALSE(desk(0)->isFullscreenDesk());
 }
 
+TEST_F(FullscreenDesksTest, ClosingTheAppBeforeTheSwitchRemovesItsDesk)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+    manager.destroyWindow(window);
+    settle();
+    ASSERT_EQ(1u, desks->desks().size());
+    EXPECT_TRUE(desk(0)->isActive());
+}
+
 TEST_F(FullscreenDesksTest, TheClientLeavingFullscreenTakesItHomeToo)
 {
     Window *window = makeWindow("claude");
     ASSERT_TRUE(fullscreen->enter(window));
+    settle();
+    // Long after entering: leaving is not a refusal.
+    test::runFor(FullscreenDesks::kRefusalWindow);
 
     window->restore();
     flush();
@@ -1333,6 +1366,7 @@ TEST_F(FullscreenDesksTest, AppsOpenedFromAFullscreenDeskOpenOnItsDeskOfOrigin)
 {
     Window *window = makeWindow("claude");
     ASSERT_TRUE(fullscreen->enter(window));
+    settle();
 
     Window *other = makeWindow("files");
     EXPECT_EQ(desk(0), desks->deskOf(other));
@@ -1354,9 +1388,11 @@ TEST_F(FullscreenDesksTest, SecondDeskOfTheSameAppIsNumbered)
     Window *first = makeWindow("claude");
     Window *second = makeWindow("claude");
     ASSERT_TRUE(fullscreen->enter(first));
+    settle();
     manager.activation()->activate(second);
     ASSERT_TRUE(desk(0)->isActive());
     ASSERT_TRUE(fullscreen->enter(second));
+    settle();
     EXPECT_EQ("Claude (2)", desks->deskOf(second)->name());
     EXPECT_EQ("Claude", desks->deskOf(first)->name());
 }
@@ -1389,6 +1425,7 @@ TEST_F(FullscreenDesksTest, RemovingTheDeskElsewhereEndsFullscreen)
 {
     Window *window = makeWindow("claude");
     ASSERT_TRUE(fullscreen->enter(window));
+    settle();
     desks->removeDesk(desk(1), DesksCreationRemovalSource::Button);
     flush();
     ASSERT_EQ(1u, desks->desks().size());
@@ -1397,67 +1434,47 @@ TEST_F(FullscreenDesksTest, RemovingTheDeskElsewhereEndsFullscreen)
     EXPECT_EQ(desk(0), desks->deskOf(window));
 }
 
-TEST_F(DeskAnimationTest, FullscreenDeskSlidesInAndBackOut)
+TEST_F(FullscreenDesksTest, ABrowserFillsItsDeskMaximizedInsteadOfFullscreen)
 {
-    FullscreenDesks *fullscreen = manager.fullscreenDesks();
-    addDesks(1);
-    Window *window = makeWindow("claude");
+    Window *window = makeWindow("helium");
+    const base::Rect normal = window->bounds();
     ASSERT_TRUE(fullscreen->enter(window));
-    ASSERT_NE(nullptr, desks->animation());
-    EXPECT_TRUE(desk(1)->isFullscreenDesk());
+    EXPECT_TRUE(fullscreen->fills(window));
+    EXPECT_EQ(WindowStateType::Maximized, window->stateType());
+    EXPECT_EQ(kOutput, window->bounds());
+    settle();
+    EXPECT_EQ(desk(1), desks->deskOf(window));
     EXPECT_TRUE(desk(1)->isActive());
-    finish();
-    EXPECT_EQ(nullptr, desks->animation());
-    EXPECT_TRUE(window->isVisible());
 
     fullscreen->exit(window);
     flush();
-    // The fullscreen desk slides away to the desk the window came from.
-    ASSERT_NE(nullptr, desks->animation());
-    finish();
-    flush();
-    EXPECT_EQ(nullptr, desks->animation());
-    ASSERT_EQ(2u, desks->desks().size());
-    EXPECT_FALSE(desk(0)->isFullscreenDesk());
-    EXPECT_FALSE(desk(1)->isFullscreenDesk());
-    EXPECT_TRUE(desk(0)->isActive());
-    EXPECT_EQ(desk(0), desks->deskOf(window));
-    EXPECT_TRUE(window->isVisible());
-    EXPECT_EQ(window, active());
-    EXPECT_NE(WindowStateType::Fullscreen, window->stateType());
+    EXPECT_EQ(1u, desks->desks().size());
+    EXPECT_EQ(WindowStateType::Normal, window->stateType());
+    EXPECT_EQ(normal, window->bounds());
 }
 
-TEST_F(DeskAnimationTest, LeavingFullscreenKeepsTheOtherDesks)
+TEST_F(FullscreenDesksTest, AClientRefusingFullscreenFillsItsDeskInstead)
 {
-    FullscreenDesks *fullscreen = manager.fullscreenDesks();
-    addDesks(2);
-    desks->activateDesk(desk(1), DesksSwitchSource::DeskSwitchShortcut);
-    finish();
-    Window *window = makeWindow("claude");
-    window->maximize();
-    ASSERT_EQ(desk(1), desks->deskOf(window));
-    const uint32_t first = desk(0)->id(), second = desk(1)->id(), third = desk(2)->id();
+    Window *window = makeWindow("terminal");
+    ASSERT_TRUE(fullscreen->enter(window));
+    ASSERT_EQ(WindowStateType::Fullscreen, window->stateType());
+    // The client leaves fullscreen at once by itself.
+    window->restore();
+    flush();
+    EXPECT_TRUE(fullscreen->owns(window));
+    EXPECT_TRUE(fullscreen->fills(window));
+    EXPECT_EQ(WindowStateType::Maximized, window->stateType());
+    EXPECT_EQ(kOutput, window->bounds());
+    settle();
+    EXPECT_EQ(desk(1), desks->deskOf(window));
 
-    for (int round = 0; round < 3; ++round) {
-        ASSERT_TRUE(fullscreen->toggle(window));
-        finish();
-        flush();
-        ASSERT_EQ(4u, desks->desks().size()) << "round " << round;
-        EXPECT_TRUE(desk(2)->isFullscreenDesk());
-        ASSERT_TRUE(fullscreen->toggle(window));
-        flush();
-        finish();
-        flush();
-        finish();
-        flush();
-        ASSERT_EQ(3u, desks->desks().size()) << "round " << round;
-        EXPECT_EQ(first, desk(0)->id());
-        EXPECT_EQ(second, desk(1)->id());
-        EXPECT_EQ(third, desk(2)->id());
-        EXPECT_TRUE(desk(1)->isActive());
-        EXPECT_EQ(desk(1), desks->deskOf(window));
-        EXPECT_EQ(WindowStateType::Maximized, window->stateType());
-    }
+    // The application fills from the start next time.
+    Window *another = makeWindow("terminal");
+    manager.activation()->activate(another);
+    ASSERT_TRUE(desk(0)->isActive());
+    ASSERT_TRUE(fullscreen->enter(another));
+    EXPECT_TRUE(fullscreen->fills(another));
+    EXPECT_EQ(WindowStateType::Maximized, another->stateType());
 }
 
 namespace {
@@ -1473,17 +1490,18 @@ protected:
         DeskAnimationTest::SetUp();
         addDesks(2);
         desks->activateDesk(desk(1), DesksSwitchSource::DeskSwitchShortcut);
-        settle();
+        finish();
+        flush();
         for (const auto &each : desks->desks())
             ids.push_back(each->id());
+        screenshots = 0;
     }
 
     void settle()
     {
-        for (int i = 0; i < 4; ++i) {
-            flush();
-            finish();
-        }
+        test::runFor(kPastSettle);
+        flush();
+        finish();
         flush();
     }
 
@@ -1497,13 +1515,58 @@ protected:
     }
 };
 
+struct ActivationRecorder : ActivationObserver {
+    std::vector<Window *> seen;
+    void onWindowActivated(Window *gained, Window *) override { seen.push_back(gained); }
+};
+
 } // namespace
+
+TEST_F(FullscreenDesksAnimatedTest, EnteringAndLeavingSwitchDesksWithoutASlide)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->toggle(window));
+    EXPECT_EQ(nullptr, desks->animation());
+    settle();
+    EXPECT_EQ(nullptr, desks->animation());
+    EXPECT_TRUE(desk(2)->isFullscreenDesk());
+    EXPECT_TRUE(desk(2)->isActive());
+    EXPECT_EQ(desk(2), desks->deskOf(window));
+
+    ASSERT_TRUE(fullscreen->toggle(window));
+    EXPECT_EQ(nullptr, desks->animation());
+    settle();
+    EXPECT_EQ(nullptr, desks->animation());
+    EXPECT_EQ(0, screenshots) << "a desk switch was animated";
+    expectTheThreeDesks();
+    EXPECT_TRUE(desk(1)->isActive());
+    EXPECT_EQ(desk(1), desks->deskOf(window));
+}
+
+TEST_F(FullscreenDesksAnimatedTest, LeavingRepeatedlyKeepsTheOtherDesks)
+{
+    Window *window = makeWindow("claude");
+    window->maximize();
+    for (int round = 0; round < 3; ++round) {
+        ASSERT_TRUE(fullscreen->toggle(window));
+        settle();
+        ASSERT_EQ(4u, desks->desks().size()) << "round " << round;
+        EXPECT_TRUE(desk(2)->isFullscreenDesk());
+        ASSERT_TRUE(fullscreen->toggle(window));
+        settle();
+        expectTheThreeDesks();
+        EXPECT_TRUE(desk(1)->isActive());
+        EXPECT_EQ(desk(1), desks->deskOf(window));
+        EXPECT_EQ(WindowStateType::Maximized, window->stateType());
+    }
+}
 
 TEST_F(FullscreenDesksAnimatedTest, TheClientLeavingFullscreenKeepsTheOtherDesks)
 {
-    Window *window = makeWindow("terminal");
+    Window *window = makeWindow("claude");
     ASSERT_TRUE(fullscreen->toggle(window));
     settle();
+    test::runFor(FullscreenDesks::kRefusalWindow);
     ASSERT_EQ(4u, desks->desks().size());
     window->restore();
     settle();
@@ -1512,15 +1575,15 @@ TEST_F(FullscreenDesksAnimatedTest, TheClientLeavingFullscreenKeepsTheOtherDesks
     EXPECT_TRUE(desk(1)->isActive());
 }
 
-TEST_F(FullscreenDesksAnimatedTest, LeavingDuringTheSlideInKeepsTheOtherDesks)
+TEST_F(FullscreenDesksAnimatedTest, LeavingBeforeTheSwitchKeepsTheOtherDesks)
 {
     Window *window = makeWindow("claude");
     ASSERT_TRUE(fullscreen->toggle(window));
-    paint();
     ASSERT_TRUE(fullscreen->toggle(window));
     settle();
     expectTheThreeDesks();
     EXPECT_EQ(desk(1), desks->deskOf(window));
+    EXPECT_TRUE(desk(1)->isActive());
 }
 
 TEST_F(FullscreenDesksAnimatedTest, ClosingAFullscreenAppKeepsTheOtherDesks)
@@ -1533,9 +1596,9 @@ TEST_F(FullscreenDesksAnimatedTest, ClosingAFullscreenAppKeepsTheOtherDesks)
     manager.destroyWindow(terminal);
     settle();
     expectTheThreeDesks();
+    EXPECT_TRUE(desk(1)->isActive());
 
     manager.activation()->activate(claude);
-    settle();
     ASSERT_TRUE(fullscreen->toggle(claude));
     settle();
     ASSERT_EQ(4u, desks->desks().size());
@@ -1545,16 +1608,7 @@ TEST_F(FullscreenDesksAnimatedTest, ClosingAFullscreenAppKeepsTheOtherDesks)
     EXPECT_EQ(desk(1), desks->deskOf(claude));
 }
 
-TEST_F(FullscreenDesksAnimatedTest, TheClientLeavingWhileTheDeskSlidesInKeepsTheOtherDesks)
-{
-    Window *window = makeWindow("claude");
-    ASSERT_TRUE(fullscreen->toggle(window));
-    window->restore();
-    settle();
-    expectTheThreeDesks();
-}
-
-TEST_F(FullscreenDesksAnimatedTest, LeavingSlidesStraightToTheWindowWhichKeepsActivation)
+TEST_F(FullscreenDesksAnimatedTest, LeavingGoesStraightToTheWindowWhichKeepsActivation)
 {
     Window *other = makeWindow("files");
     Window *window = makeWindow("claude");
@@ -1563,20 +1617,12 @@ TEST_F(FullscreenDesksAnimatedTest, LeavingSlidesStraightToTheWindowWhichKeepsAc
     settle();
     ASSERT_EQ(window, active());
 
-    std::vector<Window *> activated;
-    struct Recorder : ActivationObserver {
-        std::vector<Window *> *seen;
-        void onWindowActivating(Window *, Window *) override { }
-        void onWindowActivated(Window *gained, Window *) override { seen->push_back(gained); }
-    } recorder;
-    recorder.seen = &activated;
+    ActivationRecorder recorder;
     manager.activation()->addObserver(&recorder);
-
     ASSERT_TRUE(fullscreen->toggle(window));
-    flush();
-    ASSERT_NE(nullptr, desks->animation());
-    // Mid-slide the window is already home, shown and active.
+    // Home, shown and active straight away, before it leaves fullscreen there.
     EXPECT_EQ(desk(1), desks->deskOf(window));
+    EXPECT_TRUE(desk(1)->isActive());
     EXPECT_TRUE(window->isVisible());
     EXPECT_EQ(window, active());
     settle();
@@ -1584,31 +1630,27 @@ TEST_F(FullscreenDesksAnimatedTest, LeavingSlidesStraightToTheWindowWhichKeepsAc
 
     expectTheThreeDesks();
     EXPECT_EQ(window, active());
-    for (Window *gained : activated)
-        EXPECT_NE(other, gained) << "another window held activation during the slide";
+    EXPECT_TRUE(recorder.seen.empty()) << "activation moved " << recorder.seen.size() << " times while leaving";
+    for (Window *gained : recorder.seen)
+        EXPECT_NE(other, gained);
 }
 
 TEST_F(FullscreenDesksAnimatedTest, EnteringKeepsActivationOnTheWindow)
 {
     Window *other = makeWindow("files");
     Window *window = makeWindow("claude");
-    std::vector<Window *> activated;
-    struct Recorder : ActivationObserver {
-        std::vector<Window *> *seen;
-        void onWindowActivated(Window *gained, Window *) override { seen->push_back(gained); }
-    } recorder;
-    recorder.seen = &activated;
+    ActivationRecorder recorder;
     manager.activation()->addObserver(&recorder);
 
     ASSERT_TRUE(fullscreen->toggle(window));
-    flush();
     EXPECT_EQ(window, active());
     EXPECT_TRUE(window->isVisible());
     settle();
+    EXPECT_EQ(desk(2), desks->deskOf(window));
     manager.activation()->removeObserver(&recorder);
 
     EXPECT_EQ(window, active());
-    EXPECT_TRUE(activated.empty()) << "activation moved " << activated.size() << " times while entering";
-    for (Window *gained : activated)
+    EXPECT_TRUE(recorder.seen.empty()) << "activation moved " << recorder.seen.size() << " times while entering";
+    for (Window *gained : recorder.seen)
         EXPECT_NE(other, gained);
 }

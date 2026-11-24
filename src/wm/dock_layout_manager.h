@@ -118,6 +118,7 @@ private:
     bool hasVisibleWindow(const base::Rect &output) const;
     const Window *topmostWindowFor(const base::Rect &output) const;
     Window *fullscreenWindowFor(const base::Rect &output) const;
+    bool ownsDesk(const Window *window) const;
     bool isTopBar(const Window *dock, const Dock &entry, const base::Rect &output) const;
     void updateReveal(Window *dock, Dock &entry);
     bool isLaunchpadShowing(const base::Rect &output) const;

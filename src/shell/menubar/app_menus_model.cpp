@@ -168,7 +168,9 @@ wm::Window *AppMenusModel::fullscreenTarget() const
 bool AppMenusModel::isTargetFullscreen() const
 {
     const wm::Window *window = fullscreenTarget();
-    return window && window->stateType() == wm::WindowStateType::Fullscreen;
+    return window
+            && (window->stateType() == wm::WindowStateType::Fullscreen
+                || m_shell->windowManager()->fullscreenDesks()->owns(window));
 }
 
 void AppMenusModel::toggleFullscreen()

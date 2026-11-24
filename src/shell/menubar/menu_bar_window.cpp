@@ -35,6 +35,7 @@
 #include "render/renderer.h"
 #include "ui/theme.h"
 #include "wm/status_items.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
@@ -133,6 +134,30 @@ MenuBarWindow::MenuBarWindow(Shell *shell, std::unique_ptr<MenuBar> menuBar)
         if (onStopAgentControl)
             onStopAgentControl();
     };
+
+    if (wm::WindowManager *manager = shell->windowManager()) {
+        m_subscriptions.push_back(manager->fullscreenRevealChanged.connect(
+                [this, manager](wm::Window *window, int, int) {
+                    // Over the window while it is fullscreen and shown, revealed or not: the bar
+                    // slides away black rather than turning clear on the way.
+                    const bool over = window && window->isVisible()
+                            && (window->stateType() == wm::WindowStateType::Fullscreen
+                                || (manager->fullscreenDesks() && manager->fullscreenDesks()->owns(window)));
+                    if (over == m_overFullscreen)
+                        return;
+                    m_overFullscreen = over;
+                    updateLook();
+                }));
+        m_subscriptions.push_back(manager->activeWindowChanged.connect([this, manager](wm::Window *active) {
+            if (!m_overFullscreen
+                || (active
+                    && (active->stateType() == wm::WindowStateType::Fullscreen
+                        || (manager->fullscreenDesks() && manager->fullscreenDesks()->owns(active)))))
+                return;
+            m_overFullscreen = false;
+            updateLook();
+        }));
+    }
 
     m_statusItems = m_root->addChild<StatusItemsView>(
             this, shell->windowManager() ? shell->windowManager()->statusItems() : nullptr);
@@ -298,6 +323,10 @@ void MenuBarWindow::updateLook()
     if (opaque) {
         m_fill = dark ? ui::Color::rgb(0x202020) : ui::Color::rgb(0xDADADA);
         light = dark;
+    }
+    if (m_overFullscreen) {
+        m_fill = ui::Color::rgb(0x000000);
+        light = true;
     }
     m_window->window()->setBackgroundColor(m_fill);
     m_lightContents = light;

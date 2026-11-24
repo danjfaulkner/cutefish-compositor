@@ -240,7 +240,7 @@ const Window *DockLayoutManager::topmostWindowFor(const base::Rect &output) cons
 WorkspaceState DockLayoutManager::workspaceStateFor(const base::Rect &output) const
 {
     const Window *topmost = topmostWindowFor(output);
-    if (topmost && isFullscreenOrOverFullscreen(topmost))
+    if (topmost && (isFullscreenOrOverFullscreen(topmost) || ownsDesk(topmost)))
         return WorkspaceState::Fullscreen;
 
     if (m_manager->hasMaximizedWindow(output))
@@ -251,10 +251,20 @@ WorkspaceState DockLayoutManager::workspaceStateFor(const base::Rect &output) co
 Window *DockLayoutManager::fullscreenWindowFor(const base::Rect &output) const
 {
     for (Window *window = m_manager->activation()->activeWindow(); window; window = window->transientParent()) {
-        if (window->stateType() == WindowStateType::Fullscreen)
+        if (window->stateType() == WindowStateType::Fullscreen || ownsDesk(window))
             return m_manager->outputBoundsFor(window) == output ? window : nullptr;
     }
     return nullptr;
+}
+
+bool DockLayoutManager::ownsDesk(const Window *window) const
+{
+    // Filling its own desk while maximized counts as fullscreen too.
+    for (; window; window = window->transientParent()) {
+        if (m_manager->fullscreenDesks() && m_manager->fullscreenDesks()->owns(window))
+            return true;
+    }
+    return false;
 }
 
 bool DockLayoutManager::hasVisibleWindow(const base::Rect &output) const
@@ -467,7 +477,8 @@ void DockLayoutManager::updateReveal(Window *dock, Dock &entry)
             : 0;
     Window *previous = m_manager->windowById(entry.revealedOver);
     if (previous != fullscreen) {
-        if (previous && entry.revealSent != 0)
+        // Also when nothing was revealed: the bar learns the window is no longer under it.
+        if (previous)
             m_manager->fullscreenRevealChanged.emit(previous, 0, kSlideDurationMs);
         entry.revealedOver = fullscreen ? fullscreen->id() : 0;
         entry.revealSent = 0;
@@ -477,7 +488,13 @@ void DockLayoutManager::updateReveal(Window *dock, Dock &entry)
         m_manager->fullscreenRevealChanged.emit(fullscreen, offset, kSlideDurationMs);
     }
 
-    Window *pushing = fullscreen && fullscreen->rootSurface() && fullscreen->rootSurface()->fullscreenBarsPush()
+    // A window fullscreen on its own desk is pushed down rather than covered, like a client
+    // that asks for it: moved, not resized, so the reveal costs the client no redraw.
+    const bool ownDesk = fullscreen && m_manager->fullscreenDesks()
+            && m_manager->fullscreenDesks()->owns(fullscreen);
+    Window *pushing = fullscreen
+                    && (ownDesk
+                        || (fullscreen->rootSurface() && fullscreen->rootSurface()->fullscreenBarsPush()))
             ? fullscreen
             : nullptr;
     Window *pushed = m_manager->windowById(entry.pushed);

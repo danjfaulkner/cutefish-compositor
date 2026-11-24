@@ -133,6 +133,8 @@ private:
     int m_clockFd = -1;
     int m_clockWatch = 0;
     bool m_lightContents = false;
+    // Revealed over a fullscreen window: solid black, as nothing behind it is the wallpaper.
+    bool m_overFullscreen = false;
     ui::Color m_fill {0, 0, 0, 0};
     // In window coordinates; empty for none.
     ui::RectF m_blurPlate;

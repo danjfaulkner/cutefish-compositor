@@ -4,6 +4,7 @@
 
 #include "wm/desks/fullscreen_desks.h"
 
+#include <cctype>
 #include <chrono>
 #include <set>
 
@@ -76,6 +77,59 @@ std::string FullscreenDesks::refusal(const Window *window) const
 bool FullscreenDesks::owns(const Window *window) const
 {
     return m_entries.count(const_cast<Window *>(window)) != 0;
+}
+
+bool FullscreenDesks::fills(const Window *window) const
+{
+    const auto it = m_entries.find(const_cast<Window *>(window));
+    return it != m_entries.end() && it->second.fill;
+}
+
+bool FullscreenDesks::prefersFill(const Window *window) const
+{
+    std::string id = window->applicationId();
+    for (char &c : id)
+        c = char(std::tolower(static_cast<unsigned char>(c)));
+    if (m_fillApplications.count(id))
+        return true;
+    // Chromium and the browsers made from it leave fullscreen they did not ask for again.
+    for (const char *browser : {"chrom", "helium", "brave", "vivaldi", "msedge", "microsoft-edge",
+                                "opera", "thorium", "cromite", "yandex"}) {
+        if (id.find(browser) != std::string::npos)
+            return true;
+    }
+    return false;
+}
+
+void FullscreenDesks::applyFill(Window *window)
+{
+    const auto it = m_entries.find(window);
+    if (it == m_entries.end())
+        return;
+    it->second.fill = true;
+    const base::AutoReset changing(m_changing, true);
+    if (window->stateType() == WindowStateType::Maximized)
+        window->state()->onEvent(WMEvent(WMEventType::WorkAreaChanged));
+    else
+        window->state()->onEvent(WMEvent(WMEventType::Maximize));
+    changed.emit();
+}
+
+void FullscreenDesks::restoreState(Window *window, const Entry &entry)
+{
+    const base::AutoReset changing(m_changing, true);
+    if (!entry.fill) {
+        if (window->stateType() == WindowStateType::Fullscreen)
+            window->state()->onEvent(WMEvent(WMEventType::Restore));
+        return;
+    }
+    // Filling, it is maximized: back to the area a maximized window has, or out of maximized.
+    if (window->stateType() != WindowStateType::Maximized)
+        return;
+    if (entry.previous == WindowStateType::Maximized)
+        window->state()->onEvent(WMEvent(WMEventType::WorkAreaChanged));
+    else
+        window->state()->onEvent(WMEvent(WMEventType::Restore));
 }
 
 bool FullscreenDesks::isFullscreenDesk(const Desk *desk) const
@@ -185,25 +239,72 @@ bool FullscreenDesks::enter(Window *window)
     controller->setDeskName(desk, name);
     controller->reorderDesk(controller->deskIndex(desk), controller->deskIndex(origin) + 1);
 
-    m_entries[window] = {desk->id(), origin->id()};
+    m_entries[window] = {desk->id(), origin->id(), false, window->stateType(),
+                         std::chrono::steady_clock::now()};
     window->addObserver(this);
-    if (origin == controller->activeDesk()) {
-        // On every desk while the desks switch, so the window is never hidden and
-        // activation never passes to another window on the way; then it belongs to the
-        // fullscreen desk, which is active by then. The full slide of a desk switch by
-        // keyboard, not the quick fade an API switch gets.
-        controller->setVisibleOnAllDesks(window, true);
-        controller->activateDesk(desk, DesksSwitchSource::DeskSwitchShortcut);
-        controller->setVisibleOnAllDesks(window, false);
-        if (controller->deskOf(window) != desk)
-            controller->moveWindowFromActiveDeskTo(window, desk);
-    } else {
-        controller->sendToDeskAtIndex(window, controller->deskIndex(desk));
-        controller->activateDesk(desk, DesksSwitchSource::DeskSwitchShortcut);
-    }
-    window->state()->onEvent(WMEvent(WMEventType::Fullscreen));
+    // Fullscreen where it is first; its desk is switched to without a slide once it has drawn
+    // at the new size, when it covers the output and the switch shows nothing.
+    if (prefersFill(window))
+        applyFill(window);
+    else
+        window->state()->onEvent(WMEvent(WMEventType::Fullscreen));
+    const uint64_t id = window->id();
+    m_manager->runLater(kSettleTimeout, [this, id] {
+        if (Window *window = m_manager->windowById(id); window && owns(window))
+            moveToOwnDesk(window);
+    });
     changed.emit();
     return true;
+}
+
+void FullscreenDesks::handOver(Window *window, Desk *to)
+{
+    DesksController *controller = desks();
+    const base::AutoReset changing(m_changing, true);
+    const bool active = window->isActive();
+    controller->setVisibleOnAllDesks(window, true);
+    controller->activateDeskAtOnce(to, /*updateWindowActivation=*/false);
+    controller->setVisibleOnAllDesks(window, false);
+    if (controller->deskOf(window) != to)
+        controller->sendToDeskAtIndex(window, controller->deskIndex(to));
+    if (active && !window->isActive())
+        window->activate();
+}
+
+void FullscreenDesks::moveToOwnDesk(Window *window)
+{
+    const auto it = m_entries.find(window);
+    if (it == m_entries.end() || it->second.moved)
+        return;
+    it->second.moved = true;
+    DesksController *controller = desks();
+    Desk *desk = controller->deskById(it->second.desk);
+    if (!desk || controller->deskOf(window) == desk)
+        return;
+    if (controller->belongsToActiveDesk(window) && window->isVisible()) {
+        handOver(window, desk);
+    } else {
+        // Not on screen any more (another desk, minimized): it moves there quietly.
+        const base::AutoReset changing(m_changing, true);
+        controller->sendToDeskAtIndex(window, controller->deskIndex(desk));
+    }
+    changed.emit();
+}
+
+void FullscreenDesks::onWindowContentChanged(Window *window)
+{
+    const auto it = m_entries.find(window);
+    if (it == m_entries.end() || it->second.moved)
+        return;
+    // The client has drawn at the size it was given.
+    if (window->contentBounds().size() == window->bounds().size()
+        && window->bounds() == m_manager->outputBoundsFor(window)) {
+        const uint64_t id = window->id();
+        m_manager->runLater(std::chrono::milliseconds(0), [this, id] {
+            if (Window *window = m_manager->windowById(id); window && owns(window))
+                moveToOwnDesk(window);
+        });
+    }
 }
 
 void FullscreenDesks::exit(Window *window)
@@ -217,16 +318,22 @@ void FullscreenDesks::exit(Window *window)
     DesksController *controller = desks();
     Desk *desk = controller->deskById(entry.desk);
     Desk *origin = originFor(entry);
-    {
-        const base::AutoReset changing(m_changing, true);
-        if (window->stateType() == WindowStateType::Fullscreen)
-            window->state()->onEvent(WMEvent(WMEventType::Restore));
-        // Off screen, the window goes straight back; on screen the desk's removal takes it.
-        if (desk && origin && !desk->isActive() && controller->deskOf(window) == desk
-            && origin != controller->activeDesk())
-            controller->sendToDeskAtIndex(window, controller->deskIndex(origin));
+    // Home first, at once and still covering the output; then it leaves fullscreen there.
+    if (desk && origin && controller->deskOf(window) == desk) {
+        if (desk->isActive() && window->isVisible()) {
+            handOver(window, origin);
+        } else {
+            const base::AutoReset changing(m_changing, true);
+            if (origin == controller->activeDesk()) {
+                controller->setVisibleOnAllDesks(window, true);
+                controller->setVisibleOnAllDesks(window, false);
+            } else {
+                controller->sendToDeskAtIndex(window, controller->deskIndex(origin));
+            }
+        }
     }
-    removeDeskLater(entry.desk, window->id());
+    restoreState(window, entry);
+    removeDeskLater(entry.desk, 0);
     changed.emit();
 }
 
@@ -249,14 +356,11 @@ void FullscreenDesks::removeDeskLater(uint32_t deskId, uint64_t activateWindow)
             if (entry.desk == deskId)
                 return;
         }
-        // Removing the active desk slides to the one before it, so that is where it came from.
+        // Still the active desk (its window closed): back to the desk it came from at once,
+        // with no slide, before it goes.
         Entry entry {deskId, 0};
-        if (Desk *origin = originFor(entry); origin && desk->isActive() && !controller->animation()) {
-            const int from = controller->deskIndex(desk);
-            const int originIndex = controller->deskIndex(origin);
-            if (from != originIndex + 1)
-                controller->reorderDesk(from, originIndex < from ? originIndex + 1 : originIndex);
-        }
+        if (Desk *origin = originFor(entry); origin && desk->isActive())
+            controller->activateDeskAtOnce(origin, /*updateWindowActivation=*/true);
         // The removal moves the window to the desk it came from once the slide lands, and
         // the desk switched to during the slide does not hand out activation.
         if (activateWindow)
@@ -296,11 +400,10 @@ void FullscreenDesks::onDeskRemoved(const Desk *desk)
             continue;
         }
         Window *window = it->first;
+        const Entry entry = it->second;
         it = m_entries.erase(it);
         window->removeObserver(this);
-        const base::AutoReset changing(m_changing, true);
-        if (window->stateType() == WindowStateType::Fullscreen)
-            window->state()->onEvent(WMEvent(WMEventType::Restore));
+        restoreState(window, entry);
         changed.emit();
     }
 }
@@ -313,23 +416,41 @@ void FullscreenDesks::onWindowDeskChanged(Window *window)
     if (it == m_entries.end() || desks()->deskOf(window) && desks()->deskOf(window)->id() == it->second.desk)
         return;
     // Moved off its fullscreen desk: it leaves fullscreen there and the desk goes.
-    const uint32_t desk = it->second.desk;
+    const Entry entry = it->second;
     forget(window);
-    {
-        const base::AutoReset changing(m_changing, true);
-        if (window->stateType() == WindowStateType::Fullscreen)
-            window->state()->onEvent(WMEvent(WMEventType::Restore));
-    }
-    removeDeskLater(desk, 0);
+    restoreState(window, entry);
+    removeDeskLater(entry.desk, 0);
     changed.emit();
 }
 
-void FullscreenDesks::onWindowStateTypeChanged(Window *window, WindowStateType)
+void FullscreenDesks::onWindowStateTypeChanged(Window *window, WindowStateType oldType)
 {
-    if (m_changing || !owns(window) || window->stateType() == WindowStateType::Fullscreen)
+    const auto it = m_entries.find(window);
+    if (m_changing || it == m_entries.end())
         return;
-    // It left fullscreen some other way (the client, a shortcut, minimizing): it goes home.
+    const Entry &entry = it->second;
+    if (window->stateType() == (entry.fill ? WindowStateType::Maximized : WindowStateType::Fullscreen))
+        return;
     const uint64_t id = window->id();
+    if (!entry.fill && oldType == WindowStateType::Fullscreen
+        && window->stateType() != WindowStateType::Minimized
+        && std::chrono::steady_clock::now() - entry.entered < kRefusalWindow) {
+        // The client left fullscreen it was just given: it fills the output instead, and so
+        // does the rest of this application from now on.
+        m_fillApplications.insert([&] {
+            std::string app = window->applicationId();
+            for (char &c : app)
+                c = char(std::tolower(static_cast<unsigned char>(c)));
+            return app;
+        }());
+        CF_INFO(cfCompositor) << window->applicationId() << "refused fullscreen; filling its desk instead";
+        m_manager->runLater(std::chrono::milliseconds(0), [this, id] {
+            if (Window *window = m_manager->windowById(id); window && owns(window) && !fills(window))
+                applyFill(window);
+        });
+        return;
+    }
+    // It left fullscreen some other way (the client, a shortcut, minimizing): it goes home.
     m_manager->runLater(std::chrono::milliseconds(0), [this, id] {
         if (Window *window = m_manager->windowById(id); window && owns(window))
             exit(window);

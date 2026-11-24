@@ -239,11 +239,8 @@ bool DeskRemovalAnimation::startNode()
     for (const auto &[output, frame] : still)
         outputs.insert(output);
     m_node->setGeometry(m_controller->windowManager()->outputBounds());
-    // A fullscreen desk leaves with the same full slide it came in with.
     m_node->startRemoval(int(m_controller->desks().size()), m_deskToRemove, m_endingDesk,
-                         std::move(still), std::move(outputs), m_controller->referenceWidth(),
-                         removed->isFullscreenDesk() ? scene::DeskSwitchNode::Type::Continuous
-                                                     : scene::DeskSwitchNode::Type::Quick);
+                         std::move(still), std::move(outputs), m_controller->referenceWidth());
     return m_node->isActive();
 }
 
