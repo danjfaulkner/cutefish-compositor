@@ -9,6 +9,7 @@
 #include <pwd.h>
 #include <unistd.h>
 
+#include "core/logging.h"
 #include "core/main_loop.h"
 #include "cutefish/accounts/account_picture.h"
 #include "cutefish/accounts/user_account.h"
@@ -220,6 +221,11 @@ BarItem *AppMenusView::entry(size_t index) const
     return index < m_entries.size() ? m_entries[index] : nullptr;
 }
 
+BarItem *AppMenusView::fullscreenButton() const
+{
+    return m_fullscreen;
+}
+
 void AppMenusView::setUserIcon(const std::string &file)
 {
     m_userIcon = file;
@@ -241,6 +247,10 @@ void AppMenusView::updateFullscreenButton()
     if (!m_fullscreen || !m_model)
         return;
     const bool shown = m_model->fullscreenTarget() != nullptr;
+    // TEMPORARY diagnostics for the fullscreen desks bring-up.
+    CF_WARNING(cfCompositor) << "fullscreen-debug: button" << (shown ? "shown" : "hidden") << "desktop"
+                             << m_model->isDesktop() << "visible-now" << m_fullscreen->isVisible()
+                             << "geometry" << m_fullscreen->geometry().x << m_fullscreen->geometry().width;
     m_fullscreen->setFullscreen(m_model->isTargetFullscreen());
     if (shown != m_fullscreen->isVisible()) {
         m_fullscreen->setVisible(shown);

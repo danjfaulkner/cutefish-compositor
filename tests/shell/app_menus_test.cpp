@@ -34,9 +34,11 @@
 #include "shell/menubar/dbus_menu.h"
 #include "shell/menubar/menu_bar.h"
 #include "shell_test_util.h"
+#include "shm_test_util.h"
 #include "temporary_directory.h"
 #include "ui/embedded_window.h"
 #include "ui/menu.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
@@ -951,4 +953,109 @@ TEST_F(AppMenusTest, AnOpenSubmenuStaysOpenWhenOpeningItRenumbersTheMenus)
     EXPECT_FALSE(exporter.called("Event 1 closed"));
     EXPECT_FALSE(exporter.called("Event 10 closed"));
     EXPECT_EQ(1, toolbarsOpened);
+}
+
+TEST_F(AppMenusTest, TheFullscreenButtonFollowsTheActiveWindow)
+{
+    std::shared_ptr<compositor::ShmPool> pool = testsupport::makePool(1 << 20);
+    std::unique_ptr<compositor::Surface> surface = compositor.createSurface();
+    surface->attach(pool->createBuffer({300, 200}, 0, 300 * 4, render::PixelFormat::Bgrx8888, nullptr), {});
+    surface->commit();
+    frame();
+    wm::Window *window = manager.createWindow(surface.get(), {.requestedSize = {300, 200}, .applicationId = "terminal"});
+    window->activate();
+
+    shell::TaskWindow task;
+    task.id = window->id();
+    task.appId = "terminal";
+    task.title = "Terminal window";
+    windows->add(task);
+    windows->setActive(window->id());
+    ASSERT_TRUE(test::runUntil([&] { return !view->model().isDesktop(); }));
+    frame();
+
+    shell::BarItem *button = view->fullscreenButton();
+    ASSERT_NE(nullptr, button);
+    EXPECT_EQ(window, view->model().fullscreenTarget());
+    EXPECT_TRUE(button->isVisible());
+    EXPECT_GT(button->geometry().width, 0);
+
+    const ui::RectF rect = button->geometry();
+    click(rect.x + rect.width / 2, 16);
+    EXPECT_TRUE(manager.fullscreenDesks()->owns(window));
+    EXPECT_EQ(wm::WindowStateType::Fullscreen, window->stateType());
+
+    manager.destroyWindow(window);
+    frame();
+}
+
+class RealTaskWindowsAppMenusTest : public testing::Test
+{
+protected:
+    scene::Scene scene;
+    scene::Node *surfaceContainer = scene.root()->addChild(std::make_unique<scene::Node>("surfaces"));
+    compositor::Compositor compositor {surfaceContainer};
+    testsupport::FakeRenderer renderer;
+    input::Seat seat {&compositor};
+    input::InputManager input {&seat};
+    wm::WindowManager manager {&compositor, &seat};
+    test::TemporaryDirectory directory;
+    std::unique_ptr<shell::Shell> shell;
+    std::unique_ptr<shell::MenuBar> menuBar;
+    TestBar *bar = nullptr;
+    shell::AppMenusView *view = nullptr;
+
+    void SetUp() override
+    {
+        scene.setSize(kOutput.size());
+        manager.setOutputBounds(kOutput);
+        input.setBounds(kOutput.size());
+        input.setEventSink(&manager);
+        shell::ShellEnvironment environment {&compositor, &manager, &seat};
+        environment.bus = dbus::Connection::session(core::mainLoop());
+        environment.servicesSettings = directory.filePath("services.conf");
+        shell = std::make_unique<shell::Shell>(environment);
+        auto apps = std::make_unique<test::FakeApplications>();
+        apps->addSimple("terminal", "Terminal", "utilities-terminal");
+        apps->scan();
+        shell->setApplications(std::move(apps));
+        menuBar = std::make_unique<shell::MenuBar>(environment.bus, nullptr, &shell->tasks(),
+                                                   directory.filePath("shell.conf"));
+        ASSERT_TRUE(menuBar->registerServices());
+        bar = shell->addComponent(std::make_unique<TestBar>(shell.get()));
+        auto appMenus = std::make_unique<shell::AppMenusView>(shell.get(), bar->host(menuBar.get()));
+        view = appMenus.get();
+        bar->setAppMenus(std::move(appMenus));
+        test::processPendingEvents();
+    }
+
+    void TearDown() override
+    {
+        shell.reset();
+        menuBar.reset();
+        seat.shutdown();
+    }
+};
+
+TEST_F(RealTaskWindowsAppMenusTest, TheFullscreenButtonShowsForTheActiveWindow)
+{
+    std::shared_ptr<compositor::ShmPool> pool = testsupport::makePool(1 << 20);
+    std::unique_ptr<compositor::Surface> surface = compositor.createSurface();
+    surface->attach(pool->createBuffer({300, 200}, 0, 300 * 4, render::PixelFormat::Bgrx8888, nullptr), {});
+    surface->commit();
+    test::processPendingEvents();
+    compositor.updateTextures(renderer);
+    wm::Window *window = manager.createWindow(surface.get(), {.requestedSize = {300, 200}, .applicationId = "terminal"});
+    window->activate();
+    ASSERT_TRUE(test::runUntil([&] { return !view->model().isDesktop(); }));
+    test::processPendingEvents();
+
+    EXPECT_EQ(window->id(), shell->taskWindows().activeWindow());
+    EXPECT_TRUE(manager.fullscreenDesks()->canEnter(window));
+    EXPECT_EQ(window, view->model().fullscreenTarget());
+    ASSERT_NE(nullptr, view->fullscreenButton());
+    EXPECT_TRUE(view->fullscreenButton()->isVisible());
+
+    manager.destroyWindow(window);
+    test::processPendingEvents();
 }

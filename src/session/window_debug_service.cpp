@@ -16,6 +16,7 @@
 #include "input/input_manager.h"
 #include "scene/surface_node.h"
 #include "scene/window_animation.h"
+#include "wm/desks/fullscreen_desks.h"
 #include "wm/window.h"
 #include "wm/window_frame.h"
 #include "wm/window_manager.h"
@@ -65,6 +66,14 @@ Value describe(const wm::Window *window)
             {"appId", window->applicationId()},
             {"title", window->title()},
             {"popup", window->isPopup()},
+            {"resizable", window->isResizable()},
+            {"transientParent", window->transientParent() ? std::to_string(window->transientParent()->id())
+                                                         : std::string()},
+            {"fullscreenDesk", window->manager() && window->manager()->fullscreenDesks()
+                     ? (window->manager()->fullscreenDesks()->owns(window)
+                                ? std::string("owned")
+                                : window->manager()->fullscreenDesks()->refusal(window))
+                     : std::string("unavailable")},
             {"role", wm::toString(window->role())},
             {"state", wm::toString(window->stateType())},
             {"visible", window->isVisible()},

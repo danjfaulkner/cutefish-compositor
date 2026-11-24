@@ -47,10 +47,30 @@ DesksController *FullscreenDesks::desks() const
 
 bool FullscreenDesks::canEnter(const Window *window) const
 {
-    return window && desks() && m_manager->hasWindow(const_cast<Window *>(window))
-            && window->role() == WindowRole::Normal && !window->isPopup()
-            && !window->isShellWindow() && !window->transientParent() && window->isResizable()
-            && window->stateType() != WindowStateType::Fullscreen && !owns(window);
+    return refusal(window).empty();
+}
+
+std::string FullscreenDesks::refusal(const Window *window) const
+{
+    if (!window)
+        return "no window";
+    if (!desks())
+        return "no desks";
+    if (!m_manager->hasWindow(window))
+        return "not managed";
+    if (window->role() != WindowRole::Normal || window->isShellWindow())
+        return "not an application window";
+    if (window->isPopup())
+        return "popup";
+    if (window->transientParent())
+        return "has a transient parent";
+    if (!window->isResizable())
+        return "not resizable";
+    if (window->stateType() == WindowStateType::Fullscreen)
+        return "already fullscreen";
+    if (owns(window))
+        return "already on its own desk";
+    return {};
 }
 
 bool FullscreenDesks::owns(const Window *window) const
@@ -126,6 +146,10 @@ bool FullscreenDesks::toggle(Window *window)
         // Fullscreen in place (the client's own): just leave it.
         window->state()->onEvent(WMEvent(WMEventType::ToggleFullscreen));
         return true;
+    }
+    if (const std::string why = refusal(window); !why.empty()) {
+        CF_WARNING(cfCompositor) << "fullscreen desk refused for" << window->applicationId() << ":" << why;
+        return false;
     }
     return enter(window);
 }

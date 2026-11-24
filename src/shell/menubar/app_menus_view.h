@@ -47,6 +47,8 @@ public:
     ui::Menu *openMenu() const { return m_openMenu; }
     AppMenusModel &model() { return *m_model; }
     BarItem *entry(size_t index) const;
+    // The fullscreen button after the menus.
+    BarItem *fullscreenButton() const;
     // Empty shows the account's colour.
     void setUserIcon(const std::string &file);
 

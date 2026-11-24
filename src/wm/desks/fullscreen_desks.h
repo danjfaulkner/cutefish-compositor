@@ -34,6 +34,8 @@ public:
 
     // A normal, resizable application window that is not fullscreen in place.
     bool canEnter(const Window *window) const;
+    // Why canEnter() is false, for logs and the window debug service; empty when it is true.
+    std::string refusal(const Window *window) const;
     // Fullscreen on a desk of its own.
     bool owns(const Window *window) const;
     bool isFullscreenDesk(const Desk *desk) const;
