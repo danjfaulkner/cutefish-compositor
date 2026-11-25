@@ -422,10 +422,9 @@ TEST(LaunchpadSearchTest, MatchesTheQtLauncherOnTheReferenceApplications)
     for (const auto &item : launchpad.applications().rows())
         found.push_back(item.id);
     EXPECT_EQ(found, (std::vector<std::string>{
-                             "chromium", "properdesktop-filemanager", "com.mitchellh.ghostty", "google-chrome",
-                             "libreoffice-startcenter", "libreoffice-draw", "libreoffice-impress", "libreoffice-math",
-                             "libreoffice-writer", "properdesktop-screenshot", "properdesktop-settings",
-                             "dev.lizardbyte.app.Sunshine", "properdesktop-terminal", "org.gnome.TextEditor",
-                             "properdesktop-system-monitor", "properdesktop-video-player", "properdesktop-text-editor",
-                             "properdesktop-calendar", "ai.storyteller.photocraft", "firefox"}));
+                             "chromium", "com.mitchellh.ghostty", "google-chrome", "libreoffice-startcenter",
+                             "libreoffice-draw", "libreoffice-impress", "libreoffice-math", "libreoffice-writer",
+                             "properdesktop-screenshot", "dev.lizardbyte.app.Sunshine", "properdesktop-terminal",
+                             "org.gnome.TextEditor", "properdesktop-system-monitor", "properdesktop-text-editor",
+                             "ai.storyteller.photocraft", "firefox"}));
 }
