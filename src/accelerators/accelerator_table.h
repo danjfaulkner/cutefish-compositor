@@ -48,6 +48,18 @@ inline constexpr auto kAcceleratorData = std::to_array<AcceleratorData>({
         {true, XKB_KEY_bracketright, AltDown, AcceleratorAction::WindowCycleSnapRight},
         {true, XKB_KEY_Right, MetaDown, AcceleratorAction::WindowCycleSnapRight},
         {true, XKB_KEY_F4, AltDown, AcceleratorAction::CloseWindow},
+        // GNOME's: Super+A for the applications, Super+H to hide a window, Super+Page Up/Down
+        // and Ctrl+Alt+Left/Right through the desks, with Shift taking the window along.
+        {true, XKB_KEY_a, MetaDown, AcceleratorAction::ToggleAppList},
+        {true, XKB_KEY_h, MetaDown, AcceleratorAction::WindowMinimize},
+        {true, XKB_KEY_Page_Up, MetaDown, AcceleratorAction::DesksActivateDeskLeft},
+        {true, XKB_KEY_Page_Down, MetaDown, AcceleratorAction::DesksActivateDeskRight},
+        {true, XKB_KEY_Left, ControlDown | AltDown, AcceleratorAction::DesksActivateDeskLeft},
+        {true, XKB_KEY_Right, ControlDown | AltDown, AcceleratorAction::DesksActivateDeskRight},
+        {true, XKB_KEY_Page_Up, MetaDown | ShiftDown, AcceleratorAction::DesksMoveActiveItemLeft},
+        {true, XKB_KEY_Page_Down, MetaDown | ShiftDown, AcceleratorAction::DesksMoveActiveItemRight},
+        {true, XKB_KEY_Left, ControlDown | AltDown | ShiftDown, AcceleratorAction::DesksMoveActiveItemLeft},
+        {true, XKB_KEY_Right, ControlDown | AltDown | ShiftDown, AcceleratorAction::DesksMoveActiveItemRight},
         {true, XKB_KEY_m, MetaDown | AltDown, AcceleratorAction::MoveActiveWindowBetweenDisplays},
         {true, XKB_KEY_Tab, MetaDown, AcceleratorAction::ToggleOverview},
         {true, XKB_KEY_XF86LaunchA, NoModifier, AcceleratorAction::ToggleOverview},
@@ -171,6 +183,21 @@ inline constexpr std::array kPreferredActions = {
         AcceleratorAction::CycleForwardMru,
         AcceleratorAction::ToggleOverview,
         AcceleratorAction::ToggleFullscreen,
+        // As on GNOME, a fullscreen game or video does not swallow these: closing a window, the
+        // applications, the desks and screenshots. A client that asks to keep every key (remote
+        // desktops, virtual machines) still gets them.
+        AcceleratorAction::CloseWindow,
+        AcceleratorAction::ToggleAppList,
+        AcceleratorAction::DesksActivateDeskLeft,
+        AcceleratorAction::DesksActivateDeskRight,
+        AcceleratorAction::DesksMoveActiveItemLeft,
+        AcceleratorAction::DesksMoveActiveItemRight,
+        AcceleratorAction::StartCaptureMode,
+        AcceleratorAction::TakeScreenshot,
+        AcceleratorAction::TakeScreenshotToClipboard,
+        AcceleratorAction::TakePartialScreenshot,
+        AcceleratorAction::TakePartialScreenshotToClipboard,
+        AcceleratorAction::StopScreenRecording,
 };
 
 inline constexpr std::array kReservedActions = {

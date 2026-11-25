@@ -8,6 +8,8 @@
 
 #include "accelerators/accelerator_filter.h"
 
+#include <cmath>
+
 #include <string>
 
 #include <xkbcommon/xkbcommon.h>
@@ -16,6 +18,7 @@
 #include "core/logging.h"
 #include "input/seat.h"
 #include "input/xkb_tracker.h"
+#include "wm/desks/desks_controller.h"
 #include "wm/activation.h"
 #include "wm/window.h"
 #include "wm/window_cycle_controller.h"
@@ -138,7 +141,36 @@ bool AcceleratorFilter::onPointerButton(input::Timestamp timestamp, const base::
 bool AcceleratorFilter::onPointerAxis(input::Timestamp timestamp, const base::PointF &location,
                                       const base::PointF &offset, bool discrete)
 {
+    if (scrollThroughDesks(offset, discrete))
+        return true;
+    m_deskScroll = 0;
     return m_next && m_next->onPointerAxis(timestamp, location, offset, discrete);
+}
+
+bool AcceleratorFilter::scrollThroughDesks(const base::PointF &offset, bool discrete)
+{
+    static constexpr double kSmoothScrollPerDesk = 60;
+    if (!m_windowManager || !m_windowManager->desks() || !m_xkb->modifierPressed(XKB_MOD_NAME_LOGO)
+        || offset.y() == 0 || std::abs(offset.x()) > std::abs(offset.y()))
+        return false;
+    input::Seat *seat = m_windowManager->seat();
+    if (seat && seat->shortcutsInhibition()->isActive())
+        return false;
+    // Super released after this opens nothing.
+    m_controller->launchpadStateMachine()->onPointerButton(true);
+    double steps = 0;
+    if (discrete) {
+        steps = offset.y() > 0 ? 1 : -1;
+    } else {
+        m_deskScroll += offset.y();
+        if (std::abs(m_deskScroll) < kSmoothScrollPerDesk)
+            return true;
+        steps = m_deskScroll > 0 ? 1 : -1;
+        m_deskScroll = 0;
+    }
+    // Down (or towards you) is the next desk, up the one before.
+    m_windowManager->desks()->activateAdjacentDesk(steps < 0, wm::DesksSwitchSource::DeskSwitchShortcut);
+    return true;
 }
 
 bool AcceleratorFilter::onPointerAxisStop(input::Timestamp timestamp, const base::PointF &location)

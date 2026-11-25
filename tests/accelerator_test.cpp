@@ -401,7 +401,8 @@ TEST(AcceleratorConfiguration, AddRemoveReplaceAndRestore)
     EXPECT_EQ(AcceleratorConfigResult::Success,
               configuration.addUserAccelerator(maximize, metaDown));
     EXPECT_EQ(AcceleratorAction::ToggleMaximized, *configuration.findAcceleratorAction(metaDown));
-    EXPECT_EQ(1u, configuration.acceleratorsForAction(minimize)->size());
+    // Alt+minus and GNOME's Super+H are left.
+    EXPECT_EQ(2u, configuration.acceleratorsForAction(minimize)->size());
 
     EXPECT_EQ(AcceleratorConfigResult::Success,
               configuration.replaceAccelerator(maximize, custom,
@@ -493,7 +494,7 @@ TEST(AcceleratorConfiguration, OverridesPersistAcrossInstances)
                   *configuration.findAcceleratorAction(custom));
         EXPECT_EQ(AcceleratorAction::ToggleMaximized,
                   *configuration.findAcceleratorAction(Accelerator(XKB_KEY_Down, MetaDown)));
-        EXPECT_EQ(1u, configuration.acceleratorsForAction(
+        EXPECT_EQ(2u, configuration.acceleratorsForAction(
                               toActionId(AcceleratorAction::WindowMinimize))->size());
         EXPECT_EQ(AcceleratorConfigResult::Success,
                   configuration.addUserAccelerator(lock, metaL));
@@ -1548,7 +1549,7 @@ TEST_F(AcceleratorTest, WindowActionsDoNothingInTheOverview)
     overview->setNodes(nullptr, nullptr);
 }
 
-TEST_F(AcceleratorTest, FullscreenWindowsKeepNonReservedKeysExceptMetaOnes)
+TEST_F(AcceleratorTest, FullscreenWindowsKeepPlainKeysButNotTheDesktopOnes)
 {
     wm::Window *window = makeWindow(base::Rect(100, 100, 300, 200));
     manager.activation()->activate(window);
@@ -1561,8 +1562,14 @@ TEST_F(AcceleratorTest, FullscreenWindowsKeepNonReservedKeysExceptMetaOnes)
     window->setCloseCallback([&closes] {
         ++closes;
     });
+    // As on GNOME, Alt+F4 closes a fullscreen window: the client sees only Alt.
     chord({KEY_LEFTALT}, KEY_F4);
-    EXPECT_EQ(0, closes);
+    EXPECT_EQ(1, closes);
+    EXPECT_EQ(2u, keyboardDelegate->keys.size());
+
+    // A plain key the desktop does not bind still goes to the window.
+    keyboardDelegate->keys.clear();
+    chord({KEY_LEFTALT}, KEY_X);
     EXPECT_EQ(4u, keyboardDelegate->keys.size());
 
     chord({KEY_LEFTMETA}, KEY_F);
@@ -1724,7 +1731,8 @@ TEST_F(AcceleratorTest, ServiceValidatesConfirmsAndReportsConflicts)
     EXPECT_TRUE(configuration->findAcceleratorAction(metaTap));
     tap(KEY_LEFTMETA);
     EXPECT_EQ(2, delegate.appListToggles);
-    chord({KEY_LEFTMETA}, KEY_A);
+    // Super with another key is not a tap (Super+A has a binding of its own).
+    chord({KEY_LEFTMETA}, KEY_Q);
     EXPECT_EQ(2, delegate.appListToggles);
     EXPECT_EQ("missing-modifier",
               parse(service.addAccelerator("toggle-app-list", KEY_LEFTSHIFT, 0,
@@ -1809,7 +1817,8 @@ TEST_F(AcceleratorTest, ServiceListsActionsWithTheirDefaultsOverTheBus)
         }
         if (action["name"].toString() == "toggle-app-list") {
             const base::json::Value &defaults = action["defaults"];
-            ASSERT_EQ(1u, defaults.size());
+            // The tap, then GNOME's Super+A.
+            ASSERT_EQ(2u, defaults.size());
             const base::json::Value &tap = defaults[0];
             EXPECT_EQ(XKB_KEY_Super_L, tap["keysym"].toInt());
             EXPECT_EQ("released", tap["keyState"].toString());
@@ -1881,4 +1890,57 @@ TEST_F(AcceleratorTest, MediaKeysDispatchAndCanBeReassignedWithoutRepeating)
     ASSERT_TRUE(reloaded.findAcceleratorAction(custom));
     EXPECT_EQ(AcceleratorAction::MediaPlayPause, *reloaded.findAcceleratorAction(custom));
     EXPECT_FALSE(reloaded.findAcceleratorAction(original));
+}
+
+TEST_F(AcceleratorTest, ScreenshotsTheApplicationsAndTheDesksWorkOverAFullscreenWindow)
+{
+    wm::Window *window = makeWindow(base::Rect(100, 100, 300, 200));
+    manager.activation()->activate(window);
+    window->setFullscreen(true);
+    auto delegateOwner = std::make_unique<RecordingKeyboardDelegate>();
+    RecordingKeyboardDelegate *keyboardDelegate = delegateOwner.get();
+    input::Keyboard keyboard(std::move(delegateOwner), &seat);
+
+    tap(KEY_SYSRQ);
+    chord({KEY_LEFTSHIFT}, KEY_SYSRQ);
+    EXPECT_EQ(std::vector<std::string>({"capture-mode", "screen"}), delegate.captures);
+
+    // Super on its own: the applications.
+    tap(KEY_LEFTMETA);
+    EXPECT_EQ(1, delegate.appListToggles);
+    // GNOME's Super+A too.
+    chord({KEY_LEFTMETA}, KEY_A);
+    EXPECT_EQ(2, delegate.appListToggles);
+    (void)keyboardDelegate;
+}
+
+TEST_F(AcceleratorTest, GnomeKeysAndSuperWithTheWheelGoThroughTheDesks)
+{
+    wm::DesksController *desks = manager.desks();
+    ASSERT_NE(nullptr, desks->newDesk(wm::DesksCreationRemovalSource::Keyboard));
+    ASSERT_NE(nullptr, desks->newDesk(wm::DesksCreationRemovalSource::Keyboard));
+    ASSERT_EQ(0, desks->activeDeskIndex());
+
+    chord({KEY_LEFTMETA}, KEY_PAGEDOWN);
+    EXPECT_EQ(1, desks->activeDeskIndex());
+    press(KEY_LEFTCTRL);
+    chord({KEY_LEFTALT}, KEY_RIGHT);
+    release(KEY_LEFTCTRL);
+    EXPECT_EQ(2, desks->activeDeskIndex());
+    chord({KEY_LEFTMETA}, KEY_PAGEUP);
+    EXPECT_EQ(1, desks->activeDeskIndex());
+
+    // Super and the wheel: a desk a notch, down for the next; Super then opens nothing.
+    press(KEY_LEFTMETA);
+    input.onPointerAxis(at(++time), {0, -15}, true);
+    EXPECT_EQ(0, desks->activeDeskIndex());
+    input.onPointerAxis(at(++time), {0, 15}, true);
+    input.onPointerAxis(at(++time), {0, 15}, true);
+    EXPECT_EQ(2, desks->activeDeskIndex());
+    release(KEY_LEFTMETA);
+    EXPECT_EQ(0, delegate.appListToggles);
+
+    // Without Super the wheel is the window's.
+    input.onPointerAxis(at(++time), {0, -15}, true);
+    EXPECT_EQ(2, desks->activeDeskIndex());
 }

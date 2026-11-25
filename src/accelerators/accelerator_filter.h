@@ -71,8 +71,13 @@ private:
     void stopRepeat();
     void onRepeat();
 
+    // Super and the scroll wheel go through the desks, a desk per notch, as on GNOME.
+    bool scrollThroughDesks(const base::PointF &offset, bool discrete);
+
     AcceleratorController *m_controller = nullptr;
     const input::XkbTracker *m_xkb = nullptr;
+    // Smooth scrolling (a touchpad) adds up to a desk at a time.
+    double m_deskScroll = 0;
     // What the accelerator that started the window cycle held besides Shift.
     uint32_t m_cycleModifiers = 0;
     wm::WindowManager *m_windowManager = nullptr;
