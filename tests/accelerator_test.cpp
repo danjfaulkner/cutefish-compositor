@@ -1914,6 +1914,82 @@ TEST_F(AcceleratorTest, ScreenshotsTheApplicationsAndTheDesksWorkOverAFullscreen
     (void)keyboardDelegate;
 }
 
+TEST_F(AcceleratorTest, SuperAndTheWheelMoveADeskAClickAndPauseAfterIt)
+{
+    wm::DesksController *desks = manager.desks();
+    for (int i = 0; i < 4; ++i)
+        ASSERT_NE(nullptr, desks->newDesk(wm::DesksCreationRemovalSource::Keyboard));
+    ASSERT_EQ(0, desks->activeDeskIndex());
+    const int pause = int(AcceleratorFilter::kDeskScrollPause.count());
+    press(KEY_LEFTMETA);
+
+    // A flick of the wheel: many clicks close together move one desk.
+    for (int i = 0; i < 8; ++i)
+        input.onPointerAxis(at(time += 10), {0, 10}, true);
+    EXPECT_EQ(1, desks->activeDeskIndex());
+    // Once the pause is over, the next click moves on.
+    input.onPointerAxis(at(time += pause), {0, 10}, true);
+    EXPECT_EQ(2, desks->activeDeskIndex());
+
+    // A high-resolution wheel reports a click in eighths: only the whole click moves.
+    time += pause;
+    for (int i = 0; i < 7; ++i)
+        input.onPointerAxis(at(time += 20), {0, 1.25}, true);
+    EXPECT_EQ(2, desks->activeDeskIndex());
+    input.onPointerAxis(at(time += 20), {0, 1.25}, true);
+    EXPECT_EQ(3, desks->activeDeskIndex());
+
+    // Turning back part-way through a click starts it over.
+    time += pause;
+    input.onPointerAxis(at(time += 20), {0, 7.5}, true);
+    input.onPointerAxis(at(time += 20), {0, -5}, true);
+    EXPECT_EQ(3, desks->activeDeskIndex());
+    input.onPointerAxis(at(time += 20), {0, -5}, true);
+    EXPECT_EQ(2, desks->activeDeskIndex());
+
+    release(KEY_LEFTMETA);
+    // Super with any scrolling opens nothing when released.
+    EXPECT_EQ(0, delegate.appListToggles);
+}
+
+TEST_F(AcceleratorTest, SuperAndTouchpadScrollingSlideTheDesksWithTheFingers)
+{
+    wm::DesksController *desks = manager.desks();
+    for (int i = 0; i < 3; ++i)
+        ASSERT_NE(nullptr, desks->newDesk(wm::DesksCreationRemovalSource::Keyboard));
+    ASSERT_EQ(0, desks->activeDeskIndex());
+    const double perDesk = wm::DeskScrollSlide::kScrollPerDesk;
+    const auto settle = [&] { test::runFor(std::chrono::milliseconds(2000)); };
+
+    // How the slide follows the fingers is DeskAnimationTest's (this fixture has no switch node, so a
+    // slide lands at once); here, which way it goes and who gets the scroll.
+    // Down a little under a desk's worth, then the fingers lift: the next desk.
+    press(KEY_LEFTMETA);
+    for (int i = 0; i < 20; ++i)
+        input.onPointerAxis(at(time += 16), {0, perDesk * 0.7 / 20}, false);
+    input.onPointerAxisStop(at(time += 16));
+    settle();
+    EXPECT_EQ(1, desks->activeDeskIndex());
+
+    // A slide carries on to the lift even when Super is let go first.
+    for (int i = 0; i < 20; ++i) {
+        if (i == 5)
+            release(KEY_LEFTMETA);
+        input.onPointerAxis(at(time += 16), {0, -perDesk * 0.7 / 20}, false);
+    }
+    input.onPointerAxisStop(at(time += 16));
+    settle();
+    EXPECT_EQ(0, desks->activeDeskIndex());
+    EXPECT_EQ(0, delegate.appListToggles);
+
+    // Without Super, touchpad scrolling is the window's.
+    for (int i = 0; i < 20; ++i)
+        input.onPointerAxis(at(time += 16), {0, perDesk / 10}, false);
+    input.onPointerAxisStop(at(time += 16));
+    settle();
+    EXPECT_EQ(0, desks->activeDeskIndex());
+}
+
 TEST_F(AcceleratorTest, GnomeKeysAndSuperWithTheWheelGoThroughTheDesks)
 {
     wm::DesksController *desks = manager.desks();
@@ -1930,12 +2006,13 @@ TEST_F(AcceleratorTest, GnomeKeysAndSuperWithTheWheelGoThroughTheDesks)
     chord({KEY_LEFTMETA}, KEY_PAGEUP);
     EXPECT_EQ(1, desks->activeDeskIndex());
 
-    // Super and the wheel: a desk a notch, down for the next; Super then opens nothing.
+    // Super and the wheel: a desk a click, down for the next; Super then opens nothing.
+    const int pause = int(AcceleratorFilter::kDeskScrollPause.count());
     press(KEY_LEFTMETA);
-    input.onPointerAxis(at(++time), {0, -15}, true);
+    input.onPointerAxis(at(++time), {0, -10}, true);
     EXPECT_EQ(0, desks->activeDeskIndex());
-    input.onPointerAxis(at(++time), {0, 15}, true);
-    input.onPointerAxis(at(++time), {0, 15}, true);
+    input.onPointerAxis(at(time += pause), {0, 10}, true);
+    input.onPointerAxis(at(time += pause), {0, 10}, true);
     EXPECT_EQ(2, desks->activeDeskIndex());
     release(KEY_LEFTMETA);
     EXPECT_EQ(0, delegate.appListToggles);

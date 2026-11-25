@@ -8,6 +8,7 @@
 
 #include "accelerators/accelerator_filter.h"
 
+#include <chrono>
 #include <cmath>
 
 #include <string>
@@ -141,40 +142,70 @@ bool AcceleratorFilter::onPointerButton(input::Timestamp timestamp, const base::
 bool AcceleratorFilter::onPointerAxis(input::Timestamp timestamp, const base::PointF &location,
                                       const base::PointF &offset, bool discrete)
 {
-    if (scrollThroughDesks(offset, discrete))
+    // A slide carries on until the fingers lift, Super held or not.
+    if (m_deskSlide && m_deskSlide->sliding() && !discrete)
+        return slideDesks(timestamp, offset.y());
+    if (scrollThroughDesks(timestamp, offset, discrete))
         return true;
     m_deskScroll = 0;
     return m_next && m_next->onPointerAxis(timestamp, location, offset, discrete);
 }
 
-bool AcceleratorFilter::scrollThroughDesks(const base::PointF &offset, bool discrete)
+bool AcceleratorFilter::scrollThroughDesks(input::Timestamp timestamp, const base::PointF &offset, bool discrete)
 {
-    static constexpr double kSmoothScrollPerDesk = 60;
     if (!m_windowManager || !m_windowManager->desks() || !m_xkb->modifierPressed(XKB_MOD_NAME_LOGO)
         || offset.y() == 0 || std::abs(offset.x()) > std::abs(offset.y()))
         return false;
     input::Seat *seat = m_windowManager->seat();
     if (seat && seat->shortcutsInhibition()->isActive())
         return false;
-    // Super released after this opens nothing.
+    // Super released after scrolling opens nothing, whichever way the scroll went.
     m_controller->launchpadStateMachine()->onPointerButton(true);
-    double steps = 0;
-    if (discrete) {
-        steps = offset.y() > 0 ? 1 : -1;
-    } else {
-        m_deskScroll += offset.y();
-        if (std::abs(m_deskScroll) < kSmoothScrollPerDesk)
-            return true;
-        steps = m_deskScroll > 0 ? 1 : -1;
+    if (!discrete)
+        return slideDesks(timestamp, offset.y());
+    // Not straight after going to another desk: the rest of a flick of the wheel is dropped, and it
+    // is not the window's either, since Super is held.
+    if (m_deskScrolled && timestamp - *m_deskScrolled < kDeskScrollPause) {
         m_deskScroll = 0;
+        return true;
     }
+    // Turning the wheel the other way starts the click over.
+    if (m_deskScroll != 0 && (m_deskScroll > 0) != (offset.y() > 0))
+        m_deskScroll = 0;
+    m_deskScroll += offset.y();
+    if (std::abs(m_deskScroll) < input::kAxisUnitsPerClick)
+        return true;
     // Down (or towards you) is the next desk, up the one before.
-    m_windowManager->desks()->activateAdjacentDesk(steps < 0, wm::DesksSwitchSource::DeskSwitchShortcut);
+    const bool previous = m_deskScroll < 0;
+    m_deskScroll = 0;
+    m_deskScrolled = timestamp;
+    m_windowManager->desks()->activateAdjacentDesk(previous, wm::DesksSwitchSource::DeskSwitchShortcut);
     return true;
+}
+
+wm::DeskScrollSlide *AcceleratorFilter::deskSlide()
+{
+    wm::DesksController *desks = m_windowManager ? m_windowManager->desks() : nullptr;
+    if (!desks)
+        return nullptr;
+    if (!m_deskSlide)
+        m_deskSlide.emplace(desks);
+    return &*m_deskSlide;
+}
+
+bool AcceleratorFilter::slideDesks(input::Timestamp timestamp, double scroll)
+{
+    wm::DeskScrollSlide *slide = deskSlide();
+    return slide && slide->scroll(timestamp, scroll);
 }
 
 bool AcceleratorFilter::onPointerAxisStop(input::Timestamp timestamp, const base::PointF &location)
 {
+    // The fingers lifted: the slide settles on the nearest desk, or the way it was going.
+    if (m_deskSlide && m_deskSlide->sliding()) {
+        m_deskSlide->end(timestamp);
+        return true;
+    }
     return m_next && m_next->onPointerAxisStop(timestamp, location);
 }
 

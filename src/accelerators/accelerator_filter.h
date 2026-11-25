@@ -9,11 +9,15 @@
 #ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_FILTER_H_
 #define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_FILTER_H_
 
+#include <chrono>
+#include <optional>
+
 #include "accelerators/accelerator.h"
 #include "base/geometry.h"
 #include "base/timer.h"
 #include "input/event_sink.h"
 #include "input/types.h"
+#include "wm/desks/desk_scroll_slide.h"
 
 namespace properdesktop::input {
 class XkbTracker;
@@ -35,6 +39,10 @@ class AcceleratorFilter : public input::EventSink
 {
 
 public:
+    // After Super and the wheel go to another desk, the wheel does nothing for this long (GNOME's
+    // SCROLL_TIMEOUT_TIME).
+    static constexpr std::chrono::milliseconds kDeskScrollPause {150};
+
     // `next` receives whatever is not consumed here.
     AcceleratorFilter(AcceleratorController *controller, const input::XkbTracker *xkb,
                       wm::WindowManager *windowManager, wm::WindowCycleController *windowCycle,
@@ -71,13 +79,23 @@ private:
     void stopRepeat();
     void onRepeat();
 
-    // Super and the scroll wheel go through the desks, a desk per notch, as on GNOME.
-    bool scrollThroughDesks(const base::PointF &offset, bool discrete);
+    // Super and the scroll wheel go through the desks as on GNOME: a desk per whole wheel click, then
+    // a pause of kDeskScrollPause in which the wheel does nothing, so a flick of the wheel moves one
+    // desk rather than racing through them. Super and touchpad scrolling slide the desks along with
+    // the fingers, as the three-finger swipe does, and settle on the nearest when they lift.
+    bool scrollThroughDesks(input::Timestamp timestamp, const base::PointF &offset, bool discrete);
+    // Smooth scrolling with Super: starts the slide, or carries it on until the fingers lift.
+    bool slideDesks(input::Timestamp timestamp, double scroll);
+    wm::DeskScrollSlide *deskSlide();
 
     AcceleratorController *m_controller = nullptr;
     const input::XkbTracker *m_xkb = nullptr;
-    // Smooth scrolling (a touchpad) adds up to a desk at a time.
+    // The wheel added up towards a whole click: a high-resolution wheel reports a click in parts.
     double m_deskScroll = 0;
+    // When the wheel last went to another desk.
+    std::optional<input::Timestamp> m_deskScrolled;
+    // Super and touchpad scrolling sliding the desks, until the fingers lift.
+    std::optional<wm::DeskScrollSlide> m_deskSlide;
     // What the accelerator that started the window cycle held besides Shift.
     uint32_t m_cycleModifiers = 0;
     wm::WindowManager *m_windowManager = nullptr;

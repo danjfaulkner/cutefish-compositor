@@ -506,6 +506,7 @@ add_library(properdesktop-wm STATIC
     src/wm/desks/desk.h
     src/wm/desks/desk_animation.cpp
     src/wm/desks/desk_animation.h
+    src/wm/desks/desk_scroll_slide.cpp
     src/wm/desks/desks_controller.cpp
     src/wm/desks/desks_controller.h
     src/wm/desks/desk_preferences.cpp

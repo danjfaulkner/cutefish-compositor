@@ -31,6 +31,7 @@
 #include "wm/desks/desk.h"
 #include "wm/desks/desk_animation.h"
 #include "wm/desks/desk_preferences.h"
+#include "wm/desks/desk_scroll_slide.h"
 #include "wm/desks/desks_controller.h"
 #include "wm/desks/fullscreen_desks.h"
 #include "wm/overview/overview_controller.h"
@@ -647,6 +648,54 @@ TEST_F(DeskAnimationTest, ASwipeFollowsTheFingersAndLandsOnTheNearestDesk)
     EXPECT_EQ(nullptr, desks->animation());
     EXPECT_EQ(desk(1), desks->activeDesk());
     input.setGestureFilter(nullptr);
+}
+
+TEST_F(DeskAnimationTest, AScrollSlideFollowsTheFingersAndSettlesOnTheNearestDesk)
+{
+    addDesks(2);
+    DeskScrollSlide slide(desks);
+    // Scrolling `desks` worth in `steps` events `ms` apart.
+    const auto scroll = [&](double deskTotal, int steps, int ms) {
+        for (int i = 0; i < steps; ++i) {
+            now += ms;
+            EXPECT_TRUE(slide.scroll(at(now), deskTotal / steps * DeskScrollSlide::kScrollPerDesk));
+            paint();
+        }
+    };
+    const auto lift = [&](int after) {
+        now += after;
+        slide.end(at(now));
+        finish();
+        EXPECT_FALSE(slide.sliding());
+        EXPECT_EQ(nullptr, desks->animation());
+    };
+
+    // A slow fifth of a desk, then the fingers lift: it springs back.
+    scroll(0.2, 20, 40);
+    EXPECT_TRUE(slide.sliding());
+    ASSERT_NE(nullptr, desks->animation());
+    lift(40);
+    EXPECT_EQ(desk(0), desks->activeDesk());
+
+    // Most of a desk down, slowly: the next desk.
+    scroll(0.7, 50, 40);
+    lift(40);
+    EXPECT_EQ(desk(1), desks->activeDesk());
+
+    // Back up past the middle, slowly: the one before.
+    scroll(-0.6, 50, 40);
+    lift(40);
+    EXPECT_EQ(desk(0), desks->activeDesk());
+
+    // A quick flick of a fifth of a desk, lifted as it moves: on to the next, as a swipe's flick.
+    scroll(0.2, 3, 16);
+    lift(8);
+    EXPECT_EQ(desk(1), desks->activeDesk());
+
+    // Slowly down through more desks than there are: the last, no further.
+    scroll(2.4, 100, 40);
+    lift(40);
+    EXPECT_EQ(desk(2), desks->activeDesk());
 }
 
 TEST_F(DeskAnimationTest, AShortFlickSwitchesDesksAndAShortHeldSwipeDoesNot)
