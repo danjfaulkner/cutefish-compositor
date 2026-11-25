@@ -8,7 +8,7 @@
 #include <cmath>
 #include <map>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -378,4 +378,4 @@ void DockPresentation::changed()
         onChanged();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

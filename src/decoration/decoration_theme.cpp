@@ -9,7 +9,7 @@
 
 #include <algorithm>
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 namespace {
 
@@ -173,4 +173,4 @@ void Theme::clearTextures()
     m_renderer = nullptr;
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

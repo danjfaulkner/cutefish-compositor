@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_MODELS_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_MODELS_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_MODELS_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_MODELS_H_
 
 #include <cstdint>
 #include <set>
@@ -17,13 +17,13 @@
 #include "shell/notification/notification.h"
 #include "shell/notification/notification_server.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class NotificationSettings;
 
 std::string friendlyTime(std::optional<int64_t> created, int64_t nowMs);
 
-// Persisted in ~/.config/cutefish/notification-history.json, read and written
+// Persisted in ~/.config/properdesktop/notification-history.json, read and written
 // on the file thread.
 class NotificationHistory : public ListModelSignals
 {
@@ -98,6 +98,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_MODELS_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_MODELS_H_

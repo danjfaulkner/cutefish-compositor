@@ -6,8 +6,8 @@
 // Upstream: chromium/src/ui/compositor_extra/shadow.{h,cc}
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_DECORATION_SHADOW_NODE_H_
-#define CUTEFISH_DECORATION_SHADOW_NODE_H_
+#ifndef PROPERDESKTOP_DECORATION_SHADOW_NODE_H_
+#define PROPERDESKTOP_DECORATION_SHADOW_NODE_H_
 
 #include "base/geometry.h"
 #include "decoration/raster.h"
@@ -16,11 +16,11 @@
 #include "ui/path.h"
 #include "wm/window_shadow.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 }
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 class Theme;
 
@@ -117,6 +117,6 @@ private:
     Theme *m_theme = nullptr;
 };
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-#endif // CUTEFISH_DECORATION_SHADOW_NODE_H_
+#endif // PROPERDESKTOP_DECORATION_SHADOW_NODE_H_

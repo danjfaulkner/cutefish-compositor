@@ -24,7 +24,7 @@
 #include "temporary_directory.h"
 #include "ui/bitmap.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 namespace dbus = base::dbus;
 using shell::Notification;
 using shell::NotificationServer;
@@ -97,7 +97,7 @@ class FakeAppRuntime
 {
 public:
     explicit FakeAppRuntime(dbus::Connection *bus)
-        : object(bus, "/AppRuntime", "org.cutefish.AppRuntime")
+        : object(bus, "/AppRuntime", "org.properdesktop.AppRuntime")
     {
         object.addMethod("launchApplication", [this](const std::string &id, const std::vector<std::string> &files,
                                                      const std::string &) {
@@ -105,7 +105,7 @@ public:
             return uint32_t(1);
         });
         EXPECT_TRUE(object.publish());
-        EXPECT_TRUE(bus->requestName("org.cutefish.AppRuntime"));
+        EXPECT_TRUE(bus->requestName("org.properdesktop.AppRuntime"));
     }
 
     dbus::Object object;
@@ -124,8 +124,8 @@ TEST_F(NotificationServiceTest, AnswersTheSpecsQuestions)
 
     std::string name, vendor, version, spec;
     ASSERT_TRUE(client.call(kService, kPath, kService, "GetServerInformation").read(name, vendor, version, spec));
-    EXPECT_EQ(name, "Cutefish");
-    EXPECT_EQ(vendor, "CutefishOS");
+    EXPECT_EQ(name, "ProperDesktop");
+    EXPECT_EQ(vendor, "Proper Desktop");
     EXPECT_EQ(version, "1.0");
     EXPECT_EQ(spec, "1.2");
 
@@ -157,7 +157,7 @@ TEST_F(NotificationServiceTest, ShowsANotificationAsTheSendersApplication)
     EXPECT_EQ(shown.service, client.connection->uniqueName());
 
     const dbus::Reply applications =
-            client.call("org.cutefish.Notification", "/Notification", "org.cutefish.Notification", "applications");
+            client.call("org.properdesktop.Notification", "/Notification", "org.properdesktop.Notification", "applications");
     const auto list = applications.value<std::vector<dbus::VariantMap>>();
     ASSERT_TRUE(list.has_value());
     ASSERT_EQ(list->size(), 1u);
@@ -173,7 +173,7 @@ TEST_F(NotificationServiceTest, StartsASenderThatQuitForAnAction)
     start();
 
     auto sender = std::make_unique<test::DBusTestClient>();
-    const dbus::VariantMap hints{{"x-cutefish-relaunch-id", dbus::Variant(std::string("a b"))}};
+    const dbus::VariantMap hints{{"x-properdesktop-relaunch-id", dbus::Variant(std::string("a b"))}};
     const std::vector<std::string> actions{"default", "", "show", "Show"};
     const uint32_t id = sender->call(kService, kPath, kService, "Notify", std::string("chat"), uint32_t(0),
                                      std::string(), std::string("Done"), std::string(), actions, hints, int32_t(-1))
@@ -194,7 +194,7 @@ TEST_F(NotificationServiceTest, StartsASenderThatQuitForAnAction)
     ASSERT_TRUE(test::runUntil([&] { return !runtime.launched.empty(); }));
     EXPECT_EQ(runtime.launched.front().first, "org.example.Chat");
     EXPECT_EQ(runtime.launched.front().second,
-              std::vector<std::string>{"cutefish-notification:a%20b?action=show"});
+              std::vector<std::string>{"properdesktop-notification:a%20b?action=show"});
 
     // A sender that gave no id to come back with is not started.
     client.connection.reset();
@@ -327,7 +327,7 @@ TEST_F(NotificationServiceTest, FollowsTheApplicationModesAndDoNotDisturb)
     EXPECT_EQ(notifications->history().count(), 0);
     EXPECT_TRUE(client.call(kService, kPath, kService, "CloseNotification", uint32_t(1)).isError());
 
-    EXPECT_FALSE(client.call("org.cutefish.Notification", "/Notification", "org.cutefish.Notification",
+    EXPECT_FALSE(client.call("org.properdesktop.Notification", "/Notification", "org.properdesktop.Notification",
                              "setApplicationMode", std::string("org.example.Chat"), int32_t(1))
                          .isError());
     notify("Quiet");
@@ -339,12 +339,12 @@ TEST_F(NotificationServiceTest, FollowsTheApplicationModesAndDoNotDisturb)
     base::Settings saved(directory.filePath("shell.conf"));
     EXPECT_EQ(saved.intValue("Notifications/Applications/org.example.Chat/Mode"), 1);
 
-    client.listen("org.cutefish.Notification");
-    client.call("org.cutefish.Notification", "/Notification", "org.cutefish.Notification", "setDoNotDisturb", true);
+    client.listen("org.properdesktop.Notification");
+    client.call("org.properdesktop.Notification", "/Notification", "org.properdesktop.Notification", "setDoNotDisturb", true);
     EXPECT_TRUE(test::runUntil([&] { return !client.signalsSeen.empty(); }));
     EXPECT_EQ(client.signalsSeen.front().member(), "doNotDisturbChanged");
-    const dbus::Reply property = client.getProperty("org.cutefish.Notification", "/Notification",
-                                                    "org.cutefish.Notification", "doNotDisturb");
+    const dbus::Reply property = client.getProperty("org.properdesktop.Notification", "/Notification",
+                                                    "org.properdesktop.Notification", "doNotDisturb");
     EXPECT_EQ(property.value<dbus::Variant>().value_or(dbus::Variant()).value<bool>(), true);
     notify("Mail", 0, {}, {}, "Mail");
     settle();
@@ -435,7 +435,7 @@ TEST(NotificationTimeTest, CountsMinutesHoursAndDays)
 
 TEST(NotificationImagesTest, PrunesOnlyItsOwnPictures)
 {
-    EXPECT_EQ(base::paths::cacheHome() + "/cutefish/notification-images",
+    EXPECT_EQ(base::paths::cacheHome() + "/properdesktop/notification-images",
               shell::notification_images::defaultDirectory());
 
     test::TemporaryDirectory directory;

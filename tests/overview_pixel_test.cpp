@@ -13,8 +13,8 @@
 #include "scene/window_animation.h"
 #include "base/geometry.h"
 
-using namespace cutefish;
-using namespace cutefish::render;
+using namespace properdesktop;
+using namespace properdesktop::render;
 
 namespace {
 

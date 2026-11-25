@@ -14,7 +14,7 @@
 #include "base/paths.h"
 #include "base/strings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -123,4 +123,4 @@ std::string mimeIconNameForFile(const std::string &path)
     return iconOf("application/octet-stream");
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

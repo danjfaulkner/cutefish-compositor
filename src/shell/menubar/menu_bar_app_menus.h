@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_MENU_BAR_APP_MENUS_H_
-#define CUTEFISH_SHELL_MENUBAR_MENU_BAR_APP_MENUS_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_APP_MENUS_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_APP_MENUS_H_
 
 #include <functional>
 
 #include "ui/geometry.h"
 #include "ui/view.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class BarContext;
 class MenuBar;
@@ -31,6 +31,6 @@ public:
     virtual void barChanged() = 0;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_MENU_BAR_APP_MENUS_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_APP_MENUS_H_

@@ -5,13 +5,13 @@
 // Modelled on chromium/src/ash/wm/window_resizer.* and
 // default_window_resizer.* (revision 7acd40ddefff49c9d36144999aafdbb674dbd07a).
 
-#ifndef CUTEFISH_WM_WINDOW_RESIZER_H_
-#define CUTEFISH_WM_WINDOW_RESIZER_H_
+#ifndef PROPERDESKTOP_WM_WINDOW_RESIZER_H_
+#define PROPERDESKTOP_WM_WINDOW_RESIZER_H_
 
 #include "base/geometry.h"
 #include "wm/types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 
@@ -60,6 +60,6 @@ private:
     bool m_movedOrResized = false;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WINDOW_RESIZER_H_
+#endif // PROPERDESKTOP_WM_WINDOW_RESIZER_H_

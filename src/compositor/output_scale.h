@@ -13,7 +13,7 @@
 
 #include "base/geometry.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 class OutputScale
 {
@@ -84,4 +84,4 @@ private:
     uint32_t m_numerator = denominator;
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

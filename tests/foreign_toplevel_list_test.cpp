@@ -31,7 +31,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -253,7 +253,7 @@ TEST_F(ForeignToplevelListTest, ListsApplicationWindowsWithIdentityAndSource)
     const Handle &handle = *handles.front();
     EXPECT_EQ(handle.title, "Editor");
     EXPECT_EQ(handle.appId, "org.example.Editor");
-    EXPECT_EQ(handle.identifier, std::format("cutefish-{}", window->id()));
+    EXPECT_EQ(handle.identifier, std::format("properdesktop-{}", window->id()));
     EXPECT_GE(handle.done, 1);
     EXPECT_FALSE(handle.closed);
 

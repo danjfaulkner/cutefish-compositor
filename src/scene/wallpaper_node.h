@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SCENE_WALLPAPER_NODE_H_
-#define CUTEFISH_SCENE_WALLPAPER_NODE_H_
+#ifndef PROPERDESKTOP_SCENE_WALLPAPER_NODE_H_
+#define PROPERDESKTOP_SCENE_WALLPAPER_NODE_H_
 
 #include <memory>
 #include <optional>
@@ -11,7 +11,7 @@
 #include "scene/node.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 class WallpaperNode final : public Node
 {
@@ -62,6 +62,6 @@ private:
     mutable int m_gradientRows = 0;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_WALLPAPER_NODE_H_
+#endif // PROPERDESKTOP_SCENE_WALLPAPER_NODE_H_

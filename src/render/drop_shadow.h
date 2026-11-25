@@ -12,7 +12,7 @@
 #include "render/renderer.h"
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // Each lobe is a separable Gaussian of the caster's coverage, on a copy halved
 // until its sigma fits the kernel.
@@ -36,4 +36,4 @@ private:
     GlProgram m_program;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

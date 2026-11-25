@@ -23,7 +23,7 @@
 #include "core/main_loop.h"
 #include "shell/common/task_manager.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 using Properties = std::map<std::string, std::string>;
 
@@ -189,8 +189,8 @@ void PipeWireCapture::connectToDaemon()
         m_context = pw_context_new(m_loop, nullptr, 0);
     if (m_context) {
         m_core = pw_context_connect(m_context,
-                                    pw_properties_new(PW_KEY_APP_NAME, "Cutefish Privacy", PW_KEY_APP_ID,
-                                                      "org.cutefish.Privacy", nullptr),
+                                    pw_properties_new(PW_KEY_APP_NAME, "Proper Desktop Privacy", PW_KEY_APP_ID,
+                                                      "org.properdesktop.Privacy", nullptr),
                                     0);
     }
     if (!m_core) {
@@ -322,7 +322,7 @@ void PipeWireCapture::update()
         const Properties &properties = stream->properties;
         if (!valueOf(properties, PW_KEY_MEDIA_CLASS).starts_with("Stream/Input/"))
             continue;
-        if (valueOf(properties, PW_KEY_NODE_NAME).starts_with("cutefish.internal.")
+        if (valueOf(properties, PW_KEY_NODE_NAME).starts_with("properdesktop.internal.")
             || valueOf(properties, PW_KEY_STREAM_MONITOR) == "true" || properties.count(PW_KEY_NODE_LINK_GROUP))
             continue;
         for (const auto &[linkId, link] : m_links) {
@@ -596,4 +596,4 @@ void DeviceUsage::updateApplications()
     applicationsChanged();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -16,7 +16,7 @@
 
 #include "base/geometry.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 struct DrmDeviceTransaction {
     std::string deviceKey;
@@ -83,4 +83,4 @@ bool hardwareCloneEligible(const std::string& firstDevice, const std::string& se
                            const std::string& firstMode, const std::string& secondMode,
                            uint32_t firstPossibleCrtcs, uint32_t secondPossibleCrtcs);
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

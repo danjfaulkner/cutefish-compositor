@@ -25,7 +25,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 namespace {
 
@@ -301,4 +301,4 @@ bool AcceleratorFilter::shouldProcessAcceleratorNow(const Accelerator &accelerat
     return !fullscreen;
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

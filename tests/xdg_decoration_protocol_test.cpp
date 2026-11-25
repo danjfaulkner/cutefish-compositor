@@ -39,7 +39,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

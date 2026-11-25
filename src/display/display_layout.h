@@ -14,7 +14,7 @@
 
 #include "display/display_types.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayLayout
 {
@@ -36,4 +36,4 @@ public:
                           int minimumSharedEdge = preferredMinimumSharedEdge);
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

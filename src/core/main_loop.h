@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_MAIN_LOOP_H_
-#define CUTEFISH_CORE_MAIN_LOOP_H_
+#ifndef PROPERDESKTOP_CORE_MAIN_LOOP_H_
+#define PROPERDESKTOP_CORE_MAIN_LOOP_H_
 
 #include <memory>
 
-namespace cutefish::base {
+namespace properdesktop::base {
 class EventLoop;
-} // namespace cutefish::base
+} // namespace properdesktop::base
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 // Made before anything that uses it and destroyed after. A second one stands in
 // for the first while it exists.
@@ -34,6 +34,6 @@ private:
 // Null when no MainLoop exists.
 base::EventLoop *mainLoop();
 
-} // namespace cutefish::core
+} // namespace properdesktop::core
 
-#endif // CUTEFISH_CORE_MAIN_LOOP_H_
+#endif // PROPERDESKTOP_CORE_MAIN_LOOP_H_

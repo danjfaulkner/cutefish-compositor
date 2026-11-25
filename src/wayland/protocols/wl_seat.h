@@ -5,23 +5,23 @@
 // Upstream: chromium/src/components/exo/wayland/wl_seat.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_WL_SEAT_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_WL_SEAT_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_WL_SEAT_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_WL_SEAT_H_
 
 #include <cstdint>
 #include <wayland-server-core.h>
 
 #include "input/seat_observer.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Pointer;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 input::Pointer* pointerFromResource(wl_resource* resource);
 
@@ -47,6 +47,6 @@ WaylandSeat* waylandSeatFromResource(wl_resource* resource);
 
 wl_global* createSeatGlobal(wl_display* display, WaylandSeat* data);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_WL_SEAT_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_WL_SEAT_H_

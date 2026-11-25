@@ -9,7 +9,7 @@
 
 #include <xf86drmMode.h>
 
-namespace cutefish::testing {
+namespace properdesktop::testing {
 
 size_t FakeDrmDevice::countCommits(bool testOnly) const
 {
@@ -21,4 +21,4 @@ size_t FakeDrmDevice::countCommits(bool testOnly) const
     return count;
 }
 
-} // namespace cutefish::testing
+} // namespace properdesktop::testing

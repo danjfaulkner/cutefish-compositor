@@ -8,7 +8,7 @@
 
 #include "input/pointer_acceleration.h"
 
-using namespace cutefish::input;
+using namespace properdesktop::input;
 
 namespace {
 

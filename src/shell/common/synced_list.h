@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_SYNCED_LIST_H_
-#define CUTEFISH_SHELL_COMMON_SYNCED_LIST_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_SYNCED_LIST_H_
+#define PROPERDESKTOP_SHELL_COMMON_SYNCED_LIST_H_
 
 #include <algorithm>
 #include <functional>
@@ -14,7 +14,7 @@
 
 #include "shell/common/list_model.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Reaches a new list through removes, moves and inserts, so views keep the
 // items of rows that stay.
@@ -155,6 +155,6 @@ private:
     std::vector<T> m_rows;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_SYNCED_LIST_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_SYNCED_LIST_H_

@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 
-#include <cutefish-window-hints-v1-server-protocol.h>
+#include <properdesktop-window-hints-v1-server-protocol.h>
 
 #include "base/signal.h"
 #include "base/strings.h"
@@ -20,7 +20,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 std::vector<wl_resource *> &managers()
@@ -61,7 +61,7 @@ void sendWorkAreas(wl_resource *resource)
         if (!inserted && sent->second == entry)
             continue;
         sent->second = entry;
-        cutefish_window_hints_v1_send_work_area(resource, area.name.c_str(), area.workArea.x(),
+        properdesktop_window_hints_v1_send_work_area(resource, area.name.c_str(), area.workArea.x(),
                                                 area.workArea.y(), area.workArea.width(),
                                                 area.workArea.height(), area.primary ? 1 : 0);
     }
@@ -83,7 +83,7 @@ void destroy(wl_client *, wl_resource *resource)
 void setSkipTaskbar(wl_client *, wl_resource *resource, wl_resource *surface, uint32_t skip)
 {
     if (skip > 1) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "skip_taskbar must be zero or one");
         return;
     }
@@ -93,7 +93,7 @@ void setSkipTaskbar(wl_client *, wl_resource *resource, wl_resource *surface, ui
 void setAlwaysOnTop(wl_client *, wl_resource *resource, wl_resource *surface, uint32_t onTop)
 {
     if (onTop > 1) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "always_on_top must be zero or one");
         return;
     }
@@ -102,13 +102,13 @@ void setAlwaysOnTop(wl_client *, wl_resource *resource, wl_resource *surface, ui
 
 void setResizeAnchor(wl_client *, wl_resource *resource, wl_resource *surface, uint32_t anchor)
 {
-    if (anchor > CUTEFISH_WINDOW_HINTS_V1_RESIZE_ANCHOR_CENTER) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+    if (anchor > PROPERDESKTOP_WINDOW_HINTS_V1_RESIZE_ANCHOR_CENTER) {
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "unknown resize anchor");
         return;
     }
     getUserDataAs<compositor::Surface>(surface)->setResizeAnchor(
-            anchor == CUTEFISH_WINDOW_HINTS_V1_RESIZE_ANCHOR_CENTER
+            anchor == PROPERDESKTOP_WINDOW_HINTS_V1_RESIZE_ANCHOR_CENTER
                     ? compositor::ResizeAnchor::Center
                     : compositor::ResizeAnchor::TopLeft);
 }
@@ -116,7 +116,7 @@ void setResizeAnchor(wl_client *, wl_resource *resource, wl_resource *surface, u
 void setServerResize(wl_client *, wl_resource *resource, wl_resource *surface, uint32_t enabled)
 {
     if (enabled > 1) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "server_resize must be zero or one");
         return;
     }
@@ -132,7 +132,7 @@ void setRestoreSize(wl_client *, wl_resource *resource, wl_resource *surface, in
                     int32_t height)
 {
     if (width < 0 || height < 0) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "restore size must not be negative");
         return;
     }
@@ -143,19 +143,19 @@ void setPlacementAnchor(wl_client *, wl_resource *resource, wl_resource *surface
                         int32_t y, int32_t width, int32_t height, uint32_t anchor, uint32_t gravity)
 {
     if (width < 0 || height < 0) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "placement anchor size must not be negative");
         return;
     }
-    if (anchor > CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM_RIGHT
-        || gravity > CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM_RIGHT) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+    if (anchor > PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM_RIGHT
+        || gravity > PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM_RIGHT) {
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "unknown placement edge");
         return;
     }
-    static_assert(int(compositor::PlacementEdge::Top) == CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_TOP);
+    static_assert(int(compositor::PlacementEdge::Top) == PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_TOP);
     static_assert(int(compositor::PlacementEdge::BottomRight)
-                  == CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM_RIGHT);
+                  == PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM_RIGHT);
     getUserDataAs<compositor::Surface>(surface)->setPlacementAnchor(compositor::PlacementAnchor {
             base::Rect(x, y, width, height), compositor::PlacementEdge(anchor),
             compositor::PlacementEdge(gravity)});
@@ -170,7 +170,7 @@ void setBodyShape(wl_client *, wl_resource *resource, wl_resource *surface, wl_a
 {
     ui::Path shape;
     if (!pathFromArray(array, &shape)) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "malformed body shape");
         return;
     }
@@ -185,7 +185,7 @@ void unsetBodyShape(wl_client *, wl_resource *, wl_resource *surface)
 void setShadow(wl_client *, wl_resource *resource, wl_resource *surface, uint32_t shadow)
 {
     if (shadow > 1) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "shadow must be zero or one");
         return;
     }
@@ -196,7 +196,7 @@ void setOpacity(wl_client *, wl_resource *resource, wl_resource *surface, wl_fix
 {
     const double opacity = wl_fixed_to_double(fixed);
     if (opacity < 0 || opacity > 1) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "opacity must be between zero and one");
         return;
     }
@@ -207,7 +207,7 @@ void setFullscreenBars(wl_client *, wl_resource *resource, wl_resource *surface,
                        uint32_t push)
 {
     if (height < 0 || push > 1) {
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE,
                                "fullscreen bars need a height of zero or more and a push of zero or one");
         return;
     }
@@ -227,23 +227,23 @@ void setLevel(wl_client *, wl_resource *resource, wl_resource *surface, uint32_t
 {
     compositor::WindowLevel value;
     switch (level) {
-    case CUTEFISH_WINDOW_HINTS_V1_LEVEL_NORMAL:
+    case PROPERDESKTOP_WINDOW_HINTS_V1_LEVEL_NORMAL:
         value = compositor::WindowLevel::Normal;
         break;
-    case CUTEFISH_WINDOW_HINTS_V1_LEVEL_FLOATING:
+    case PROPERDESKTOP_WINDOW_HINTS_V1_LEVEL_FLOATING:
         value = compositor::WindowLevel::Floating;
         break;
-    case CUTEFISH_WINDOW_HINTS_V1_LEVEL_ABOVE_DOCK:
+    case PROPERDESKTOP_WINDOW_HINTS_V1_LEVEL_ABOVE_DOCK:
         value = compositor::WindowLevel::AboveDock;
         break;
     default:
-        wl_resource_post_error(resource, CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE, "unknown level");
+        wl_resource_post_error(resource, PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE, "unknown level");
         return;
     }
     getUserDataAs<compositor::Surface>(surface)->setLevel(value);
 }
 
-const struct cutefish_window_hints_v1_interface implementation = {
+const struct properdesktop_window_hints_v1_interface implementation = {
         destroy, setSkipTaskbar, setAlwaysOnTop, setResizeAnchor,
         setServerResize, setRestoreId, setRestoreSize, setPlacementAnchor,
         unsetPlacementAnchor, setBodyShape, unsetBodyShape, setShadow,
@@ -258,7 +258,7 @@ void unbind(wl_resource *resource)
 
 void bind(wl_client *client, void *data, uint32_t, uint32_t id)
 {
-    auto *resource = wl_resource_create(client, &cutefish_window_hints_v1_interface, 1, id);
+    auto *resource = wl_resource_create(client, &properdesktop_window_hints_v1_interface, 1, id);
     if (!resource) {
         wl_client_post_no_memory(client);
         return;
@@ -284,7 +284,7 @@ void sendInteractiveResize(wl_resource *surface, bool active)
     wl_client *client = wl_resource_get_client(surface);
     for (wl_resource *resource : managers()) {
         if (wl_resource_get_client(resource) == client)
-            cutefish_window_hints_v1_send_interactive_resize(resource, surface, active ? 1 : 0);
+            properdesktop_window_hints_v1_send_interactive_resize(resource, surface, active ? 1 : 0);
     }
 }
 
@@ -296,14 +296,14 @@ void sendFullscreenReveal(wm::Window *window, int offset, int durationMs)
     wl_client *client = wl_resource_get_client(surface);
     for (wl_resource *resource : managers()) {
         if (wl_resource_get_client(resource) == client)
-            cutefish_window_hints_v1_send_fullscreen_reveal(resource, surface, offset, uint32_t(durationMs));
+            properdesktop_window_hints_v1_send_fullscreen_reveal(resource, surface, offset, uint32_t(durationMs));
     }
 }
 
 wl_global *createWindowHintsGlobal(wl_display *display, wm::WindowManager *windows)
 {
     wl_global *global =
-            wl_global_create(display, &cutefish_window_hints_v1_interface, 1, windows, bind);
+            wl_global_create(display, &properdesktop_window_hints_v1_interface, 1, windows, bind);
     if (!global || !windows)
         return global;
     auto *watch = new WorkAreaWatch;
@@ -323,4 +323,4 @@ wl_global *createWindowHintsGlobal(wl_display *display, wm::WindowManager *windo
     return global;
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

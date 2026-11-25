@@ -11,7 +11,7 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -104,4 +104,4 @@ void FileThemeIcon::paint(ui::Painter &painter)
     ui::ThemeIcon::paint(painter);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

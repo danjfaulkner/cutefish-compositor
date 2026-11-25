@@ -10,7 +10,7 @@
 #include "base/locale.h"
 #include "ui/icon.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 RegistryApplications::RegistryApplications()
     : m_registry(base::ApplicationRegistry::instance())
@@ -69,4 +69,4 @@ const std::vector<DesktopEntryPtr> &RegistryApplications::applications() const
     return m_applications;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

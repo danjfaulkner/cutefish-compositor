@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_STORE_H_
-#define CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_STORE_H_
+#ifndef PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_STORE_H_
+#define PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_STORE_H_
 
 #include <cstdint>
 #include <functional>
@@ -16,7 +16,7 @@
 #include "base/signal.h"
 #include "base/thread_pool.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // What one copy held: each kept type with its bytes, in the order kept.
 using ClipboardPayload = std::vector<std::pair<std::string, std::string>>;
@@ -90,6 +90,6 @@ private:
     std::vector<base::Job> m_jobs;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_STORE_H_
+#endif // PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_STORE_H_

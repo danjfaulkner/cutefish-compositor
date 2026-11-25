@@ -6,7 +6,7 @@
 
 #include <unistd.h>
 
-namespace cutefish {
+namespace properdesktop {
 
 std::vector<std::string> childEnvironment()
 {
@@ -16,4 +16,4 @@ std::vector<std::string> childEnvironment()
     return environment;
 }
 
-} // namespace cutefish
+} // namespace properdesktop

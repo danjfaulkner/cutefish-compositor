@@ -14,9 +14,9 @@
 #include <sys/un.h>
 #include <unistd.h>
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 namespace {
 
@@ -203,12 +203,12 @@ void GreetdBackend::handleResponse(const base::json::Value &response)
         } else if (m_phase == Phase::Authenticating) {
             m_pending.clear();
             m_phase = Phase::Starting;
-            // The command and environment are for greetd; cutefish-dm starts
+            // The command and environment are for greetd; properdesktop-dm starts
             // the session its id names and sets the environment itself.
             base::json::Value start = base::json::Value::object(
                     {{"cmd",
                       stringArray(m_session.command.empty()
-                                          ? std::vector<std::string> {"cutefish-session"}
+                                          ? std::vector<std::string> {"properdesktop-session"}
                                           : m_session.command)},
                      {"env", stringArray(m_session.environment)}});
             if (!m_session.id.empty())
@@ -261,4 +261,4 @@ void GreetdBackend::fail()
     failed(tr("Sign-in failed"));
 }
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth

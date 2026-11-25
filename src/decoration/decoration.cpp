@@ -22,7 +22,7 @@
 #include "wm/window_state.h"
 #include "wm/window_visual_controller.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 namespace {
 
@@ -497,4 +497,4 @@ wm::Insets DecorationProvider::defaultExtents() const
     return m_theme->metrics().insets();
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

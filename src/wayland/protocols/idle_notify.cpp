@@ -15,7 +15,7 @@
 #include "wayland/protocols/wl_seat.h"
 #include "base/signal.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 struct Notification {
@@ -129,4 +129,4 @@ wl_global *createIdleNotifierGlobal(wl_display *display, IdleInhibition *inhibit
 {
     return wl_global_create(display, &ext_idle_notifier_v1_interface, 1, inhibition, bind);
 }
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

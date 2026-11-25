@@ -15,7 +15,7 @@
 #include "backend/drm/drm_plane.h"
 #include "backend/drm/plane_assignment.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -178,4 +178,4 @@ TEST(PlaneAssignmentTest, NoRequestsAssignNoPlanes)
     EXPECT_TRUE(assignPlanes(typicalPlanes(), 0, {}).empty());
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

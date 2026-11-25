@@ -14,7 +14,7 @@
 #include "wm/window_cycle_controller.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 SessionTeardown::SessionTeardown(input::Seat *seat, wm::WindowManager *windowManager)
     : m_seat(seat)
@@ -100,4 +100,4 @@ void SessionTeardown::onSessionUnblocked()
         activation->activate(window);
 }
 
-} // namespace cutefish::session
+} // namespace properdesktop::session

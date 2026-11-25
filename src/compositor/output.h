@@ -12,7 +12,7 @@
 #include "compositor/output_scale.h"
 #include "render/presentation.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 // Metrics for the selected native mode; UI scale never changes pixelSize.
 struct Output {
@@ -56,7 +56,7 @@ struct Output {
     OutputScale scale;
     std::shared_ptr<render::PresentationOutput> presentation =
             std::make_shared<render::PresentationOutput>();
-    std::string name = "Cutefish-1";
+    std::string name = "ProperDesktop-1";
     std::string description;
     Transform transform = Transform::Normal;
     double renderScale = 1.0;
@@ -64,4 +64,4 @@ struct Output {
     base::Size logicalExtent;
     std::string displayId;
 };
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

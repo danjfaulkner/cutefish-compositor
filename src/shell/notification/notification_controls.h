@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_CONTROLS_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_CONTROLS_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_CONTROLS_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_CONTROLS_H_
 
 #include <functional>
 #include <memory>
@@ -13,11 +13,11 @@
 #include "ui/geometry.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Label;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class Tween;
 
@@ -107,6 +107,6 @@ private:
 
 ui::Color pillFill(ui::Color surface, bool hovered, bool pressed);
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_CONTROLS_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_CONTROLS_H_

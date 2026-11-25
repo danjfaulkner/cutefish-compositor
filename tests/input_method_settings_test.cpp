@@ -11,10 +11,10 @@
 #include "base/paths.h"
 #include "input_test_util.h"
 
-using cutefish::base::EventLoop;
-using cutefish::input::findInputMethodProviders;
-using cutefish::input::InputMethodSettings;
-using cutefish::input::parseDesktopExec;
+using properdesktop::base::EventLoop;
+using properdesktop::input::findInputMethodProviders;
+using properdesktop::input::InputMethodSettings;
+using properdesktop::input::parseDesktopExec;
 using input_test::RemoteObject;
 using input_test::TemporaryDirectory;
 using input_test::writeFile;
@@ -54,7 +54,7 @@ TEST(InputMethodSettings, FindsProvidersWithXdgPrecedence)
     const auto providers = findInputMethodProviders({user.path(), system.path()});
     ASSERT_EQ(2u, providers.size());
     EXPECT_EQ("fcitx.desktop", providers.at(0).id);
-    EXPECT_EQ(cutefish::base::paths::findExecutable("sh"), providers.at(0).command.front());
+    EXPECT_EQ(properdesktop::base::paths::findExecutable("sh"), providers.at(0).command.front());
     EXPECT_EQ(Strings({"--flag"}), Strings(providers.at(0).command.begin() + 1,
                                            providers.at(0).command.end()));
     EXPECT_EQ("vendor-ime.desktop", providers.at(1).id);
@@ -97,8 +97,8 @@ TEST(InputMethodSettings, ExportsTheSessionService)
     writeFile(applications.filePath("ime.desktop"), provider("/bin/sh"));
     InputMethodSettings settings(directory.filePath("compositor.conf"), {applications.path()});
     ASSERT_TRUE(settings.registerService());
-    RemoteObject remote(loop, "org.cutefish.InputMethod1", "/org/cutefish/InputMethod1",
-                        "org.cutefish.InputMethod1");
+    RemoteObject remote(loop, "org.properdesktop.InputMethod1", "/org/properdesktop/InputMethod1",
+                        "org.properdesktop.InputMethod1");
     ASSERT_TRUE(remote.isValid());
     EXPECT_EQ(Strings({"ime.desktop"}), remote.call("availableInputMethods").value<Strings>());
     EXPECT_EQ(false, remote.call("setInputMethod", std::string("nope.desktop")).value<bool>());

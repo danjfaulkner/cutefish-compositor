@@ -22,7 +22,7 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr std::chrono::milliseconds kPressAndHold {800};
 static constexpr double kStartDragDistance = 10;
@@ -681,4 +681,4 @@ void DockIcon::paintThumbnail(ui::Painter &painter, const ui::RectF &slot)
     painter.restore();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

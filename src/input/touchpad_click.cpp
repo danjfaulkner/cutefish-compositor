@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 namespace {
 
@@ -66,4 +66,4 @@ bool isTwoFingerClick(const TouchpadContact &first, const TouchpadContact &secon
     return true;
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

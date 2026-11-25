@@ -8,7 +8,7 @@
 #include <cmath>
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 void setGaussianKernel(const GlProgram &program, float sigma, float stepX, float stepY, int reach)
 {
@@ -54,4 +54,4 @@ void setGaussianClamp(const GlProgram &program, const base::Rect &texels, const 
                 (texels.bottom() - 0.5f) / size.height());
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

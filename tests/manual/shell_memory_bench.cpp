@@ -4,7 +4,7 @@
 
 // What the compositor's shell components cost in memory, one step at a time:
 //
-//   cutefish-shell-memory-bench [--scale S] [--dark] [--wallpaper IMAGE]
+//   properdesktop-shell-memory-bench [--scale S] [--dark] [--wallpaper IMAGE]
 //                               [--glibc-defaults] [--mmap-threshold BYTES]
 //                               [--arena-max N] [--no-thp] [--cpu-panels]
 //                               [--hold S] [--cycles N] [--idle S,S...]
@@ -78,7 +78,7 @@
 
 #include <linux/input-event-codes.h>
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -111,7 +111,7 @@ std::string kindOf(const std::string &path)
         return "icons";
     if (has("libicu"))
         return "icu";
-    if (has("cutefish-toolkit"))
+    if (has("properdesktop-toolkit"))
         return "toolkit";
     if (has("LLVM") || has("gallium") || has("dri") || has("mesa") || has("libz3")
         || has("drm_amdgpu") || has("libelf") || has("libsensors"))
@@ -527,7 +527,7 @@ private:
 // This run's own directory, removed at exit.
 std::filesystem::path scratchDirectory()
 {
-    return std::filesystem::temp_directory_path() / ("cutefish-shell-memory-bench-" + std::to_string(getpid()));
+    return std::filesystem::temp_directory_path() / ("properdesktop-shell-memory-bench-" + std::to_string(getpid()));
 }
 
 std::string scratchPath(const std::string &name)
@@ -819,7 +819,7 @@ int main(int argc, char **argv)
     bool slabProbe = false;
     bool textureReport = false;
     std::vector<int> idleMarks;
-    std::string wallpaperPath = "/usr/share/backgrounds/cutefishos/default.jpg";
+    std::string wallpaperPath = "/usr/share/backgrounds/properdesktop/default.jpg";
     std::vector<std::string> wanted;
     if (std::none_of(argv + 1, argv + argc, [](const char *arg) { return std::string(arg) == "--glibc-defaults"; }))
         core::applyMallocPolicy();
@@ -875,8 +875,8 @@ int main(int argc, char **argv)
 
     const bool ownWallpaper = std::find(wanted.begin(), wanted.end(), "wallpaper") == wanted.end();
     if (wallpaperFiles().empty())
-        wallpaperFiles() = {wallpaperPath, "/usr/share/backgrounds/cutefishos/wallpaper-1.jpg",
-                            "/usr/share/backgrounds/cutefishos/wallpaper-2.jpg"};
+        wallpaperFiles() = {wallpaperPath, "/usr/share/backgrounds/properdesktop/wallpaper-1.jpg",
+                            "/usr/share/backgrounds/properdesktop/wallpaper-2.jpg"};
 
     // The GL allocation tracker, when it is preloaded for a look at who
     // holds which texture.

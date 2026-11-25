@@ -9,7 +9,7 @@
 #include "render/gl_program.h"
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // `sigma` and `reach` are in texels; `stepX` and `stepY` are one texel in
 // texture coordinates. `program` must be in use.
@@ -19,4 +19,4 @@ void setGaussianKernel(const GlProgram &program, float sigma, float stepX, float
 // Rows count bottom-up, as GL lays them.
 void setGaussianClamp(const GlProgram &program, const base::Rect &texels, const base::Size &size);
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

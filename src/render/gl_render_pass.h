@@ -11,7 +11,7 @@
 #include <EGL/eglext.h>
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 template <typename T> class ScopedValue
 {
@@ -112,4 +112,4 @@ private:
     std::vector<unsigned int> m_framebuffers;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

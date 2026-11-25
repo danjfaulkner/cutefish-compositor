@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CONTROLCENTER_PANEL_STYLE_H_
-#define CUTEFISH_SHELL_CONTROLCENTER_PANEL_STYLE_H_
+#ifndef PROPERDESKTOP_SHELL_CONTROLCENTER_PANEL_STYLE_H_
+#define PROPERDESKTOP_SHELL_CONTROLCENTER_PANEL_STYLE_H_
 
 #include <string>
 #include <string_view>
@@ -11,11 +11,11 @@
 #include "render/glass.h"
 #include "ui/geometry.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Painter;
 }
 
-namespace cutefish::shell::panel {
+namespace properdesktop::shell::panel {
 
 inline constexpr double kPopupMargin = 6;
 inline constexpr double kPanelRadius = 16;
@@ -48,6 +48,6 @@ double glide(double t);
 std::string artwork(std::string_view name, bool white);
 std::string artwork(std::string_view name);
 
-} // namespace cutefish::shell::panel
+} // namespace properdesktop::shell::panel
 
-#endif // CUTEFISH_SHELL_CONTROLCENTER_PANEL_STYLE_H_
+#endif // PROPERDESKTOP_SHELL_CONTROLCENTER_PANEL_STYLE_H_

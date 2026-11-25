@@ -57,7 +57,7 @@ struct LauncherHarness : Harness {
 
     std::vector<std::string> command(const char *mode) const
     {
-        return {CUTEFISH_LAUNCHED_CLIENT, mode, log};
+        return {PROPERDESKTOP_LAUNCHED_CLIENT, mode, log};
     }
 };
 } // namespace

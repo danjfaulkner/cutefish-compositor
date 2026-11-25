@@ -46,7 +46,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -136,7 +136,7 @@ protected:
 
     void SetUp() override
     {
-        shell::setShellDataDirectoryForTesting(CUTEFISH_SOURCE_DIR "/data/shell");
+        shell::setShellDataDirectoryForTesting(PROPERDESKTOP_SOURCE_DIR "/data/shell");
         scene.setSize(kOutput.size());
         manager.setOutputBounds(kOutput);
         manager.setExclusiveZone(&menuBar, wm::ScreenEdge::Top, kMenuBar);
@@ -316,7 +316,7 @@ TEST_F(ShellComponentsTest, TheOsdVolumeUpKeepsAVolumeAboveNormal)
     EXPECT_NEAR(1.0, values->m_volume, 1e-9);
 }
 
-TEST_F(ShellComponentsTest, TheOsdServesOrgCutefishOsd)
+TEST_F(ShellComponentsTest, TheOsdServesOrgProperDesktopOsd)
 {
     auto levels = std::make_unique<FakeLevels>();
     FakeLevels *values = levels.get();
@@ -327,10 +327,10 @@ TEST_F(ShellComponentsTest, TheOsdServesOrgCutefishOsd)
     auto *osd = shell->addComponent(std::make_unique<shell::Osd>(shell.get(), std::move(levels)));
     ASSERT_TRUE(osd->registerService());
     test::DBusTestClient client;
-    client.call("org.cutefish.Osd", "/Osd", "org.cutefish.Osd", "brightnessDown");
+    client.call("org.properdesktop.Osd", "/Osd", "org.properdesktop.Osd", "brightnessDown");
     EXPECT_EQ(56, values->m_brightness);
     EXPECT_TRUE(osd->isShown());
-    client.call("org.cutefish.Osd", "/Osd", "org.cutefish.Osd", "toggleMicrophoneMute");
+    client.call("org.properdesktop.Osd", "/Osd", "org.properdesktop.Osd", "toggleMicrophoneMute");
     EXPECT_TRUE(values->m_microphoneMuted);
     EXPECT_EQ(shell::shellDataFile("microphone-muted.svg"), osd->track()->icon());
 }
@@ -366,17 +366,17 @@ TEST_F(ShellComponentsTest, TheOsdAndTheDockServeTheirNames)
     ASSERT_TRUE(dockService->registerService());
 
     test::DBusTestClient client;
-    const std::string osdXml = client.introspect("org.cutefish.Osd", "/Osd");
-    EXPECT_NE(std::string::npos, osdXml.find("<interface name=\"org.cutefish.Osd\">")) << osdXml;
+    const std::string osdXml = client.introspect("org.properdesktop.Osd", "/Osd");
+    EXPECT_NE(std::string::npos, osdXml.find("<interface name=\"org.properdesktop.Osd\">")) << osdXml;
     EXPECT_NE(std::string::npos, osdXml.find("<method name=\"brightnessUp\">")) << osdXml;
-    const std::string dockXml = client.introspect("org.cutefish.Dock", "/Dock");
-    EXPECT_NE(std::string::npos, dockXml.find("<interface name=\"org.cutefish.Dock\">")) << dockXml;
+    const std::string dockXml = client.introspect("org.properdesktop.Dock", "/Dock");
+    EXPECT_NE(std::string::npos, dockXml.find("<interface name=\"org.properdesktop.Dock\">")) << dockXml;
     EXPECT_NE(std::string::npos, dockXml.find("<method name=\"setMinimizedArea\">")) << dockXml;
 
-    client.call("org.cutefish.Osd", "/Osd", "org.cutefish.Osd", "brightnessUp");
+    client.call("org.properdesktop.Osd", "/Osd", "org.properdesktop.Osd", "brightnessUp");
     EXPECT_EQ(69, values->m_brightness);
     EXPECT_TRUE(osd->isShown());
-    client.call("org.cutefish.Dock", "/Dock", "org.cutefish.Dock", "setMinimizedArea", false);
+    client.call("org.properdesktop.Dock", "/Dock", "org.properdesktop.Dock", "setMinimizedArea", false);
     EXPECT_TRUE(test::runUntil([dockService] { return !dockService->settings().minimizedArea(); }));
 }
 

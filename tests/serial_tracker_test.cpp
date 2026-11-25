@@ -10,7 +10,7 @@
 #include <gtest/gtest.h>
 #include <wayland-server-core.h>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 constexpr uint32_t kMaxEventsTracked = 1024;
@@ -120,4 +120,4 @@ TEST_F(SerialTrackerTest, ToStringCoversEveryEventType)
 }
 
 } // namespace
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

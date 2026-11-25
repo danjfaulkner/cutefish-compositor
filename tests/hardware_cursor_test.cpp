@@ -31,13 +31,13 @@
 #include "shm_test_util.h"
 #include "wm/window_manager.h"
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace {
 
 constexpr uint32_t kCrtcId = 7;
 
-std::vector<uint8_t> opaquePixels(const cutefish::base::Size &size)
+std::vector<uint8_t> opaquePixels(const properdesktop::base::Size &size)
 {
     return std::vector<uint8_t>(static_cast<size_t>(size.width()) * size.height() * 4, 0xFF);
 }
@@ -120,7 +120,7 @@ TEST_F(DrmCursorTest, AnImageIsUploadedWithItsHotspot)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
 
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point(5, 3)));
@@ -136,7 +136,7 @@ TEST_F(DrmCursorTest, TheHotspotIsSubtractedFromThePointerPosition)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point(5, 3)));
 
@@ -150,7 +150,7 @@ TEST_F(DrmCursorTest, AnImageChangeRepositionsForTheNewHotspot)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point(0, 0)));
     cursor->move(base::Point(100, 90));
@@ -164,7 +164,7 @@ TEST_F(DrmCursorTest, TheFirstImageStaysWhereThePreviousMastersCursorWas)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point(5, 3)));
     EXPECT_EQ(m_device->moveCursorCalls, 0);
@@ -177,7 +177,7 @@ TEST_F(DrmCursorTest, ConsecutiveImagesAlternateBuffers)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
 
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point()));
@@ -194,7 +194,7 @@ TEST_F(DrmCursorTest, TheSameImageAgainLeavesThePlaneAlone)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point(5, 3)));
     const int calls = m_device->setCursorCalls;
@@ -215,7 +215,7 @@ TEST_F(DrmCursorTest, ATintScalesTheColoursThePlaneShows)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(1, 1);
+    const properdesktop::base::Size size(1, 1);
     const uint8_t pixel[] = {200, 100, 40, 255};
     const auto shown = [&] {
         const auto *data =
@@ -242,7 +242,7 @@ TEST_F(DrmCursorTest, AnImageLargerThanThePlaneIsRefused)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(128, 128);
+    const properdesktop::base::Size size(128, 128);
     const auto pixels = opaquePixels(size);
 
     EXPECT_FALSE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point()));
@@ -254,7 +254,7 @@ TEST_F(DrmCursorTest, ADriverRejectionIsNotRetried)
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
     m_device->setCursorFails = true;
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
 
     EXPECT_FALSE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point()));
@@ -266,7 +266,7 @@ TEST_F(DrmCursorTest, HidingIsIdempotentAndClearsThePlane)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point()));
     const int calls = m_device->setCursorCalls;
@@ -295,7 +295,7 @@ TEST_F(DrmCursorTest, AWaitingDriverTakesOnlyTheNewestPositionOnceTheFlipLands)
     m_device->cursorWaits = true;
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point(5, 3)));
 
@@ -321,7 +321,7 @@ TEST_F(DrmCursorTest, AWaitingDriverTakesOnlyTheNewestImageOnceTheFlipLands)
     m_device->cursorWaits = true;
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point(0, 0)));
     cursor->move(base::Point(100, 90));
@@ -349,7 +349,7 @@ TEST_F(DrmCursorTest, AWaitingDriverStillShowsAHiddenCursorAtOnce)
     m_device->cursorWaits = true;
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
 
     cursor->setFlipPending(true);
@@ -362,7 +362,7 @@ TEST_F(DrmCursorTest, OtherDriversMoveTheCursorDuringAFlip)
 {
     auto cursor = backend::DrmCursor::create(m_device.get(), kCrtcId);
     ASSERT_TRUE(cursor);
-    const cutefish::base::Size size(24, 24);
+    const properdesktop::base::Size size(24, 24);
     const auto pixels = opaquePixels(size);
     ASSERT_TRUE(cursor->setImage(pixels.data(), size, size.width() * 4, base::Point(0, 0)));
 
@@ -694,4 +694,4 @@ TEST(SessionLockCursor, WakingWithARefusingPlaneStillLeavesNoSessionCursor)
     EXPECT_TRUE(fixture.node->isVisible());
 }
 
-} // namespace cutefish
+} // namespace properdesktop

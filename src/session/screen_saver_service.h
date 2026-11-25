@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-namespace cutefish::session {
+namespace properdesktop::session {
 class SessionController;
 
 // A second object at either path fails to register.
@@ -54,4 +54,4 @@ private:
     bool m_registered = false;
     bool m_active;
 };
-} // namespace cutefish::session
+} // namespace properdesktop::session

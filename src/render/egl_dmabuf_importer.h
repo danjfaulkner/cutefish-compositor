@@ -10,7 +10,7 @@
 #include "base/geometry.h"
 struct gbm_device;
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class EglImageTexture : public GlTexture
 {
 public:
@@ -41,4 +41,4 @@ private:
     DmaBufFormats m_dmaBufFormats;
     dev_t m_dmaBufMainDevice = 0;
 };
-} // namespace cutefish::render
+} // namespace properdesktop::render

@@ -7,7 +7,7 @@
 #include <string>
 #include <string_view>
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 // Empty when the block is missing, has no EDID header or fails its checksum.
 struct EdidInfo {
@@ -21,4 +21,4 @@ struct EdidInfo {
 
 EdidInfo parseEdid(std::string_view edid);
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

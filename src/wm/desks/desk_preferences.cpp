@@ -18,7 +18,7 @@
 #include "wm/window_manager.h"
 #include "wm/desks/fullscreen_desks.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -105,4 +105,4 @@ void DeskPreferences::save()
     m_settings.sync();
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

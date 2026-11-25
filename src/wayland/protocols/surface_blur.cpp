@@ -6,7 +6,7 @@
 
 #include <algorithm>
 #include <cmath>
-#include <cutefish-surface-blur-v1-server-protocol.h>
+#include <properdesktop-surface-blur-v1-server-protocol.h>
 #include <limits>
 #include <vector>
 
@@ -14,7 +14,7 @@
 #include "compositor/surface.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -129,7 +129,7 @@ void set(wl_client *, wl_resource *resource, wl_resource *surfaceResource, int32
     if (width <= 0 || height <= 0 || radius < 0
         || int64_t(x) + width > std::numeric_limits<int32_t>::max()
         || int64_t(y) + height > std::numeric_limits<int32_t>::max()) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
                                "invalid blur rectangle or radius");
         return;
     }
@@ -174,7 +174,7 @@ void setGlassMaterial(wl_client *, wl_resource *resource, wl_resource *surfaceRe
     if (!valid(blurSigma, 0) || !valid(bevel, 0) || !valid(depth, 0) || !valid(ior, 1)
         || !valid(profile, 0) || !valid(chroma, 0)
         || !std::isfinite(wl_fixed_to_double(displacement))) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
                                "invalid glass material");
         return;
     }
@@ -198,7 +198,7 @@ void setGlassLighting(wl_client *, wl_resource *resource, wl_resource *surfaceRe
     if (!std::isfinite(wl_fixed_to_double(lightAngle)) || !valid(specularIntensity, 0)
         || !valid(shininess, 0) || !valid(sheen, 0) || !valid(ambientOcclusion, 0)
         || !valid(ambientOcclusionRadius, 0)) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
                                "invalid glass lighting");
         return;
     }
@@ -233,7 +233,7 @@ void setShape(wl_client *, wl_resource *resource, wl_resource *surfaceResource, 
 {
     ui::Path path;
     if (!pathFromArray(array, &path)) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
                                "invalid blur shape");
         return;
     }
@@ -259,26 +259,26 @@ bool pathFromArray(const wl_array *array, ui::Path *result)
     };
     while (i < count) {
         const uint32_t command = values[i++];
-        const size_t points = command == CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CUBIC_TO ? 3
-                : command == CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE                ? 0
+        const size_t points = command == PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CUBIC_TO ? 3
+                : command == PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE                ? 0
                                                                                         : 1;
         // A shape may start with a line or a curve, from the origin.
-        if (command > CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE || count - i < points * 2)
+        if (command > PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE || count - i < points * 2)
             return false;
         switch (command) {
-        case CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO:
+        case PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO:
             path.moveTo(point());
             break;
-        case CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO:
+        case PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO:
             path.lineTo(point());
             break;
-        case CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CUBIC_TO: {
+        case PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CUBIC_TO: {
             const base::PointF first = point();
             const base::PointF second = point();
             path.cubicTo(first, second, point());
             break;
         }
-        case CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE:
+        case PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE:
             path.close();
             break;
         }
@@ -298,7 +298,7 @@ void setGlassSaturation(wl_client *, wl_resource *resource, wl_resource *surface
                         wl_fixed_t saturation)
 {
     if (!valid(saturation, 0)) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
                                "invalid glass saturation");
         return;
     }
@@ -312,7 +312,7 @@ void setGlassRim(wl_client *, wl_resource *resource, wl_resource *surfaceResourc
                  wl_fixed_t intensity)
 {
     if (!valid(intensity, 0)) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
                                "invalid glass rim");
         return;
     }
@@ -328,7 +328,7 @@ void setOverSubsurfaces(wl_client *, wl_resource *resource, wl_resource *surface
     if (width <= 0 || height <= 0 || radius < 0
         || int64_t(x) + width > std::numeric_limits<int32_t>::max()
         || int64_t(y) + height > std::numeric_limits<int32_t>::max()) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
                                "invalid blur rectangle or radius");
         return;
     }
@@ -346,7 +346,7 @@ void setOverSubsurfacesShape(wl_client *, wl_resource *resource, wl_resource *su
 {
     ui::Path path;
     if (!pathFromArray(array, &path)) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY,
                                "invalid blur shape");
         return;
     }
@@ -362,8 +362,8 @@ void setOverSubsurfacesFill(wl_client *, wl_resource *resource, wl_resource *sur
                             wl_fixed_t tintGreen, wl_fixed_t tintBlue, wl_fixed_t tintAlpha, uint32_t mode,
                             wl_fixed_t red, wl_fixed_t green, wl_fixed_t blue, wl_fixed_t alpha)
 {
-    if (mode > CUTEFISH_SURFACE_BLUR_V1_BACKDROP_BLEND_LUMINOSITY) {
-        wl_resource_post_error(resource, CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY, "invalid blend mode");
+    if (mode > PROPERDESKTOP_SURFACE_BLUR_V1_BACKDROP_BLEND_LUMINOSITY) {
+        wl_resource_post_error(resource, PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY, "invalid blend mode");
         return;
     }
     const auto component = [](wl_fixed_t value) {
@@ -372,7 +372,7 @@ void setOverSubsurfacesFill(wl_client *, wl_resource *resource, wl_resource *sur
     };
     render::GlassParams fill;
     fill.fillMode = int(mode);
-    if (mode != CUTEFISH_SURFACE_BLUR_V1_BACKDROP_BLEND_NONE) {
+    if (mode != PROPERDESKTOP_SURFACE_BLUR_V1_BACKDROP_BLEND_NONE) {
         // The tint goes over premultiplied.
         const float tint = component(tintAlpha);
         fill.fillTint[0] = component(tintRed) * tint;
@@ -387,7 +387,7 @@ void setOverSubsurfacesFill(wl_client *, wl_resource *resource, wl_resource *sur
     getUserDataAs<compositor::Surface>(surfaceResource)->setSubsurfaceBlurFill(fill);
 }
 
-const struct cutefish_surface_blur_v1_interface implementation = {
+const struct properdesktop_surface_blur_v1_interface implementation = {
         destroy,          set,          unset,    setGlass,   unsetGlass,         setGlassMaterial,
         setGlassLighting, setGlassTint, setShape, unsetShape, setGlassSaturation, setGlassRim,
         setOverSubsurfaces, unsetOverSubsurfaces, setOverSubsurfacesShape, unsetOverSubsurfacesShape,
@@ -395,7 +395,7 @@ const struct cutefish_surface_blur_v1_interface implementation = {
 
 void bind(wl_client *client, void *, uint32_t, uint32_t id)
 {
-    auto *resource = wl_resource_create(client, &cutefish_surface_blur_v1_interface, 1, id);
+    auto *resource = wl_resource_create(client, &properdesktop_surface_blur_v1_interface, 1, id);
     if (!resource) {
         wl_client_post_no_memory(client);
         return;
@@ -407,7 +407,7 @@ void bind(wl_client *client, void *, uint32_t, uint32_t id)
 
 wl_global *createSurfaceBlurGlobal(wl_display *display)
 {
-    return wl_global_create(display, &cutefish_surface_blur_v1_interface, 1, nullptr, bind);
+    return wl_global_create(display, &properdesktop_surface_blur_v1_interface, 1, nullptr, bind);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

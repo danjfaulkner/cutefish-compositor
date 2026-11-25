@@ -19,7 +19,7 @@
 struct udev;
 struct udev_monitor;
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 class DrmHotplugMonitor final
 {
@@ -52,4 +52,4 @@ private:
     base::Timer m_deadline;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

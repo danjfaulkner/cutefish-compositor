@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_GTK_SETTINGS_H_
-#define CUTEFISH_SHELL_MENUBAR_GTK_SETTINGS_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_GTK_SETTINGS_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_GTK_SETTINGS_H_
 
 #include <memory>
 
 #include "base/dbus.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // org.gtk.Settings at /org/gtk/Settings, where GTK 3 on Wayland reads the
 // modules it loads.
@@ -31,6 +31,6 @@ private:
     std::unique_ptr<base::dbus::Object> m_object;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_GTK_SETTINGS_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_GTK_SETTINGS_H_

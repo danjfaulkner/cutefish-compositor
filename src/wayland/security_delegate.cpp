@@ -13,7 +13,7 @@
 
 #include <wayland-server-core.h>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -110,4 +110,4 @@ bool ExecutableSecurityDelegate::bindsCommandKey(int64_t pid) const
     return runsOneOf(static_cast<pid_t>(pid), m_windowPlacementClients);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

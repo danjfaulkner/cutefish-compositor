@@ -20,7 +20,7 @@
 #include <string_view>
 #include <sys/stat.h>
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 namespace {
 
@@ -56,7 +56,7 @@ double easeOut(double t)
     return 1 - (1 - t) * (1 - t);
 }
 
-const std::string kDefaultWallpaper = "/usr/share/backgrounds/cutefishos/default.jpg";
+const std::string kDefaultWallpaper = "/usr/share/backgrounds/properdesktop/default.jpg";
 const std::string kDefaultBackgroundColor = "#2B8ADA";
 
 // A path, or a file: URL.
@@ -492,4 +492,4 @@ void SecureContainer::rebuildShield(bool crossfade)
     }
 }
 
-} // namespace cutefish::session
+} // namespace properdesktop::session

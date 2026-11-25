@@ -12,7 +12,7 @@
 #include "compositor/shm_pool.h"
 #include "core/logging.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 Buffer::Buffer() = default;
 
@@ -177,4 +177,4 @@ bool ShmBuffer::endPixelAccess()
     return false;
 }
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

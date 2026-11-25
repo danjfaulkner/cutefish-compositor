@@ -10,9 +10,9 @@
 #include "shell/common/task_manager.h"
 #include "shell/dock/dock.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
-static const base::LogCategory cfLaunchpad("cutefish.shell.launchpad");
+static const base::LogCategory cfLaunchpad("properdesktop.shell.launchpad");
 
 Launchpad::Launchpad(base::dbus::Connection *bus, TaskManager &tasks, ApplicationLauncher &launcher, Dock *dock,
                      std::string settingsPath)
@@ -40,7 +40,7 @@ Launchpad::Launchpad(base::dbus::Connection *bus, TaskManager &tasks, Applicatio
 Launchpad::~Launchpad()
 {
     if (m_object && m_bus)
-        m_bus->releaseName("org.cutefish.Launchpad");
+        m_bus->releaseName("org.properdesktop.Launchpad");
 }
 
 bool Launchpad::registerService()
@@ -49,13 +49,13 @@ bool Launchpad::registerService()
         return true;
     if (!m_bus)
         return false;
-    auto object = std::make_unique<base::dbus::Object>(m_bus, "/Launchpad", "org.cutefish.Launchpad");
+    auto object = std::make_unique<base::dbus::Object>(m_bus, "/Launchpad", "org.properdesktop.Launchpad");
     object->addMethod("show", [this] { show(); });
     object->addMethod("hide", [this] { hide(); });
     object->addMethod("toggle", [this] { toggle(); });
     if (!object->publish()
-        || !m_bus->requestName("org.cutefish.Launchpad", base::dbus::Connection::DoNotQueue)) {
-        CF_WARNING(cfLaunchpad) << "Cannot own org.cutefish.Launchpad";
+        || !m_bus->requestName("org.properdesktop.Launchpad", base::dbus::Connection::DoNotQueue)) {
+        CF_WARNING(cfLaunchpad) << "Cannot own org.properdesktop.Launchpad";
         return false;
     }
     m_object = std::move(object);
@@ -129,4 +129,4 @@ void Launchpad::setDragging(bool dragging)
     m_dragging = dragging;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

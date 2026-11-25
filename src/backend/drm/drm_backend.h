@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_BACKEND_H_
-#define CUTEFISH_BACKEND_DRM_DRM_BACKEND_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_BACKEND_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_BACKEND_H_
 
 #include "backend/drm/drm_output.h"
 #include "base/signal.h"
@@ -15,11 +15,11 @@
 
 struct gbm_device;
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class EglRenderer;
 }
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 class AmdgpuBoost;
 class DrmDevice;
@@ -138,6 +138,6 @@ private:
     std::vector<std::unique_ptr<DrmOutput::FlipEvent>> m_retiredEvents;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_BACKEND_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_BACKEND_H_

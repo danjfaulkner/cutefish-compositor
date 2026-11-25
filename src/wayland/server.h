@@ -6,8 +6,8 @@
 //           chromium/src/components/exo/wayland/wayland_watcher.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_SERVER_H_
-#define CUTEFISH_WAYLAND_SERVER_H_
+#ifndef PROPERDESKTOP_WAYLAND_SERVER_H_
+#define PROPERDESKTOP_WAYLAND_SERVER_H_
 
 #include <chrono>
 #include <memory>
@@ -19,7 +19,7 @@
 #include "scoped_wl.h"
 #include "serial_tracker.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class Server
 {
@@ -122,6 +122,6 @@ private:
     std::string m_socketName;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_SERVER_H_
+#endif // PROPERDESKTOP_WAYLAND_SERVER_H_

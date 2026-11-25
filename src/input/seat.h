@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/seat.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_SEAT_H_
-#define CUTEFISH_INPUT_SEAT_H_
+#ifndef PROPERDESKTOP_INPUT_SEAT_H_
+#define PROPERDESKTOP_INPUT_SEAT_H_
 
 #include <functional>
 #include <map>
@@ -28,15 +28,15 @@
 #include "input/key_translator.h"
 #include "input/xkb_tracker.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Compositor;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class Keyboard;
 class Pointer;
@@ -322,6 +322,6 @@ private:
     std::set<uint32_t> m_suppressedKeys;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_SEAT_H_
+#endif // PROPERDESKTOP_INPUT_SEAT_H_

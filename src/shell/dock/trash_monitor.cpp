@@ -21,7 +21,7 @@
 #include "base/paths.h"
 #include "base/strings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace fs = std::filesystem;
 
@@ -43,7 +43,7 @@ static bool holdsNoTrash(const std::string &mountPoint, const std::string &type)
             "proc",        "sysfs",           "devtmpfs",           "devpts",   "cgroup",      "cgroup2",
             "debugfs",     "tracefs",         "securityfs",         "bpf",      "pstore",      "autofs",
             "mqueue",      "hugetlbfs",       "configfs",           "fusectl",  "efivarfs",    "nsfs",
-            "binfmt_misc", "rpc_pipefs",      "fuse.portal",        "fuse.gvfsd-fuse",         "fuse.cutefish-mountd",
+            "binfmt_misc", "rpc_pipefs",      "fuse.portal",        "fuse.gvfsd-fuse",         "fuse.properdesktop-mountd",
             "tmpfs",       "ramfs",
             "nfs",         "nfs4",            "cifs",               "smb3",     "smbfs",       "ncpfs",
             "afs",         "ceph",            "9p",                 "glusterfs", "coda",       "davfs",
@@ -291,7 +291,7 @@ static void callFileManager(base::dbus::Connection *bus, const std::string &meth
     if (!bus)
         return;
     base::dbus::Message message =
-            bus->newMethodCall("org.cutefish.FileManager", "/FileManager", "org.cutefish.FileManager", method);
+            bus->newMethodCall("org.properdesktop.FileManager", "/FileManager", "org.properdesktop.FileManager", method);
     if (paths)
         message.append(*paths);
     bus->send(message);
@@ -314,4 +314,4 @@ void TrashMonitor::openTrash(base::dbus::Connection *bus)
     callFileManager(bus, "openFiles", &trash);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

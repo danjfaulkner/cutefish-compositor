@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_AUTH_UI_H
-#define CUTEFISH_AUTH_UI_H
+#ifndef PROPERDESKTOP_AUTH_UI_H
+#define PROPERDESKTOP_AUTH_UI_H
 #include "base/dbus.h"
 #include "base/geometry.h"
 #include "base/signal.h"
@@ -21,33 +21,33 @@
 #include <memory>
 #include <vector>
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class XkbTracker;
 }
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class Renderer;
 class Texture;
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-namespace cutefish::toolkit {
+namespace properdesktop::toolkit {
 class PanelTexture;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class EmbeddedWindow;
 class View;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::session {
+namespace properdesktop::session {
 class SessionController;
 }
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 class AuthBackend;
 class AuthController;
 class AuthScreen;
@@ -164,5 +164,5 @@ private:
     const void *m_judgedPixels = nullptr;
     bool m_judged = false;
 };
-} // namespace cutefish::auth
+} // namespace properdesktop::auth
 #endif

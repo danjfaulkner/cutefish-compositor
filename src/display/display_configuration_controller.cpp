@@ -13,7 +13,7 @@
 #include "base/uuid.h"
 #include "core/main_loop.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 namespace {
 
 const DisplaySnapshot *snapshotForId(const HardwareSnapshot &hardware, const DisplayId &id)
@@ -418,4 +418,4 @@ DisplayConfigurationController::makeRequest(const HardwareSnapshot &hardware,
     return result;
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

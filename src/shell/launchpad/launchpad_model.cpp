@@ -21,7 +21,7 @@
 #include "shell/common/file_thread.h"
 #include "shell/common/text_match.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static void updateItem(LaunchpadItem *item, const base::DesktopEntry &entry)
 {
@@ -768,4 +768,4 @@ void LaunchpadPageModel::sync()
     m_rows.sync(ids);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_AUTH_STATUS_H
-#define CUTEFISH_AUTH_STATUS_H
+#ifndef PROPERDESKTOP_AUTH_STATUS_H
+#define PROPERDESKTOP_AUTH_STATUS_H
 
 #include <memory>
 #include <vector>
@@ -11,17 +11,17 @@
 #include "base/signal.h"
 #include "shell/menubar/bar_item.h"
 
-namespace cutefish::powerprofiles {
+namespace properdesktop::powerprofiles {
 class PowerProfiles;
-} // namespace cutefish::powerprofiles
+} // namespace properdesktop::powerprofiles
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 class Battery;
 class StatusIcon;
 class WirelessStatus;
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 class AuthStatus final : public ui::View, public shell::BarContext
 {
@@ -60,6 +60,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth
 
-#endif // CUTEFISH_AUTH_STATUS_H
+#endif // PROPERDESKTOP_AUTH_STATUS_H

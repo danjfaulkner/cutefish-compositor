@@ -10,6 +10,6 @@
 struct wl_display;
 struct wl_global;
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 wl_global* createFractionalScaleGlobal(wl_display* display);
 }

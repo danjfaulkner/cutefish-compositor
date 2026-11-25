@@ -22,16 +22,16 @@
 #include "render/drm_syncobj.h"
 #include "scene/scene.h"
 
-using namespace cutefish;
-using namespace cutefish::compositor;
-using cutefish::testsupport::FakeFence;
+using namespace properdesktop;
+using namespace properdesktop::compositor;
+using properdesktop::testsupport::FakeFence;
 
 namespace {
 
 class FencedBuffer final : public Buffer
 {
 public:
-    cutefish::base::Size size() const override { return {64, 64}; }
+    properdesktop::base::Size size() const override { return {64, 64}; }
     render::PixelFormat format() const override { return render::PixelFormat::Bgrx8888; }
     const uint8_t *pixels() const override { return nullptr; }
     int stride() const override { return 256; }
@@ -95,7 +95,7 @@ private:
 
 bool waitFor(const std::function<bool()> &condition)
 {
-    return cutefish::test::runUntil(condition, std::chrono::seconds(2));
+    return properdesktop::test::runUntil(condition, std::chrono::seconds(2));
 }
 
 class CommitReadinessTest : public testing::Test

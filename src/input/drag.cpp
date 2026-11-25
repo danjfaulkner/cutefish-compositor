@@ -20,7 +20,7 @@
 #include "scene/motion.h"
 #include "scene/surface_node.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 static constexpr double kReturnDurationMs = 250;
 
@@ -778,4 +778,4 @@ void DragController::onSurfaceCommit(compositor::Surface *surface)
         leave();
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

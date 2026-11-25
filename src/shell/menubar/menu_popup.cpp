@@ -11,7 +11,7 @@
 #include "ui/icon.h"
 #include "ui/menu.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -293,4 +293,4 @@ void MenuPopup::fill(const std::shared_ptr<State> &state, ui::Menu &menu, int32_
         refill(state, move.second);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

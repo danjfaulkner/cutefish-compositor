@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ash/public/cpp/accelerator_actions.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_ACTIONS_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_ACTIONS_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_ACTIONS_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_ACTIONS_H_
 
 #include <cstdint>
 #include <optional>
@@ -15,7 +15,7 @@
 #include <string>
 #include <string_view>
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 // Persisted and exposed over D-Bus by name, never by value, so the order here
 // is free to change.
@@ -92,6 +92,6 @@ std::optional<AcceleratorAction> acceleratorActionFromName(std::string_view name
 // An action need not have a default binding to exist.
 std::vector<AcceleratorAction> allAcceleratorActions();
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_ACTIONS_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_ACTIONS_H_

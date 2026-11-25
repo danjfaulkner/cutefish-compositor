@@ -10,8 +10,8 @@
 #include "input_test_util.h"
 #include "ui/event.h"
 
-using namespace cutefish;
-using namespace cutefish::accelerators;
+using namespace properdesktop;
+using namespace properdesktop::accelerators;
 
 namespace {
 

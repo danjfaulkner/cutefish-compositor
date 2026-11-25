@@ -14,7 +14,7 @@
 #include <numeric>
 #include <utility>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -280,4 +280,4 @@ WaylandPositioner::Result WaylandPositioner::calculateBounds(const base::Rect& w
                        std::max(1, y.first.end - y.first.start))};
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

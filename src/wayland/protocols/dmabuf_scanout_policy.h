@@ -1,17 +1,17 @@
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_DMABUF_SCANOUT_POLICY_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_DMABUF_SCANOUT_POLICY_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_DMABUF_SCANOUT_POLICY_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_DMABUF_SCANOUT_POLICY_H_
 
 #include <set>
 
 #include "base/signal.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 class WindowManager;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class DmaBufFeedbackManager;
 
@@ -36,6 +36,6 @@ private:
     base::Subscription m_windowRemoved;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_DMABUF_SCANOUT_POLICY_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_DMABUF_SCANOUT_POLICY_H_

@@ -17,7 +17,7 @@
 #include "base/geometry.h"
 #include "compositor/output_scale.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayId
 {
@@ -269,12 +269,12 @@ struct ConfigurationResult {
     std::optional<DisplayConfiguration> selected;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display
 
 template<>
-struct std::hash<cutefish::display::DisplayId>
+struct std::hash<properdesktop::display::DisplayId>
 {
-    size_t operator()(const cutefish::display::DisplayId &id) const noexcept
+    size_t operator()(const properdesktop::display::DisplayId &id) const noexcept
     {
         return std::hash<std::string>()(id.value());
     }

@@ -19,7 +19,7 @@
 #include "wayland/server_util.h"
 #include "wayland/server.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -302,4 +302,4 @@ wl_global* createCompositorGlobal(wl_display* display, compositor::Compositor* c
                             compositor, bind_compositor);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

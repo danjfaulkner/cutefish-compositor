@@ -1,5 +1,5 @@
-find_package(CutefishClients REQUIRED COMPONENTS appearance)
-add_library(cutefish-shell-wallpaper STATIC
+find_package(ProperDesktopClients REQUIRED COMPONENTS appearance)
+add_library(properdesktop-shell-wallpaper STATIC
     src/shell/wallpaper/bar_backdrop.cpp
     src/shell/wallpaper/bar_backdrop.h
     src/shell/wallpaper/wallpaper.cpp
@@ -7,21 +7,21 @@ add_library(cutefish-shell-wallpaper STATIC
     src/shell/wallpaper/wallpaper_cache.cpp
     src/shell/wallpaper/wallpaper_cache.h
 )
-target_link_libraries(cutefish-shell-wallpaper PUBLIC cutefish-shell Cutefish::AppearanceClient)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-wallpaper)
+target_link_libraries(properdesktop-shell-wallpaper PUBLIC properdesktop-shell ProperDesktop::AppearanceClient)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-wallpaper)
 
-add_library(cutefish-shell-osd STATIC
+add_library(properdesktop-shell-osd STATIC
     src/shell/osd/level_track.cpp
     src/shell/osd/level_track.h
     src/shell/osd/osd.cpp
     src/shell/osd/osd.h
     src/shell/osd/osd_levels.cpp
 )
-target_link_libraries(cutefish-shell-osd PUBLIC cutefish-shell cutefish-shell-menubar
-    Cutefish::AudioClient)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-osd)
+target_link_libraries(properdesktop-shell-osd PUBLIC properdesktop-shell properdesktop-shell-menubar
+    ProperDesktop::AudioClient)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-osd)
 
-add_library(cutefish-shell-dock-view STATIC
+add_library(properdesktop-shell-dock-view STATIC
     src/shell/dock/dock_icon.cpp
     src/shell/dock/dock_icon.h
     src/shell/dock/dock_magnification.cpp
@@ -34,25 +34,25 @@ add_library(cutefish-shell-dock-view STATIC
     src/shell/dock/dock_window.cpp
     src/shell/dock/dock_window.h
 )
-target_link_libraries(cutefish-shell-dock-view PUBLIC cutefish-shell cutefish-shell-dock)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-dock-view)
+target_link_libraries(properdesktop-shell-dock-view PUBLIC properdesktop-shell properdesktop-shell-dock)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-dock-view)
 
-add_library(cutefish-shell-clipboard-view STATIC
+add_library(properdesktop-shell-clipboard-view STATIC
     src/shell/clipboard/clipboard_picker.cpp
     src/shell/clipboard/clipboard_picker.h
     src/shell/clipboard/clipboard_picker_view.cpp
     src/shell/clipboard/clipboard_picker_view.h
 )
-target_link_libraries(cutefish-shell-clipboard-view PUBLIC cutefish-shell cutefish-shell-clipboard)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-clipboard-view)
+target_link_libraries(properdesktop-shell-clipboard-view PUBLIC properdesktop-shell properdesktop-shell-clipboard)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-clipboard-view)
 
-add_library(cutefish-shell-notresponding STATIC
+add_library(properdesktop-shell-notresponding STATIC
     src/shell/notresponding/not_responding_sheets.cpp
     src/shell/notresponding/not_responding_sheets.h
 )
-target_link_libraries(cutefish-shell-notresponding PUBLIC cutefish-shell)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-notresponding)
-add_library(cutefish-shell-screenshot STATIC
+target_link_libraries(properdesktop-shell-notresponding PUBLIC properdesktop-shell)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-notresponding)
+add_library(properdesktop-shell-screenshot STATIC
     src/shell/screenshot/capture_clipboard.cpp
     src/shell/screenshot/capture_clipboard.h
     src/shell/screenshot/capture_notifier.cpp
@@ -70,11 +70,11 @@ add_library(cutefish-shell-screenshot STATIC
     src/shell/screenshot/screen_recording.cpp
     src/shell/screenshot/screen_recording.h
 )
-target_link_libraries(cutefish-shell-screenshot PUBLIC cutefish-shell cutefish-shell-common
-    cutefish-wayland cutefish-wayland-private-shell Cutefish::AudioClient)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-screenshot)
-find_package(CutefishClients REQUIRED COMPONENTS networkmanager bluez)
-add_library(cutefish-shell-secrets STATIC
+target_link_libraries(properdesktop-shell-screenshot PUBLIC properdesktop-shell properdesktop-shell-common
+    properdesktop-wayland properdesktop-wayland-private-shell ProperDesktop::AudioClient)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-screenshot)
+find_package(ProperDesktopClients REQUIRED COMPONENTS networkmanager bluez)
+add_library(properdesktop-shell-secrets STATIC
     src/shell/secrets/bluetooth_pairing_dialog.cpp
     src/shell/secrets/bluetooth_pairing_dialog.h
     src/shell/secrets/network_dialogs.cpp
@@ -90,10 +90,10 @@ add_library(cutefish-shell-secrets STATIC
     src/shell/secrets/vpn_secret_fields.cpp
     src/shell/secrets/vpn_secret_fields.h
 )
-target_link_libraries(cutefish-shell-secrets PUBLIC cutefish-shell
-    Cutefish::NetworkManagerClient Cutefish::BluezClient)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-secrets)
-add_library(cutefish-shell-notification-view STATIC
+target_link_libraries(properdesktop-shell-secrets PUBLIC properdesktop-shell
+    ProperDesktop::NetworkManagerClient ProperDesktop::BluezClient)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-secrets)
+add_library(properdesktop-shell-notification-view STATIC
     src/shell/notification/notification_card.cpp
     src/shell/notification/notification_card.h
     src/shell/notification/notification_centre.cpp
@@ -107,9 +107,9 @@ add_library(cutefish-shell-notification-view STATIC
     src/shell/notification/notification_ui.cpp
     src/shell/notification/notification_ui.h
 )
-target_link_libraries(cutefish-shell-notification-view PUBLIC cutefish-shell cutefish-shell-notification)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-notification-view)
-add_library(cutefish-shell-launchpad-view STATIC
+target_link_libraries(properdesktop-shell-notification-view PUBLIC properdesktop-shell properdesktop-shell-notification)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-notification-view)
+add_library(properdesktop-shell-launchpad-view STATIC
     src/shell/launchpad/launchpad_cell.cpp
     src/shell/launchpad/launchpad_cell.h
     src/shell/launchpad/launchpad_folder_view.cpp
@@ -128,11 +128,11 @@ add_library(cutefish-shell-launchpad-view STATIC
     src/shell/launchpad/launchpad_window.cpp
     src/shell/launchpad/launchpad_window.h
 )
-target_link_libraries(cutefish-shell-launchpad-view PUBLIC cutefish-shell cutefish-shell-launchpad
-    cutefish-shell-wallpaper)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-launchpad-view)
-find_package(CutefishClients REQUIRED COMPONENTS networkmanager bluez audio)
-add_library(cutefish-shell-controlcenter STATIC
+target_link_libraries(properdesktop-shell-launchpad-view PUBLIC properdesktop-shell properdesktop-shell-launchpad
+    properdesktop-shell-wallpaper)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-launchpad-view)
+find_package(ProperDesktopClients REQUIRED COMPONENTS networkmanager bluez audio)
+add_library(properdesktop-shell-controlcenter STATIC
     src/shell/controlcenter/control_center.cpp
     src/shell/controlcenter/control_center.h
     src/shell/controlcenter/control_center_services.h
@@ -152,20 +152,20 @@ add_library(cutefish-shell-controlcenter STATIC
     src/shell/controlcenter/tiles.h
     src/shell/menubar/menu_bar_panels.h
 )
-target_link_libraries(cutefish-shell-controlcenter PUBLIC cutefish-shell cutefish-shell-osd
-    cutefish-shell-menubar cutefish-shell-notification Cutefish::NetworkManagerClient
-    Cutefish::BluezClient Cutefish::AudioClient)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-controlcenter)
-add_library(cutefish-shell-bar-items STATIC
+target_link_libraries(properdesktop-shell-controlcenter PUBLIC properdesktop-shell properdesktop-shell-osd
+    properdesktop-shell-menubar properdesktop-shell-notification ProperDesktop::NetworkManagerClient
+    ProperDesktop::BluezClient ProperDesktop::AudioClient)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-controlcenter)
+add_library(properdesktop-shell-bar-items STATIC
     src/shell/menubar/bar_item.cpp
     src/shell/menubar/bar_item.h
     src/shell/menubar/menu_bar_panels.h
     src/shell/menubar/status_icon.cpp
     src/shell/menubar/status_icon.h
 )
-target_link_libraries(cutefish-shell-bar-items PUBLIC cutefish-shell cutefish-shell-menubar)
-find_package(CutefishClients REQUIRED COMPONENTS appearance)
-add_library(cutefish-shell-menubar-view STATIC
+target_link_libraries(properdesktop-shell-bar-items PUBLIC properdesktop-shell properdesktop-shell-menubar)
+find_package(ProperDesktopClients REQUIRED COMPONENTS appearance)
+add_library(properdesktop-shell-menubar-view STATIC
     src/shell/menubar/menu_popup.cpp
     src/shell/menubar/menu_popup.h
     src/shell/menubar/device_usage.cpp
@@ -181,7 +181,7 @@ add_library(cutefish-shell-menubar-view STATIC
     src/shell/menubar/system_tray_view.cpp
     src/shell/menubar/system_tray_view.h
 )
-target_link_libraries(cutefish-shell-menubar-view PUBLIC cutefish-shell cutefish-shell-bar-items
-    cutefish-shell-menubar cutefish-shell-wallpaper Cutefish::AudioClient)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-shell-menubar-view)
+target_link_libraries(properdesktop-shell-menubar-view PUBLIC properdesktop-shell properdesktop-shell-bar-items
+    properdesktop-shell-menubar properdesktop-shell-wallpaper ProperDesktop::AudioClient)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-menubar-view)
 include(src/shell/menubar/app_menus.cmake)

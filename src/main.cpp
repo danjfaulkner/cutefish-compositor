@@ -41,24 +41,24 @@ int createSignalFd()
 
 int main(int argc, char *argv[])
 {
-    cutefish::core::applyMallocPolicy();
+    properdesktop::core::applyMallocPolicy();
     signal(SIGPIPE, SIG_IGN);
     // Set now, not only once the embedded toolkit sets it for the lock screen.
-    cutefish::base::Locale::setProcessLocale();
-    cutefish::i18n::setDomain("cutefish-compositor");
-    const cutefish::ScopedFd signalFdOwner(createSignalFd());
+    properdesktop::base::Locale::setProcessLocale();
+    properdesktop::i18n::setDomain("properdesktop-compositor");
+    const properdesktop::ScopedFd signalFdOwner(createSignalFd());
     const int signalFd = signalFdOwner.get();
     // Outlives the shell, whose objects may watch, time or post on it.
-    const cutefish::core::MainLoop mainLoop;
+    const properdesktop::core::MainLoop mainLoop;
 
-    const auto options = cutefish::core::CompositorOptions::parse(argc, argv);
+    const auto options = properdesktop::core::CompositorOptions::parse(argc, argv);
     if (!options)
         return 1;
     if (!options->logRules.empty())
-        cutefish::core::setLoggingRules(options->logRules);
-    cutefish::scene::motion::setDurationScale(options->animationDurationScale);
+        properdesktop::core::setLoggingRules(options->logRules);
+    properdesktop::scene::motion::setDurationScale(options->animationDurationScale);
 
-    auto shell = std::make_unique<cutefish::core::CompositorShell>(*options);
+    auto shell = std::make_unique<properdesktop::core::CompositorShell>(*options);
     if (!shell->init())
         return 1;
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         CF_WARNING(cfWayland) << "Failed to create signalfd; Ctrl-C will not shut down cleanly";
     }
 
-    CF_INFO(cfWayland) << "cutefish-compositor started, WAYLAND_DISPLAY=" + shell->socketName();
+    CF_INFO(cfWayland) << "properdesktop-compositor started, WAYLAND_DISPLAY=" + shell->socketName();
 
     if (!shell->notifyReady())
         return 1;

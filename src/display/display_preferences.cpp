@@ -24,7 +24,7 @@
 #include "base/strings.h"
 #include "core/preferences.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 namespace {
 
 using base::json::Value;
@@ -377,4 +377,4 @@ std::optional<DisplayConfiguration> DisplayPreferences::restore(const HardwareSn
     return result;
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

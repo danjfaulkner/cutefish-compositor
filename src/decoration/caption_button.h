@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_DECORATION_CAPTION_BUTTON_H_
-#define CUTEFISH_DECORATION_CAPTION_BUTTON_H_
+#ifndef PROPERDESKTOP_DECORATION_CAPTION_BUTTON_H_
+#define PROPERDESKTOP_DECORATION_CAPTION_BUTTON_H_
 
 #include "base/geometry.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 enum class CaptionButtonType {
     Close,
@@ -39,6 +39,6 @@ private:
     bool m_pressed = false;
 };
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-#endif // CUTEFISH_DECORATION_CAPTION_BUTTON_H_
+#endif // PROPERDESKTOP_DECORATION_CAPTION_BUTTON_H_

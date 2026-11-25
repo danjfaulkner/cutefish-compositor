@@ -11,7 +11,7 @@
 #include "base/transform.h"
 #include "ui/path.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 enum class WindowVisualMode {
     ServerFrame,
@@ -108,4 +108,4 @@ private:
     mutable bool m_dimFading = false;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

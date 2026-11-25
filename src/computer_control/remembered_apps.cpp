@@ -20,11 +20,11 @@
 #include "base/json.h"
 #include "input/dbus_export.h"
 
-namespace cutefish::computer_control {
+namespace properdesktop::computer_control {
 namespace {
 
-constexpr auto service = "org.cutefish.ComputerControl1";
-constexpr auto path = "/org/cutefish/ComputerControl1";
+constexpr auto service = "org.properdesktop.ComputerControl1";
+constexpr auto path = "/org/properdesktop/ComputerControl1";
 constexpr auto key = "ComputerControl/AllowedApps";
 
 // Programs that run what they are handed, matched on the executable's name
@@ -182,4 +182,4 @@ void RememberedApps::save()
         m_object->emitSignal("changed");
 }
 
-} // namespace cutefish::computer_control
+} // namespace properdesktop::computer_control

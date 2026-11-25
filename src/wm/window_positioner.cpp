@@ -14,7 +14,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm::window_positioner {
+namespace properdesktop::wm::window_positioner {
 
 namespace {
 
@@ -77,4 +77,4 @@ base::Rect boundsForNewWindow(const Window *window, base::Rect bounds)
     return bounds;
 }
 
-} // namespace cutefish::wm::window_positioner
+} // namespace properdesktop::wm::window_positioner

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_AUTH_SECRET_H
-#define CUTEFISH_AUTH_SECRET_H
+#ifndef PROPERDESKTOP_AUTH_SECRET_H
+#define PROPERDESKTOP_AUTH_SECRET_H
 
 #include <cstring>
 #include <string>
@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 inline void wipeString(std::string &secret)
 {
@@ -77,6 +77,6 @@ private:
     std::vector<char> m_data;
 };
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth
 
-#endif // CUTEFISH_AUTH_SECRET_H
+#endif // PROPERDESKTOP_AUTH_SECRET_H

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SHELL_H_
-#define CUTEFISH_SHELL_SHELL_H_
+#ifndef PROPERDESKTOP_SHELL_SHELL_H_
+#define PROPERDESKTOP_SHELL_SHELL_H_
 
 #include <functional>
 #include <memory>
@@ -14,35 +14,35 @@
 #include "base/signal.h"
 #include "base/timer.h"
 
-namespace cutefish::base::dbus {
+namespace properdesktop::base::dbus {
 class Connection;
 }
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Compositor;
 }
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 class Theme;
 }
 
-namespace cutefish::display {
+namespace properdesktop::display {
 class DisplayManager;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 class InputMethodRelay;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowManager;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ApplicationBadges;
 class ApplicationLauncher;
@@ -171,6 +171,6 @@ private:
     std::vector<std::unique_ptr<Component>> m_components;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SHELL_H_
+#endif // PROPERDESKTOP_SHELL_SHELL_H_

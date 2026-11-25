@@ -7,15 +7,15 @@
 //               (HardwareDisplayPlaneManager::IsCompatible / AssignOverlayPlanes)
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_BACKEND_DRM_PLANE_ASSIGNMENT_H_
-#define CUTEFISH_BACKEND_DRM_PLANE_ASSIGNMENT_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_PLANE_ASSIGNMENT_H_
+#define PROPERDESKTOP_BACKEND_DRM_PLANE_ASSIGNMENT_H_
 
 #include <cstdint>
 #include <vector>
 
 #include "backend/drm/drm_plane.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 struct PlaneRequest {
     uint32_t format = 0;
@@ -34,6 +34,6 @@ struct PlaneAssignment {
 std::vector<PlaneAssignment> assignPlanes(const std::vector<DrmPlane>& planes, int crtcIndex,
                                           const std::vector<PlaneRequest>& requests);
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_PLANE_ASSIGNMENT_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_PLANE_ASSIGNMENT_H_

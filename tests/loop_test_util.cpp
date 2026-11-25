@@ -12,7 +12,7 @@
 #include "base/event_loop.h"
 #include "core/main_loop.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 bool runUntil(const std::function<bool()>& done, std::chrono::milliseconds timeout)
 {
@@ -54,4 +54,4 @@ void processPendingEvents()
     loop->dispatch();
 }
 
-} // namespace cutefish::test
+} // namespace properdesktop::test

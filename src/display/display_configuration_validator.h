@@ -12,7 +12,7 @@
 #include "display/display_layout.h"
 #include "display/display_types.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayConfigurationValidator
 {
@@ -28,4 +28,4 @@ public:
                                    const DisplayConfiguration& requested);
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

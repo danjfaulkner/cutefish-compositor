@@ -21,7 +21,7 @@
 #include "wm/desks/fullscreen_desks.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -679,4 +679,4 @@ void DockLayoutManager::onWindowTransientParentChanged(Window *, Window *)
     update();
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

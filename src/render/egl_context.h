@@ -12,7 +12,7 @@
 
 struct gbm_device;
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class EglRenderTarget;
 class EglDisplay;
@@ -78,4 +78,4 @@ private:
     bool m_valid;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

@@ -6,8 +6,8 @@
 //           chromium/src/ash/public/cpp/accelerator_configuration.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_CONFIGURATION_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_CONFIGURATION_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_CONFIGURATION_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_CONFIGURATION_H_
 
 #include <map>
 #include <optional>
@@ -23,7 +23,7 @@
 #include "base/signal.h"
 #include "input/types.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 enum class AcceleratorConfigResult {
     Success,
@@ -139,6 +139,6 @@ private:
     AcceleratorActionMap m_defaultAcceleratorsToId;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_CONFIGURATION_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_CONFIGURATION_H_

@@ -4,7 +4,7 @@
 
 #include "wm/wm_event.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 WMEvent::WMEvent(WMEventType type)
     : m_type(type)
@@ -21,4 +21,4 @@ SetBoundsWMEvent::SetBoundsWMEvent(const base::Rect &bounds)
 
 SetBoundsWMEvent::~SetBoundsWMEvent() = default;
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

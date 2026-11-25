@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_WINDOW_MANAGER_H_
-#define CUTEFISH_WM_WINDOW_MANAGER_H_
+#ifndef PROPERDESKTOP_WM_WINDOW_MANAGER_H_
+#define PROPERDESKTOP_WM_WINDOW_MANAGER_H_
 
 #include <chrono>
 #include <cstdint>
@@ -31,25 +31,25 @@
 #include "wm/window_modality_controller.h"
 #include "wm/work_area.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Compositor;
 class Surface;
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
 class SessionGate;
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-namespace cutefish::display {
+namespace properdesktop::display {
 class DisplayManager;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class DesksController;
 class FullscreenDesks;
@@ -450,6 +450,6 @@ private:
     base::WeakPtrFactory<WindowManager> m_weakFactory {this};
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WINDOW_MANAGER_H_
+#endif // PROPERDESKTOP_WM_WINDOW_MANAGER_H_

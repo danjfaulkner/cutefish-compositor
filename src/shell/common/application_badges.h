@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_APPLICATION_BADGES_H_
-#define CUTEFISH_SHELL_COMMON_APPLICATION_BADGES_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_APPLICATION_BADGES_H_
+#define PROPERDESKTOP_SHELL_COMMON_APPLICATION_BADGES_H_
 
 #include <cstdint>
 #include <map>
@@ -12,7 +12,7 @@
 #include "base/dbus.h"
 #include "base/signal.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Counts from com.canonical.Unity.LauncherEntry's Update signal, shown while
 // count-visible is true and the count is above zero.
@@ -52,6 +52,6 @@ private:
     base::dbus::Match m_nameOwnerChanged;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_APPLICATION_BADGES_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_APPLICATION_BADGES_H_

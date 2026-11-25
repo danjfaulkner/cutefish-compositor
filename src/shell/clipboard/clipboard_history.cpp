@@ -16,13 +16,13 @@
 #include "shell/common/mime_icons.h"
 #include "shell/common/text_match.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
-using cutefish::i18n::trn;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
+using properdesktop::i18n::trn;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
-static const base::LogCategory cfClipboard("cutefish.shell.clipboard");
+static const base::LogCategory cfClipboard("properdesktop.shell.clipboard");
 
 static constexpr size_t kTitleLength = 300;
 
@@ -191,7 +191,7 @@ ClipboardHistory::ClipboardHistory(base::dbus::Connection *bus, clipboard::Selec
 ClipboardHistory::~ClipboardHistory()
 {
     if (m_object && m_bus)
-        m_bus->releaseName("org.cutefish.ClipboardHistory");
+        m_bus->releaseName("org.properdesktop.ClipboardHistory");
 }
 
 bool ClipboardHistory::registerService()
@@ -200,11 +200,11 @@ bool ClipboardHistory::registerService()
         return true;
     if (!m_bus)
         return false;
-    auto object = std::make_unique<base::dbus::Object>(m_bus, "/ClipboardHistory", "org.cutefish.ClipboardHistory");
+    auto object = std::make_unique<base::dbus::Object>(m_bus, "/ClipboardHistory", "org.properdesktop.ClipboardHistory");
     object->addMethod("toggle", [this] { toggle(); });
     if (!object->publish()
-        || !m_bus->requestName("org.cutefish.ClipboardHistory", base::dbus::Connection::DoNotQueue)) {
-        CF_WARNING(cfClipboard) << "Cannot own org.cutefish.ClipboardHistory";
+        || !m_bus->requestName("org.properdesktop.ClipboardHistory", base::dbus::Connection::DoNotQueue)) {
+        CF_WARNING(cfClipboard) << "Cannot own org.properdesktop.ClipboardHistory";
         return false;
     }
     m_object = std::move(object);
@@ -261,4 +261,4 @@ void ClipboardHistory::clear()
     m_store.clear();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

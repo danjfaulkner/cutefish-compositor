@@ -17,11 +17,11 @@
 #include "ui/theme.h"
 #include "wm/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfOsd("cutefish.shell.osd");
+static const base::LogCategory cfOsd("properdesktop.shell.osd");
 
 // On PipeWire's scale, where 1 is normal.
 static constexpr double kNormalVolume = 1.0;
@@ -77,7 +77,7 @@ Osd::~Osd()
 {
     m_subscriptions.clear();
     if (m_service && m_shell->bus())
-        m_shell->bus()->releaseName("org.cutefish.Osd");
+        m_shell->bus()->releaseName("org.properdesktop.Osd");
     m_service.reset();
     m_window.reset();
 }
@@ -89,7 +89,7 @@ bool Osd::registerService()
     dbus::Connection *bus = m_shell->bus();
     if (!bus)
         return false;
-    auto object = std::make_unique<dbus::Object>(bus, "/Osd", "org.cutefish.Osd");
+    auto object = std::make_unique<dbus::Object>(bus, "/Osd", "org.properdesktop.Osd");
     object->addMethod("volumeDown", [this] { volumeDown(); });
     object->addMethod("volumeUp", [this] { volumeUp(); });
     object->addMethod("toggleMute", [this] { toggleMute(); });
@@ -98,8 +98,8 @@ bool Osd::registerService()
     object->addMethod("brightnessUp", [this] { brightnessUp(); });
     object->addMethod("keyboardBrightnessDown", [this] { keyboardBrightnessDown(); });
     object->addMethod("keyboardBrightnessUp", [this] { keyboardBrightnessUp(); });
-    if (!object->publish() || !bus->requestName("org.cutefish.Osd", dbus::Connection::DoNotQueue)) {
-        CF_WARNING(cfOsd) << "Cannot own org.cutefish.Osd";
+    if (!object->publish() || !bus->requestName("org.properdesktop.Osd", dbus::Connection::DoNotQueue)) {
+        CF_WARNING(cfOsd) << "Cannot own org.properdesktop.Osd";
         return false;
     }
     m_service = std::move(object);
@@ -335,4 +335,4 @@ void Osd::keyboardBrightnessDown()
     stepKeyboardBrightness(-1);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

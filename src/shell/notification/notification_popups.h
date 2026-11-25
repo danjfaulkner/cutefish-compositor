@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_POPUPS_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_POPUPS_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_POPUPS_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_POPUPS_H_
 
 #include <chrono>
 #include <cstdint>
@@ -15,7 +15,7 @@
 #include "base/timer.h"
 #include "shell/notification/notification.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class NotificationBanners;
 class NotificationCard;
@@ -102,6 +102,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_POPUPS_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_POPUPS_H_

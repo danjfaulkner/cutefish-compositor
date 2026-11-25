@@ -12,7 +12,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -74,4 +74,4 @@ void WindowModalityController::updateModality(Window *window, bool modalChanged)
         activation->activate(active);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

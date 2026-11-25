@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_RENDER_DRM_SYNCOBJ_H_
-#define CUTEFISH_RENDER_DRM_SYNCOBJ_H_
+#ifndef PROPERDESKTOP_RENDER_DRM_SYNCOBJ_H_
+#define PROPERDESKTOP_RENDER_DRM_SYNCOBJ_H_
 
 #include <cstdint>
 #include <memory>
@@ -11,7 +11,7 @@
 #include "core/scoped_fd.h"
 #include "render/sync_fence.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class DrmSyncobj
 {
@@ -47,6 +47,6 @@ private:
     uint32_t m_handle = 0;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_DRM_SYNCOBJ_H_
+#endif // PROPERDESKTOP_RENDER_DRM_SYNCOBJ_H_

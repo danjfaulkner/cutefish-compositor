@@ -14,11 +14,11 @@
 #include "wayland/server_util.h"
 #include "wm/shell_surface.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
-using cutefish::wm::ShellSurface;
+using properdesktop::wm::ShellSurface;
 
 // The protocol lets the xdg_toplevel go first; the dialog object is inert from then on.
 class WaylandXdgDialog
@@ -146,4 +146,4 @@ wl_global *createXdgDialogGlobal(wl_display *display)
                             &bindXdgWmDialog);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

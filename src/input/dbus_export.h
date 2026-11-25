@@ -9,7 +9,7 @@
 
 #include "base/dbus.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class DBusExport
 {
@@ -38,4 +38,4 @@ private:
     bool m_named = false;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

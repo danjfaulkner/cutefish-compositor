@@ -5,7 +5,7 @@
 #include <atomic>
 #include <chrono>
 #include <cstring>
-#include <cutefish-window-hints-v1-client-protocol.h>
+#include <properdesktop-window-hints-v1-client-protocol.h>
 #include <gtest/gtest.h>
 #include <sys/socket.h>
 #include <thread>
@@ -20,7 +20,7 @@
 #include "wayland/protocols/wl_compositor.h"
 #include "wayland/server_util.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -33,7 +33,7 @@ protected:
     wl_display *client = nullptr;
     wl_registry *registry = nullptr;
     wl_compositor *clientCompositor = nullptr;
-    cutefish_window_hints_v1 *hints = nullptr;
+    properdesktop_window_hints_v1 *hints = nullptr;
 
     void SetUp() override
     {
@@ -54,9 +54,9 @@ protected:
                     if (std::strcmp(interface, "wl_compositor") == 0)
                         self->clientCompositor = static_cast<wl_compositor *>(
                                 wl_registry_bind(registry, name, &wl_compositor_interface, 4));
-                    else if (std::strcmp(interface, "cutefish_window_hints_v1") == 0)
-                        self->hints = static_cast<cutefish_window_hints_v1 *>(wl_registry_bind(
-                                registry, name, &cutefish_window_hints_v1_interface, 1));
+                    else if (std::strcmp(interface, "properdesktop_window_hints_v1") == 0)
+                        self->hints = static_cast<properdesktop_window_hints_v1 *>(wl_registry_bind(
+                                registry, name, &properdesktop_window_hints_v1_interface, 1));
                 },
                 [](void *, wl_registry *, uint32_t) {}};
         wl_registry_add_listener(registry, &listener, this);
@@ -87,7 +87,7 @@ protected:
     void TearDown() override
     {
         if (hints)
-            cutefish_window_hints_v1_destroy(hints);
+            properdesktop_window_hints_v1_destroy(hints);
         if (clientCompositor)
             wl_compositor_destroy(clientCompositor);
         if (registry)
@@ -107,14 +107,14 @@ TEST_F(WindowHintsProtocolTest, MetadataIsImmediateAndPersistsUntilTheSurfaceDie
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_FALSE(model->skipTaskbar());
-    cutefish_window_hints_v1_set_skip_taskbar(hints, surface, 1);
+    properdesktop_window_hints_v1_set_skip_taskbar(hints, surface, 1);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->skipTaskbar());
-    cutefish_window_hints_v1_set_skip_taskbar(hints, surface, 0);
+    properdesktop_window_hints_v1_set_skip_taskbar(hints, surface, 0);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_FALSE(model->skipTaskbar());
-    cutefish_window_hints_v1_set_skip_taskbar(hints, surface, 1);
-    cutefish_window_hints_v1_destroy(hints);
+    properdesktop_window_hints_v1_set_skip_taskbar(hints, surface, 1);
+    properdesktop_window_hints_v1_destroy(hints);
     hints = nullptr;
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->skipTaskbar());
@@ -132,14 +132,14 @@ TEST_F(WindowHintsProtocolTest, AlwaysOnTopIsImmediateAndPersistsUntilTheSurface
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_FALSE(model->alwaysOnTop());
-    cutefish_window_hints_v1_set_always_on_top(hints, surface, 1);
+    properdesktop_window_hints_v1_set_always_on_top(hints, surface, 1);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->alwaysOnTop());
-    cutefish_window_hints_v1_set_always_on_top(hints, surface, 0);
+    properdesktop_window_hints_v1_set_always_on_top(hints, surface, 0);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_FALSE(model->alwaysOnTop());
-    cutefish_window_hints_v1_set_always_on_top(hints, surface, 1);
-    cutefish_window_hints_v1_destroy(hints);
+    properdesktop_window_hints_v1_set_always_on_top(hints, surface, 1);
+    properdesktop_window_hints_v1_destroy(hints);
     hints = nullptr;
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->alwaysOnTop());
@@ -154,10 +154,10 @@ TEST_F(WindowHintsProtocolTest, AlwaysOnTopIsImmediateAndPersistsUntilTheSurface
 TEST_F(WindowHintsProtocolTest, InvalidAlwaysOnTopIsAProtocolError)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_window_hints_v1_set_always_on_top(hints, surface, 2);
+    properdesktop_window_hints_v1_set_always_on_top(hints, surface, 2);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -167,20 +167,20 @@ TEST_F(WindowHintsProtocolTest, LevelIsImmediateAndTheLaterOfItAndAlwaysOnTopApp
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_EQ(model->level(), compositor::WindowLevel::Normal);
-    cutefish_window_hints_v1_set_level(hints, surface, CUTEFISH_WINDOW_HINTS_V1_LEVEL_ABOVE_DOCK);
+    properdesktop_window_hints_v1_set_level(hints, surface, PROPERDESKTOP_WINDOW_HINTS_V1_LEVEL_ABOVE_DOCK);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_EQ(model->level(), compositor::WindowLevel::AboveDock);
     EXPECT_TRUE(model->alwaysOnTop());
-    cutefish_window_hints_v1_set_always_on_top(hints, surface, 1);
+    properdesktop_window_hints_v1_set_always_on_top(hints, surface, 1);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_EQ(model->level(), compositor::WindowLevel::Floating);
-    cutefish_window_hints_v1_set_level(hints, surface, CUTEFISH_WINDOW_HINTS_V1_LEVEL_NORMAL);
+    properdesktop_window_hints_v1_set_level(hints, surface, PROPERDESKTOP_WINDOW_HINTS_V1_LEVEL_NORMAL);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_FALSE(model->alwaysOnTop());
-    cutefish_window_hints_v1_set_level(hints, surface, 3);
+    properdesktop_window_hints_v1_set_level(hints, surface, 3);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -190,11 +190,11 @@ TEST_F(WindowHintsProtocolTest, ResizeAnchorIsImmediateAndPersistsUntilTheSurfac
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_EQ(model->resizeAnchor(), compositor::ResizeAnchor::TopLeft);
-    cutefish_window_hints_v1_set_resize_anchor(hints, surface,
-                                               CUTEFISH_WINDOW_HINTS_V1_RESIZE_ANCHOR_CENTER);
+    properdesktop_window_hints_v1_set_resize_anchor(hints, surface,
+                                               PROPERDESKTOP_WINDOW_HINTS_V1_RESIZE_ANCHOR_CENTER);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_EQ(model->resizeAnchor(), compositor::ResizeAnchor::Center);
-    cutefish_window_hints_v1_destroy(hints);
+    properdesktop_window_hints_v1_destroy(hints);
     hints = nullptr;
     ASSERT_GE(roundtrip(), 0);
     EXPECT_EQ(model->resizeAnchor(), compositor::ResizeAnchor::Center);
@@ -209,10 +209,10 @@ TEST_F(WindowHintsProtocolTest, ResizeAnchorIsImmediateAndPersistsUntilTheSurfac
 TEST_F(WindowHintsProtocolTest, UnknownResizeAnchorIsAProtocolError)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_window_hints_v1_set_resize_anchor(hints, surface, 2);
+    properdesktop_window_hints_v1_set_resize_anchor(hints, surface, 2);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -222,13 +222,13 @@ TEST_F(WindowHintsProtocolTest, ServerResizeIsImmediateAndRejectsOtherValues)
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_FALSE(model->serverResize());
-    cutefish_window_hints_v1_set_server_resize(hints, surface, 1);
+    properdesktop_window_hints_v1_set_server_resize(hints, surface, 1);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->serverResize());
-    cutefish_window_hints_v1_set_server_resize(hints, surface, 2);
+    properdesktop_window_hints_v1_set_server_resize(hints, surface, 2);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -238,10 +238,10 @@ TEST_F(WindowHintsProtocolTest, RestoreIdIsImmediateAndPersistsUntilTheSurfaceDi
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_TRUE(model->restoreId().empty());
-    cutefish_window_hints_v1_set_restore_id(hints, surface, "preview");
+    properdesktop_window_hints_v1_set_restore_id(hints, surface, "preview");
     ASSERT_GE(roundtrip(), 0);
     EXPECT_EQ(model->restoreId(), "preview");
-    cutefish_window_hints_v1_set_restore_id(hints, surface, "");
+    properdesktop_window_hints_v1_set_restore_id(hints, surface, "");
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->restoreId().empty());
     wl_surface_destroy(surface);
@@ -253,16 +253,16 @@ TEST_F(WindowHintsProtocolTest, PlacementAnchorIsImmediateAndCanBeUnset)
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_FALSE(model->placementAnchor());
-    cutefish_window_hints_v1_set_placement_anchor(hints, surface, 700, 12, 0, 0,
-                                                  CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM,
-                                                  CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM);
+    properdesktop_window_hints_v1_set_placement_anchor(hints, surface, 700, 12, 0, 0,
+                                                  PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM,
+                                                  PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM);
     ASSERT_GE(roundtrip(), 0);
     ASSERT_TRUE(model->placementAnchor());
     EXPECT_EQ(*model->placementAnchor(),
-              (cutefish::compositor::PlacementAnchor {cutefish::base::Rect(700, 12, 0, 0),
-                                                      cutefish::compositor::PlacementEdge::Bottom,
-                                                      cutefish::compositor::PlacementEdge::Bottom}));
-    cutefish_window_hints_v1_unset_placement_anchor(hints, surface);
+              (properdesktop::compositor::PlacementAnchor {properdesktop::base::Rect(700, 12, 0, 0),
+                                                      properdesktop::compositor::PlacementEdge::Bottom,
+                                                      properdesktop::compositor::PlacementEdge::Bottom}));
+    properdesktop_window_hints_v1_unset_placement_anchor(hints, surface);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_FALSE(model->placementAnchor());
     wl_surface_destroy(surface);
@@ -280,11 +280,11 @@ TEST_F(WindowHintsProtocolTest, BodyShapeIsImmediateAndCanBeUnset)
     wl_array_init(&array);
     auto *data = static_cast<int32_t *>(wl_array_add(&array, values.size() * sizeof(int32_t)));
     std::copy(values.begin(), values.end(), data);
-    cutefish_window_hints_v1_set_body_shape(hints, surface, &array);
+    properdesktop_window_hints_v1_set_body_shape(hints, surface, &array);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_FALSE(model->bodyShape().isEmpty());
-    EXPECT_EQ(model->bodyShape().boundingRect(), (cutefish::ui::RectF {0, 0, 20, 10}));
-    cutefish_window_hints_v1_unset_body_shape(hints, surface);
+    EXPECT_EQ(model->bodyShape().boundingRect(), (properdesktop::ui::RectF {0, 0, 20, 10}));
+    properdesktop_window_hints_v1_unset_body_shape(hints, surface);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->bodyShape().isEmpty());
 
@@ -294,10 +294,10 @@ TEST_F(WindowHintsProtocolTest, BodyShapeIsImmediateAndCanBeUnset)
     wl_array_init(&array);
     data = static_cast<int32_t *>(wl_array_add(&array, sizeof(int32_t)));
     *data = 7;
-    cutefish_window_hints_v1_set_body_shape(hints, surface, &array);
+    properdesktop_window_hints_v1_set_body_shape(hints, surface, &array);
     wl_array_release(&array);
     EXPECT_LT(roundtrip(), 0);
-    EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr), CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+    EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr), PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -307,16 +307,16 @@ TEST_F(WindowHintsProtocolTest, ShadowIsImmediateAndRejectsOtherValues)
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_TRUE(model->castsShadow());
-    cutefish_window_hints_v1_set_shadow(hints, surface, 0);
+    properdesktop_window_hints_v1_set_shadow(hints, surface, 0);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_FALSE(model->castsShadow());
-    cutefish_window_hints_v1_set_shadow(hints, surface, 1);
+    properdesktop_window_hints_v1_set_shadow(hints, surface, 1);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->castsShadow());
-    cutefish_window_hints_v1_set_shadow(hints, surface, 2);
+    properdesktop_window_hints_v1_set_shadow(hints, surface, 2);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -324,12 +324,12 @@ TEST_F(WindowHintsProtocolTest, PlacementAnchorRejectsANegativeSize)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
     ASSERT_GE(roundtrip(), 0);
-    cutefish_window_hints_v1_set_placement_anchor(hints, surface, 0, 0, -1, 0,
-                                                  CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_NONE,
-                                                  CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_NONE);
+    properdesktop_window_hints_v1_set_placement_anchor(hints, surface, 0, 0, -1, 0,
+                                                  PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_NONE,
+                                                  PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_NONE);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -337,11 +337,11 @@ TEST_F(WindowHintsProtocolTest, PlacementAnchorRejectsAnUnknownEdge)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
     ASSERT_GE(roundtrip(), 0);
-    cutefish_window_hints_v1_set_placement_anchor(hints, surface, 0, 0, 0, 0, 9,
-                                                  CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_NONE);
+    properdesktop_window_hints_v1_set_placement_anchor(hints, surface, 0, 0, 0, 0, 9,
+                                                  PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_NONE);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -351,13 +351,13 @@ TEST_F(WindowHintsProtocolTest, RestoreSizeIsImmediateAndRejectsNegativeValues)
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_TRUE(model->restoreSize().isEmpty());
-    cutefish_window_hints_v1_set_restore_size(hints, surface, 300, 200);
+    properdesktop_window_hints_v1_set_restore_size(hints, surface, 300, 200);
     ASSERT_GE(roundtrip(), 0);
-    EXPECT_EQ(model->restoreSize(), cutefish::base::Size(300, 200));
-    cutefish_window_hints_v1_set_restore_size(hints, surface, -1, 200);
+    EXPECT_EQ(model->restoreSize(), properdesktop::base::Size(300, 200));
+    properdesktop_window_hints_v1_set_restore_size(hints, surface, -1, 200);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     wl_surface_destroy(surface);
 }
 
@@ -368,11 +368,11 @@ TEST_F(WindowHintsProtocolTest, InteractiveResizeReachesTheSurfacesClient)
         uint32_t active;
     };
     std::vector<Event> events;
-    static const cutefish_window_hints_v1_listener listener = {
-            [](void *data, cutefish_window_hints_v1 *, wl_surface *surface, uint32_t active) {
+    static const properdesktop_window_hints_v1_listener listener = {
+            [](void *data, properdesktop_window_hints_v1 *, wl_surface *surface, uint32_t active) {
                 static_cast<std::vector<Event> *>(data)->push_back({surface, active});
             }};
-    cutefish_window_hints_v1_add_listener(hints, &listener, &events);
+    properdesktop_window_hints_v1_add_listener(hints, &listener, &events);
     auto *surface = wl_compositor_create_surface(clientCompositor);
     ASSERT_GE(roundtrip(), 0);
     wl_resource *resource = wayland::getSurfaceResource(compositor.surfaces().front());
@@ -386,7 +386,7 @@ TEST_F(WindowHintsProtocolTest, InteractiveResizeReachesTheSurfacesClient)
     EXPECT_EQ(events[0].active, 1u);
     EXPECT_EQ(events[1].active, 0u);
 
-    cutefish_window_hints_v1_destroy(hints);
+    properdesktop_window_hints_v1_destroy(hints);
     hints = nullptr;
     ASSERT_GE(roundtrip(), 0);
     wayland::sendInteractiveResize(resource, true);
@@ -401,13 +401,13 @@ TEST_F(WindowHintsProtocolTest, OpacityIsImmediateAndBetweenZeroAndOne)
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_EQ(model->opacity(), 1.0f);
-    cutefish_window_hints_v1_set_opacity(hints, surface, wl_fixed_from_double(0.5));
+    properdesktop_window_hints_v1_set_opacity(hints, surface, wl_fixed_from_double(0.5));
     ASSERT_GE(roundtrip(), 0);
     EXPECT_EQ(model->opacity(), 0.5f);
-    cutefish_window_hints_v1_set_opacity(hints, surface, wl_fixed_from_double(1.5));
+    properdesktop_window_hints_v1_set_opacity(hints, surface, wl_fixed_from_double(1.5));
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     EXPECT_EQ(model->opacity(), 0.5f);
     wl_surface_destroy(surface);
 }
@@ -419,14 +419,14 @@ TEST_F(WindowHintsProtocolTest, FullscreenBarsAreImmediateAndRejectOtherValues)
     auto *model = compositor.surfaces().front();
     EXPECT_EQ(model->fullscreenBarsHeight(), 0);
     EXPECT_FALSE(model->fullscreenBarsPush());
-    cutefish_window_hints_v1_set_fullscreen_bars(hints, surface, 52, 1);
+    properdesktop_window_hints_v1_set_fullscreen_bars(hints, surface, 52, 1);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_EQ(model->fullscreenBarsHeight(), 52);
     EXPECT_TRUE(model->fullscreenBarsPush());
-    cutefish_window_hints_v1_set_fullscreen_bars(hints, surface, 52, 2);
+    properdesktop_window_hints_v1_set_fullscreen_bars(hints, surface, 52, 2);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     EXPECT_TRUE(model->fullscreenBarsPush());
     wl_surface_destroy(surface);
 }
@@ -434,7 +434,7 @@ TEST_F(WindowHintsProtocolTest, FullscreenBarsAreImmediateAndRejectOtherValues)
 TEST_F(WindowHintsProtocolTest, HideApplicationOnASurfaceWithoutAWindowIsHarmless)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_window_hints_v1_hide_application(hints, surface);
+    properdesktop_window_hints_v1_hide_application(hints, surface);
     EXPECT_GE(roundtrip(), 0);
     wl_surface_destroy(surface);
 }
@@ -442,14 +442,14 @@ TEST_F(WindowHintsProtocolTest, HideApplicationOnASurfaceWithoutAWindowIsHarmles
 TEST_F(WindowHintsProtocolTest, InvalidBooleanIsAProtocolError)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_window_hints_v1_set_skip_taskbar(hints, surface, 2);
+    properdesktop_window_hints_v1_set_skip_taskbar(hints, surface, 2);
     EXPECT_LT(roundtrip(), 0);
     const wl_interface *interface = nullptr;
     uint32_t id = 0;
     EXPECT_EQ(wl_display_get_protocol_error(client, &interface, &id),
-              CUTEFISH_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
+              PROPERDESKTOP_WINDOW_HINTS_V1_ERROR_INVALID_VALUE);
     ASSERT_NE(interface, nullptr);
-    EXPECT_STREQ(interface->name, "cutefish_window_hints_v1");
+    EXPECT_STREQ(interface->name, "properdesktop_window_hints_v1");
     wl_surface_destroy(surface);
 }
 

@@ -11,7 +11,7 @@
 #include "compositor/surface.h"
 #include "wm/window.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 bool WmShadowControllerDelegate::shouldShowShadowForWindow(const Window *window)
 {
@@ -66,4 +66,4 @@ ShadowElevation WmShadowControllerDelegate::elevationForWindow(const Window *win
     return window->isActive() ? ShadowElevation::Active : ShadowElevation::Inactive;
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

@@ -7,7 +7,7 @@
 #include "session/session_controller.h"
 #include "base/logging.h"
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 namespace {
 
@@ -85,7 +85,7 @@ void SleepLock::inhibit()
                 if (!m_sleeping)
                     m_inhibitor = reply.value<base::dbus::UnixFd>().value_or(base::dbus::UnixFd());
             },
-            std::string("sleep"), std::string("Cutefish"),
+            std::string("sleep"), std::string("ProperDesktop"),
             std::string("Lock the screen before sleeping"), std::string("delay"));
 }
 
@@ -140,4 +140,4 @@ void SleepLock::updateLockedHint(SessionState state)
         CF_WARNING(logs()) << "Cannot tell logind that the session is"
                            << (locked ? "locked" : "unlocked");
 }
-} // namespace cutefish::session
+} // namespace properdesktop::session

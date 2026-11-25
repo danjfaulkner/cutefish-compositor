@@ -12,15 +12,15 @@
 
 #include "base/geometry.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 struct WaylandSeat;
 
 // Application text state in text-input-v3 / input-method-v2 units: UTF-8 byte
@@ -114,4 +114,4 @@ bool validCursorRectangle(int32_t x, int32_t y, int32_t width, int32_t height);
 wl_global *createTextInputV3Global(wl_display *display, InputMethodRelay *relay);
 wl_global *createTextInputV1Global(wl_display *display, InputMethodRelay *relay);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

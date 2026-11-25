@@ -25,8 +25,8 @@
 #include <vector>
 #include <wayland-client.h>
 #include <wayland-server-core.h>
-#include <cutefish-window-hints-v1-client-protocol.h>
-#include <cutefish-window-placement-v1-client-protocol.h>
+#include <properdesktop-window-hints-v1-client-protocol.h>
+#include <properdesktop-window-placement-v1-client-protocol.h>
 #include <xdg-activation-v1-client-protocol.h>
 #include <xdg-dialog-v1-client-protocol.h>
 #include <xdg-shell-client-protocol.h>
@@ -61,7 +61,7 @@
 #include "wm/window_modality_controller.h"
 #include "wm/window_state.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -886,12 +886,12 @@ TEST_F(XdgShellProtocolTest, TitleAndAppIdReachTheWindow)
     run([&](Client &c) {
         XdgWindow *window = c.makeMappedToplevel(base::Size(300, 200));
         xdg_toplevel_set_title(window->toplevel, "Notes");
-        xdg_toplevel_set_app_id(window->toplevel, "org.cutefish.Notes");
+        xdg_toplevel_set_app_id(window->toplevel, "org.properdesktop.Notes");
         c.sync();
 
         check([&] {
             EXPECT_EQ("Notes", onlyWindow()->title());
-            EXPECT_EQ("org.cutefish.Notes", onlyWindow()->applicationId());
+            EXPECT_EQ("org.properdesktop.Notes", onlyWindow()->applicationId());
         });
     });
 }
@@ -1209,7 +1209,7 @@ TEST_F(XdgShellProtocolTest, ToplevelsOfOneApplicationCascade)
     run([&](Client &c) {
         for (int i = 0; i < 2; ++i) {
             XdgWindow *window = c.makeToplevel();
-            xdg_toplevel_set_app_id(window->toplevel, "org.cutefish.test");
+            xdg_toplevel_set_app_id(window->toplevel, "org.properdesktop.test");
             wl_surface_commit(window->surface);
             c.sync();
             c.ackAndAttach(window, base::Size(300, 200));
@@ -1226,14 +1226,14 @@ TEST_F(XdgShellProtocolTest, ToplevelsOfOneApplicationCascade)
 TEST_F(XdgShellProtocolTest, AToplevelWithAPlacementAnchorMapsNextToIt)
 {
     run([&](Client &c) {
-        auto *hints = static_cast<cutefish_window_hints_v1 *>(
-                wl_registry_bind(c.registry, c.globals.at("cutefish_window_hints_v1").first,
-                                 &cutefish_window_hints_v1_interface, 1));
+        auto *hints = static_cast<properdesktop_window_hints_v1 *>(
+                wl_registry_bind(c.registry, c.globals.at("properdesktop_window_hints_v1").first,
+                                 &properdesktop_window_hints_v1_interface, 1));
         XdgWindow *window = c.makeToplevel();
-        xdg_toplevel_set_app_id(window->toplevel, "org.cutefish.test");
-        cutefish_window_hints_v1_set_placement_anchor(
-                hints, window->surface, 700, 0, 0, 0, CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM,
-                CUTEFISH_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM);
+        xdg_toplevel_set_app_id(window->toplevel, "org.properdesktop.test");
+        properdesktop_window_hints_v1_set_placement_anchor(
+                hints, window->surface, 700, 0, 0, 0, PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM,
+                PROPERDESKTOP_WINDOW_HINTS_V1_PLACEMENT_EDGE_BOTTOM);
         wl_surface_commit(window->surface);
         c.sync();
         c.ackAndAttach(window, base::Size(300, 200));
@@ -1241,7 +1241,7 @@ TEST_F(XdgShellProtocolTest, AToplevelWithAPlacementAnchorMapsNextToIt)
             ASSERT_EQ(1u, windowManager.windows().size());
             EXPECT_EQ(base::Rect(500, 0, 300, 200), windowManager.windows()[0]->bounds());
         });
-        cutefish_window_hints_v1_destroy(hints);
+        properdesktop_window_hints_v1_destroy(hints);
     });
 }
 
@@ -1249,7 +1249,7 @@ TEST_F(XdgShellProtocolTest, ANewToplevelIsConfiguredNormalAfterAMaximizedOne)
 {
     run([&](Client &c) {
         XdgWindow *first = c.makeToplevel();
-        xdg_toplevel_set_app_id(first->toplevel, "org.cutefish.test");
+        xdg_toplevel_set_app_id(first->toplevel, "org.properdesktop.test");
         wl_surface_commit(first->surface);
         c.sync();
         c.ackAndAttach(first, base::Size(300, 200));
@@ -1257,7 +1257,7 @@ TEST_F(XdgShellProtocolTest, ANewToplevelIsConfiguredNormalAfterAMaximizedOne)
         c.sync();
 
         XdgWindow *second = c.makeToplevel();
-        xdg_toplevel_set_app_id(second->toplevel, "org.cutefish.test");
+        xdg_toplevel_set_app_id(second->toplevel, "org.properdesktop.test");
         wl_surface_commit(second->surface);
         c.sync();
         ASSERT_FALSE(second->toplevelConfigures.empty());
@@ -2046,7 +2046,7 @@ TEST_F(XdgShellProtocolTest, APopupIsConstrainedToItsParentsOutput)
     const auto logical = [](const char *name, const base::Rect &bounds, bool primary) {
         return display::LogicalDisplay {display::DisplayId(name),
                                         {display::DisplayId(name)},
-                                        std::string("Cutefish-") + name,
+                                        std::string("ProperDesktop-") + name,
                                         bounds,
                                         bounds.adjusted(0, 24, 0, 0),
                                         {},
@@ -2114,7 +2114,7 @@ std::string requestActivationToken(Client &client, xdg_activation_v1 *activation
         xdg_activation_token_v1_set_serial(request, serial, client.seat);
     if (surface)
         xdg_activation_token_v1_set_surface(request, surface);
-    xdg_activation_token_v1_set_app_id(request, "org.cutefish.ActivationTest");
+    xdg_activation_token_v1_set_app_id(request, "org.properdesktop.ActivationTest");
     xdg_activation_token_v1_commit(request);
     client.sync();
     xdg_activation_token_v1_destroy(request);
@@ -2448,16 +2448,16 @@ struct PlacementEvents {
     base::Point last() const { return positions.empty() ? base::Point(-1, -1) : positions.back().second; }
 };
 
-cutefish_window_placement_v1 *bindPlacement(Client &c, PlacementEvents *events)
+properdesktop_window_placement_v1 *bindPlacement(Client &c, PlacementEvents *events)
 {
-    auto *placement = static_cast<cutefish_window_placement_v1 *>(
-            wl_registry_bind(c.registry, c.globals.at("cutefish_window_placement_v1").first,
-                             &cutefish_window_placement_v1_interface, 1));
-    static const cutefish_window_placement_v1_listener listener = {
-            [](void *data, cutefish_window_placement_v1 *, wl_surface *surface, int32_t x, int32_t y) {
+    auto *placement = static_cast<properdesktop_window_placement_v1 *>(
+            wl_registry_bind(c.registry, c.globals.at("properdesktop_window_placement_v1").first,
+                             &properdesktop_window_placement_v1_interface, 1));
+    static const properdesktop_window_placement_v1_listener listener = {
+            [](void *data, properdesktop_window_placement_v1 *, wl_surface *surface, int32_t x, int32_t y) {
                 static_cast<PlacementEvents *>(data)->positions.push_back({surface, base::Point(x, y)});
             }};
-    cutefish_window_placement_v1_add_listener(placement, &listener, events);
+    properdesktop_window_placement_v1_add_listener(placement, &listener, events);
     return placement;
 }
 
@@ -2467,8 +2467,8 @@ TEST_F(XdgShellProtocolTest, OnlyATrustedClientSeesTheWindowPlacementGlobal)
 {
     placementAuthorized = false;
     run([&](Client &c) {
-        EXPECT_FALSE(c.globals.contains("cutefish_window_placement_v1"));
-        EXPECT_TRUE(c.globals.contains("cutefish_window_hints_v1"));
+        EXPECT_FALSE(c.globals.contains("properdesktop_window_placement_v1"));
+        EXPECT_TRUE(c.globals.contains("properdesktop_window_hints_v1"));
     });
 }
 
@@ -2478,8 +2478,8 @@ TEST_F(XdgShellProtocolTest, AWindowItsClientPlacedMapsThereAndHearsWhereItIs)
         PlacementEvents events;
         auto *placement = bindPlacement(c, &events);
         XdgWindow *window = c.makeToplevel();
-        xdg_toplevel_set_app_id(window->toplevel, "org.cutefish.test");
-        cutefish_window_placement_v1_set_position(placement, window->surface, 40, 60);
+        xdg_toplevel_set_app_id(window->toplevel, "org.properdesktop.test");
+        properdesktop_window_placement_v1_set_position(placement, window->surface, 40, 60);
         wl_surface_commit(window->surface);
         c.sync();
         c.ackAndAttach(window, base::Size(300, 200));
@@ -2492,7 +2492,7 @@ TEST_F(XdgShellProtocolTest, AWindowItsClientPlacedMapsThereAndHearsWhereItIs)
         EXPECT_EQ(window->surface, events.positions.back().first);
         EXPECT_EQ(base::Point(40, 60), events.last());
 
-        cutefish_window_placement_v1_set_position(placement, window->surface, 200, 100);
+        properdesktop_window_placement_v1_set_position(placement, window->surface, 200, 100);
         c.sync();
         c.sync();
         check([&] {
@@ -2505,7 +2505,7 @@ TEST_F(XdgShellProtocolTest, AWindowItsClientPlacedMapsThereAndHearsWhereItIs)
         });
         c.sync();
         EXPECT_EQ(base::Point(120, 80), events.last());
-        cutefish_window_placement_v1_destroy(placement);
+        properdesktop_window_placement_v1_destroy(placement);
     });
 }
 
@@ -2515,8 +2515,8 @@ TEST_F(XdgShellProtocolTest, AWindowCannotBePlacedOutOfReach)
         PlacementEvents events;
         auto *placement = bindPlacement(c, &events);
         XdgWindow *window = c.makeToplevel();
-        xdg_toplevel_set_app_id(window->toplevel, "org.cutefish.test");
-        cutefish_window_placement_v1_set_position(placement, window->surface, -5000, -5000);
+        xdg_toplevel_set_app_id(window->toplevel, "org.properdesktop.test");
+        properdesktop_window_placement_v1_set_position(placement, window->surface, -5000, -5000);
         wl_surface_commit(window->surface);
         c.sync();
         c.ackAndAttach(window, base::Size(300, 200));
@@ -2527,7 +2527,7 @@ TEST_F(XdgShellProtocolTest, AWindowCannotBePlacedOutOfReach)
             EXPECT_GE(bounds.y(), kOutput.y());
             EXPECT_GE(bounds.right(), kOutput.x() + wm::kMinimumOnScreenArea);
         });
-        cutefish_window_placement_v1_set_position(placement, window->surface, 5000, 5000);
+        properdesktop_window_placement_v1_set_position(placement, window->surface, 5000, 5000);
         c.sync();
         c.sync();
         check([&] {
@@ -2536,7 +2536,7 @@ TEST_F(XdgShellProtocolTest, AWindowCannotBePlacedOutOfReach)
             EXPECT_LE(bounds.y(), kOutput.bottom() - wm::kMinimumOnScreenArea);
             EXPECT_EQ(bounds.topLeft(), events.last());
         });
-        cutefish_window_placement_v1_destroy(placement);
+        properdesktop_window_placement_v1_destroy(placement);
     });
 }
 
@@ -2546,7 +2546,7 @@ TEST_F(XdgShellProtocolTest, AMaximizedWindowStaysWhereItIsWhenPlaced)
         PlacementEvents events;
         auto *placement = bindPlacement(c, &events);
         XdgWindow *window = c.makeToplevel();
-        xdg_toplevel_set_app_id(window->toplevel, "org.cutefish.test");
+        xdg_toplevel_set_app_id(window->toplevel, "org.properdesktop.test");
         wl_surface_commit(window->surface);
         c.sync();
         c.ackAndAttach(window, base::Size(300, 200));
@@ -2556,12 +2556,12 @@ TEST_F(XdgShellProtocolTest, AMaximizedWindowStaysWhereItIsWhenPlaced)
         check([&] {
             maximized = windowManager.windows()[0]->bounds();
         });
-        cutefish_window_placement_v1_set_position(placement, window->surface, 100, 100);
+        properdesktop_window_placement_v1_set_position(placement, window->surface, 100, 100);
         c.sync();
         check([&] {
             EXPECT_EQ(maximized, windowManager.windows()[0]->bounds());
         });
-        cutefish_window_placement_v1_destroy(placement);
+        properdesktop_window_placement_v1_destroy(placement);
     });
 }
 
@@ -2574,17 +2574,17 @@ TEST_F(XdgShellProtocolTest, WindowHintsTellEachOutputsWorkArea)
             uint32_t primary;
         };
         std::vector<WorkArea> areas;
-        auto *hints = static_cast<cutefish_window_hints_v1 *>(
-                wl_registry_bind(c.registry, c.globals.at("cutefish_window_hints_v1").first,
-                                 &cutefish_window_hints_v1_interface, 1));
-        static const cutefish_window_hints_v1_listener listener = {
-                [](void *, cutefish_window_hints_v1 *, wl_surface *, uint32_t) {},
-                [](void *data, cutefish_window_hints_v1 *, const char *output, int32_t x, int32_t y,
+        auto *hints = static_cast<properdesktop_window_hints_v1 *>(
+                wl_registry_bind(c.registry, c.globals.at("properdesktop_window_hints_v1").first,
+                                 &properdesktop_window_hints_v1_interface, 1));
+        static const properdesktop_window_hints_v1_listener listener = {
+                [](void *, properdesktop_window_hints_v1 *, wl_surface *, uint32_t) {},
+                [](void *data, properdesktop_window_hints_v1 *, const char *output, int32_t x, int32_t y,
                    int32_t width, int32_t height, uint32_t primary) {
                     static_cast<std::vector<WorkArea> *>(data)->push_back(
                             {output, base::Rect(x, y, width, height), primary});
                 }};
-        cutefish_window_hints_v1_add_listener(hints, &listener, &areas);
+        properdesktop_window_hints_v1_add_listener(hints, &listener, &areas);
         c.sync();
         ASSERT_EQ(1u, areas.size());
         EXPECT_FALSE(areas[0].output.empty());
@@ -2601,18 +2601,18 @@ TEST_F(XdgShellProtocolTest, WindowHintsTellEachOutputsWorkArea)
             windowManager.clearExclusiveZone(this);
         });
         c.sync();
-        cutefish_window_hints_v1_destroy(hints);
+        properdesktop_window_hints_v1_destroy(hints);
     });
 }
 
 TEST_F(XdgShellProtocolTest, AClientsOpacityCombinesWithTheWindowManagers)
 {
     run([&](Client &c) {
-        auto *hints = static_cast<cutefish_window_hints_v1 *>(
-                wl_registry_bind(c.registry, c.globals.at("cutefish_window_hints_v1").first,
-                                 &cutefish_window_hints_v1_interface, 1));
+        auto *hints = static_cast<properdesktop_window_hints_v1 *>(
+                wl_registry_bind(c.registry, c.globals.at("properdesktop_window_hints_v1").first,
+                                 &properdesktop_window_hints_v1_interface, 1));
         XdgWindow *window = c.makeToplevel();
-        cutefish_window_hints_v1_set_opacity(hints, window->surface, wl_fixed_from_double(0.5));
+        properdesktop_window_hints_v1_set_opacity(hints, window->surface, wl_fixed_from_double(0.5));
         wl_surface_commit(window->surface);
         c.sync();
         c.ackAndAttach(window, base::Size(300, 200));
@@ -2628,11 +2628,11 @@ TEST_F(XdgShellProtocolTest, AClientsOpacityCombinesWithTheWindowManagers)
             windowManager.windows()[0]->setOpacity(1);
             EXPECT_FLOAT_EQ(0.5f, drawn());
         });
-        cutefish_window_hints_v1_set_opacity(hints, window->surface, wl_fixed_from_double(1));
+        properdesktop_window_hints_v1_set_opacity(hints, window->surface, wl_fixed_from_double(1));
         c.sync();
         check([&] {
             EXPECT_FLOAT_EQ(1.0f, drawn());
         });
-        cutefish_window_hints_v1_destroy(hints);
+        properdesktop_window_hints_v1_destroy(hints);
     });
 }

@@ -46,7 +46,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using Panel = shell::MenuBarPanels::Panel;
 
 namespace {
@@ -187,7 +187,7 @@ protected:
 
     void SetUp() override
     {
-        shell::setShellDataDirectoryForTesting(CUTEFISH_SOURCE_DIR "/data/shell");
+        shell::setShellDataDirectoryForTesting(PROPERDESKTOP_SOURCE_DIR "/data/shell");
         scene.setSize(kOutput.size());
         manager.setOutputBounds(kOutput);
         manager.setExclusiveZone(&dock, wm::ScreenEdge::Bottom, kDock);

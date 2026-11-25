@@ -14,7 +14,7 @@
 
 #include "base/auto_reset.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 namespace {
 
@@ -405,4 +405,4 @@ const DisplaySnapshot *DisplayManager::physicalDisplay(const DisplayId &id) cons
     return nullptr;
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

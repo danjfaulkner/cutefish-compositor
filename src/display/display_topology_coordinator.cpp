@@ -11,7 +11,7 @@
 #include "base/event_loop.h"
 #include "core/main_loop.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 DisplayTopologyCoordinator::DisplayTopologyCoordinator(DisplayManager *manager,
                                                        CallbackNativeDisplayDelegate *delegate,
@@ -206,4 +206,4 @@ void DisplayTopologyCoordinator::run()
     m_operationToken = m_controller->apply(request, "topology", -1);
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

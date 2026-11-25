@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_RENDER_OUTPUT_SCHEDULER_H_
-#define CUTEFISH_RENDER_OUTPUT_SCHEDULER_H_
+#ifndef PROPERDESKTOP_RENDER_OUTPUT_SCHEDULER_H_
+#define PROPERDESKTOP_RENDER_OUTPUT_SCHEDULER_H_
 
 #include <algorithm>
 #include <array>
@@ -13,7 +13,7 @@
 #include <functional>
 #include <optional>
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class OutputScheduler
 {
@@ -160,5 +160,5 @@ private:
     unsigned m_failures = 0;
     Stats m_stats;
 };
-} // namespace cutefish::render
+} // namespace properdesktop::render
 #endif

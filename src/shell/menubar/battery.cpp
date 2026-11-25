@@ -5,11 +5,11 @@
 #include "shell/menubar/battery.h"
 
 #include "base/settings.h"
-#include "cutefish/upower/battery_status.h"
+#include "properdesktop/upower/battery_status.h"
 #include "shell/common/file_thread.h"
 #include "shell/common/service_owner.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 Battery::Battery(std::shared_ptr<upower::BatteryStatus> status, std::string path)
     : m_status(std::move(status))
@@ -43,7 +43,7 @@ void Battery::followService(base::dbus::Connection *sessionBus,
     m_make = std::move(make);
     if (!m_make)
         return;
-    m_owner = followServiceOwner(sessionBus, "org.cutefish.Services", [this] {
+    m_owner = followServiceOwner(sessionBus, "org.properdesktop.Services", [this] {
         m_status = m_make();
         subscribe();
         changed();
@@ -102,4 +102,4 @@ void Battery::setShowPercentage(bool enabled)
     showPercentageChanged();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

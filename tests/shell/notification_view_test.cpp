@@ -38,7 +38,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 namespace dbus = base::dbus;
 using shell::NotificationCentre;
 using shell::NotificationPopups;
@@ -74,7 +74,7 @@ protected:
 
     void SetUp() override
     {
-        shell::setShellDataDirectoryForTesting(CUTEFISH_SOURCE_DIR "/data/shell");
+        shell::setShellDataDirectoryForTesting(PROPERDESKTOP_SOURCE_DIR "/data/shell");
         scene.setSize(kOutput.size());
         manager.setOutputBounds(kOutput);
         manager.setExclusiveZone(&menuBarZone, wm::ScreenEdge::Top, kMenuBar);

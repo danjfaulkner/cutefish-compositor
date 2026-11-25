@@ -3,8 +3,8 @@
 #   tools/run-vt-test.sh [options] -- <client> [client args...]
 #
 # Options:
-#   --socket NAME          Wayland socket name (default: cutefish-vt-test)
-#   --compositor PATH      compositor binary (default: build/cutefish-compositor)
+#   --socket NAME          Wayland socket name (default: properdesktop-vt-test)
+#   --compositor PATH      compositor binary (default: build/properdesktop-compositor)
 #   --compositor-arg ARG   extra argument for the compositor; repeatable
 #   --drm-device PATH      passed through as --drm-device
 #   --vt N                 force a VT instead of searching for a free one
@@ -21,8 +21,8 @@
 
 set -uo pipefail
 
-SOCKET="cutefish-vt-test"
-COMPOSITOR="$(dirname "$(readlink -f "$0")")/../build/cutefish-compositor"
+SOCKET="properdesktop-vt-test"
+COMPOSITOR="$(dirname "$(readlink -f "$0")")/../build/properdesktop-compositor"
 DRM_DEVICE=""
 FORCED_VT=""
 COMPOSITOR_ARGS=()
@@ -156,7 +156,7 @@ if [[ -n "$ORIGINAL_VT" && "$VT" == "$ORIGINAL_VT" ]]; then
     die "refusing to use VT $VT: it is the foreground VT"
 fi
 
-WORKDIR="$(mktemp -d /tmp/cutefish-vt-test.XXXXXX)"
+WORKDIR="$(mktemp -d /tmp/properdesktop-vt-test.XXXXXX)"
 RUNTIME_DIR="$WORKDIR/runtime"
 COMPOSITOR_LOG="$WORKDIR/compositor.log"
 CLIENT_LOG="$WORKDIR/client.log"
@@ -263,7 +263,7 @@ trap cleanup EXIT INT TERM
 # Left at the compositor's own defaults unless asked: the debug categories log
 # once per surface commit, which is once per frame.
 QT_RULES=""
-(( VERBOSE )) && QT_RULES="cutefish.*.debug=true"
+(( VERBOSE )) && QT_RULES="properdesktop.*.debug=true"
 
 # openvt hands the program the VT as its stdio, so the redirection has to happen
 # inside the launched shell for the logs to be capturable.

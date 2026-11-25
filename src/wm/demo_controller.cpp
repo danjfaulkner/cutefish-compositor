@@ -20,7 +20,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 DemoController::DemoController(WindowManager* manager, input::InputManager* input)
     : m_manager(manager)
@@ -327,4 +327,4 @@ void DemoController::buildScript()
     });
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

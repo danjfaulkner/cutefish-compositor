@@ -20,7 +20,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -229,4 +229,4 @@ void DrmDevice::unmapDumbBuffer(void* data, uint64_t size)
         munmap(data, size);
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WAYLAND_PRIVILEGED_CLIENT_H_
-#define CUTEFISH_WAYLAND_PRIVILEGED_CLIENT_H_
+#ifndef PROPERDESKTOP_WAYLAND_PRIVILEGED_CLIENT_H_
+#define PROPERDESKTOP_WAYLAND_PRIVILEGED_CLIENT_H_
 
 #include <functional>
 #include <map>
@@ -11,7 +11,7 @@
 #include <vector>
 #include <wayland-server-core.h>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 // Trusted is the wl_client made from the session's socketpair fd, never a client of the public socket.
 // Private globals are filtered from other registries, and their bind handlers must check isTrusted() too.
@@ -68,6 +68,6 @@ private:
     std::map<const wl_global *, std::function<bool(const wl_client *)>> m_restrictedGlobals;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PRIVILEGED_CLIENT_H_
+#endif // PROPERDESKTOP_WAYLAND_PRIVILEGED_CLIENT_H_

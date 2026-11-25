@@ -19,7 +19,7 @@
 #include "scene/motion.h"
 #include "base/geometry.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 namespace {
 
@@ -620,4 +620,4 @@ void DeskSwitchNode::releaseRenderResources()
     Node::releaseRenderResources();
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

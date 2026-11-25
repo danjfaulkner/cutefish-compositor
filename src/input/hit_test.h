@@ -6,21 +6,21 @@
 //           (GetTargetSurfaceForLocatedEvent)
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_HIT_TEST_H_
-#define CUTEFISH_INPUT_HIT_TEST_H_
+#ifndef PROPERDESKTOP_INPUT_HIT_TEST_H_
+#define PROPERDESKTOP_INPUT_HIT_TEST_H_
 
 #include "base/geometry.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Compositor;
 class Surface;
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class SessionGate;
 
@@ -49,6 +49,6 @@ scene::Node *inputRootFor(compositor::Compositor *compositor, const SessionGate 
 // `location` is in output coordinates. Ignores input regions, so a grab can report points outside the surface.
 base::PointF locationInSurface(const compositor::Surface *surface, const base::PointF &location);
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_HIT_TEST_H_
+#endif // PROPERDESKTOP_INPUT_HIT_TEST_H_

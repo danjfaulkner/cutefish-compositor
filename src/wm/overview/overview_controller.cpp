@@ -26,10 +26,10 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -1224,4 +1224,4 @@ void OverviewController::onWindowDeskChanged(Window *)
         rebuild(true);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

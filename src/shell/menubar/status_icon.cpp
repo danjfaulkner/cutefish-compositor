@@ -12,7 +12,7 @@
 #include "ui/cell_layout.h"
 #include "ui/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static double windowScale(const ui::View *view)
 {
@@ -252,4 +252,4 @@ void StopItem::layout()
     m_icon->setGeometry(centred({BarContext::kIconSize, BarContext::kIconSize}));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

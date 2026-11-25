@@ -6,8 +6,8 @@
 //           chromium/src/gpu/command_buffer/common/capabilities.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_RENDER_DMABUF_H_
-#define CUTEFISH_RENDER_DMABUF_H_
+#ifndef PROPERDESKTOP_RENDER_DMABUF_H_
+#define PROPERDESKTOP_RENDER_DMABUF_H_
 
 #include <sys/types.h>
 
@@ -21,7 +21,7 @@
 #include "render/texture.h"
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // linux-dmabuf allows at most four planes per buffer.
 constexpr size_t kMaxDmaBufPlanes = 4;
@@ -63,6 +63,6 @@ public:
     virtual std::shared_ptr<Texture> importDmaBuf(const DmaBufAttributes& attributes) = 0;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_DMABUF_H_
+#endif // PROPERDESKTOP_RENDER_DMABUF_H_

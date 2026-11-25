@@ -7,7 +7,7 @@
 
 #include "fake_native_display_delegate.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 void FakeNativeDisplayDelegate::queryHardware(QueryCallback callback)
 {
@@ -43,4 +43,4 @@ void FakeNativeDisplayDelegate::setDisplayPower(const std::vector<display::Displ
     callback({true, false, {}, std::nullopt});
 }
 
-} // namespace cutefish::test
+} // namespace properdesktop::test

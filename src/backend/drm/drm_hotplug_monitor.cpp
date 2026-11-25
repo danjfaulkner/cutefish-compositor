@@ -16,7 +16,7 @@
 #include "base/event_loop.h"
 #include "core/main_loop.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 DrmHotplugMonitor::DrmHotplugMonitor()
     : m_quiet(core::mainLoop())
     , m_deadline(core::mainLoop())
@@ -98,4 +98,4 @@ void DrmHotplugMonitor::fire()
     reprobeRequested();
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

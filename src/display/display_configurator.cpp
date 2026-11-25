@@ -8,7 +8,7 @@
 #include "display/display_configurator.h"
 
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 DisplayConfigurator::DisplayConfigurator(NativeDisplayDelegate *delegate)
     : m_delegate(delegate)
@@ -116,4 +116,4 @@ void DisplayConfigurator::run(const HardwareSnapshot &hardware, uint64_t revisio
             });
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

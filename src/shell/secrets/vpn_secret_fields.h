@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SECRETS_VPN_SECRET_FIELDS_H_
-#define CUTEFISH_SHELL_SECRETS_VPN_SECRET_FIELDS_H_
+#ifndef PROPERDESKTOP_SHELL_SECRETS_VPN_SECRET_FIELDS_H_
+#define PROPERDESKTOP_SHELL_SECRETS_VPN_SECRET_FIELDS_H_
 
 #include <map>
 #include <string>
 #include <vector>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 struct VpnSecretField {
     std::string key;
@@ -23,6 +23,6 @@ std::vector<VpnSecretField> vpnSecretFields(const std::string &serviceType,
                                             const std::vector<std::string> &hints);
 std::string vpnHintMessage(const std::vector<std::string> &hints);
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SECRETS_VPN_SECRET_FIELDS_H_
+#endif // PROPERDESKTOP_SHELL_SECRETS_VPN_SECRET_FIELDS_H_

@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_WALLPAPER_BAR_BACKDROP_H_
-#define CUTEFISH_SHELL_WALLPAPER_BAR_BACKDROP_H_
+#ifndef PROPERDESKTOP_SHELL_WALLPAPER_BAR_BACKDROP_H_
+#define PROPERDESKTOP_SHELL_WALLPAPER_BAR_BACKDROP_H_
 
 #include "ui/geometry.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Bitmap;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class BarBackdrop
 {
@@ -47,6 +47,6 @@ public:
     static bool prefersWhite(double luminance);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_WALLPAPER_BAR_BACKDROP_H_
+#endif // PROPERDESKTOP_SHELL_WALLPAPER_BAR_BACKDROP_H_

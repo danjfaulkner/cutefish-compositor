@@ -5,23 +5,23 @@
 // Upstream: chromium/src/ash/accelerators/accelerator_commands.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_COMMANDS_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_COMMANDS_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_COMMANDS_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_COMMANDS_H_
 
 #include "accelerators/accelerator_actions.h"
 
-namespace cutefish::session {
+namespace properdesktop::session {
 class ScreenSaverService;
 class SessionController;
-} // namespace cutefish::session
+} // namespace properdesktop::session
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 class WindowCycleController;
 class WindowManager;
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 class AcceleratorDelegate;
 
@@ -89,6 +89,6 @@ void keyboardBrightnessDown(const CommandContext &context);
 void keyboardBrightnessUp(const CommandContext &context);
 
 } // namespace commands
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_COMMANDS_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_COMMANDS_H_

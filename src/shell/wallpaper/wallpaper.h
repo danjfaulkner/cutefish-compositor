@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_WALLPAPER_WALLPAPER_H_
-#define CUTEFISH_SHELL_WALLPAPER_WALLPAPER_H_
+#ifndef PROPERDESKTOP_SHELL_WALLPAPER_WALLPAPER_H_
+#define PROPERDESKTOP_SHELL_WALLPAPER_WALLPAPER_H_
 
 #include <map>
 #include <memory>
@@ -19,24 +19,24 @@
 #include "ui/bitmap.h"
 #include "ui/geometry.h"
 
-namespace cutefish::appearance {
+namespace properdesktop::appearance {
 class Appearance;
 }
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class CaptureSource;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 class WallpaperNode;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // A new picture replaces the old one only once it is decoded and, on the primary
 // output, judged for the bar, so the picture, the gradient and the bar's contents
@@ -115,6 +115,6 @@ private:
     base::Subscription m_themeChanged;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_WALLPAPER_WALLPAPER_H_
+#endif // PROPERDESKTOP_SHELL_WALLPAPER_WALLPAPER_H_

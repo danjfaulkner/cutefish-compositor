@@ -11,7 +11,7 @@
 
 #include "base/geometry.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 class Surface;
 
@@ -43,4 +43,4 @@ private:
     Surface* m_parent;
     bool m_isSynchronized = true;
 };
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

@@ -23,7 +23,7 @@
 #include "wm/window_visual_controller.h"
 #include "wm/wm_event.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 base::Rect Window::minimizedGeometry() const
 {
@@ -812,4 +812,4 @@ bool Window::hasObserver(const WindowObserver *observer) const
     return std::find(m_observers.begin(), m_observers.end(), observer) != m_observers.end();
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

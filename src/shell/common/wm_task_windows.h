@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_WM_TASK_WINDOWS_H_
-#define CUTEFISH_SHELL_COMMON_WM_TASK_WINDOWS_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_WM_TASK_WINDOWS_H_
+#define PROPERDESKTOP_SHELL_COMMON_WM_TASK_WINDOWS_H_
 
 #include <unordered_map>
 #include <vector>
@@ -12,12 +12,12 @@
 #include "shell/common/task_windows.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 class WindowManager;
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Shell windows and popups are left out.
 class WmTaskWindows : public TaskWindows, private wm::WindowObserver, private compositor::SurfaceObserver
@@ -81,6 +81,6 @@ private:
     base::Subscription m_activeChanged;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_WM_TASK_WINDOWS_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_WM_TASK_WINDOWS_H_

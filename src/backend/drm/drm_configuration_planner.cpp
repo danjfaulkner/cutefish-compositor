@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <set>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 namespace {
 
 bool assignRoute(size_t routeIndex, const std::vector<DrmRouteCandidate> &routes,
@@ -70,4 +70,4 @@ DrmConfigurationPlanner::assign(const std::vector<DrmRouteCandidate> &routes,
     return result;
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

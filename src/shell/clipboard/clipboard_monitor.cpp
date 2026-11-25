@@ -16,7 +16,7 @@
 #include "clipboard/selection.h"
 #include "clipboard/stored_source.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // The text types offered for a text, as wl-copy offers them, so X clients
 // find one through the selection bridge too.
@@ -198,4 +198,4 @@ void ClipboardMonitor::cancelRead()
     m_source.reset();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

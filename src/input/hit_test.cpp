@@ -16,7 +16,7 @@
 #include "scene/node.h"
 #include "scene/surface_node.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 // The input region is an integer region, so the fractional part of a pointer
 // location is dropped for the containment test only; the location handed to the
@@ -154,4 +154,4 @@ base::PointF locationInSurface(const compositor::Surface *surface, const base::P
     return display::DisplayManager::globalToSurfaceLocal(location, node->absolutePosition());
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

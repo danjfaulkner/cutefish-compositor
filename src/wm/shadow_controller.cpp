@@ -12,7 +12,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 ShadowController::ShadowController(WindowManager* manager, ShadowProvider* provider,
                                    ShadowControllerDelegate* delegate)
@@ -133,4 +133,4 @@ void ShadowController::onWindowFrameChanged(Window* window)
     handlePossibleShadowVisibilityChange(window);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

@@ -4,21 +4,21 @@
 
 #include "core/logging.h"
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 void setLoggingRules(std::string_view rules)
 {
     base::logging::setRules(rules);
 }
 
-} // namespace cutefish::core
+} // namespace properdesktop::core
 
-const cutefish::core::LogCategory cfWayland("cutefish.wayland");
-const cutefish::core::LogCategory cfSession("cutefish.session");
-const cutefish::core::LogCategory cfDrm("cutefish.drm");
-const cutefish::core::LogCategory cfRender("cutefish.render");
-const cutefish::core::LogCategory cfScene("cutefish.scene");
-const cutefish::core::LogCategory cfCompositor("cutefish.compositor");
-const cutefish::core::LogCategory cfInput("cutefish.input");
-const cutefish::core::LogCategory cfInputTransitions("cutefish.input.transitions");
-const cutefish::core::LogCategory cfCursorTransitions("cutefish.cursor.transitions");
+const properdesktop::core::LogCategory cfWayland("properdesktop.wayland");
+const properdesktop::core::LogCategory cfSession("properdesktop.session");
+const properdesktop::core::LogCategory cfDrm("properdesktop.drm");
+const properdesktop::core::LogCategory cfRender("properdesktop.render");
+const properdesktop::core::LogCategory cfScene("properdesktop.scene");
+const properdesktop::core::LogCategory cfCompositor("properdesktop.compositor");
+const properdesktop::core::LogCategory cfInput("properdesktop.input");
+const properdesktop::core::LogCategory cfInputTransitions("properdesktop.input.transitions");
+const properdesktop::core::LogCategory cfCursorTransitions("properdesktop.cursor.transitions");

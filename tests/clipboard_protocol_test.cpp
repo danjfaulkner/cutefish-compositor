@@ -53,7 +53,7 @@ TEST(ClipboardProtocol, RealBytesOpaqueFormatsRepeatedReceivesAndIdleProgress)
         {"text/html", "<b>hello</b>"},
         {"text/uri-list", "file:///generated-not-opened\r\n"},
         {"image/png", std::string("\x89PNG\0\xff", 6)},
-        {"application/x-cutefish-test", std::string(256 * 1024, '\xab')}};
+        {"application/x-properdesktop-test", std::string(256 * 1024, '\xab')}};
     h.publish(a, data);
     h.focus(b);
     ASSERT_NE(nullptr, b.selection);

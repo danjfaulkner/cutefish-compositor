@@ -14,7 +14,7 @@
 #include "compositor/capture_source.h"
 #include "compositor/compositor.h"
 #include "core/preferences.h"
-#include "cutefish/appearance/appearance.h"
+#include "properdesktop/appearance/appearance.h"
 #include "render/renderer.h"
 #include "ui/theme.h"
 #include "scene/node.h"
@@ -23,9 +23,9 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
-static const char kDefaultWallpaper[] = "/usr/share/backgrounds/cutefishos/default.jpg";
+static const char kDefaultWallpaper[] = "/usr/share/backgrounds/properdesktop/default.jpg";
 static const char kDefaultBackgroundColor[] = "#2B8ADA";
 static constexpr render::Color kBlack {0, 0, 0, 1};
 static constexpr size_t kMaxSamples = 8;
@@ -486,4 +486,4 @@ std::shared_ptr<compositor::CaptureSource> Wallpaper::desktopCaptureSource(wm::W
     return screen.captureSource;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

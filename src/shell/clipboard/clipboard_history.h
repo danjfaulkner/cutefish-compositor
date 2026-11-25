@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_HISTORY_H_
-#define CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_HISTORY_H_
+#ifndef PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_HISTORY_H_
+#define PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_HISTORY_H_
 
 #include <functional>
 #include <map>
@@ -17,11 +17,11 @@
 #include "shell/clipboard/clipboard_store.h"
 #include "shell/common/list_model.h"
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 class SelectionController;
-} // namespace cutefish::clipboard
+} // namespace properdesktop::clipboard
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ClipboardHistoryModel : public ListModelSignals
 {
@@ -97,6 +97,6 @@ private:
     uint64_t m_selectSerial = 0;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_HISTORY_H_
+#endif // PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_HISTORY_H_

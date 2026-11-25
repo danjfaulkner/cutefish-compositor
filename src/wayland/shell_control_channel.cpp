@@ -15,7 +15,7 @@
 #include "core/logging.h"
 #include "core/main_loop.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -161,4 +161,4 @@ void ShellControlChannel::closeControl()
     }
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

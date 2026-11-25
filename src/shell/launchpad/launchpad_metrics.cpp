@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Halves round up.
 static int jsRound(double value)
@@ -131,4 +131,4 @@ int moveLaunchpadSelection(int selected, int page, int total, int columns, int p
     return next;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

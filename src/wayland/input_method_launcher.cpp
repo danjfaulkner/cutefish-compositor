@@ -13,7 +13,7 @@
 #include "core/logging.h"
 #include "core/main_loop.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 constexpr int kMaxFailures = 5;
 constexpr int64_t kStableUptimeMs = 60000;
@@ -217,4 +217,4 @@ void InputMethodLauncher::connectionLost()
     m_restartTimer.start(std::chrono::milliseconds(delay));
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

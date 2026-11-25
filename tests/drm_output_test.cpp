@@ -82,7 +82,7 @@ uint64_t propertyValue(const backend::AtomicRequest &request, uint32_t objectId,
 class DrmOutputTest : public PresentationProtocolTest
 {
 protected:
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     ScopedFd gbmFd;
     std::unique_ptr<gbm_device, decltype(&gbm_device_destroy)> gbmDevice {nullptr,
                                                                           gbm_device_destroy};
@@ -100,7 +100,7 @@ protected:
     std::vector<base::Subscription> outputSubscriptions;
     Output::Config initialConfig;
     std::vector<Output::FlipEvent> events;
-    std::function<bool(const cutefish::testing::FakeDrmDevice::Commit &)> accept;
+    std::function<bool(const properdesktop::testing::FakeDrmDevice::Commit &)> accept;
     bool active = true;
     ScopedFd outFence;
     std::chrono::steady_clock::duration clockOffset {};
@@ -119,7 +119,7 @@ protected:
     {
         PresentationProtocolTest::SetUp();
         ASSERT_FALSE(HasFatalFailure());
-        const char *devicePath = getenv("CUTEFISH_TEST_DRM_DEVICE");
+        const char *devicePath = getenv("PROPERDESKTOP_TEST_DRM_DEVICE");
         if (!devicePath || !*devicePath) {
             egl = render::EglRendererTestAccess::create();
         } else {
@@ -411,7 +411,7 @@ TEST_F(DrmOutputTest, ProbedCursorIsThePreviousMastersCursorPlane)
         probed.planes.push_back(plane);
         return Output(&device, probed, [] { return true; }, true).probedCursor();
     };
-    EXPECT_EQ(probe(cursor), cutefish::base::Point(-3, 40));
+    EXPECT_EQ(probe(cursor), properdesktop::base::Point(-3, 40));
     auto off = cursor;
     off.properties.insert("FB_ID", 61, 0);
     EXPECT_EQ(probe(off), std::nullopt);
@@ -655,7 +655,7 @@ TEST_F(DrmOutputTest, SessionLossDuringJointTestPreventsRealCommit)
 
 TEST_F(DrmOutputTest, MultiDeviceSuccessTestsEveryDeviceBeforeAnyWriteOrNotification)
 {
-    cutefish::testing::FakeDrmDevice other;
+    properdesktop::testing::FakeDrmDevice other;
     auto second = secondOutput(false, &other);
     ASSERT_TRUE(second);
     ASSERT_TRUE(drm->enable());
@@ -691,7 +691,7 @@ TEST_F(DrmOutputTest, MultiDeviceSuccessTestsEveryDeviceBeforeAnyWriteOrNotifica
 
 TEST_F(DrmOutputTest, LaterDeviceTestFailurePreventsEveryNativeCommit)
 {
-    cutefish::testing::FakeDrmDevice other;
+    properdesktop::testing::FakeDrmDevice other;
     auto second = secondOutput(false, &other);
     ASSERT_TRUE(second);
     other.commitFilter = [](const auto &) {
@@ -713,7 +713,7 @@ TEST_F(DrmOutputTest, LaterDeviceTestFailurePreventsEveryNativeCommit)
 
 TEST_F(DrmOutputTest, LaterDeviceCommitFailureRestoresEarlierNativeDevice)
 {
-    cutefish::testing::FakeDrmDevice other;
+    properdesktop::testing::FakeDrmDevice other;
     auto second = secondOutput(false, &other);
     ASSERT_TRUE(second);
     ASSERT_TRUE(drm->enable());
@@ -739,7 +739,7 @@ TEST_F(DrmOutputTest, LaterDeviceCommitFailureRestoresEarlierNativeDevice)
 
 TEST_F(DrmOutputTest, FailedCompensationRetainsActuallyCommittedCandidate)
 {
-    cutefish::testing::FakeDrmDevice other;
+    properdesktop::testing::FakeDrmDevice other;
     auto second = secondOutput(false, &other);
     ASSERT_TRUE(second);
     ASSERT_TRUE(drm->enable());
@@ -770,7 +770,7 @@ TEST_F(DrmOutputTest, FailedCompensationRetainsActuallyCommittedCandidate)
 
 TEST_F(DrmOutputTest, InvalidationInsideFinalDeviceCommitCannotPublishSuccess)
 {
-    cutefish::testing::FakeDrmDevice other;
+    properdesktop::testing::FakeDrmDevice other;
     auto second = secondOutput(false, &other);
     ASSERT_TRUE(second);
     other.commitFilter = [&](const auto &commit) {

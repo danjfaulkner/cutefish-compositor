@@ -9,8 +9,8 @@
 
 #include "display/display_types.h"
 
-using namespace cutefish::display;
-namespace base = cutefish::base;
+using namespace properdesktop::display;
+namespace base = properdesktop::base;
 
 namespace {
 

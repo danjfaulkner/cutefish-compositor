@@ -9,7 +9,7 @@
 
 #include "display/display_configuration_validator.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

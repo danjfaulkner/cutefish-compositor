@@ -11,8 +11,8 @@
 //               drm_gpu_util.cc (CreateCTMBlob CreateLutBlob)
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_BACKEND_DRM_SCANOUT_CONTROLLER_H_
-#define CUTEFISH_BACKEND_DRM_SCANOUT_CONTROLLER_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_SCANOUT_CONTROLLER_H_
+#define PROPERDESKTOP_BACKEND_DRM_SCANOUT_CONTROLLER_H_
 
 #include <cstdint>
 #include <memory>
@@ -27,7 +27,7 @@
 #include "render/sync_fence.h"
 #include "scene/overlay_candidate.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 struct PlaneContent {
     uint32_t planeId = 0;
@@ -138,6 +138,6 @@ private:
     uint64_t m_importFailures = 0;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_SCANOUT_CONTROLLER_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_SCANOUT_CONTROLLER_H_

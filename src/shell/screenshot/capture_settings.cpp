@@ -11,7 +11,7 @@
 #include "base/strings.h"
 #include "shell/common/file_thread.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static const char kGroup[] = "Screenshot/";
 
@@ -247,4 +247,4 @@ std::string CaptureSettings::folderFor(const std::string &destination, const std
     return base::paths::userDirectory(UserDirectory::Pictures) + "/Screenshots";
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

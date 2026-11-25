@@ -16,13 +16,13 @@
 #include "base/uuid.h"
 #include "display/recommended_scale.h"
 
-namespace cutefish::display::ipc {
+namespace properdesktop::display::ipc {
 
 namespace dbus = base::dbus;
 
-static constexpr const char* kPath = "/org/cutefish/DisplayConfig1";
-static constexpr const char* kInterface = "org.cutefish.DisplayConfig1";
-static constexpr const char* kUnauthorized = "org.cutefish.DisplayConfig1.Error.Unauthorized";
+static constexpr const char* kPath = "/org/properdesktop/DisplayConfig1";
+static constexpr const char* kInterface = "org.properdesktop.DisplayConfig1";
+static constexpr const char* kUnauthorized = "org.properdesktop.DisplayConfig1.Error.Unauthorized";
 
 DisplayConfigService::DisplayConfigService(DisplayManager* manager,
                                            DisplayConfigurationController* controller,
@@ -297,4 +297,4 @@ std::string DisplayConfigService::reject(DisplayErrorCode code, const std::strin
     return token;
 }
 
-} // namespace cutefish::display::ipc
+} // namespace properdesktop::display::ipc

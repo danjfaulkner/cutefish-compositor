@@ -8,11 +8,11 @@
 #include "scene/window_visual_node.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 struct WindowVisualStyle;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class WindowVisualController : public WindowObserver
 {
@@ -55,4 +55,4 @@ private:
     scene::WindowVisualNode* m_node = nullptr;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

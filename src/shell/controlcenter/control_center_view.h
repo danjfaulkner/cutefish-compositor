@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_VIEW_H_
-#define CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_VIEW_H_
+#ifndef PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_VIEW_H_
+#define PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_VIEW_H_
 
 #include <functional>
 #include <memory>
 
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Animation;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class CardItem;
 class ControlCenterServices;
@@ -111,6 +111,6 @@ private:
     double m_target = 0;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_VIEW_H_
+#endif // PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_VIEW_H_

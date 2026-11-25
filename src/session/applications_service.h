@@ -9,11 +9,11 @@
 #include <memory>
 #include <vector>
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class QuitAll;
 }
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 class ApplicationsService
 {
@@ -42,4 +42,4 @@ private:
     bool m_registered = false;
 };
 
-} // namespace cutefish::session
+} // namespace properdesktop::session

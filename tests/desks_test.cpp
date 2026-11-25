@@ -41,8 +41,8 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-using namespace cutefish;
-using namespace cutefish::wm;
+using namespace properdesktop;
+using namespace properdesktop::wm;
 
 namespace {
 
@@ -1692,8 +1692,8 @@ TEST_F(FullscreenDesksTest, AVideoGoingFullscreenInAFilledDeskStaysOnIt)
 TEST_F(FullscreenDesksTest, AClientWithBarsOfItsOwnGetsTheTitleBarRowAndDecidesOnThePush)
 {
     Window *plain = makeWindow("claude");
-    Window *cutefish = makeWindow("cutefish-calendar");
-    cutefish->rootSurface()->setFullscreenBars(40, /*push=*/false);
+    Window *properdesktop = makeWindow("properdesktop-calendar");
+    properdesktop->rootSurface()->setFullscreenBars(40, /*push=*/false);
 
     manager.activation()->activate(plain);
     ASSERT_TRUE(fullscreen->enter(plain));
@@ -1701,26 +1701,26 @@ TEST_F(FullscreenDesksTest, AClientWithBarsOfItsOwnGetsTheTitleBarRowAndDecidesO
     EXPECT_TRUE(fullscreen->isPushedByReveal(plain));
     settle();
 
-    manager.activation()->activate(cutefish);
+    manager.activation()->activate(properdesktop);
     settle();
-    ASSERT_TRUE(fullscreen->enter(cutefish));
-    EXPECT_TRUE(fullscreen->owns(cutefish));
-    EXPECT_TRUE(fullscreen->wantsTitleBar(cutefish));
-    EXPECT_FALSE(fullscreen->isPushedByReveal(cutefish));
-    cutefish->rootSurface()->setFullscreenBars(40, /*push=*/true);
-    EXPECT_TRUE(fullscreen->isPushedByReveal(cutefish));
+    ASSERT_TRUE(fullscreen->enter(properdesktop));
+    EXPECT_TRUE(fullscreen->owns(properdesktop));
+    EXPECT_TRUE(fullscreen->wantsTitleBar(properdesktop));
+    EXPECT_FALSE(fullscreen->isPushedByReveal(properdesktop));
+    properdesktop->rootSurface()->setFullscreenBars(40, /*push=*/true);
+    EXPECT_TRUE(fullscreen->isPushedByReveal(properdesktop));
 }
 
-TEST_F(FullscreenDesksTest, ACutefishApplicationFullscreenInPlaceGetsTheTitleBarRow)
+TEST_F(FullscreenDesksTest, AProperDesktopApplicationFullscreenInPlaceGetsTheTitleBarRow)
 {
     addDesks(DesksController::kMaxDesks - 1);
-    Window *cutefish = makeWindow("cutefish-video-player");
-    cutefish->rootSurface()->setFullscreenBars(40, /*push=*/false);
-    EXPECT_FALSE(fullscreen->wantsTitleBar(cutefish));
+    Window *properdesktop = makeWindow("properdesktop-video-player");
+    properdesktop->rootSurface()->setFullscreenBars(40, /*push=*/false);
+    EXPECT_FALSE(fullscreen->wantsTitleBar(properdesktop));
     // Every desk taken: fullscreen where it is.
-    ASSERT_TRUE(fullscreen->toggle(cutefish));
-    ASSERT_FALSE(fullscreen->owns(cutefish));
-    EXPECT_TRUE(fullscreen->wantsTitleBar(cutefish));
+    ASSERT_TRUE(fullscreen->toggle(properdesktop));
+    ASSERT_FALSE(fullscreen->owns(properdesktop));
+    EXPECT_TRUE(fullscreen->wantsTitleBar(properdesktop));
     // Another application fullscreen in place has its own controls, if any.
     Window *other = makeWindow("mpv");
     other->setFullscreen(true);

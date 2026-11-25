@@ -10,7 +10,7 @@
 struct wl_display;
 struct wl_global;
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 wl_global* createSubcompositorGlobal(wl_display* display);
 }

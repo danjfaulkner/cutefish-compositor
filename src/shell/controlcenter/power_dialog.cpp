@@ -21,10 +21,10 @@
 #include "ui/theme.h"
 #include "wm/shell_surface.h"
 
-using cutefish::i18n::tr;
-using cutefish::i18n::trNoop;
+using properdesktop::i18n::tr;
+using properdesktop::i18n::trNoop;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr double kDragDistance = 10;
 
@@ -218,4 +218,4 @@ void PowerDialog::finish(bool accepted)
         onRejected();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

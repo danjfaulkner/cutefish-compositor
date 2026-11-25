@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_DECORATION_DECORATION_H_
-#define CUTEFISH_DECORATION_DECORATION_H_
+#ifndef PROPERDESKTOP_DECORATION_DECORATION_H_
+#define PROPERDESKTOP_DECORATION_DECORATION_H_
 
 #include <memory>
 #include <optional>
@@ -17,11 +17,11 @@
 #include "wm/window_frame.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 }
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 class DecorationNode;
 
@@ -127,6 +127,6 @@ private:
     Theme* m_theme = nullptr;
 };
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-#endif // CUTEFISH_DECORATION_DECORATION_H_
+#endif // PROPERDESKTOP_DECORATION_DECORATION_H_

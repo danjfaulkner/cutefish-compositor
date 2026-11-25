@@ -42,7 +42,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 namespace dbus = base::dbus;
 
 namespace {
@@ -552,7 +552,7 @@ TEST_F(AppMenusTest, TheDesktopsProcessOtherWindowsDoNotShowItsMenus)
     ASSERT_EQ(titles(), (std::vector<std::string> {"", "Desktop", "File", "Edit"}));
 
     shell::TaskWindow browser;
-    browser.appId = "cutefish-filemanager";
+    browser.appId = "properdesktop-filemanager";
     browser.title = "Home";
     browser.pid = getpid();
     const uint64_t id = windows->add(browser);

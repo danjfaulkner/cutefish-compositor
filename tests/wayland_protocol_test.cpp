@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// A Cutefish counterpart to chromium/src/components/exo/wayland/surface_unittest.cc:
+// A Proper Desktop counterpart to chromium/src/components/exo/wayland/surface_unittest.cc:
 // a real libwayland client driving the real server over a socket.
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
@@ -33,7 +33,7 @@
 #include "wayland/protocols/wl_shm.h"
 #include "wayland/server.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -151,7 +151,7 @@ private:
 
 int makeMemfd(size_t size)
 {
-    const int fd = memfd_create("cutefish-protocol-test", MFD_CLOEXEC);
+    const int fd = memfd_create("properdesktop-protocol-test", MFD_CLOEXEC);
     if (fd < 0 || ftruncate(fd, static_cast<off_t>(size)) != 0) {
         if (fd >= 0)
             close(fd);
@@ -188,7 +188,7 @@ protected:
     template<class Predicate>
     bool waitFor(Predicate predicate, int timeoutMs = 5000)
     {
-        return cutefish::test::runUntil(predicate, std::chrono::milliseconds(timeoutMs));
+        return properdesktop::test::runUntil(predicate, std::chrono::milliseconds(timeoutMs));
     }
 
     bool runClient(TestClient& client, TestClient::Body body)
@@ -199,7 +199,7 @@ protected:
         return ok;
     }
 
-    cutefish::test::TemporaryDirectory m_runtimeDir;
+    properdesktop::test::TemporaryDirectory m_runtimeDir;
     scene::Scene m_scene;
     std::unique_ptr<compositor::Compositor> m_compositor;
     std::unique_ptr<wayland::Server> m_server;
@@ -344,7 +344,7 @@ TEST_F(WaylandProtocolTest, TheCommittedBufferReachesTheSceneAndReleasesTheClien
     EXPECT_EQ(base::Size(8, 4), surface->contentSize());
     EXPECT_EQ(base::Region(base::Rect(0, 0, 8, 4)), surface->damageRegion());
 
-    cutefish::testsupport::FakeRenderer renderer;
+    properdesktop::testsupport::FakeRenderer renderer;
     m_compositor->updateTextures(renderer);
     ASSERT_NE(nullptr, surface->node());
     ASSERT_NE(nullptr, surface->node()->texture());

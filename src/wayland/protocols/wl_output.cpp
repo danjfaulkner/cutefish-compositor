@@ -25,7 +25,7 @@
 #include "scene/surface_node.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 struct Binding;
@@ -471,4 +471,4 @@ wl_global *createXdgOutputManagerGlobal(wl_display *display)
     return wl_global_create(display, &zxdg_output_manager_v1_interface, 3, nullptr, bindManager);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

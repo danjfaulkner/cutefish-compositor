@@ -14,7 +14,7 @@
 #include "wayland/server_util.h"
 #include "xwayland-keyboard-grab-unstable-v1-server-protocol.h"
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 namespace {
 
 // The protocol has no events: the grab stays inert rather than failing when
@@ -118,4 +118,4 @@ void XwaylandKeyboardGrab::bind(wl_client* client, void* data, uint32_t version,
     wl_resource_set_implementation(resource, &managerImplementation, self->m_seat, nullptr);
 }
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

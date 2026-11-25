@@ -5,14 +5,14 @@
 // Upstream: chromium/src/ash/wm/gestures/wm_gesture_handler.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_WM_GESTURES_WM_GESTURE_HANDLER_H_
-#define CUTEFISH_WM_GESTURES_WM_GESTURE_HANDLER_H_
+#ifndef PROPERDESKTOP_WM_GESTURES_WM_GESTURE_HANDLER_H_
+#define PROPERDESKTOP_WM_GESTURES_WM_GESTURE_HANDLER_H_
 
 #include <functional>
 
 #include "input/gesture_filter.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class DesksController;
 class OverviewController;
@@ -67,6 +67,6 @@ private:
     ScrollData m_scroll;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_GESTURES_WM_GESTURE_HANDLER_H_
+#endif // PROPERDESKTOP_WM_GESTURES_WM_GESTURE_HANDLER_H_

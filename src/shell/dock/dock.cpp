@@ -8,11 +8,11 @@
 #include "shell/common/file_thread.h"
 #include "shell/common/task_manager.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfDock("cutefish.shell.dock");
+static const base::LogCategory cfDock("properdesktop.shell.dock");
 
 Dock::Dock(dbus::Connection *bus, TaskManager &tasks, ApplicationLauncher &launcher, std::string settingsPath,
            std::unique_ptr<TrashMonitor> trash)
@@ -28,7 +28,7 @@ Dock::Dock(dbus::Connection *bus, TaskManager &tasks, ApplicationLauncher &launc
 Dock::~Dock()
 {
     if (m_object && m_bus)
-        m_bus->releaseName("org.cutefish.Dock");
+        m_bus->releaseName("org.properdesktop.Dock");
     waitForFileThread();
 }
 
@@ -44,7 +44,7 @@ bool Dock::registerService()
     if (!m_bus)
         return false;
 
-    auto object = std::make_unique<dbus::Object>(m_bus, "/Dock", "org.cutefish.Dock");
+    auto object = std::make_unique<dbus::Object>(m_bus, "/Dock", "org.properdesktop.Dock");
     object->addMethod("setDirection",
                       [this](int32_t direction) { m_settings.setDirection(DockSettings::Direction(direction)); },
                       dbus::ArgumentNames{{"direction"}, {}});
@@ -59,12 +59,12 @@ bool Dock::registerService()
                       dbus::ArgumentNames{{"enabled"}, {}});
     object->addMethod("setMagnifiedIconSize", [this](int32_t size) { m_settings.setMagnifiedIconSize(size); },
                       dbus::ArgumentNames{{"size"}, {}});
-    if (!object->publish() || !m_bus->requestName("org.cutefish.Dock", dbus::Connection::DoNotQueue)) {
-        CF_WARNING(cfDock) << "Cannot own org.cutefish.Dock";
+    if (!object->publish() || !m_bus->requestName("org.properdesktop.Dock", dbus::Connection::DoNotQueue)) {
+        CF_WARNING(cfDock) << "Cannot own org.properdesktop.Dock";
         return false;
     }
     m_object = std::move(object);
     return true;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -30,14 +30,14 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfScreenshot("cutefish.shell.screenshot");
+static const base::LogCategory cfScreenshot("properdesktop.shell.screenshot");
 
 struct ScreenCapture::SavingNames {
     std::mutex mutex;
@@ -141,7 +141,7 @@ ScreenCapture::ScreenCapture(Shell *shell, ScreenCaptureServices services)
             m_service->emitPropertiesChanged({"recording"});
         notifyChanged();
     }));
-    m_recording->onStarted = [this](int64_t pid) { m_shell->tasks().claimProcess(pid, "cutefish-screenshot"); };
+    m_recording->onStarted = [this](int64_t pid) { m_shell->tasks().claimProcess(pid, "properdesktop-screenshot"); };
     m_recording->onStopped = [this](int64_t pid) { m_shell->tasks().releaseProcess(pid); };
 
     TaskWindows &windows = m_shell->taskWindows();
@@ -189,7 +189,7 @@ bool ScreenCapture::registerService()
     dbus::Connection *bus = m_shell->bus();
     if (!bus)
         return false;
-    auto object = std::make_unique<dbus::Object>(bus, "/Screenshot", "org.cutefish.Screenshot");
+    auto object = std::make_unique<dbus::Object>(bus, "/Screenshot", "org.properdesktop.Screenshot");
     object->addProperty("recording", [this] { return isRecording(); });
     object->addMethod("takeScreenshot", [this](bool toClipboard) { takeScreenshot(toClipboard); },
                       dbus::ArgumentNames {{"toClipboard"}, {}});
@@ -209,15 +209,15 @@ bool ScreenCapture::registerService()
                 captureOutput(output, cursor,
                               [call](std::optional<std::string> png, const std::string &error) mutable {
                                   if (!png) {
-                                      call.replyError("org.cutefish.Screenshot.Error.Failed", error);
+                                      call.replyError("org.properdesktop.Screenshot.Error.Failed", error);
                                       return;
                                   }
                                   call.reply(std::vector<uint8_t>(png->begin(), png->end()));
                               });
             },
             dbus::ArgumentNames {{"output", "cursor"}, {"png"}});
-    if (!object->publish() || !bus->requestName("org.cutefish.Screenshot", dbus::Connection::DoNotQueue)) {
-        CF_WARNING(cfScreenshot) << "Cannot own org.cutefish.Screenshot";
+    if (!object->publish() || !bus->requestName("org.properdesktop.Screenshot", dbus::Connection::DoNotQueue)) {
+        CF_WARNING(cfScreenshot) << "Cannot own org.properdesktop.Screenshot";
         return false;
     }
     m_service = std::move(object);
@@ -888,4 +888,4 @@ void ScreenCapture::startRecording(const Target &target)
             }));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

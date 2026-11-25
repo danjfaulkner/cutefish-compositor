@@ -31,7 +31,7 @@
 #include "render/egl_renderer.h"
 #include "scene/surface_node.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -201,7 +201,7 @@ compositor::Output::Subpixel DrmOutput::subpixel() const
 
 double DrmOutput::refreshRate() const
 {
-    return cutefish::backend::refreshRate(m_config.mode);
+    return properdesktop::backend::refreshRate(m_config.mode);
 }
 
 double DrmOutput::pacingRate() const
@@ -1395,4 +1395,4 @@ void DrmOutput::moveCursor(const base::PointF &position)
         m_cursor->move(position.toPoint());
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

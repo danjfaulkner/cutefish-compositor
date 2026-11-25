@@ -19,7 +19,7 @@
 #include "base/strings.h"
 #include "ui/bitmap_painter.h"
 
-namespace cutefish::cursor {
+namespace properdesktop::cursor {
 
 std::string resourceName(input::CursorShape shape)
 {
@@ -279,4 +279,4 @@ int defaultSize()
     return 24;
 }
 
-} // namespace cutefish::cursor
+} // namespace properdesktop::cursor

@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ui/ozone/platform/drm/gpu/drm_framebuffer.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_FRAMEBUFFER_H_
-#define CUTEFISH_BACKEND_DRM_DRM_FRAMEBUFFER_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_FRAMEBUFFER_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_FRAMEBUFFER_H_
 
 #include "base/geometry.h"
 
@@ -18,7 +18,7 @@
 
 struct gbm_bo;
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 class DrmDeviceApi;
 
@@ -79,6 +79,6 @@ private:
     uint64_t m_dumbSize = 0;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_FRAMEBUFFER_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_FRAMEBUFFER_H_

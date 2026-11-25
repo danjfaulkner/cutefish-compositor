@@ -11,8 +11,8 @@
 
 #include "core/logging.h"
 #include "core/main_loop.h"
-#include "cutefish/accounts/account_picture.h"
-#include "cutefish/accounts/user_account.h"
+#include "properdesktop/accounts/account_picture.h"
+#include "properdesktop/accounts/user_account.h"
 #include "shell/common/task_windows.h"
 #include "shell/shell.h"
 #include "shell/shell_data.h"
@@ -25,7 +25,7 @@
 #include "wm/desks/fullscreen_desks.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class AppMenusView::Entry final : public BarItem
 {
@@ -404,4 +404,4 @@ void AppMenusView::step(int step)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

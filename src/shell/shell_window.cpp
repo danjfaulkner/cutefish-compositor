@@ -24,7 +24,7 @@
 #include "wm/shell_surface.h"
 #include "wm/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Holds no pixels of its own and owes no release to anybody.
 class PanelBuffer final : public compositor::Buffer
@@ -602,4 +602,4 @@ base::Rect ShellWindow::placePopup(const ui::PopupPlacement &placement,
     return positioner.calculateBounds(workArea).toRect();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

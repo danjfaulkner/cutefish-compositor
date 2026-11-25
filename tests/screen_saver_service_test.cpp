@@ -12,7 +12,7 @@
 #include <optional>
 #include <unistd.h>
 
-using namespace cutefish;
+using namespace properdesktop;
 namespace dbus = base::dbus;
 
 namespace {

@@ -9,7 +9,7 @@
 
 #include <array>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -128,4 +128,4 @@ bool TouchpadContacts::clicked() const
     return testBit(keys.data(), BTN_LEFT);
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

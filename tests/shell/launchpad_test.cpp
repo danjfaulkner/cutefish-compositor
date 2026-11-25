@@ -16,7 +16,7 @@
 #include "shell_test_util.h"
 #include "temporary_directory.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 namespace dbus = base::dbus;
 
 namespace {
@@ -304,10 +304,10 @@ TEST_F(LaunchpadTest, HandsABundleNothingRunsToTheFileManager)
 {
     test::DBusTestClient fileManagerClient;
     std::vector<std::vector<std::string>> opened;
-    dbus::Object fileManager(fileManagerClient.connection.get(), "/FileManager", "org.cutefish.FileManager");
+    dbus::Object fileManager(fileManagerClient.connection.get(), "/FileManager", "org.properdesktop.FileManager");
     fileManager.addMethod("openFiles", [&opened](const std::vector<std::string> &paths) { opened.push_back(paths); });
     ASSERT_TRUE(fileManager.publish());
-    ASSERT_TRUE(fileManagerClient.connection->requestName("org.cutefish.FileManager"));
+    ASSERT_TRUE(fileManagerClient.connection->requestName("org.properdesktop.FileManager"));
 
     const std::string bundle = "/Applications/Editor.app";
     applications.addUnhandledBundle(bundle, "Editor");
@@ -334,7 +334,7 @@ TEST_F(LaunchpadTest, ShowsHidesAndRemembersOpenedApplications)
     launchpad->hideWindow = [&] { --shown; };
 
     test::DBusTestClient session;
-    session.call("org.cutefish.Launchpad", "/Launchpad", "org.cutefish.Launchpad", "toggle");
+    session.call("org.properdesktop.Launchpad", "/Launchpad", "org.properdesktop.Launchpad", "toggle");
     EXPECT_TRUE(launchpad->isShown());
     EXPECT_EQ(shown, 1);
     launchpad->setDragging(true);
@@ -363,7 +363,7 @@ TEST(LaunchpadSearchTest, MatchesTheQtLauncherOnTheReferenceApplications)
         {"io.bassi.Amberol", "Amberol", "Music Player", ""},
         {"chromium", "Chromium Web Browser", "Web Browser", "Access the Internet"},
         {"org.gnome.dfeet", "D-Feet", "D-Bus Debugger", "Debug D-Bus applications"},
-        {"cutefish-filemanager", "Files", "File Manager", "Browse and manage your files"},
+        {"properdesktop-filemanager", "Files", "File Manager", "Browse and manage your files"},
         {"com.mitchellh.ghostty", "Ghostty", "", "A terminal emulator"},
         {"google-chrome", "Google Chrome", "Web Browser", "Access the Internet"},
         {"org.gnome.Loupe", "Image Viewer", "", ""},
@@ -380,18 +380,18 @@ TEST(LaunchpadSearchTest, MatchesTheQtLauncherOnTheReferenceApplications)
          "Create and edit text and graphics in letters, reports, documents and Web pages."},
         {"com.obsproject.Studio", "OBS Studio", "Streaming/Recording Software",
          "Free and Open Source Streaming/Recording Software"},
-        {"cutefish-screenshot", "Screenshot", "", "Capture or record the screen, a window or a selected portion"},
-        {"cutefish-settings", "Settings", "", ""},
+        {"properdesktop-screenshot", "Screenshot", "", "Capture or record the screen, a window or a selected portion"},
+        {"properdesktop-settings", "Settings", "", ""},
         {"dev.lizardbyte.app.Sunshine", "Sunshine", "", "Self-hosted game stream host for Moonlight"},
-        {"cutefish-terminal", "Terminal", "", ""},
+        {"properdesktop-terminal", "Terminal", "", ""},
         {"org.gnome.TextEditor", "Text Editor", "Text Editor", "View and edit text files"},
         {"vlc", "VLC media player", "Media player", "Read, capture, broadcast your multimedia streams"},
-        {"cutefish-system-monitor", "System Monitor", "", "View resource usage and manage running processes"},
-        {"cutefish-video-player", "Video Player", "", "Play videos and other media files"},
-        {"cutefish-text-editor", "Text Editor", "", "Edit plain text files"},
+        {"properdesktop-system-monitor", "System Monitor", "", "View resource usage and manage running processes"},
+        {"properdesktop-video-player", "Video Player", "", "Play videos and other media files"},
+        {"properdesktop-text-editor", "Text Editor", "", "Edit plain text files"},
         {"org.keepassxc.KeePassXC", "KeePassXC", "Password Manager",
          "Community-driven port of the Windows application \xe2\x80\x9cKeePass Password Safe\xe2\x80\x9d"},
-        {"cutefish-calendar", "Calendar", "", "Keep track of events and appointments"},
+        {"properdesktop-calendar", "Calendar", "", "Keep track of events and appointments"},
         {"org.gnome.Cheese", "Cheese", "Webcam Booth", "Take photos and videos with your webcam, with fun graphical effects"},
         {"org.gnome.SoundRecorder", "Sound Recorder", "", "Record sound via the microphone and play it back"},
         {"ai.storyteller.photocraft", "PhotoCraft", "Image Editor", "Edit photos and layered PSD documents"},
@@ -422,10 +422,10 @@ TEST(LaunchpadSearchTest, MatchesTheQtLauncherOnTheReferenceApplications)
     for (const auto &item : launchpad.applications().rows())
         found.push_back(item.id);
     EXPECT_EQ(found, (std::vector<std::string>{
-                             "chromium", "cutefish-filemanager", "com.mitchellh.ghostty", "google-chrome",
+                             "chromium", "properdesktop-filemanager", "com.mitchellh.ghostty", "google-chrome",
                              "libreoffice-startcenter", "libreoffice-draw", "libreoffice-impress", "libreoffice-math",
-                             "libreoffice-writer", "cutefish-screenshot", "cutefish-settings",
-                             "dev.lizardbyte.app.Sunshine", "cutefish-terminal", "org.gnome.TextEditor",
-                             "cutefish-system-monitor", "cutefish-video-player", "cutefish-text-editor",
-                             "cutefish-calendar", "ai.storyteller.photocraft", "firefox"}));
+                             "libreoffice-writer", "properdesktop-screenshot", "properdesktop-settings",
+                             "dev.lizardbyte.app.Sunshine", "properdesktop-terminal", "org.gnome.TextEditor",
+                             "properdesktop-system-monitor", "properdesktop-video-player", "properdesktop-text-editor",
+                             "properdesktop-calendar", "ai.storyteller.photocraft", "firefox"}));
 }

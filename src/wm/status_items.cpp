@@ -12,7 +12,7 @@
 #include "wm/shell_surface.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 StatusItem::StatusItem(StatusItems *items, compositor::Surface *surface, std::string owner, Client client)
     : m_items(items)
@@ -350,4 +350,4 @@ void StatusItems::setAppearance(bool dark, uint32_t foreground)
         item->sendAppearance();
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

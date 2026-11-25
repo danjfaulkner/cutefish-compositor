@@ -9,7 +9,7 @@
 #include <optional>
 #include <string_view>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
@@ -121,4 +121,4 @@ void ApplicationBadges::senderVanished(const std::string &sender)
         changed();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ui/ozone/platform/drm/common/drm_wrapper.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_DEVICE_API_H_
-#define CUTEFISH_BACKEND_DRM_DRM_DEVICE_API_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_DEVICE_API_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_DEVICE_API_H_
 
 #include "base/geometry.h"
 
@@ -17,7 +17,7 @@
 
 struct gbm_device;
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 struct AtomicProperty {
     uint32_t objectId = 0;
@@ -107,6 +107,6 @@ public:
     virtual void unmapDumbBuffer(void* data, uint64_t size) = 0;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_DEVICE_API_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_DEVICE_API_H_

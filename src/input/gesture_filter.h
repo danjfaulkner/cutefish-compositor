@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_INPUT_GESTURE_FILTER_H_
-#define CUTEFISH_INPUT_GESTURE_FILTER_H_
+#ifndef PROPERDESKTOP_INPUT_GESTURE_FILTER_H_
+#define PROPERDESKTOP_INPUT_GESTURE_FILTER_H_
 
 #include <cstdint>
 
 #include "input/pointer_gesture_delegate.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 // A gesture claimed at its begin is the compositor's to the end: no client sees any of it.
 class GestureFilter
@@ -22,6 +22,6 @@ public:
     virtual void onGestureEnd(Timestamp timestamp, bool cancelled) = 0;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_GESTURE_FILTER_H_
+#endif // PROPERDESKTOP_INPUT_GESTURE_FILTER_H_

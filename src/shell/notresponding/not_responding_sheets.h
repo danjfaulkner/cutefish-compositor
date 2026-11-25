@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTRESPONDING_NOT_RESPONDING_SHEETS_H_
-#define CUTEFISH_SHELL_NOTRESPONDING_NOT_RESPONDING_SHEETS_H_
+#ifndef PROPERDESKTOP_SHELL_NOTRESPONDING_NOT_RESPONDING_SHEETS_H_
+#define PROPERDESKTOP_SHELL_NOTRESPONDING_NOT_RESPONDING_SHEETS_H_
 
 #include <cstdint>
 #include <functional>
@@ -18,17 +18,17 @@
 #include "ui/view.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class DialogButton;
 class Label;
 class ThemeIcon;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ShellWindow;
 
@@ -117,6 +117,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTRESPONDING_NOT_RESPONDING_SHEETS_H_
+#endif // PROPERDESKTOP_SHELL_NOTRESPONDING_NOT_RESPONDING_SHEETS_H_

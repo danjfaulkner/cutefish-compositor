@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SCENE_SCENE_H_
-#define CUTEFISH_SCENE_SCENE_H_
+#ifndef PROPERDESKTOP_SCENE_SCENE_H_
+#define PROPERDESKTOP_SCENE_SCENE_H_
 
 #include <memory>
 
@@ -11,7 +11,7 @@
 #include "scene/node.h"
 #include "base/geometry.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 class Scene
 {
@@ -53,6 +53,6 @@ private:
     render::Color m_background;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_SCENE_H_
+#endif // PROPERDESKTOP_SCENE_SCENE_H_

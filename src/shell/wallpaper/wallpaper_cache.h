@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_WALLPAPER_WALLPAPER_CACHE_H_
-#define CUTEFISH_SHELL_WALLPAPER_WALLPAPER_CACHE_H_
+#ifndef PROPERDESKTOP_SHELL_WALLPAPER_WALLPAPER_CACHE_H_
+#define PROPERDESKTOP_SHELL_WALLPAPER_WALLPAPER_CACHE_H_
 
 #include <chrono>
 #include <cstdint>
@@ -20,7 +20,7 @@
 #include "base/timer.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // One decode per path and device size is shared by every user, the last few stay
 // in memory, and results go to a disk cache for the next session.
@@ -39,7 +39,7 @@ public:
 
     using Done = std::function<void(const ui::Bitmap &image)>;
 
-    // Empty `directory` is ~/.cache/cutefish/wallpapers.
+    // Empty `directory` is ~/.cache/properdesktop/wallpapers.
     explicit WallpaperCache(std::string directory = {});
     ~WallpaperCache();
 
@@ -98,6 +98,6 @@ private:
     std::chrono::milliseconds m_expiryDelay = kExpiry;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_WALLPAPER_WALLPAPER_CACHE_H_
+#endif // PROPERDESKTOP_SHELL_WALLPAPER_WALLPAPER_CACHE_H_

@@ -38,8 +38,8 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-using namespace cutefish;
-using namespace cutefish::wm;
+using namespace properdesktop;
+using namespace properdesktop::wm;
 using State = OverviewController::State;
 
 namespace {
@@ -1258,7 +1258,7 @@ display::LogicalDisplay logicalDisplay(const char *name, base::Rect bounds, bool
 {
     return {displayId(name),
             {displayId(name)},
-            "Cutefish-" + std::string(name),
+            "ProperDesktop-" + std::string(name),
             bounds,
             bounds,
             {},

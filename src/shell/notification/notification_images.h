@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_IMAGES_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_IMAGES_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_IMAGES_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_IMAGES_H_
 
 #include <optional>
 #include <string>
@@ -12,7 +12,7 @@
 #include "base/dbus_types.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Checked where the message arrives; the pixels are converted on a worker.
 struct ImageHint {
@@ -42,6 +42,6 @@ void prune(const std::string &directory, const std::vector<std::string> &keep);
 
 } // namespace notification_images
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_IMAGES_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_IMAGES_H_

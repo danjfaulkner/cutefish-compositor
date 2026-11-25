@@ -13,7 +13,7 @@
 
 #include <algorithm>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -81,4 +81,4 @@ std::vector<PlaneAssignment> assignPlanes(const std::vector<DrmPlane>& planes, i
     return assignments;
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

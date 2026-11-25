@@ -14,7 +14,7 @@
 #include "base/strings.h"
 #include "decoration/text.h"
 
-using namespace cutefish::decoration;
+using namespace properdesktop::decoration;
 
 namespace {
 class TitleText : public testing::Test
@@ -22,12 +22,12 @@ class TitleText : public testing::Test
 protected:
     TextRenderer renderer;
 
-    cutefish::base::Size textSize(const std::string& text, int size)
+    properdesktop::base::Size textSize(const std::string& text, int size)
     {
         return renderer.textSize(text, size);
     }
 
-    Image renderText(const std::string& text, int size, const cutefish::render::Color& color)
+    Image renderText(const std::string& text, int size, const properdesktop::render::Color& color)
     {
         return renderer.renderText(text, size, color);
     }
@@ -121,7 +121,7 @@ TEST_F(TitleText, ElisionFitsAtGraphemeBoundaries)
 {
     const std::string title = "A e\u0301 \u4e2d\u6587 👩‍💻 العربية document title";
     // Positions are UTF-16 units, as ICU's grapheme breaks take them.
-    const std::u16string title16 = cutefish::base::strings::utf8ToUtf16(title);
+    const std::u16string title16 = properdesktop::base::strings::utf8ToUtf16(title);
     UErrorCode error = U_ZERO_ERROR;
     std::unique_ptr<UBreakIterator, decltype(&ubrk_close)> graphemes(
         ubrk_open(UBRK_CHARACTER, nullptr, reinterpret_cast<const UChar*>(title16.data()),
@@ -133,7 +133,7 @@ TEST_F(TitleText, ElisionFitsAtGraphemeBoundaries)
         EXPECT_LE(textSize(elided, 14).width(), width);
         if (elided.empty())
             continue;
-        const std::u16string elided16 = cutefish::base::strings::utf8ToUtf16(elided);
+        const std::u16string elided16 = properdesktop::base::strings::utf8ToUtf16(elided);
         const size_t ellipsis = elided16.find(u'\u2026');
         ASSERT_NE(ellipsis, std::u16string::npos);
         EXPECT_EQ(elided16.substr(0, ellipsis), title16.substr(0, ellipsis));
@@ -170,10 +170,10 @@ TEST_F(TitleText, DeviceRasterKeepsLogicalShapingAndElision)
 {
     for (const std::string title : {"Fractional title", "العربية \u4e2d\u6587", "😀👩‍💻"}) {
         const std::string elided = elideText(title, 14, 70);
-        const cutefish::base::Size logical = textSize(elided, 14);
+        const properdesktop::base::Size logical = textSize(elided, 14);
         for (double density : {1.0, 2.0, 3.0, 4.0, 1.25, 1.5, 1.75, 1.0}) {
             const auto image = renderer.renderText(elided, 14, {1, 1, 1, 1}, density);
-            EXPECT_EQ(image.size(), cutefish::base::Size(int(std::ceil(logical.width() * density)),
+            EXPECT_EQ(image.size(), properdesktop::base::Size(int(std::ceil(logical.width() * density)),
                                                          int(std::ceil(logical.height() * density))))
                     << density;
             const uint8_t *bits = image.bits();

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_MPRIS_H_
-#define CUTEFISH_SHELL_MENUBAR_MPRIS_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_MPRIS_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_MPRIS_H_
 
 #include <cstdint>
 #include <memory>
@@ -15,7 +15,7 @@
 #include "shell/common/pending_calls.h"
 #include "shell/common/sender_filter.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class MprisPlayer
 {
@@ -118,6 +118,6 @@ private:
     PendingCalls m_calls;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_MPRIS_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_MPRIS_H_

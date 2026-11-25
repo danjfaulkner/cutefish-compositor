@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_DECORATION_DECORATION_THEME_H_
-#define CUTEFISH_DECORATION_DECORATION_THEME_H_
+#ifndef PROPERDESKTOP_DECORATION_DECORATION_THEME_H_
+#define PROPERDESKTOP_DECORATION_DECORATION_THEME_H_
 
 #include <algorithm>
 #include <functional>
@@ -23,7 +23,7 @@
 #include "wm/shadow_types.h"
 #include "wm/types.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 // Frame layout uses logical pixels; the exterior hairline uses physical pixels.
 struct Metrics {
@@ -162,6 +162,6 @@ private:
     std::map<std::string, std::unique_ptr<render::Texture>> m_textures;
 };
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-#endif // CUTEFISH_DECORATION_DECORATION_THEME_H_
+#endif // PROPERDESKTOP_DECORATION_DECORATION_THEME_H_

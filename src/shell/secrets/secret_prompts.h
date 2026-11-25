@@ -2,27 +2,27 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SECRETS_SECRET_PROMPTS_H_
-#define CUTEFISH_SHELL_SECRETS_SECRET_PROMPTS_H_
+#ifndef PROPERDESKTOP_SHELL_SECRETS_SECRET_PROMPTS_H_
+#define PROPERDESKTOP_SHELL_SECRETS_SECRET_PROMPTS_H_
 
 #include <memory>
 
 #include "base/signal.h"
 #include "shell/shell.h"
 
-namespace cutefish::base::dbus {
+namespace properdesktop::base::dbus {
 class Connection;
 }
 
-namespace cutefish::bluez {
+namespace properdesktop::bluez {
 class Manager;
 }
 
-namespace cutefish::networkmanager {
+namespace properdesktop::networkmanager {
 class Client;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class BluetoothPairingDialog;
 class NetworkSecretAgent;
@@ -68,6 +68,6 @@ private:
     bool m_systemServices = false;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SECRETS_SECRET_PROMPTS_H_
+#endif // PROPERDESKTOP_SHELL_SECRETS_SECRET_PROMPTS_H_

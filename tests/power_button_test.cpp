@@ -11,7 +11,7 @@
 #include <gtest/gtest.h>
 #include <linux/input-event-codes.h>
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

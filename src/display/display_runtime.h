@@ -21,7 +21,7 @@
 struct wl_display;
 struct wl_global;
 
-namespace cutefish {
+namespace properdesktop {
 namespace backend {
 class DrmBackend;
 class DrmOutput;
@@ -185,4 +185,4 @@ private:
     base::Timer startupCoverDeadline {core::mainLoop()};
 };
 } // namespace display
-} // namespace cutefish
+} // namespace properdesktop

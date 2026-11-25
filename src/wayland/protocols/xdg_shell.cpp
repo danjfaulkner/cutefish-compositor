@@ -33,13 +33,13 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
-using cutefish::wm::ResizeEdge;
-using cutefish::wm::ShellSurface;
-using cutefish::wm::WindowStateType;
+using properdesktop::wm::ResizeEdge;
+using properdesktop::wm::ShellSurface;
+using properdesktop::wm::WindowStateType;
 
 void xdg_positioner_destroy(wl_client*, wl_resource* resource)
 {
@@ -758,7 +758,7 @@ void xdg_surface_get_popup(wl_client* client, wl_resource* resource, uint32_t id
     }
     if (!parentResource) {
         // Another protocol names the parent before the first commit, as
-        // cutefish_status_item_v1.get_popup does.
+        // properdesktop_status_item_v1.get_popup does.
         auto* positioner = getUserDataAs<WaylandPositioner>(positionerResource);
         if (positioner->size().isEmpty()) {
             wl_resource_post_error(resource, XDG_WM_BASE_ERROR_INVALID_POSITIONER,
@@ -1006,4 +1006,4 @@ wl_global* createXdgShellGlobal(wl_display* display, WaylandXdgShell* shell)
                             &bindXdgShell);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

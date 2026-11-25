@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_RENDER_CURSOR_SINK_H_
-#define CUTEFISH_RENDER_CURSOR_SINK_H_
+#ifndef PROPERDESKTOP_RENDER_CURSOR_SINK_H_
+#define PROPERDESKTOP_RENDER_CURSOR_SINK_H_
 
 
 #include <cstdint>
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // Premultiplied RGBA8888 in increasing address order, matching the compositor's
 // own texture upload format.
@@ -37,6 +37,6 @@ public:
     virtual void moveCursor(const base::PointF& position) = 0;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_CURSOR_SINK_H_
+#endif // PROPERDESKTOP_RENDER_CURSOR_SINK_H_

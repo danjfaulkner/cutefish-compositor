@@ -34,7 +34,7 @@
 #include "wayland/protocols/wl_subcompositor.h"
 #include "wayland/server.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -402,7 +402,7 @@ TEST_P(OutputProtocolTest, FakeOutputMetricsAndVersionGates)
                                             (output.preferred ? WL_OUTPUT_MODE_PREFERRED : 0)),
                       metrics.flags);
             if (GetParam() >= 4) {
-                EXPECT_EQ("Cutefish-1", metrics.name);
+                EXPECT_EQ("ProperDesktop-1", metrics.name);
                 EXPECT_EQ("DP-7", metrics.description);
             }
             if (GetParam() >= 3)

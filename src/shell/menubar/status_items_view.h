@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_STATUS_ITEMS_VIEW_H_
-#define CUTEFISH_SHELL_MENUBAR_STATUS_ITEMS_VIEW_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_STATUS_ITEMS_VIEW_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_STATUS_ITEMS_VIEW_H_
 
 #include <functional>
 #include <vector>
@@ -12,16 +12,16 @@
 #include "shell/menubar/bar_item.h"
 #include "ui/view.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class StatusItem;
 class StatusItems;
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class StatusItemSlot;
 
-// Items from cutefish_status_item_v1, in the window manager's order, newest
+// Items from properdesktop_status_item_v1, in the window manager's order, newest
 // leftmost.
 class StatusItemsView : public ui::View
 {
@@ -65,6 +65,6 @@ private:
     wm::StatusItem *m_item;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_STATUS_ITEMS_VIEW_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_STATUS_ITEMS_VIEW_H_

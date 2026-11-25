@@ -17,7 +17,7 @@
 #include "shell_test_util.h"
 #include "temporary_directory.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 namespace dbus = base::dbus;
 using shell::DockModel;
 
@@ -27,7 +27,7 @@ class FakeAppRuntime
 {
 public:
     explicit FakeAppRuntime(dbus::Connection *bus)
-        : object(bus, "/AppRuntime", "org.cutefish.AppRuntime")
+        : object(bus, "/AppRuntime", "org.properdesktop.AppRuntime")
     {
         object.addMethod("launchApplication", [this](const std::string &id, const std::vector<std::string> &files,
                                                      const std::string &token) {
@@ -47,7 +47,7 @@ public:
             return true;
         });
         EXPECT_TRUE(object.publish());
-        EXPECT_TRUE(bus->requestName("org.cutefish.AppRuntime"));
+        EXPECT_TRUE(bus->requestName("org.properdesktop.AppRuntime"));
     }
 
     dbus::Object object;
@@ -196,10 +196,10 @@ TEST_F(DockTest, KeepsAPinnedBundleWhileItIsGone)
 
 TEST_F(DockTest, StartsFromTheDefaultPinsWithoutAList)
 {
-    applications.addSimple("cutefish-terminal", "Terminal");
+    applications.addSimple("properdesktop-terminal", "Terminal");
     applications.scan();
     start();
-    EXPECT_EQ(ids(), (std::vector<std::string>{DockModel::kLaunchpadId, "cutefish-terminal"}));
+    EXPECT_EQ(ids(), (std::vector<std::string>{DockModel::kLaunchpadId, "properdesktop-terminal"}));
     shell::waitForFileThread();
     EXPECT_FALSE(base::Settings(directory.filePath("shell.conf")).contains("Dock/Pinned"));
 }
@@ -240,7 +240,7 @@ TEST_F(DockTest, FollowsRunningApplications)
 TEST_F(DockTest, KeepsApplicationsThatRunWithoutWindows)
 {
     start("[Dock]\nPinned=files\n");
-    auto editor = std::make_unique<WindowlessApplication>("org.cutefish.Application.editor", "editor");
+    auto editor = std::make_unique<WindowlessApplication>("org.properdesktop.Application.editor", "editor");
     ASSERT_TRUE(test::runUntil([&] { return model().indexOf("editor") >= 0; }));
     auto item = [&]() -> const shell::DockItem & { return model().at(model().indexOf("editor")); };
     EXPECT_TRUE(item().running);
@@ -354,18 +354,18 @@ TEST_F(DockTest, PinsMovesAndDrops)
     EXPECT_EQ(ids(), (std::vector<std::string>{DockModel::kLaunchpadId, "terminal", "editor", "files"}));
 }
 
-TEST_F(DockTest, ServesOrgCutefishDock)
+TEST_F(DockTest, ServesOrgProperDesktopDock)
 {
     start("[Dock]\nPinned=files\n");
     ASSERT_TRUE(dock->registerService());
 
     test::DBusTestClient settings;
-    settings.call("org.cutefish.Dock", "/Dock", "org.cutefish.Dock", "setDirection", int32_t(0));
-    settings.call("org.cutefish.Dock", "/Dock", "org.cutefish.Dock", "setGlassTint", 3.0);
+    settings.call("org.properdesktop.Dock", "/Dock", "org.properdesktop.Dock", "setDirection", int32_t(0));
+    settings.call("org.properdesktop.Dock", "/Dock", "org.properdesktop.Dock", "setGlassTint", 3.0);
     EXPECT_EQ(dock->settings().direction(), shell::DockSettings::Left);
     EXPECT_EQ(dock->settings().glassTint(), 1.0);
 
-    const std::string xml = settings.introspect("org.cutefish.Dock", "/Dock");
+    const std::string xml = settings.introspect("org.properdesktop.Dock", "/Dock");
     EXPECT_NE(xml.find("name=\"direction\""), std::string::npos);
 
     shell::waitForFileThread();
@@ -386,7 +386,7 @@ TEST_F(DockTest, MagnificationIsOnWithASizeAndItIsSaved)
     int changes = 0;
     const base::Subscription subscription = dock->settings().magnifiedIconSizeChanged.connect([&] { ++changes; });
     test::DBusTestClient settings;
-    settings.call("org.cutefish.Dock", "/Dock", "org.cutefish.Dock", "setMagnifiedIconSize", int32_t(110));
+    settings.call("org.properdesktop.Dock", "/Dock", "org.properdesktop.Dock", "setMagnifiedIconSize", int32_t(110));
     EXPECT_EQ(110, dock->settings().magnifiedIconSize());
     EXPECT_TRUE(dock->settings().magnification());
     EXPECT_EQ(1, changes);
@@ -397,7 +397,7 @@ TEST_F(DockTest, MagnificationIsOnWithASizeAndItIsSaved)
     test::runFor(std::chrono::milliseconds(400));
     shell::waitForFileThread();
     EXPECT_EQ(110, base::Settings(directory.filePath("shell.conf")).intValue("Dock/MagnifiedIconSize"));
-    const std::string xml = settings.introspect("org.cutefish.Dock", "/Dock");
+    const std::string xml = settings.introspect("org.properdesktop.Dock", "/Dock");
     EXPECT_EQ(std::string::npos, xml.find("\"setMagnification\""));
 }
 

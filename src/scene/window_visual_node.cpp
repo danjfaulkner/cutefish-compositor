@@ -14,7 +14,7 @@
 #include "base/transform.h"
 #include "ui/geometry_conversions.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 namespace {
 
@@ -136,4 +136,4 @@ void WindowVisualNode::render(render::Renderer &renderer) const
     }
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

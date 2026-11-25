@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_SERVICES_H_
-#define CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_SERVICES_H_
+#ifndef PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_SERVICES_H_
+#define PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_SERVICES_H_
 
 #include <cstdint>
 #include <functional>
@@ -12,7 +12,7 @@
 
 #include "base/signal.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 struct WirelessNetwork {
     enum class State {
@@ -159,6 +159,6 @@ public:
 
 std::string volumeIconName(bool hasSink, double volume);
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_SERVICES_H_
+#endif // PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_SERVICES_H_

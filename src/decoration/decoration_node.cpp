@@ -19,7 +19,7 @@
 #include "ui/window_controls.h"
 #include "wm/window.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 namespace {
 
@@ -184,4 +184,4 @@ void DecorationNode::paintButtons(render::Renderer& renderer, const base::Rect& 
     }
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

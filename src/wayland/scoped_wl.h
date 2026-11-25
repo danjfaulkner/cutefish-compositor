@@ -6,14 +6,14 @@
 //           chromium/src/components/exo/wayland/scoped_wl.cc
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_SCOPED_WL_H_
-#define CUTEFISH_WAYLAND_SCOPED_WL_H_
+#ifndef PROPERDESKTOP_WAYLAND_SCOPED_WL_H_
+#define PROPERDESKTOP_WAYLAND_SCOPED_WL_H_
 
 #include <wayland-server-core.h>
 
 #include <memory>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 struct WlDisplayDeleter {
     void operator()(wl_display* display) const
@@ -32,6 +32,6 @@ struct WlDisplayDeleter {
 
 using ScopedWlDisplay = std::unique_ptr<wl_display, WlDisplayDeleter>;
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_SCOPED_WL_H_
+#endif // PROPERDESKTOP_WAYLAND_SCOPED_WL_H_

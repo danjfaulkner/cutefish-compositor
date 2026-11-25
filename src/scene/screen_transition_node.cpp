@@ -16,7 +16,7 @@
 #include "base/geometry.h"
 #include "base/transform.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 namespace {
 
@@ -195,4 +195,4 @@ void ScreenTransitionNode::releaseRenderResources()
     Node::releaseRenderResources();
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

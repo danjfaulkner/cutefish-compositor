@@ -15,7 +15,7 @@
 #include "scene/window_animation.h"
 #include "scene/window_visual_node.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 scene::OverviewWindowFrame overviewWindowFrame(const Theme *theme)
 {
@@ -90,4 +90,4 @@ scene::OverviewWindowFrame overviewWindowFrame(const Theme *theme)
     return frame;
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

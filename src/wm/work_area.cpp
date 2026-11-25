@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 bool ExclusiveZones::set(const void* token, ScreenEdge edge, int thickness,
                          const std::string& outputName, bool yieldsToMaximized)
@@ -82,4 +82,4 @@ base::Rect ExclusiveZones::apply(const base::Rect& outputBounds, const std::stri
     return area;
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

@@ -21,9 +21,9 @@
 #include "ui/window.h"
 #include "toolkit/compositor_colors.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Twice the icon, whatever the scale.
 static constexpr int kThumbnailPixels = ClipboardPickerView::kIconSize * 2;
@@ -591,4 +591,4 @@ void ClipboardPickerView::paint(ui::Painter &painter)
                             ink);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

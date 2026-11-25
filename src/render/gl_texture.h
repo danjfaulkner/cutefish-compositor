@@ -11,7 +11,7 @@
 #include <vector>
 #include "base/region.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // Made and destroyed on the main thread, the one context's.
 struct GlTextureUsage {
@@ -102,4 +102,4 @@ private:
     std::vector<uint8_t> m_uploadScratch;
     std::optional<bool> m_unpacksRows;
 };
-} // namespace cutefish::render
+} // namespace properdesktop::render

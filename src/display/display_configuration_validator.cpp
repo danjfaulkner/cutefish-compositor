@@ -12,7 +12,7 @@
 
 
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 namespace {
 
@@ -164,4 +164,4 @@ DisplayConfigurationValidator::Result DisplayConfigurationValidator::validateExt
     return result;
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_INPUT_LIBINPUT_BACKEND_H_
-#define CUTEFISH_BACKEND_INPUT_LIBINPUT_BACKEND_H_
+#ifndef PROPERDESKTOP_BACKEND_INPUT_LIBINPUT_BACKEND_H_
+#define PROPERDESKTOP_BACKEND_INPUT_LIBINPUT_BACKEND_H_
 
 #include "input/mouse_settings.h"
 #include "input/seat_observer.h"
@@ -23,11 +23,11 @@ struct libinput_event;
 struct libinput_device;
 struct udev;
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class InputManager;
 }
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 class Session;
 class TouchpadContacts;
@@ -95,6 +95,6 @@ private:
     uint32_t m_leds = 0;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_INPUT_LIBINPUT_BACKEND_H_
+#endif // PROPERDESKTOP_BACKEND_INPUT_LIBINPUT_BACKEND_H_

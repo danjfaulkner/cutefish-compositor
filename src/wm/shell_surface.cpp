@@ -29,7 +29,7 @@
 #include "wm/window_state.h"
 #include "wm/wm_event.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -1294,4 +1294,4 @@ void ShellSurface::removeChildShell(ShellSurface *child)
                         m_childShells.end());
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

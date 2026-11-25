@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_AUTH_GREETD_BACKEND_H
-#define CUTEFISH_AUTH_GREETD_BACKEND_H
+#ifndef PROPERDESKTOP_AUTH_GREETD_BACKEND_H
+#define PROPERDESKTOP_AUTH_GREETD_BACKEND_H
 #include "auth/auth_backend.h"
 #include "base/json.h"
 #include "base/timer.h"
 
-namespace cutefish::base {
+namespace properdesktop::base {
 class EventLoop;
 }
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 class GreetdBackend : public AuthBackend
 {
 public:
@@ -59,5 +59,5 @@ private:
     bool m_sessionOpen = false;
     bool m_retry = false;
 };
-} // namespace cutefish::auth
+} // namespace properdesktop::auth
 #endif

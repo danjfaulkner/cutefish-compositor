@@ -15,7 +15,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -122,4 +122,4 @@ void Desk::moveWindowToDesk(Window *window, Desk *target)
         root->restore();
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

@@ -5,20 +5,20 @@
 // Upstream: chromium/src/components/exo/wayland/wl_shm.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_WL_SHM_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_WL_SHM_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_WL_SHM_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_WL_SHM_H_
 
 #include <wayland-server-core.h>
 
 #include <cstdint>
 #include <memory>
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Buffer;
 class Compositor;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 constexpr uint32_t kWlShmVersion = 1;
 
@@ -34,6 +34,6 @@ void setBufferImplementation(wl_resource* resource, const void* implementation, 
 
 wl_global* createShmGlobal(wl_display* display, compositor::Compositor* compositor);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_WL_SHM_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_WL_SHM_H_

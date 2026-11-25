@@ -7,7 +7,7 @@
 
 #include "client_tracker.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 ClientTracker::ClientTracker(wl_display* display)
     : m_display(display)
@@ -73,4 +73,4 @@ void ClientTracker::handleClientDestroyed(wl_client* client)
     m_clientDestroyedListeners.erase(it);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

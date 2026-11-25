@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_H_
-#define CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_H_
+#ifndef PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_H_
+#define PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_H_
 
 #include <functional>
 #include <memory>
@@ -14,12 +14,12 @@
 #include "base/signal.h"
 #include "shell/launchpad/launchpad_model.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class Dock;
 class TaskManager;
 
-// Exports org.cutefish.Launchpad at /Launchpad.
+// Exports org.properdesktop.Launchpad at /Launchpad.
 class Launchpad
 {
 public:
@@ -74,6 +74,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_H_
+#endif // PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_H_

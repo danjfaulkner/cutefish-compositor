@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_STATUS_ICON_H_
-#define CUTEFISH_SHELL_MENUBAR_STATUS_ICON_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_STATUS_ICON_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_STATUS_ICON_H_
 
 #include <functional>
 #include <optional>
@@ -12,11 +12,11 @@
 #include "shell/menubar/bar_item.h"
 #include "shell/menubar/menu_bar_panels.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class RowLayout;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class Battery;
 
@@ -95,6 +95,6 @@ private:
     BarIcon *m_icon;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_STATUS_ICON_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_STATUS_ICON_H_

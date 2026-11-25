@@ -9,7 +9,7 @@
 #include "base/geometry.h"
 
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // decoration::ThemePreferences keeps it in step with the Appearance setting.
 bool continuousCorners();
@@ -77,4 +77,4 @@ struct RoundedShape {
     friend bool operator==(const RoundedShape &, const RoundedShape &) = default;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

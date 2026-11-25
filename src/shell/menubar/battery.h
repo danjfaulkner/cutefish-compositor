@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_BATTERY_H_
-#define CUTEFISH_SHELL_MENUBAR_BATTERY_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_BATTERY_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_BATTERY_H_
 
 #include <functional>
 #include <memory>
@@ -14,11 +14,11 @@
 #include "base/signal.h"
 #include "base/thread_pool.h"
 
-namespace cutefish::upower {
+namespace properdesktop::upower {
 class BatteryStatus;
-} // namespace cutefish::upower
+} // namespace properdesktop::upower
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class Battery
 {
@@ -58,6 +58,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_BATTERY_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_BATTERY_H_

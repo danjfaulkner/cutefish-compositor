@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(cutefish-compositor
+project(properdesktop-compositor
     VERSION 1.0
-    DESCRIPTION "Cutefish Wayland compositor and window manager"
+    DESCRIPTION "Proper Desktop Wayland compositor and window manager"
     LANGUAGES C CXX
 )
 
@@ -21,16 +21,16 @@ include(CTest)
 # session bus, runtime directory and home, with the account's home out of
 # reach.
 if(BUILD_TESTING)
-    find_program(CUTEFISH_PYTHON python3 REQUIRED)
-    find_program(CUTEFISH_DBUS_RUN_SESSION dbus-run-session REQUIRED)
-    set(CUTEFISH_TEST_RECORD ${CMAKE_BINARY_DIR}/Testing/isolation)
-    set(CMAKE_TEST_LAUNCHER ${CUTEFISH_PYTHON} ${PROJECT_SOURCE_DIR}/tests/isolate.py
+    find_program(PROPERDESKTOP_PYTHON python3 REQUIRED)
+    find_program(PROPERDESKTOP_DBUS_RUN_SESSION dbus-run-session REQUIRED)
+    set(PROPERDESKTOP_TEST_RECORD ${CMAKE_BINARY_DIR}/Testing/isolation)
+    set(CMAKE_TEST_LAUNCHER ${PROPERDESKTOP_PYTHON} ${PROJECT_SOURCE_DIR}/tests/isolate.py
         --keep ${PROJECT_SOURCE_DIR} --keep ${CMAKE_BINARY_DIR}
-        --record ${CUTEFISH_TEST_RECORD}/writes.log -- ${CUTEFISH_DBUS_RUN_SESSION} --)
+        --record ${PROPERDESKTOP_TEST_RECORD}/writes.log -- ${PROPERDESKTOP_DBUS_RUN_SESSION} --)
 endif()
 
 find_package(PkgConfig REQUIRED)
-find_package(CutefishToolkit REQUIRED)
+find_package(ProperDesktopToolkit REQUIRED)
 pkg_check_modules(TitleText REQUIRED IMPORTED_TARGET harfbuzz freetype2 fontconfig icu-uc icu-i18n)
 pkg_check_modules(WaylandServer REQUIRED IMPORTED_TARGET wayland-server>=1.23)
 pkg_check_modules(Libseat REQUIRED IMPORTED_TARGET libseat)
@@ -45,13 +45,13 @@ pkg_check_modules(WaylandProtocols REQUIRED wayland-protocols>=1.39)
 pkg_get_variable(WAYLAND_PROTOCOLS_DATADIR wayland-protocols pkgdatadir)
 pkg_get_variable(WAYLAND_SCANNER wayland-scanner wayland_scanner)
 
-set(CUTEFISH_PROTOCOL_DIR ${CMAKE_BINARY_DIR}/wayland-protocols)
-file(MAKE_DIRECTORY ${CUTEFISH_PROTOCOL_DIR})
+set(PROPERDESKTOP_PROTOCOL_DIR ${CMAKE_BINARY_DIR}/wayland-protocols)
+file(MAKE_DIRECTORY ${PROPERDESKTOP_PROTOCOL_DIR})
 
-function(cutefish_wayland_protocol name xml)
-    set(code ${CUTEFISH_PROTOCOL_DIR}/${name}-protocol.c)
-    set(server ${CUTEFISH_PROTOCOL_DIR}/${name}-server-protocol.h)
-    set(client ${CUTEFISH_PROTOCOL_DIR}/${name}-client-protocol.h)
+function(properdesktop_wayland_protocol name xml)
+    set(code ${PROPERDESKTOP_PROTOCOL_DIR}/${name}-protocol.c)
+    set(server ${PROPERDESKTOP_PROTOCOL_DIR}/${name}-server-protocol.h)
+    set(client ${PROPERDESKTOP_PROTOCOL_DIR}/${name}-client-protocol.h)
     add_custom_command(OUTPUT ${code}
         COMMAND ${WAYLAND_SCANNER} private-code ${xml} ${code}
         DEPENDS ${xml} VERBATIM)
@@ -64,93 +64,93 @@ function(cutefish_wayland_protocol name xml)
     set(${name}_SOURCES ${code} ${server} ${client} PARENT_SCOPE)
 endfunction()
 
-cutefish_wayland_protocol(ext-idle-notify-v1
+properdesktop_wayland_protocol(ext-idle-notify-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/ext-idle-notify/ext-idle-notify-v1.xml)
-cutefish_wayland_protocol(idle-inhibit-unstable-v1
+properdesktop_wayland_protocol(idle-inhibit-unstable-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/idle-inhibit/idle-inhibit-unstable-v1.xml)
-cutefish_wayland_protocol(pointer-constraints-unstable-v1
+properdesktop_wayland_protocol(pointer-constraints-unstable-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/pointer-constraints/pointer-constraints-unstable-v1.xml)
-cutefish_wayland_protocol(pointer-gestures-unstable-v1
+properdesktop_wayland_protocol(pointer-gestures-unstable-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/pointer-gestures/pointer-gestures-unstable-v1.xml)
-cutefish_wayland_protocol(relative-pointer-unstable-v1
+properdesktop_wayland_protocol(relative-pointer-unstable-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/relative-pointer/relative-pointer-unstable-v1.xml)
-cutefish_wayland_protocol(keyboard-shortcuts-inhibit-unstable-v1
+properdesktop_wayland_protocol(keyboard-shortcuts-inhibit-unstable-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/keyboard-shortcuts-inhibit/keyboard-shortcuts-inhibit-unstable-v1.xml)
 
-cutefish_wayland_protocol(presentation-time
+properdesktop_wayland_protocol(presentation-time
     ${WAYLAND_PROTOCOLS_DATADIR}/stable/presentation-time/presentation-time.xml)
-cutefish_wayland_protocol(fractional-scale-v1
+properdesktop_wayland_protocol(fractional-scale-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/fractional-scale/fractional-scale-v1.xml)
-cutefish_wayland_protocol(xdg-output-unstable-v1
+properdesktop_wayland_protocol(xdg-output-unstable-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/xdg-output/xdg-output-unstable-v1.xml)
-cutefish_wayland_protocol(viewporter
+properdesktop_wayland_protocol(viewporter
     ${WAYLAND_PROTOCOLS_DATADIR}/stable/viewporter/viewporter.xml)
-cutefish_wayland_protocol(xdg-activation-v1
+properdesktop_wayland_protocol(xdg-activation-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/xdg-activation/xdg-activation-v1.xml)
-cutefish_wayland_protocol(xdg-shell
+properdesktop_wayland_protocol(xdg-shell
     ${WAYLAND_PROTOCOLS_DATADIR}/stable/xdg-shell/xdg-shell.xml)
-cutefish_wayland_protocol(xdg-decoration
+properdesktop_wayland_protocol(xdg-decoration
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/xdg-decoration/xdg-decoration-unstable-v1.xml)
-cutefish_wayland_protocol(xdg-dialog-v1
+properdesktop_wayland_protocol(xdg-dialog-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/xdg-dialog/xdg-dialog-v1.xml)
-cutefish_wayland_protocol(xdg-foreign-unstable-v2
+properdesktop_wayland_protocol(xdg-foreign-unstable-v2
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/xdg-foreign/xdg-foreign-unstable-v2.xml)
-cutefish_wayland_protocol(xdg-toplevel-drag-v1
+properdesktop_wayland_protocol(xdg-toplevel-drag-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/xdg-toplevel-drag/xdg-toplevel-drag-v1.xml)
 
-cutefish_wayland_protocol(linux-dmabuf-v1
+properdesktop_wayland_protocol(linux-dmabuf-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/stable/linux-dmabuf/linux-dmabuf-v1.xml)
 
-cutefish_wayland_protocol(linux-drm-syncobj-v1
+properdesktop_wayland_protocol(linux-drm-syncobj-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/linux-drm-syncobj/linux-drm-syncobj-v1.xml)
 
-# cutefish-toolkit/protocols keeps the client-side copy; the two copies must stay
+# properdesktop-toolkit/protocols keeps the client-side copy; the two copies must stay
 # byte-identical.
-set(CUTEFISH_PRIVATE_PROTOCOL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/protocols)
-cutefish_wayland_protocol(cutefish-shell-v1
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/cutefish-shell-v1.xml)
-cutefish_wayland_protocol(cutefish-computer-control-v1
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/cutefish-computer-control-v1.xml)
+set(PROPERDESKTOP_PRIVATE_PROTOCOL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/protocols)
+properdesktop_wayland_protocol(properdesktop-shell-v1
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/properdesktop-shell-v1.xml)
+properdesktop_wayland_protocol(properdesktop-computer-control-v1
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/properdesktop-computer-control-v1.xml)
 
-cutefish_wayland_protocol(cursor-shape-v1
+properdesktop_wayland_protocol(cursor-shape-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/cursor-shape/cursor-shape-v1.xml)
 # cursor-shape's tablet-tool argument references this interface at link time.
 # Generate its descriptors only; no tablet global or capability is advertised.
-cutefish_wayland_protocol(tablet-v2
+properdesktop_wayland_protocol(tablet-v2
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/tablet/tablet-unstable-v2.xml)
-cutefish_wayland_protocol(cutefish-window-hints-v1
-    ${CMAKE_CURRENT_SOURCE_DIR}/protocols/cutefish-window-hints-v1.xml)
-cutefish_wayland_protocol(cutefish-surface-blur-v1
-    ${CMAKE_CURRENT_SOURCE_DIR}/protocols/cutefish-surface-blur-v1.xml)
-cutefish_wayland_protocol(cutefish-status-item-v1
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/cutefish-status-item-v1.xml)
-cutefish_wayland_protocol(cutefish-main-menu-v1
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/cutefish-main-menu-v1.xml)
-cutefish_wayland_protocol(cutefish-window-placement-v1
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/cutefish-window-placement-v1.xml)
-cutefish_wayland_protocol(ext-data-control-v1
+properdesktop_wayland_protocol(properdesktop-window-hints-v1
+    ${CMAKE_CURRENT_SOURCE_DIR}/protocols/properdesktop-window-hints-v1.xml)
+properdesktop_wayland_protocol(properdesktop-surface-blur-v1
+    ${CMAKE_CURRENT_SOURCE_DIR}/protocols/properdesktop-surface-blur-v1.xml)
+properdesktop_wayland_protocol(properdesktop-status-item-v1
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/properdesktop-status-item-v1.xml)
+properdesktop_wayland_protocol(properdesktop-main-menu-v1
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/properdesktop-main-menu-v1.xml)
+properdesktop_wayland_protocol(properdesktop-window-placement-v1
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/properdesktop-window-placement-v1.xml)
+properdesktop_wayland_protocol(ext-data-control-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/ext-data-control/ext-data-control-v1.xml)
-cutefish_wayland_protocol(wlr-data-control-unstable-v1
+properdesktop_wayland_protocol(wlr-data-control-unstable-v1
     ${CMAKE_CURRENT_SOURCE_DIR}/protocols/wlr-data-control-unstable-v1.xml)
-cutefish_wayland_protocol(primary-selection-unstable-v1
+properdesktop_wayland_protocol(primary-selection-unstable-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/primary-selection/primary-selection-unstable-v1.xml)
-cutefish_wayland_protocol(appmenu ${CMAKE_CURRENT_SOURCE_DIR}/protocols/appmenu.xml)
-cutefish_wayland_protocol(gtk-shell ${CMAKE_CURRENT_SOURCE_DIR}/protocols/gtk-shell.xml)
-cutefish_wayland_protocol(ext-image-capture-source-v1
+properdesktop_wayland_protocol(appmenu ${CMAKE_CURRENT_SOURCE_DIR}/protocols/appmenu.xml)
+properdesktop_wayland_protocol(gtk-shell ${CMAKE_CURRENT_SOURCE_DIR}/protocols/gtk-shell.xml)
+properdesktop_wayland_protocol(ext-image-capture-source-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/ext-image-capture-source/ext-image-capture-source-v1.xml)
-cutefish_wayland_protocol(ext-image-copy-capture-v1
+properdesktop_wayland_protocol(ext-image-copy-capture-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/ext-image-copy-capture/ext-image-copy-capture-v1.xml)
-cutefish_wayland_protocol(ext-foreign-toplevel-list-v1
+properdesktop_wayland_protocol(ext-foreign-toplevel-list-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/staging/ext-foreign-toplevel-list/ext-foreign-toplevel-list-v1.xml)
-cutefish_wayland_protocol(text-input-unstable-v1
+properdesktop_wayland_protocol(text-input-unstable-v1
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/text-input/text-input-unstable-v1.xml)
-cutefish_wayland_protocol(text-input-unstable-v3
+properdesktop_wayland_protocol(text-input-unstable-v3
     ${WAYLAND_PROTOCOLS_DATADIR}/unstable/text-input/text-input-unstable-v3.xml)
-cutefish_wayland_protocol(input-method-unstable-v2
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/input-method-unstable-v2.xml)
-cutefish_wayland_protocol(virtual-keyboard-unstable-v1
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/virtual-keyboard-unstable-v1.xml)
-add_library(cutefish-protocols STATIC
+properdesktop_wayland_protocol(input-method-unstable-v2
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/input-method-unstable-v2.xml)
+properdesktop_wayland_protocol(virtual-keyboard-unstable-v1
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/virtual-keyboard-unstable-v1.xml)
+add_library(properdesktop-protocols STATIC
     ${text-input-unstable-v1_SOURCES}
     ${text-input-unstable-v3_SOURCES}
     ${input-method-unstable-v2_SOURCES}
@@ -172,21 +172,21 @@ add_library(cutefish-protocols STATIC
     ${fractional-scale-v1_SOURCES}
     ${xdg-output-unstable-v1_SOURCES}
     ${ext-data-control-v1_SOURCES} ${wlr-data-control-unstable-v1_SOURCES}
-    ${cutefish-window-hints-v1_SOURCES} ${cutefish-surface-blur-v1_SOURCES} ${xdg-shell_SOURCES} ${xdg-decoration_SOURCES}
-    ${cutefish-status-item-v1_SOURCES}
-    ${cutefish-main-menu-v1_SOURCES}
-    ${cutefish-window-placement-v1_SOURCES}
+    ${properdesktop-window-hints-v1_SOURCES} ${properdesktop-surface-blur-v1_SOURCES} ${xdg-shell_SOURCES} ${xdg-decoration_SOURCES}
+    ${properdesktop-status-item-v1_SOURCES}
+    ${properdesktop-main-menu-v1_SOURCES}
+    ${properdesktop-window-placement-v1_SOURCES}
     ${xdg-dialog-v1_SOURCES}
     ${xdg-foreign-unstable-v2_SOURCES}
     ${xdg-toplevel-drag-v1_SOURCES}
     ${cursor-shape-v1_SOURCES} ${tablet-v2_SOURCES} ${linux-dmabuf-v1_SOURCES}
-    ${linux-drm-syncobj-v1_SOURCES} ${cutefish-shell-v1_SOURCES}
-    ${cutefish-computer-control-v1_SOURCES})
-target_include_directories(cutefish-protocols PUBLIC ${CUTEFISH_PROTOCOL_DIR})
-target_link_libraries(cutefish-protocols PUBLIC PkgConfig::WaylandServer)
-set_target_properties(cutefish-protocols PROPERTIES POSITION_INDEPENDENT_CODE ON)
+    ${linux-drm-syncobj-v1_SOURCES} ${properdesktop-shell-v1_SOURCES}
+    ${properdesktop-computer-control-v1_SOURCES})
+target_include_directories(properdesktop-protocols PUBLIC ${PROPERDESKTOP_PROTOCOL_DIR})
+target_link_libraries(properdesktop-protocols PUBLIC PkgConfig::WaylandServer)
+set_target_properties(properdesktop-protocols PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-core STATIC
+add_library(properdesktop-core STATIC
     src/core/logging.cpp
     src/core/logging.h
     src/core/main_loop.cpp
@@ -196,11 +196,11 @@ add_library(cutefish-core STATIC
     src/core/process_environment.cpp
     src/core/process_environment.h
 )
-target_include_directories(cutefish-core PUBLIC src)
-target_link_libraries(cutefish-core PUBLIC Cutefish::ToolkitBase)
-set_target_properties(cutefish-core PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-core PUBLIC src)
+target_link_libraries(properdesktop-core PUBLIC ProperDesktop::ToolkitBase)
+set_target_properties(properdesktop-core PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-display STATIC
+add_library(properdesktop-display STATIC
     src/display/callback_native_display_delegate.cpp
     src/display/callback_native_display_delegate.h
     src/display/display_configuration_controller.cpp
@@ -233,21 +233,21 @@ add_library(cutefish-display STATIC
     src/display/recommended_scale.cpp
     src/display/recommended_scale.h
 )
-target_include_directories(cutefish-display PUBLIC src)
-target_link_libraries(cutefish-display PUBLIC cutefish-core Cutefish::ToolkitBase)
-set_target_properties(cutefish-display PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-display PUBLIC src)
+target_link_libraries(properdesktop-display PUBLIC properdesktop-core ProperDesktop::ToolkitBase)
+set_target_properties(properdesktop-display PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-display-ipc STATIC
+add_library(properdesktop-display-ipc STATIC
     src/ipc/display_config_service.cpp
     src/ipc/display_config_service.h
     src/ipc/display_dbus_types.cpp
     src/ipc/display_dbus_types.h
 )
-target_include_directories(cutefish-display-ipc PUBLIC src)
-target_link_libraries(cutefish-display-ipc PUBLIC cutefish-display)
-set_target_properties(cutefish-display-ipc PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-display-ipc PUBLIC src)
+target_link_libraries(properdesktop-display-ipc PUBLIC properdesktop-display)
+set_target_properties(properdesktop-display-ipc PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-wayland STATIC
+add_library(properdesktop-wayland STATIC
     src/wayland/client_tracker.cpp
     src/wayland/client_tracker.h
     src/wayland/scoped_wl.h
@@ -262,21 +262,21 @@ add_library(cutefish-wayland STATIC
     src/wayland/security_delegate.h
 )
 
-target_include_directories(cutefish-wayland PUBLIC src)
-target_link_libraries(cutefish-wayland PUBLIC cutefish-core PkgConfig::WaylandServer)
-set_target_properties(cutefish-wayland PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-wayland PUBLIC src)
+target_link_libraries(properdesktop-wayland PUBLIC properdesktop-core PkgConfig::WaylandServer)
+set_target_properties(properdesktop-wayland PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-sync STATIC
+add_library(properdesktop-sync STATIC
     src/render/sync_fence.cpp
     src/render/sync_fence.h
     src/render/drm_syncobj.cpp
     src/render/drm_syncobj.h
 )
-target_include_directories(cutefish-sync PUBLIC src)
-target_link_libraries(cutefish-sync PUBLIC cutefish-core PkgConfig::Libdrm)
-set_target_properties(cutefish-sync PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-sync PUBLIC src)
+target_link_libraries(properdesktop-sync PUBLIC properdesktop-core PkgConfig::Libdrm)
+set_target_properties(properdesktop-sync PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-scene STATIC
+add_library(properdesktop-scene STATIC
     src/scene/window_visual_node.cpp
     src/scene/motion.cpp
     src/scene/motion.h
@@ -316,11 +316,11 @@ add_library(cutefish-scene STATIC
     src/render/dmabuf.h
     src/render/texture.h
 )
-target_include_directories(cutefish-scene PUBLIC src)
-target_link_libraries(cutefish-scene PUBLIC cutefish-core cutefish-sync Cutefish::ToolkitBase Cutefish::Toolkit)
-set_target_properties(cutefish-scene PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-scene PUBLIC src)
+target_link_libraries(properdesktop-scene PUBLIC properdesktop-core properdesktop-sync ProperDesktop::ToolkitBase ProperDesktop::Toolkit)
+set_target_properties(properdesktop-scene PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-compositor-core STATIC
+add_library(properdesktop-compositor-core STATIC
     src/compositor/buffer.cpp
     src/compositor/buffer.h
     src/compositor/dmabuf_buffer.cpp
@@ -352,16 +352,16 @@ add_library(cutefish-compositor-core STATIC
     src/wayland/protocols/wl_shm.cpp
     src/wayland/protocols/wl_shm.h
 )
-target_include_directories(cutefish-compositor-core PUBLIC src)
-target_link_libraries(cutefish-compositor-core PUBLIC cutefish-wayland cutefish-scene cutefish-protocols
-    Cutefish::Toolkit)
-set_target_properties(cutefish-compositor-core PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-compositor-core PUBLIC src)
+target_link_libraries(properdesktop-compositor-core PUBLIC properdesktop-wayland properdesktop-scene properdesktop-protocols
+    ProperDesktop::Toolkit)
+set_target_properties(properdesktop-compositor-core PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-input-dbus STATIC src/input/dbus_export.cpp src/input/dbus_export.h)
-target_include_directories(cutefish-input-dbus PUBLIC src)
-target_link_libraries(cutefish-input-dbus PUBLIC cutefish-core Cutefish::ToolkitBase)
+add_library(properdesktop-input-dbus STATIC src/input/dbus_export.cpp src/input/dbus_export.h)
+target_include_directories(properdesktop-input-dbus PUBLIC src)
+target_link_libraries(properdesktop-input-dbus PUBLIC properdesktop-core ProperDesktop::ToolkitBase)
 
-add_library(cutefish-mouse-settings STATIC
+add_library(properdesktop-mouse-settings STATIC
     src/input/mouse_settings.cpp
     src/input/mouse_settings.h
     src/input/pointer_acceleration.cpp
@@ -373,24 +373,24 @@ add_library(cutefish-mouse-settings STATIC
     src/input/touchscreen_settings.cpp
     src/input/touchscreen_settings.h
 )
-target_include_directories(cutefish-mouse-settings PUBLIC src)
-target_link_libraries(cutefish-mouse-settings PUBLIC cutefish-input-dbus)
+target_include_directories(properdesktop-mouse-settings PUBLIC src)
+target_link_libraries(properdesktop-mouse-settings PUBLIC properdesktop-input-dbus)
 
-add_library(cutefish-keyboard-settings STATIC
+add_library(properdesktop-keyboard-settings STATIC
     src/input/keyboard_settings.cpp
     src/input/keyboard_settings.h
 )
-target_include_directories(cutefish-keyboard-settings PUBLIC src)
-target_link_libraries(cutefish-keyboard-settings PUBLIC cutefish-input-dbus)
+target_include_directories(properdesktop-keyboard-settings PUBLIC src)
+target_link_libraries(properdesktop-keyboard-settings PUBLIC properdesktop-input-dbus)
 
-add_library(cutefish-input-method-settings STATIC
+add_library(properdesktop-input-method-settings STATIC
     src/input/input_method_settings.cpp
     src/input/input_method_settings.h
 )
-target_include_directories(cutefish-input-method-settings PUBLIC src)
-target_link_libraries(cutefish-input-method-settings PUBLIC cutefish-input-dbus)
+target_include_directories(properdesktop-input-method-settings PUBLIC src)
+target_link_libraries(properdesktop-input-method-settings PUBLIC properdesktop-input-dbus)
 
-add_library(cutefish-input STATIC
+add_library(properdesktop-input STATIC
     src/clipboard/selection.cpp
     src/clipboard/selection.h
     src/clipboard/stored_source.cpp
@@ -429,12 +429,12 @@ add_library(cutefish-input STATIC
     src/input/input_manager.cpp
     src/input/input_manager.h
 )
-target_include_directories(cutefish-input PUBLIC src)
-target_link_libraries(cutefish-input PUBLIC cutefish-display cutefish-compositor-core Cutefish::ToolkitBase
+target_include_directories(properdesktop-input PUBLIC src)
+target_link_libraries(properdesktop-input PUBLIC properdesktop-display properdesktop-compositor-core ProperDesktop::ToolkitBase
     PkgConfig::Xkbcommon)
-set_target_properties(cutefish-input PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(properdesktop-input PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-wm STATIC
+add_library(properdesktop-wm STATIC
     src/wm/types.cpp
     src/wm/types.h
     src/wm/wm_event.cpp
@@ -521,12 +521,12 @@ add_library(cutefish-wm STATIC
     src/wm/demo_controller.cpp
     src/wm/demo_controller.h
 )
-target_include_directories(cutefish-wm PUBLIC src)
-target_link_libraries(cutefish-wm PUBLIC cutefish-input cutefish-compositor-core cutefish-display
-    cutefish-core Cutefish::ToolkitBase)
-set_target_properties(cutefish-wm PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-wm PUBLIC src)
+target_link_libraries(properdesktop-wm PUBLIC properdesktop-input properdesktop-compositor-core properdesktop-display
+    properdesktop-core ProperDesktop::ToolkitBase)
+set_target_properties(properdesktop-wm PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-decoration STATIC
+add_library(properdesktop-decoration STATIC
     src/decoration/shadow.cpp
     src/decoration/shadow.h
     src/decoration/shadow_node.cpp
@@ -548,12 +548,12 @@ add_library(cutefish-decoration STATIC
     src/decoration/theme_preferences.cpp
     src/decoration/theme_preferences.h
 )
-target_include_directories(cutefish-decoration PUBLIC src)
-target_link_libraries(cutefish-decoration PUBLIC cutefish-wm cutefish-scene Cutefish::Toolkit
+target_include_directories(properdesktop-decoration PUBLIC src)
+target_link_libraries(properdesktop-decoration PUBLIC properdesktop-wm properdesktop-scene ProperDesktop::Toolkit
     PRIVATE PkgConfig::TitleText)
-set_target_properties(cutefish-decoration PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(properdesktop-decoration PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-wayland-input STATIC
+add_library(properdesktop-wayland-input STATIC
     src/wayland/protocols/input_method.cpp
     src/wayland/protocols/input_method.h
     src/wayland/protocols/text_input.h
@@ -589,11 +589,11 @@ add_library(cutefish-wayland-input STATIC
     src/wayland/protocols/wl_data_device_manager.cpp
     src/wayland/protocols/wl_data_device_manager.h
 )
-target_include_directories(cutefish-wayland-input PUBLIC src)
-target_link_libraries(cutefish-wayland-input PUBLIC cutefish-input cutefish-wayland)
-set_target_properties(cutefish-wayland-input PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-wayland-input PUBLIC src)
+target_link_libraries(properdesktop-wayland-input PUBLIC properdesktop-input properdesktop-wayland)
+set_target_properties(properdesktop-wayland-input PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-session STATIC
+add_library(properdesktop-session STATIC
     src/session/applications_service.cpp
     src/session/applications_service.h
     src/session/power_button.cpp
@@ -612,11 +612,11 @@ add_library(cutefish-session STATIC
     src/session/window_debug_service.cpp
     src/session/window_debug_service.h
 )
-target_include_directories(cutefish-session PUBLIC src)
-target_link_libraries(cutefish-session PUBLIC cutefish-compositor-core cutefish-wm Cutefish::Toolkit)
-set_target_properties(cutefish-session PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-session PUBLIC src)
+target_link_libraries(properdesktop-session PUBLIC properdesktop-compositor-core properdesktop-wm ProperDesktop::Toolkit)
+set_target_properties(properdesktop-session PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-computer-control STATIC
+add_library(properdesktop-computer-control STATIC
     src/computer_control/controller.cpp
     src/computer_control/controller.h
     src/computer_control/permission_consent.cpp
@@ -624,11 +624,11 @@ add_library(cutefish-computer-control STATIC
     src/computer_control/remembered_apps.cpp
     src/computer_control/remembered_apps.h
 )
-target_include_directories(cutefish-computer-control PUBLIC src)
-target_link_libraries(cutefish-computer-control PUBLIC cutefish-input cutefish-input-dbus Cutefish::ToolkitBase)
-set_target_properties(cutefish-computer-control PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-computer-control PUBLIC src)
+target_link_libraries(properdesktop-computer-control PUBLIC properdesktop-input properdesktop-input-dbus ProperDesktop::ToolkitBase)
+set_target_properties(properdesktop-computer-control PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-accelerators STATIC
+add_library(properdesktop-accelerators STATIC
     src/accelerators/accelerator.cpp
     src/accelerators/accelerator.h
     src/accelerators/accelerator_actions.cpp
@@ -660,11 +660,11 @@ add_library(cutefish-accelerators STATIC
     src/accelerators/menu_shortcut.cpp
     src/accelerators/menu_shortcut.h
 )
-target_include_directories(cutefish-accelerators PUBLIC src)
-target_link_libraries(cutefish-accelerators PUBLIC cutefish-wm cutefish-session cutefish-input-dbus PkgConfig::Xkbcommon)
-set_target_properties(cutefish-accelerators PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-accelerators PUBLIC src)
+target_link_libraries(properdesktop-accelerators PUBLIC properdesktop-wm properdesktop-session properdesktop-input-dbus PkgConfig::Xkbcommon)
+set_target_properties(properdesktop-accelerators PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-wayland-shell STATIC
+add_library(properdesktop-wayland-shell STATIC
     src/wayland/protocols/dmabuf_scanout_policy.cpp
     src/wayland/protocols/dmabuf_scanout_policy.h
     src/wayland/protocols/xdg_activation.cpp
@@ -697,28 +697,28 @@ add_library(cutefish-wayland-shell STATIC
     src/wayland/protocols/xdg_toplevel_drag.cpp
     src/wayland/protocols/xdg_toplevel_drag.h
 )
-target_include_directories(cutefish-wayland-shell PUBLIC src)
-target_link_libraries(cutefish-wayland-shell
-    PUBLIC cutefish-wm cutefish-wayland cutefish-protocols cutefish-wayland-input
-           cutefish-wayland-dmabuf)
-set_target_properties(cutefish-wayland-shell PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-wayland-shell PUBLIC src)
+target_link_libraries(properdesktop-wayland-shell
+    PUBLIC properdesktop-wm properdesktop-wayland properdesktop-protocols properdesktop-wayland-input
+           properdesktop-wayland-dmabuf)
+set_target_properties(properdesktop-wayland-shell PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-wayland-private-shell STATIC
+add_library(properdesktop-wayland-private-shell STATIC
     src/wayland/privileged_client.cpp
     src/wayland/privileged_client.h
     src/wayland/shell_control_channel.cpp
     src/wayland/shell_control_channel.h
-    src/wayland/protocols/cutefish_shell.cpp
-    src/wayland/protocols/cutefish_shell.h
+    src/wayland/protocols/properdesktop_shell.cpp
+    src/wayland/protocols/properdesktop_shell.h
     src/wayland/protocols/foreign_toplevel_list.cpp
     src/wayland/protocols/foreign_toplevel_list.h
 )
-target_include_directories(cutefish-wayland-private-shell PUBLIC src)
-target_link_libraries(cutefish-wayland-private-shell
-    PUBLIC cutefish-wm cutefish-wayland cutefish-protocols)
-set_target_properties(cutefish-wayland-private-shell PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-wayland-private-shell PUBLIC src)
+target_link_libraries(properdesktop-wayland-private-shell
+    PUBLIC properdesktop-wm properdesktop-wayland properdesktop-protocols)
+set_target_properties(properdesktop-wayland-private-shell PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-wayland-dmabuf STATIC
+add_library(properdesktop-wayland-dmabuf STATIC
     src/wayland/protocols/dmabuf_feedback_manager.cpp
     src/wayland/protocols/dmabuf_feedback_manager.h
     src/wayland/protocols/linux_dmabuf.cpp
@@ -726,33 +726,33 @@ add_library(cutefish-wayland-dmabuf STATIC
     src/wayland/protocols/linux_drm_syncobj.cpp
     src/wayland/protocols/linux_drm_syncobj.h
 )
-target_include_directories(cutefish-wayland-dmabuf PUBLIC src)
-target_link_libraries(cutefish-wayland-dmabuf
-    PUBLIC cutefish-compositor-core cutefish-wayland cutefish-protocols cutefish-sync
+target_include_directories(properdesktop-wayland-dmabuf PUBLIC src)
+target_link_libraries(properdesktop-wayland-dmabuf
+    PUBLIC properdesktop-compositor-core properdesktop-wayland properdesktop-protocols properdesktop-sync
     PRIVATE PkgConfig::Libdrm)
-set_property(TARGET cutefish-wayland-dmabuf PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET properdesktop-wayland-dmabuf PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-set(CUTEFISH_SHADER_NAMES
+set(PROPERDESKTOP_SHADER_NAMES
     color_vertex_shader color_fragment_shader
     texture_vertex_shader texture_fragment_shader
     blur_fragment_shader blur_mask_fragment_shader glass_fragment_shader
     external_fragment_shader external_extension
     rounded_clip clipped_precision clipped_main)
-set(CUTEFISH_SHADER_FILES)
-foreach(name IN LISTS CUTEFISH_SHADER_NAMES)
-    list(APPEND CUTEFISH_SHADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/render/shaders/${name}.glsl")
+set(PROPERDESKTOP_SHADER_FILES)
+foreach(name IN LISTS PROPERDESKTOP_SHADER_NAMES)
+    list(APPEND PROPERDESKTOP_SHADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/render/shaders/${name}.glsl")
 endforeach()
-set(CUTEFISH_SHADER_HEADER "${CMAKE_CURRENT_BINARY_DIR}/render_shaders.h")
-add_custom_command(OUTPUT "${CUTEFISH_SHADER_HEADER}"
+set(PROPERDESKTOP_SHADER_HEADER "${CMAKE_CURRENT_BINARY_DIR}/render_shaders.h")
+add_custom_command(OUTPUT "${PROPERDESKTOP_SHADER_HEADER}"
     COMMAND ${CMAKE_COMMAND}
-        "-DOUTPUT=${CUTEFISH_SHADER_HEADER}"
+        "-DOUTPUT=${PROPERDESKTOP_SHADER_HEADER}"
         "-DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}/src/render/shaders"
-        "-DSHADERS=${CUTEFISH_SHADER_NAMES}"
+        "-DSHADERS=${PROPERDESKTOP_SHADER_NAMES}"
         -P "${CMAKE_CURRENT_SOURCE_DIR}/src/render/shaders/embed.cmake"
-    DEPENDS ${CUTEFISH_SHADER_FILES} src/render/shaders/embed.cmake
+    DEPENDS ${PROPERDESKTOP_SHADER_FILES} src/render/shaders/embed.cmake
     VERBATIM)
-add_library(cutefish-render STATIC
-    "${CUTEFISH_SHADER_HEADER}"
+add_library(properdesktop-render STATIC
+    "${PROPERDESKTOP_SHADER_HEADER}"
     src/render/egl_renderer.cpp
     src/render/egl_renderer.h
     src/render/egl_context.cpp
@@ -780,14 +780,14 @@ add_library(cutefish-render STATIC
     src/render/color_transform.h
     src/render/texture.h
 )
-target_include_directories(cutefish-render PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(cutefish-render
-    PUBLIC cutefish-scene PkgConfig::Egl PkgConfig::GlesV2
+target_include_directories(properdesktop-render PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+target_link_libraries(properdesktop-render
+    PUBLIC properdesktop-scene PkgConfig::Egl PkgConfig::GlesV2
     PRIVATE PkgConfig::Gbm PkgConfig::Libdrm
 )
-set_target_properties(cutefish-render PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(properdesktop-render PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-backend STATIC
+add_library(properdesktop-backend STATIC
     src/backend/drm/amdgpu_boost.cpp
     src/backend/drm/amdgpu_boost.h
     src/backend/drm/drm_commit_coordinator.cpp
@@ -831,50 +831,50 @@ add_library(cutefish-backend STATIC
     src/backend/input/touchpad_contacts.cpp
     src/backend/input/touchpad_contacts.h
 )
-target_link_libraries(cutefish-backend
-    PUBLIC cutefish-core cutefish-render cutefish-input cutefish-mouse-settings PkgConfig::Libdrm
+target_link_libraries(properdesktop-backend
+    PUBLIC properdesktop-core properdesktop-render properdesktop-input properdesktop-mouse-settings PkgConfig::Libdrm
     PRIVATE PkgConfig::Libseat PkgConfig::Gbm PkgConfig::Libinput PkgConfig::Libudev
 )
-set_target_properties(cutefish-backend PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(properdesktop-backend PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-output-scheduler STATIC src/render/output_scheduler.cpp)
-target_include_directories(cutefish-output-scheduler PUBLIC src)
-target_link_libraries(cutefish-backend PUBLIC cutefish-output-scheduler)
+add_library(properdesktop-output-scheduler STATIC src/render/output_scheduler.cpp)
+target_include_directories(properdesktop-output-scheduler PUBLIC src)
+target_link_libraries(properdesktop-backend PUBLIC properdesktop-output-scheduler)
 
-add_library(cutefish-display-runtime STATIC src/display/display_runtime.cpp)
-target_link_libraries(cutefish-display-runtime PUBLIC cutefish-backend cutefish-wayland-shell
-    cutefish-wm cutefish-display cutefish-wayland-input cutefish-cursor)
-add_library(cutefish-toolkit-host STATIC
+add_library(properdesktop-display-runtime STATIC src/display/display_runtime.cpp)
+target_link_libraries(properdesktop-display-runtime PUBLIC properdesktop-backend properdesktop-wayland-shell
+    properdesktop-wm properdesktop-display properdesktop-wayland-input properdesktop-cursor)
+add_library(properdesktop-toolkit-host STATIC
     src/toolkit/toolkit_host.cpp src/toolkit/toolkit_host.h
     src/toolkit/compositor_colors.cpp src/toolkit/compositor_colors.h)
-target_include_directories(cutefish-toolkit-host PUBLIC src)
-target_link_libraries(cutefish-toolkit-host PUBLIC Cutefish::Toolkit cutefish-render)
+target_include_directories(properdesktop-toolkit-host PUBLIC src)
+target_link_libraries(properdesktop-toolkit-host PUBLIC ProperDesktop::Toolkit properdesktop-render)
 
 find_library(PAM_LIBRARY pam REQUIRED)
-add_executable(cutefish-auth-helper src/auth/auth_helper.cpp)
-target_link_libraries(cutefish-auth-helper PRIVATE ${PAM_LIBRARY})
-install(TARGETS cutefish-auth-helper RUNTIME DESTINATION ${CMAKE_INSTALL_LIBEXECDIR})
+add_executable(properdesktop-auth-helper src/auth/auth_helper.cpp)
+target_link_libraries(properdesktop-auth-helper PRIVATE ${PAM_LIBRARY})
+install(TARGETS properdesktop-auth-helper RUNTIME DESTINATION ${CMAKE_INSTALL_LIBEXECDIR})
 # Fedora/RHEL use authselect's system-auth rather than Debian's common-*.
-set(_cutefish_pam_default "${CMAKE_CURRENT_SOURCE_DIR}/data/cutefish-auth")
+set(_properdesktop_pam_default "${CMAKE_CURRENT_SOURCE_DIR}/data/properdesktop-auth")
 if(EXISTS "/etc/pam.d/system-auth" AND NOT EXISTS "/etc/pam.d/common-auth")
-    set(_cutefish_pam_default "${CMAKE_CURRENT_SOURCE_DIR}/data/cutefish-auth-fedora")
+    set(_properdesktop_pam_default "${CMAKE_CURRENT_SOURCE_DIR}/data/properdesktop-auth-fedora")
 endif()
-set(CUTEFISH_PAM_CONFIG "${_cutefish_pam_default}" CACHE FILEPATH
-    "PAM service file for Cutefish lock-screen authentication")
-install(FILES "${CUTEFISH_PAM_CONFIG}"
-        DESTINATION ${CMAKE_INSTALL_FULL_SYSCONFDIR}/pam.d RENAME cutefish-auth)
-# The fingerprint half runs beside cutefish-auth; it carries pam_fprintd alone.
-set(_cutefish_pam_fingerprint_default
-    "${CMAKE_CURRENT_SOURCE_DIR}/data/cutefish-auth-fingerprint")
+set(PROPERDESKTOP_PAM_CONFIG "${_properdesktop_pam_default}" CACHE FILEPATH
+    "PAM service file for Proper Desktop lock-screen authentication")
+install(FILES "${PROPERDESKTOP_PAM_CONFIG}"
+        DESTINATION ${CMAKE_INSTALL_FULL_SYSCONFDIR}/pam.d RENAME properdesktop-auth)
+# The fingerprint half runs beside properdesktop-auth; it carries pam_fprintd alone.
+set(_properdesktop_pam_fingerprint_default
+    "${CMAKE_CURRENT_SOURCE_DIR}/data/properdesktop-auth-fingerprint")
 if(EXISTS "/etc/pam.d/system-auth" AND NOT EXISTS "/etc/pam.d/common-auth")
-    set(_cutefish_pam_fingerprint_default
-        "${CMAKE_CURRENT_SOURCE_DIR}/data/cutefish-auth-fingerprint-fedora")
+    set(_properdesktop_pam_fingerprint_default
+        "${CMAKE_CURRENT_SOURCE_DIR}/data/properdesktop-auth-fingerprint-fedora")
 endif()
-set(CUTEFISH_PAM_FINGERPRINT_CONFIG "${_cutefish_pam_fingerprint_default}" CACHE FILEPATH
-    "PAM service file for Cutefish fingerprint unlock")
-install(FILES "${CUTEFISH_PAM_FINGERPRINT_CONFIG}"
-        DESTINATION ${CMAKE_INSTALL_FULL_SYSCONFDIR}/pam.d RENAME cutefish-auth-fingerprint)
-add_library(cutefish-auth STATIC
+set(PROPERDESKTOP_PAM_FINGERPRINT_CONFIG "${_properdesktop_pam_fingerprint_default}" CACHE FILEPATH
+    "PAM service file for Proper Desktop fingerprint unlock")
+install(FILES "${PROPERDESKTOP_PAM_FINGERPRINT_CONFIG}"
+        DESTINATION ${CMAKE_INSTALL_FULL_SYSCONFDIR}/pam.d RENAME properdesktop-auth-fingerprint)
+add_library(properdesktop-auth STATIC
     src/auth/auth_status.cpp src/auth/auth_status.h
     src/auth/auth_ui.cpp src/auth/auth_ui.h
     src/auth/auth_view.cpp src/auth/auth_view.h
@@ -882,23 +882,23 @@ add_library(cutefish-auth STATIC
     src/auth/pam_backend.cpp src/auth/pam_backend.h
     src/auth/greetd_backend.cpp src/auth/greetd_backend.h
     src/auth/login_sessions.cpp src/auth/login_sessions.h)
-target_include_directories(cutefish-auth PUBLIC src)
+target_include_directories(properdesktop-auth PUBLIC src)
 # The menu bar's items and backdrop rules come from the shell's libraries,
 # defined further down.
-find_package(CutefishClients REQUIRED COMPONENTS accounts)
-target_link_libraries(cutefish-auth PUBLIC cutefish-session cutefish-toolkit-host
-    cutefish-shell-bar-items cutefish-shell-wallpaper PRIVATE PkgConfig::TitleText Cutefish::AccountsClient)
-target_compile_definitions(cutefish-auth PRIVATE
-    CUTEFISH_AUTH_HELPER="${CMAKE_INSTALL_FULL_LIBEXECDIR}/cutefish-auth-helper")
+find_package(ProperDesktopClients REQUIRED COMPONENTS accounts)
+target_link_libraries(properdesktop-auth PUBLIC properdesktop-session properdesktop-toolkit-host
+    properdesktop-shell-bar-items properdesktop-shell-wallpaper PRIVATE PkgConfig::TitleText ProperDesktop::AccountsClient)
+target_compile_definitions(properdesktop-auth PRIVATE
+    PROPERDESKTOP_AUTH_HELPER="${CMAKE_INSTALL_FULL_LIBEXECDIR}/properdesktop-auth-helper")
 
-add_library(cutefish-switcher STATIC
+add_library(properdesktop-switcher STATIC
     src/switcher/application_info.cpp src/switcher/application_info.h
     src/switcher/switcher_view.cpp src/switcher/switcher_view.h)
-target_include_directories(cutefish-switcher PUBLIC src)
-target_link_libraries(cutefish-switcher PUBLIC cutefish-wm cutefish-decoration cutefish-scene
-    cutefish-toolkit-host)
+target_include_directories(properdesktop-switcher PUBLIC src)
+target_link_libraries(properdesktop-switcher PUBLIC properdesktop-wm properdesktop-decoration properdesktop-scene
+    properdesktop-toolkit-host)
 
-add_library(cutefish-shell STATIC
+add_library(properdesktop-shell STATIC
     src/shell/shell.cpp src/shell/shell.h
     src/shell/shell_data.cpp src/shell/shell_data.h
     src/shell/shell_drag.cpp src/shell/shell_drag.h
@@ -907,36 +907,36 @@ add_library(cutefish-shell STATIC
     src/shell/shell_text_input.cpp src/shell/shell_text_input.h
     src/shell/shell_window.cpp src/shell/shell_window.h
     src/shell/window_renderer.cpp src/shell/window_renderer.h)
-target_include_directories(cutefish-shell PUBLIC src)
-target_link_libraries(cutefish-shell PUBLIC cutefish-wm cutefish-input cutefish-display
-    cutefish-decoration cutefish-toolkit-host cutefish-shell-common PRIVATE cutefish-wayland-shell)
-target_compile_definitions(cutefish-shell PRIVATE
-    CUTEFISH_SHELL_DATA_DIR="${CMAKE_INSTALL_FULL_DATADIR}/cutefish-compositor/shell")
-install(DIRECTORY data/shell/ DESTINATION ${CMAKE_INSTALL_DATADIR}/cutefish-compositor/shell)
+target_include_directories(properdesktop-shell PUBLIC src)
+target_link_libraries(properdesktop-shell PUBLIC properdesktop-wm properdesktop-input properdesktop-display
+    properdesktop-decoration properdesktop-toolkit-host properdesktop-shell-common PRIVATE properdesktop-wayland-shell)
+target_compile_definitions(properdesktop-shell PRIVATE
+    PROPERDESKTOP_SHELL_DATA_DIR="${CMAKE_INSTALL_FULL_DATADIR}/properdesktop-compositor/shell")
+install(DIRECTORY data/shell/ DESTINATION ${CMAKE_INSTALL_DATADIR}/properdesktop-compositor/shell)
 
-add_library(cutefish-headless STATIC
+add_library(properdesktop-headless STATIC
     src/backend/headless/headless_backend.cpp
     src/backend/headless/headless_backend.h
 )
-target_include_directories(cutefish-headless PUBLIC src)
-target_link_libraries(cutefish-headless PUBLIC cutefish-compositor-core)
-set_target_properties(cutefish-headless PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_include_directories(properdesktop-headless PUBLIC src)
+target_link_libraries(properdesktop-headless PUBLIC properdesktop-compositor-core)
+set_target_properties(properdesktop-headless PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(cutefish-wayland-globals STATIC
+add_library(properdesktop-wayland-globals STATIC
     src/wayland/protocol_globals.cpp
     src/wayland/protocol_globals.h
-    src/wayland/protocols/cutefish_computer_control.cpp
-    src/wayland/protocols/cutefish_computer_control.h
+    src/wayland/protocols/properdesktop_computer_control.cpp
+    src/wayland/protocols/properdesktop_computer_control.h
 )
-target_include_directories(cutefish-wayland-globals PUBLIC src)
-target_link_libraries(cutefish-wayland-globals
-    PUBLIC cutefish-wayland cutefish-compositor-core cutefish-wayland-input
-           cutefish-wayland-shell cutefish-wayland-private-shell cutefish-wm
-           cutefish-input cutefish-input-method-settings cutefish-computer-control
+target_include_directories(properdesktop-wayland-globals PUBLIC src)
+target_link_libraries(properdesktop-wayland-globals
+    PUBLIC properdesktop-wayland properdesktop-compositor-core properdesktop-wayland-input
+           properdesktop-wayland-shell properdesktop-wayland-private-shell properdesktop-wm
+           properdesktop-input properdesktop-input-method-settings properdesktop-computer-control
 )
-set_target_properties(cutefish-wayland-globals PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(properdesktop-wayland-globals PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_executable(cutefish-compositor
+add_executable(properdesktop-compositor
     src/main.cpp
     src/core/compositor_options.cpp
     src/core/compositor_options.h
@@ -945,34 +945,34 @@ add_executable(cutefish-compositor
     src/core/compositor_shell.cpp
     src/core/compositor_shell.h
 )
-target_link_libraries(cutefish-compositor PRIVATE cutefish-display-runtime
-    cutefish-auth cutefish-switcher cutefish-shell cutefish-wayland-globals cutefish-headless)
-target_compile_definitions(cutefish-compositor PRIVATE
-    CUTEFISH_PORTAL_BACKEND="${CMAKE_INSTALL_FULL_LIBEXECDIR}/xdg-desktop-portal-cutefish"
-    CUTEFISH_SCREEN_RECORDER="${CMAKE_INSTALL_FULL_LIBEXECDIR}/cutefish-screenrecorder")
-target_link_libraries(cutefish-compositor
-    PRIVATE cutefish-wayland cutefish-compositor-core cutefish-backend cutefish-scene
-            cutefish-input cutefish-wayland-input cutefish-wm
-            cutefish-wayland-shell cutefish-decoration cutefish-wayland-dmabuf
-            cutefish-wayland-private-shell cutefish-display-ipc cutefish-input-method-settings
-            cutefish-keyboard-settings cutefish-accelerators)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-display-runtime
+    properdesktop-auth properdesktop-switcher properdesktop-shell properdesktop-wayland-globals properdesktop-headless)
+target_compile_definitions(properdesktop-compositor PRIVATE
+    PROPERDESKTOP_PORTAL_BACKEND="${CMAKE_INSTALL_FULL_LIBEXECDIR}/xdg-desktop-portal-properdesktop"
+    PROPERDESKTOP_SCREEN_RECORDER="${CMAKE_INSTALL_FULL_LIBEXECDIR}/properdesktop-screenrecorder")
+target_link_libraries(properdesktop-compositor
+    PRIVATE properdesktop-wayland properdesktop-compositor-core properdesktop-backend properdesktop-scene
+            properdesktop-input properdesktop-wayland-input properdesktop-wm
+            properdesktop-wayland-shell properdesktop-decoration properdesktop-wayland-dmabuf
+            properdesktop-wayland-private-shell properdesktop-display-ipc properdesktop-input-method-settings
+            properdesktop-keyboard-settings properdesktop-accelerators)
 
 pkg_check_modules(WaylandCaptureClient REQUIRED IMPORTED_TARGET wayland-client)
-add_executable(cutefish-screenshot src/tools/screenshot.cpp)
-target_link_libraries(cutefish-screenshot PRIVATE PkgConfig::WaylandCaptureClient Cutefish::ToolkitBase)
+add_executable(properdesktop-screenshot src/tools/screenshot.cpp)
+target_link_libraries(properdesktop-screenshot PRIVATE PkgConfig::WaylandCaptureClient ProperDesktop::ToolkitBase)
 
-add_executable(cutefish-displayctl src/tools/displayctl.cpp)
-target_link_libraries(cutefish-displayctl PRIVATE cutefish-display-ipc Cutefish::ToolkitBase)
+add_executable(properdesktop-displayctl src/tools/displayctl.cpp)
+target_link_libraries(properdesktop-displayctl PRIVATE properdesktop-display-ipc ProperDesktop::ToolkitBase)
 
-option(CUTEFISH_ENABLE_XWAYLAND "Build the native Xwayland frontend" ON)
-if(CUTEFISH_ENABLE_XWAYLAND)
+option(PROPERDESKTOP_ENABLE_XWAYLAND "Build the native Xwayland frontend" ON)
+if(PROPERDESKTOP_ENABLE_XWAYLAND)
     find_package(Threads REQUIRED)
     pkg_check_modules(Xcb REQUIRED IMPORTED_TARGET xcb xcb-composite xcb-xfixes xcb-shape xcb-sync)
-    cutefish_wayland_protocol(xwayland-shell-v1
+    properdesktop_wayland_protocol(xwayland-shell-v1
         ${WAYLAND_PROTOCOLS_DATADIR}/staging/xwayland-shell/xwayland-shell-v1.xml)
-    cutefish_wayland_protocol(xwayland-keyboard-grab-unstable-v1
+    properdesktop_wayland_protocol(xwayland-keyboard-grab-unstable-v1
         ${WAYLAND_PROTOCOLS_DATADIR}/unstable/xwayland-keyboard-grab/xwayland-keyboard-grab-unstable-v1.xml)
-    add_library(cutefish-xwayland STATIC
+    add_library(properdesktop-xwayland STATIC
         src/xwayland/surface_association.cpp
         src/xwayland/xwayland_shell.cpp
         src/xwayland/xwayland_keyboard_grab.cpp
@@ -982,34 +982,34 @@ if(CUTEFISH_ENABLE_XWAYLAND)
         src/xwayland/dnd_bridge.cpp
         ${xwayland-shell-v1_SOURCES}
         ${xwayland-keyboard-grab-unstable-v1_SOURCES})
-    target_include_directories(cutefish-xwayland PUBLIC src ${CUTEFISH_PROTOCOL_DIR})
-    target_link_libraries(cutefish-xwayland PUBLIC cutefish-wayland-private-shell cutefish-cursor PkgConfig::Xcb
-        Threads::Threads Cutefish::ToolkitBase)
-    target_link_libraries(cutefish-compositor PRIVATE cutefish-xwayland)
-    target_compile_definitions(cutefish-compositor PRIVATE CUTEFISH_ENABLE_XWAYLAND)
+    target_include_directories(properdesktop-xwayland PUBLIC src ${PROPERDESKTOP_PROTOCOL_DIR})
+    target_link_libraries(properdesktop-xwayland PUBLIC properdesktop-wayland-private-shell properdesktop-cursor PkgConfig::Xcb
+        Threads::Threads ProperDesktop::ToolkitBase)
+    target_link_libraries(properdesktop-compositor PRIVATE properdesktop-xwayland)
+    target_compile_definitions(properdesktop-compositor PRIVATE PROPERDESKTOP_ENABLE_XWAYLAND)
     install(FILES ${WAYLAND_PROTOCOLS_DATADIR}/staging/xwayland-shell/xwayland-shell-v1.xml
-        DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/cutefish-compositor)
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/properdesktop-compositor)
 endif()
 
-install(TARGETS cutefish-compositor cutefish-displayctl cutefish-screenshot RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS properdesktop-compositor properdesktop-displayctl properdesktop-screenshot RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(FILES
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/input-method-unstable-v2.xml
-    ${CUTEFISH_PRIVATE_PROTOCOL_DIR}/virtual-keyboard-unstable-v1.xml
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/cutefish-compositor)
-install(FILES LICENSE LICENSE.chromium LICENSE.sommelier DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/cutefish-compositor)
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/input-method-unstable-v2.xml
+    ${PROPERDESKTOP_PRIVATE_PROTOCOL_DIR}/virtual-keyboard-unstable-v1.xml
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/properdesktop-compositor)
+install(FILES LICENSE LICENSE.chromium LICENSE.sommelier DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/properdesktop-compositor)
 install(FILES ${DISPLAY_CONFIG_XML} DESTINATION ${CMAKE_INSTALL_DATADIR}/dbus-1/interfaces)
-cutefish_add_translations(cutefish-compositor SOURCES src/shell src/auth src/wm/overview
-    DESKTOP_FILES data/cutefish-screenshot.desktop)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/cutefish-screenshot.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+properdesktop_add_translations(properdesktop-compositor SOURCES src/shell src/auth src/wm/overview
+    DESKTOP_FILES data/properdesktop-screenshot.desktop)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/properdesktop-screenshot.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
 
-target_link_libraries(cutefish-wayland-input PUBLIC cutefish-protocols)
+target_link_libraries(properdesktop-wayland-input PUBLIC properdesktop-protocols)
 
-add_library(cutefish-cursor STATIC src/cursor/theme.cpp src/cursor/cursor.cpp
+add_library(properdesktop-cursor STATIC src/cursor/theme.cpp src/cursor/cursor.cpp
     src/cursor/output_cursor_router.cpp src/cursor/output_cursor_router.h)
-target_include_directories(cutefish-cursor PUBLIC src)
-target_sources(cutefish-cursor PRIVATE src/cursor/preferences.cpp src/cursor/preferences.h)
-target_link_libraries(cutefish-cursor PUBLIC cutefish-input cutefish-display Cutefish::Toolkit)
-target_link_libraries(cutefish-compositor PRIVATE cutefish-cursor)
+target_include_directories(properdesktop-cursor PUBLIC src)
+target_sources(properdesktop-cursor PRIVATE src/cursor/preferences.cpp src/cursor/preferences.h)
+target_link_libraries(properdesktop-cursor PUBLIC properdesktop-input properdesktop-display ProperDesktop::Toolkit)
+target_link_libraries(properdesktop-compositor PRIVATE properdesktop-cursor)
 
 include(src/shell/backends.cmake)
 include(src/shell/components.cmake)

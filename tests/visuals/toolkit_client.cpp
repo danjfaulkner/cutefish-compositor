@@ -19,7 +19,7 @@
 #include "ui/view.h"
 #include "ui/window.h"
 
-using namespace cutefish::ui;
+using namespace properdesktop::ui;
 
 // With --subsurface a subsurface above the window, 20 px inside its edges,
 // is drawn green by a thread of its own at each size it is given.
@@ -32,7 +32,7 @@ public:
         std::fprintf(stderr, "SUBSURFACE valid=%d\n", int(m_surface.isValid()));
         if (!m_surface.isValid())
             return;
-        m_surface.onResize = [this](cutefish::base::Size) {
+        m_surface.onResize = [this](properdesktop::base::Size) {
             {
                 std::lock_guard lock(m_mutex);
                 m_dirty = true;
@@ -71,7 +71,7 @@ private:
                     break;
                 m_dirty = false;
             }
-            const cutefish::base::Size size = m_surface.beginFrame();
+            const properdesktop::base::Size size = m_surface.beginFrame();
             if (size.isEmpty())
                 continue;
             clearColor(0, 1, 0, 1);

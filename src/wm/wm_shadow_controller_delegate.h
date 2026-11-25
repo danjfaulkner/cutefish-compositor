@@ -6,12 +6,12 @@
 // Upstream: chromium/src/ash/wm/wm_shadow_controller_delegate.{h,cc}
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WM_WM_SHADOW_CONTROLLER_DELEGATE_H_
-#define CUTEFISH_WM_WM_SHADOW_CONTROLLER_DELEGATE_H_
+#ifndef PROPERDESKTOP_WM_WM_SHADOW_CONTROLLER_DELEGATE_H_
+#define PROPERDESKTOP_WM_WM_SHADOW_CONTROLLER_DELEGATE_H_
 
 #include "wm/shadow_controller_delegate.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class WmShadowControllerDelegate : public ShadowControllerDelegate
 {
@@ -20,6 +20,6 @@ public:
     ShadowElevation elevationForWindow(const Window* window) override;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WM_SHADOW_CONTROLLER_DELEGATE_H_
+#endif // PROPERDESKTOP_WM_WM_SHADOW_CONTROLLER_DELEGATE_H_

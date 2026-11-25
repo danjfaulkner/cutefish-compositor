@@ -27,8 +27,8 @@
 #include "wm/wm_shadow_controller_delegate.h"
 #include "ui/path.h"
 
-using namespace cutefish;
-using cutefish::base::roundToInt;
+using namespace properdesktop;
+using properdesktop::base::roundToInt;
 using Mode = scene::WindowVisualMode;
 
 namespace {

@@ -4,7 +4,7 @@
 
 #include "wm/types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 const char* toString(WindowStateType type)
 {
@@ -77,4 +77,4 @@ const char* toString(ResizeEdge edge)
     return "unknown";
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

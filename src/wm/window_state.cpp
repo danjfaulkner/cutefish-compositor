@@ -15,7 +15,7 @@
 #include "wm/window_snap.h"
 #include "wm/wm_event.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -311,4 +311,4 @@ void WindowState::setBoundsDirect(const base::Rect &bounds)
     m_window->setBounds(adjusted);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

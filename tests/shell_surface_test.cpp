@@ -41,8 +41,8 @@
 #include "wm/window_state.h"
 #include "wm/wm_shadow_controller_delegate.h"
 
-using namespace cutefish;
-using namespace cutefish::wm;
+using namespace properdesktop;
+using namespace properdesktop::wm;
 
 namespace {
 
@@ -588,10 +588,10 @@ TEST_F(ShellSurfaceTest, TitleAndApplicationIdReachTheWindow)
     ShellSurface *shell = makeMappedToplevel(base::Size(300, 200));
 
     shell->setTitle("Editor");
-    shell->setApplicationId("org.cutefish.Editor");
+    shell->setApplicationId("org.properdesktop.Editor");
 
     EXPECT_EQ("Editor", shell->window()->title());
-    EXPECT_EQ("org.cutefish.Editor", shell->window()->applicationId());
+    EXPECT_EQ("org.properdesktop.Editor", shell->window()->applicationId());
 }
 
 TEST_F(ShellSurfaceTest, TitleSetBeforeMappingSurvivesTheMap)
@@ -1921,7 +1921,7 @@ display::LogicalDisplay logicalDisplay(const char *name, base::Rect bounds, bool
 {
     return {displayId(name),
             {displayId(name)},
-            "Cutefish-" + std::string(name),
+            "ProperDesktop-" + std::string(name),
             bounds,
             bounds.adjusted(0, 24, 0, 0),
             {},
@@ -2068,7 +2068,7 @@ TEST_F(MultiDisplayShellSurfaceTest, LeavingFullscreenOnAnotherOutputRestoresThe
     const base::Rect normal = shell->window()->bounds();
     ASSERT_TRUE(kPrimary.contains(normal));
 
-    shell->setFullscreenOutput("Cutefish-b");
+    shell->setFullscreenOutput("ProperDesktop-b");
     shell->setFullscreen(true);
     EXPECT_EQ(kSecondary, shell->window()->bounds());
     shell->setFullscreen(false);
@@ -2081,7 +2081,7 @@ TEST_F(MultiDisplayShellSurfaceTest, FullscreenWithoutAnOutputStaysOnTheWindowsO
     ShellSurface *shell = mapApp("video", base::Size(400, 300));
     ASSERT_TRUE(kPrimary.contains(shell->window()->bounds()));
 
-    shell->setFullscreenOutput("Cutefish-b");
+    shell->setFullscreenOutput("ProperDesktop-b");
     shell->setFullscreen(true);
     EXPECT_EQ(kSecondary, shell->window()->bounds());
     shell->setFullscreen(false);

@@ -12,7 +12,7 @@
 #include <xkbcommon/xkbcommon.h>
 
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 std::string Accelerator::shortcutText() const
 {
@@ -159,4 +159,4 @@ bool isFunctionKeysym(uint32_t keysym)
     return keysym >= XKB_KEY_F1 && keysym <= XKB_KEY_F24;
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

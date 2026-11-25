@@ -22,7 +22,7 @@
 #include "render/drm_syncobj.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -370,4 +370,4 @@ wl_global* createLinuxDrmSyncobjGlobal(wl_display* display, int drmFd)
                             bind_syncobj_manager);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

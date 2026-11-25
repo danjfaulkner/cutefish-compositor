@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SHELL_INPUT_H_
-#define CUTEFISH_SHELL_SHELL_INPUT_H_
+#ifndef PROPERDESKTOP_SHELL_SHELL_INPUT_H_
+#define PROPERDESKTOP_SHELL_SHELL_INPUT_H_
 
 #include <cstdint>
 #include <map>
@@ -15,17 +15,17 @@
 #include "base/timer.h"
 #include "ui/event.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Keyboard;
 class Pointer;
 class Touch;
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class Shell;
 class ShellWindow;
@@ -81,6 +81,6 @@ private:
     std::chrono::milliseconds m_repeatInterval {40};
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SHELL_INPUT_H_
+#endif // PROPERDESKTOP_SHELL_SHELL_INPUT_H_

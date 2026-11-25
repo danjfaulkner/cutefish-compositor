@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_COMPOSITOR_SHELL_H_
-#define CUTEFISH_CORE_COMPOSITOR_SHELL_H_
+#ifndef PROPERDESKTOP_CORE_COMPOSITOR_SHELL_H_
+#define PROPERDESKTOP_CORE_COMPOSITOR_SHELL_H_
 
 #include <memory>
 #include <string>
@@ -47,7 +47,7 @@
 
 struct wl_global;
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace backend {
 class DrmBackend;
@@ -346,6 +346,6 @@ private:
 };
 
 } // namespace core
-} // namespace cutefish
+} // namespace properdesktop
 
-#endif // CUTEFISH_CORE_COMPOSITOR_SHELL_H_
+#endif // PROPERDESKTOP_CORE_COMPOSITOR_SHELL_H_

@@ -6,8 +6,8 @@
 // chromium/src/ash/wm/workspace/workspace_window_resizer.cc (revision
 // 7acd40ddefff49c9d36144999aafdbb674dbd07a).
 
-#ifndef CUTEFISH_WM_SNAP_DRAG_CONTROLLER_H_
-#define CUTEFISH_WM_SNAP_DRAG_CONTROLLER_H_
+#ifndef PROPERDESKTOP_WM_SNAP_DRAG_CONTROLLER_H_
+#define PROPERDESKTOP_WM_SNAP_DRAG_CONTROLLER_H_
 
 #include <optional>
 
@@ -15,11 +15,11 @@
 #include "base/timer.h"
 #include "wm/window_snap.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class SnapPreviewNode;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 class WindowManager;
@@ -65,6 +65,6 @@ private:
     scene::SnapPreviewNode *m_preview = nullptr;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_SNAP_DRAG_CONTROLLER_H_
+#endif // PROPERDESKTOP_WM_SNAP_DRAG_CONTROLLER_H_

@@ -10,7 +10,7 @@
 #include "base/file_watcher.h"
 #include "base/settings.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 class Theme;
 
 // The service writes the settings file lazily, so its signals carry the
@@ -41,4 +41,4 @@ private:
     base::dbus::PendingCall m_captionPointSizeRead;
 };
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

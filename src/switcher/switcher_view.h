@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SWITCHER_SWITCHER_VIEW_H_
-#define CUTEFISH_SWITCHER_SWITCHER_VIEW_H_
+#ifndef PROPERDESKTOP_SWITCHER_SWITCHER_VIEW_H_
+#define PROPERDESKTOP_SWITCHER_SWITCHER_VIEW_H_
 
 #include <chrono>
 #include <cstdint>
@@ -21,33 +21,33 @@
 #include "ui/bitmap.h"
 #include "wm/window_cycle_controller.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class Renderer;
 class Texture;
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-namespace cutefish::toolkit {
+namespace properdesktop::toolkit {
 class PanelTexture;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class EmbeddedWindow;
 }
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 class ShadowNode;
 class Theme;
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowManager;
 }
 
-namespace cutefish::switcher {
+namespace properdesktop::switcher {
 
 class SwitcherContent;
 
@@ -127,6 +127,6 @@ private:
     base::Subscription m_windowAdded;
 };
 
-} // namespace cutefish::switcher
+} // namespace properdesktop::switcher
 
-#endif // CUTEFISH_SWITCHER_SWITCHER_VIEW_H_
+#endif // PROPERDESKTOP_SWITCHER_SWITCHER_VIEW_H_

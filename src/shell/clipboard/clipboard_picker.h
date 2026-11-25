@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_PICKER_H_
-#define CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_PICKER_H_
+#ifndef PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_PICKER_H_
+#define PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_PICKER_H_
 
 #include <memory>
 #include <vector>
@@ -12,7 +12,7 @@
 #include "base/signal.h"
 #include "shell/shell.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ClipboardHistory;
 class ClipboardPickerView;
@@ -51,6 +51,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_PICKER_H_
+#endif // PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_PICKER_H_

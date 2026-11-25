@@ -6,7 +6,7 @@
 
 #include <cassert>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 void IdleInhibition::acquire()
 {
@@ -28,4 +28,4 @@ void IdleInhibition::setIgnored(bool ignored)
     if (inhibited() != wasInhibited)
         inhibitedChanged();
 }
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

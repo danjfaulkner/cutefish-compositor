@@ -5,12 +5,12 @@
 // Modelled on chromium/src/ash/wm/wm_event.h (revision
 // 7acd40ddefff49c9d36144999aafdbb674dbd07a).
 
-#ifndef CUTEFISH_WM_WM_EVENT_H_
-#define CUTEFISH_WM_WM_EVENT_H_
+#ifndef PROPERDESKTOP_WM_WM_EVENT_H_
+#define PROPERDESKTOP_WM_WM_EVENT_H_
 
 #include "base/geometry.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 enum class WMEventType {
     // The request may not be granted.
@@ -58,6 +58,6 @@ private:
     base::Rect m_requestedBounds;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WM_EVENT_H_
+#endif // PROPERDESKTOP_WM_WM_EVENT_H_

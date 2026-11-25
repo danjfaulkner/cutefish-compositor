@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/buffer.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_COMPOSITOR_DMABUF_BUFFER_H_
-#define CUTEFISH_COMPOSITOR_DMABUF_BUFFER_H_
+#ifndef PROPERDESKTOP_COMPOSITOR_DMABUF_BUFFER_H_
+#define PROPERDESKTOP_COMPOSITOR_DMABUF_BUFFER_H_
 
 #include <memory>
 #include <utility>
@@ -14,7 +14,7 @@
 #include "compositor/buffer.h"
 #include "render/dmabuf.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 // Samples the client's storage directly, so wl_buffer.release waits until the
 // buffer is off every surface.
@@ -66,6 +66,6 @@ private:
     render::PixelFormat m_format = render::PixelFormat::Rgba8888;
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-#endif // CUTEFISH_COMPOSITOR_DMABUF_BUFFER_H_
+#endif // PROPERDESKTOP_COMPOSITOR_DMABUF_BUFFER_H_

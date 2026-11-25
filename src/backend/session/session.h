@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_SESSION_SESSION_H_
-#define CUTEFISH_BACKEND_SESSION_SESSION_H_
+#ifndef PROPERDESKTOP_BACKEND_SESSION_SESSION_H_
+#define PROPERDESKTOP_BACKEND_SESSION_SESSION_H_
 
 #include <string>
 
 #include "base/signal.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 class Session
 {
@@ -34,6 +34,6 @@ public:
     base::Signal<bool> activeChanged;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_SESSION_SESSION_H_
+#endif // PROPERDESKTOP_BACKEND_SESSION_SESSION_H_

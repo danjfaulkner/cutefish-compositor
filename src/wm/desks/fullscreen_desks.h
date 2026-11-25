@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_DESKS_FULLSCREEN_DESKS_H_
-#define CUTEFISH_WM_DESKS_FULLSCREEN_DESKS_H_
+#ifndef PROPERDESKTOP_WM_DESKS_FULLSCREEN_DESKS_H_
+#define PROPERDESKTOP_WM_DESKS_FULLSCREEN_DESKS_H_
 
 #include <chrono>
 #include <cstdint>
@@ -17,7 +17,7 @@
 #include "wm/types.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Desk;
 class Window;
@@ -50,7 +50,7 @@ public:
     // for clients that do not take fullscreen they did not ask for (Chromium browsers leave it
     // again by themselves), which keep their own toolbars that way, as on macOS.
     bool fills(const Window *window) const;
-    // Gets the top bar's title bar row when revealed over it: owned windows, and Cutefish
+    // Gets the top bar's title bar row when revealed over it: owned windows, and Proper Desktop
     // applications fullscreen where they are, whose headers leave the window controls to it.
     bool wantsTitleBar(const Window *window) const;
     // Pushed down by the revealed top bar rather than covered: owned windows, unless they show
@@ -146,6 +146,6 @@ private:
     bool m_changing = false;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_DESKS_FULLSCREEN_DESKS_H_
+#endif // PROPERDESKTOP_WM_DESKS_FULLSCREEN_DESKS_H_

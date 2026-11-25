@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_DEVICE_USAGE_H_
-#define CUTEFISH_SHELL_MENUBAR_DEVICE_USAGE_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_DEVICE_USAGE_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_DEVICE_USAGE_H_
 
 #include <cstdint>
 #include <map>
@@ -19,7 +19,7 @@ struct pw_core;
 struct pw_loop;
 struct pw_registry;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class TaskManager;
 
@@ -162,6 +162,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_DEVICE_USAGE_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_DEVICE_USAGE_H_

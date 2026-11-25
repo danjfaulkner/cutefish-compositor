@@ -12,7 +12,7 @@
 
 #include "core/main_loop.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 namespace {
 
@@ -64,4 +64,4 @@ void NightLight::step()
     m_apply(transformFor(m_current));
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

@@ -8,7 +8,7 @@
 
 #include "shell/common/task_manager.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
@@ -192,4 +192,4 @@ void RunningApplications::announce(const std::string &before, const std::string 
         changed(after);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

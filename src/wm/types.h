@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_TYPES_H_
-#define CUTEFISH_WM_TYPES_H_
+#ifndef PROPERDESKTOP_WM_TYPES_H_
+#define PROPERDESKTOP_WM_TYPES_H_
 
 #include <cstdint>
 
 #include "base/geometry.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 enum class WindowType {
     Normal,
@@ -168,6 +168,6 @@ const char* toString(WindowStateType type);
 const char* toString(WindowRole role);
 const char* toString(ResizeEdge edge);
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_TYPES_H_
+#endif // PROPERDESKTOP_WM_TYPES_H_

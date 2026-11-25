@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_SEARCH_FIELD_H_
-#define CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_SEARCH_FIELD_H_
+#ifndef PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_SEARCH_FIELD_H_
+#define PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_SEARCH_FIELD_H_
 
 #include <functional>
 #include <string>
@@ -13,12 +13,12 @@
 #include "ui/text_field.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Icon;
 class Label;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class LaunchpadSearchField final : public ui::View
 {
@@ -65,6 +65,6 @@ private:
     LaunchpadTween m_glyphTween;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_SEARCH_FIELD_H_
+#endif // PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_SEARCH_FIELD_H_

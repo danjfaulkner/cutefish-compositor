@@ -18,7 +18,7 @@
 #include "ui/theme.h"
 #include "ui/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 DockTooltip::DockTooltip(DockWindow *dock, Shell *shell)
     : m_dock(dock)
@@ -139,4 +139,4 @@ void DockTooltip::place(const std::string &text, const base::PointF &target, dou
     popup->setBackgroundBlur(region, int(std::lround(radius)), glass, bubble.path());
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

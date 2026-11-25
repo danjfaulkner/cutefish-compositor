@@ -16,7 +16,7 @@
 #include "ui/embedded_window.h"
 #include "ui/theme.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 ShellHost::ShellHost(Shell *shell, wayland::InputMethodRelay *inputMethod)
     : m_shell(shell)
@@ -140,4 +140,4 @@ bool ShellHost::startDrag(ui::EmbeddedWindow *window, ui::DragSource source)
     return shellWindow && m_drag->start(shellWindow, std::move(source));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

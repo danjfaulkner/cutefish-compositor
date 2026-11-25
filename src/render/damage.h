@@ -13,7 +13,7 @@
 #include <vector>
 #include "base/region.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 inline constexpr int kBackdropBlurSupport = 90;
 
@@ -168,4 +168,4 @@ private:
     std::deque<base::Rect> m_history;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

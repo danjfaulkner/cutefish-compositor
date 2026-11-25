@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_COMPUTER_CONTROL_PERMISSION_CONSENT_H_
-#define CUTEFISH_COMPUTER_CONTROL_PERMISSION_CONSENT_H_
+#ifndef PROPERDESKTOP_COMPUTER_CONTROL_PERMISSION_CONSENT_H_
+#define PROPERDESKTOP_COMPUTER_CONTROL_PERMISSION_CONSENT_H_
 
 #include <cstdint>
 #include <functional>
@@ -15,7 +15,7 @@
 #include "computer_control/controller.h"
 #include "computer_control/remembered_apps.h"
 
-namespace cutefish::computer_control {
+namespace properdesktop::computer_control {
 
 // Any session client can own a bus name first, so the owner's process must show
 // system dialogs, and the prompt goes to the owner's unique name.
@@ -43,6 +43,6 @@ private:
     base::dbus::Connection *m_bus;
 };
 
-} // namespace cutefish::computer_control
+} // namespace properdesktop::computer_control
 
-#endif // CUTEFISH_COMPUTER_CONTROL_PERMISSION_CONSENT_H_
+#endif // PROPERDESKTOP_COMPUTER_CONTROL_PERMISSION_CONSENT_H_

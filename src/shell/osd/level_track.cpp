@@ -12,7 +12,7 @@
 #include "ui/theme.h"
 #include "toolkit/compositor_colors.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 LevelTrack::LevelTrack() = default;
 
@@ -107,4 +107,4 @@ void LevelTrack::paint(ui::Painter &painter)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

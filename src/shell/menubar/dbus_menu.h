@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_DBUS_MENU_H_
-#define CUTEFISH_SHELL_MENUBAR_DBUS_MENU_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_DBUS_MENU_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_DBUS_MENU_H_
 
 #include <cstdint>
 #include <memory>
@@ -20,7 +20,7 @@
 #include "shell/common/pending_calls.h"
 #include "shell/common/sender_filter.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Untrusted sizes are capped; an entry keeps the type, toggle-type and
 // children-display it first arrived with.
@@ -71,6 +71,6 @@ private:
     std::unordered_map<int32_t, base::Job> m_iconJobs;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_DBUS_MENU_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_DBUS_MENU_H_

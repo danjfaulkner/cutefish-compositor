@@ -12,7 +12,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_visual_controller.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using Mode = scene::WindowVisualMode;
 
 TEST(WindowVisualPolicy, ContinuousCornersExtendBeyondCircularTangency)

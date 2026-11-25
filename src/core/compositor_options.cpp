@@ -10,12 +10,12 @@
 #include "base/strings.h"
 #include "core/logging.h"
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 std::optional<CompositorOptions> CompositorOptions::parse(int argc, char **argv)
 {
     base::CommandLineParser parser;
-    parser.setApplicationDescription("Cutefish Wayland compositor");
+    parser.setApplicationDescription("Proper Desktop Wayland compositor");
     parser.setApplicationVersion("1.0");
     parser.addHelpOption();
     parser.addVersionOption();
@@ -50,8 +50,8 @@ std::optional<CompositorOptions> CompositorOptions::parse(int argc, char **argv)
     parser.addOption({"scale", "Output scale, a decimal from 1.0 through 4.0.", "factor", "1.0"});
     parser.addOption({"display-config-service",
                       "Session D-Bus name for native display configuration.", "name",
-                      "org.cutefish.DisplayConfig"});
-#ifdef CUTEFISH_ENABLE_XWAYLAND
+                      "org.properdesktop.DisplayConfig"});
+#ifdef PROPERDESKTOP_ENABLE_XWAYLAND
     parser.addOption({"xwayland", "Enable the X11 frontend (enabled by default)."});
     parser.addOption({"no-xwayland", "Disable the X11 frontend; overrides --xwayland."});
     parser.addOption({"xwayland-shm", "Use Xwayland software buffers for diagnostics."});
@@ -62,7 +62,7 @@ std::optional<CompositorOptions> CompositorOptions::parse(int argc, char **argv)
                       "Stretch every animation by this factor, to judge motion slowly.", "factor",
                       "1"});
     parser.addOption({"log-rules",
-                      "Logging rules, e.g. \"cutefish.compositor.debug=true;cutefish.drm=true\".",
+                      "Logging rules, e.g. \"properdesktop.compositor.debug=true;properdesktop.drm=true\".",
                       "rules"});
     parser.process(argc, argv);
 
@@ -118,7 +118,7 @@ std::optional<CompositorOptions> CompositorOptions::parse(int argc, char **argv)
     options.windowPlacementClients = parser.values("window-placement-client");
     options.inputMethodId = parser.value("input-method");
     options.displayConfigService = parser.value("display-config-service");
-#ifdef CUTEFISH_ENABLE_XWAYLAND
+#ifdef PROPERDESKTOP_ENABLE_XWAYLAND
     options.xwayland = !parser.isSet("no-xwayland");
     options.xwaylandSoftware = parser.isSet("xwayland-shm");
 #else
@@ -132,9 +132,9 @@ std::optional<CompositorOptions> CompositorOptions::parse(int argc, char **argv)
 
 std::vector<std::string> captureExecutables(const CompositorOptions &options)
 {
-    std::vector<std::string> executables {CUTEFISH_PORTAL_BACKEND};
+    std::vector<std::string> executables {PROPERDESKTOP_PORTAL_BACKEND};
     executables.insert(executables.end(), options.captureClients.begin(), options.captureClients.end());
     return executables;
 }
 
-} // namespace cutefish::core
+} // namespace properdesktop::core

@@ -19,7 +19,7 @@
 #include "base/transform.h"
 #include "ui/geometry_conversions.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 // Coverage history follows cc/trees/damage_tracker at Chromium 7acd40ddefff.
 class DamageTracker
@@ -280,4 +280,4 @@ private:
     mutable std::optional<Cached> m_cached;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

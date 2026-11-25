@@ -15,8 +15,8 @@
 #include "scene/surface_node.h"
 #include "shm_test_util.h"
 
-using namespace cutefish;
-using namespace cutefish::compositor;
+using namespace properdesktop;
+using namespace properdesktop::compositor;
 
 namespace {
 

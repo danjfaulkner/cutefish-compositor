@@ -16,7 +16,7 @@
 #include "wayland/serial_tracker.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -194,4 +194,4 @@ wl_global *createPointerGesturesGlobal(wl_display *display, WaylandSeat *seat)
                             seat, bind_pointer_gestures);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

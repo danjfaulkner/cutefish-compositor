@@ -9,7 +9,7 @@
 #include "input/input_manager.h"
 #include "input/seat.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(OutputScale, ParsingCanonicalValuesAndLimits)
 {

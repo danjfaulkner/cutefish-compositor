@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_MENU_BAR_WINDOW_H_
-#define CUTEFISH_SHELL_MENUBAR_MENU_BAR_WINDOW_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_WINDOW_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_WINDOW_H_
 
 #include <functional>
 #include <memory>
@@ -18,15 +18,15 @@
 #include "shell/menubar/menu_bar_app_menus.h"
 #include "shell/menubar/menu_bar_panels.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Menu;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ClockItem;
 class DeviceUsage;
@@ -158,6 +158,6 @@ private:
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_MENU_BAR_WINDOW_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_WINDOW_H_

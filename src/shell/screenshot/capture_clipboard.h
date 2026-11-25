@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SCREENSHOT_CAPTURE_CLIPBOARD_H_
-#define CUTEFISH_SHELL_SCREENSHOT_CAPTURE_CLIPBOARD_H_
+#ifndef PROPERDESKTOP_SHELL_SCREENSHOT_CAPTURE_CLIPBOARD_H_
+#define PROPERDESKTOP_SHELL_SCREENSHOT_CAPTURE_CLIPBOARD_H_
 
 #include <memory>
 
 #include "base/thread_pool.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 class SelectionController;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // The selection is offered at once and encoded on a worker; a reader that asks
 // before that waits for it.
@@ -32,6 +32,6 @@ private:
     base::Job m_encode;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SCREENSHOT_CAPTURE_CLIPBOARD_H_
+#endif // PROPERDESKTOP_SHELL_SCREENSHOT_CAPTURE_CLIPBOARD_H_

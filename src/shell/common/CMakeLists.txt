@@ -1,4 +1,4 @@
-add_library(cutefish-shell-common STATIC
+add_library(properdesktop-shell-common STATIC
     app_launcher.cpp
     app_launcher.h
     application_badges.cpp
@@ -30,5 +30,5 @@ add_library(cutefish-shell-common STATIC
     wm_task_windows.cpp
     wm_task_windows.h
 )
-target_link_libraries(cutefish-shell-common PUBLIC cutefish-core cutefish-wm Cutefish::ToolkitBase
-    Cutefish::Toolkit PkgConfig::TitleText)
+target_link_libraries(properdesktop-shell-common PUBLIC properdesktop-core properdesktop-wm ProperDesktop::ToolkitBase
+    ProperDesktop::Toolkit PkgConfig::TitleText)

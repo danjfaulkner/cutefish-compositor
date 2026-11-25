@@ -19,10 +19,10 @@
 #include "shell/notification/notification_images.h"
 #include "shell/notification/notification_settings.h"
 
-using cutefish::i18n::tr;
-using cutefish::i18n::trn;
+using properdesktop::i18n::tr;
+using properdesktop::i18n::trn;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 
 // Rounds half away from zero.
@@ -385,4 +385,4 @@ void NotificationBanners::removePending()
     m_pendingRemovals.clear();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

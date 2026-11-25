@@ -15,7 +15,7 @@
 #include "display/mirror_transform.h"
 #include "render/cursor_sink.h"
 
-namespace cutefish::cursor {
+namespace properdesktop::cursor {
 
 class OutputCursorRouter final : public render::CursorSink
 {
@@ -48,4 +48,4 @@ private:
     std::vector<int> m_activeTargets;
 };
 
-} // namespace cutefish::cursor
+} // namespace properdesktop::cursor

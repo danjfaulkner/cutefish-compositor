@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_DOCK_DOCK_ICON_H_
-#define CUTEFISH_SHELL_DOCK_DOCK_ICON_H_
+#ifndef PROPERDESKTOP_SHELL_DOCK_DOCK_ICON_H_
+#define PROPERDESKTOP_SHELL_DOCK_DOCK_ICON_H_
 
 #include <cstdint>
 #include <memory>
@@ -14,12 +14,12 @@
 #include "ui/image.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Animation;
 class ThemeIcon;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class CountBadge;
 class DockWindow;
@@ -166,6 +166,6 @@ private:
     bool m_held = false;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_DOCK_DOCK_ICON_H_
+#endif // PROPERDESKTOP_SHELL_DOCK_DOCK_ICON_H_

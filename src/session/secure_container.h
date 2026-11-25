@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SESSION_SECURE_CONTAINER_H_
-#define CUTEFISH_SESSION_SECURE_CONTAINER_H_
+#ifndef PROPERDESKTOP_SESSION_SECURE_CONTAINER_H_
+#define PROPERDESKTOP_SESSION_SECURE_CONTAINER_H_
 
 #include <functional>
 #include <memory>
@@ -16,16 +16,16 @@
 #include "base/signal.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class Renderer;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class ColorNode;
 class Node;
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 struct SecureOutput {
     std::string name;
@@ -98,7 +98,7 @@ public:
     // Empty for the plain colour.
     const std::string &picture() const { return m_picture; }
 
-    // At the login screen, the copy cutefish-dm keeps for the account picked.
+    // At the login screen, the copy properdesktop-dm keeps for the account picked.
     void setSettingsFile(const std::string &path, bool crossfade);
     const std::string &settingsFile() const { return m_settingsFile; }
 
@@ -128,6 +128,6 @@ private:
     mutable std::optional<double> m_start;
 };
 
-} // namespace cutefish::session
+} // namespace properdesktop::session
 
-#endif // CUTEFISH_SESSION_SECURE_CONTAINER_H_
+#endif // PROPERDESKTOP_SESSION_SECURE_CONTAINER_H_

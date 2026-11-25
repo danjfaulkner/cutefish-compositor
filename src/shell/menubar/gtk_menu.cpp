@@ -9,7 +9,7 @@
 #include <chrono>
 #include <utility>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
@@ -550,4 +550,4 @@ void GtkMenu::activate(int32_t id)
     proxy->second.send("Activate", name.substr(dot + 1), parameter, dbus::VariantMap());
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

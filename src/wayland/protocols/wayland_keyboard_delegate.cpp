@@ -19,7 +19,7 @@
 #include "wayland/serial_tracker.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 WaylandKeyboardDelegate::WaylandKeyboardDelegate(wl_resource *keyboardResource,
                                                  SerialTracker *serialTracker,
@@ -114,7 +114,7 @@ void WaylandKeyboardDelegate::onKeyboardLayoutUpdated(const std::string &keymap)
     // The client mmaps this, so it needs its own file description. The trailing
     // NUL is part of the advertised size.
     const size_t size = keymap.size() + 1;
-    const int fd = memfd_create("cutefish-keymap", MFD_CLOEXEC);
+    const int fd = memfd_create("properdesktop-keymap", MFD_CLOEXEC);
     if (fd < 0) {
         CF_WARNING(cfWayland) << "Failed to create a keymap memfd";
         return;
@@ -169,4 +169,4 @@ void WaylandKeyboardDelegate::onKeyRepeatSettingsChanged(bool enabled,
     wl_client_flush(client());
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

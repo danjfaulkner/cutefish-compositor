@@ -13,7 +13,7 @@
 #include "compositor/surface.h"
 #include "input/seat.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 Keyboard::Keyboard(std::unique_ptr<KeyboardDelegate> delegate, Seat* seat)
     : m_delegate(std::move(delegate))
@@ -140,4 +140,4 @@ void Keyboard::onKey(Timestamp timestamp, uint32_t evdevCode, bool pressed)
     }
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

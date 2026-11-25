@@ -11,7 +11,7 @@
 #include "ui/bitmap.h"
 #include "ui/path.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 ui::Color toUiColor(const Color &color);
 
@@ -45,4 +45,4 @@ ui::Bitmap rasterizeShape(const ui::Path &path, const ShapeRaster &raster);
 ui::Bitmap rasterizeShapeOutline(const ui::Path &path, const ShapeRaster &raster, double widthPx,
                                  const Color &outline, const Color &highlight);
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

@@ -7,11 +7,11 @@
 //           chromium/src/ui/ozone/platform/drm/gpu/drm_dumb_buffer.cc
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 //
-// Adapted for Cutefish: one cursor buffer size from the device maximum instead
+// Adapted for Proper Desktop: one cursor buffer size from the device maximum instead
 // of the Intel cursor-size table.
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_CURSOR_H_
-#define CUTEFISH_BACKEND_DRM_DRM_CURSOR_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_CURSOR_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_CURSOR_H_
 
 #include <string>
 
@@ -24,7 +24,7 @@
 #include "backend/drm/drm_device_api.h"
 #include "render/color_transform.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 class DrmCursor
 {
@@ -86,6 +86,6 @@ private:
     bool m_failed = false;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_CURSOR_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_CURSOR_H_

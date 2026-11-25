@@ -19,10 +19,10 @@
 #include "core/preferences.h"
 #include "input/dbus_export.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
-static constexpr auto service = "org.cutefish.InputMethod1";
-static constexpr auto path = "/org/cutefish/InputMethod1";
+static constexpr auto service = "org.properdesktop.InputMethod1";
+static constexpr auto path = "/org/properdesktop/InputMethod1";
 static constexpr auto selectionKey = "InputMethod/inputMethod";
 
 static bool isSpace(char c)
@@ -344,4 +344,4 @@ bool InputMethodSettings::setInputMethod(const std::string &id)
     return true;
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

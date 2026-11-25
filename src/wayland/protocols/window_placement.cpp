@@ -6,14 +6,14 @@
 
 #include <algorithm>
 
-#include <cutefish-window-placement-v1-server-protocol.h>
+#include <properdesktop-window-placement-v1-server-protocol.h>
 
 #include "compositor/surface.h"
 #include "wayland/server_util.h"
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 struct WindowPlacementRequests {
     static void destroy(wl_client *, wl_resource *resource)
@@ -43,7 +43,7 @@ struct WindowPlacementRequests {
     }
 };
 
-static const struct cutefish_window_placement_v1_interface implementation = {
+static const struct properdesktop_window_placement_v1_interface implementation = {
         WindowPlacementRequests::destroy,
         WindowPlacementRequests::setPosition,
 };
@@ -53,7 +53,7 @@ WaylandWindowPlacement::WaylandWindowPlacement(wl_display *display, wm::WindowMa
     : m_windows(windows)
     , m_authorize(std::move(authorize))
 {
-    m_global = wl_global_create(display, &cutefish_window_placement_v1_interface, 1, this, bind);
+    m_global = wl_global_create(display, &properdesktop_window_placement_v1_interface, 1, this, bind);
     m_windowAdded = m_windows->windowAdded.connect([this](wm::Window *window) {
         sendPosition(window);
     });
@@ -78,7 +78,7 @@ void WaylandWindowPlacement::bind(wl_client *client, void *data, uint32_t versio
         return;
     }
     wl_resource *resource =
-            wl_resource_create(client, &cutefish_window_placement_v1_interface, version, id);
+            wl_resource_create(client, &properdesktop_window_placement_v1_interface, version, id);
     if (!resource) {
         wl_client_post_no_memory(client);
         return;
@@ -99,9 +99,9 @@ void WaylandWindowPlacement::sendPosition(wm::Window *window)
     const base::Point position = window->contentBounds().topLeft();
     for (wl_resource *resource : m_resources) {
         if (wl_resource_get_client(resource) == client)
-            cutefish_window_placement_v1_send_position(resource, surface, position.x(),
+            properdesktop_window_placement_v1_send_position(resource, surface, position.x(),
                                                         position.y());
     }
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

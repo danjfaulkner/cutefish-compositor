@@ -11,7 +11,7 @@
 #include <set>
 #include <unordered_set>
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 bool DisplayMode::isValid() const
 {
@@ -60,4 +60,4 @@ bool HardwareSnapshot::isValid() const
     return true;
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

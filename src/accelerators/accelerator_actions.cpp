@@ -10,7 +10,7 @@
 #include <array>
 #include <utility>
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 namespace {
 
@@ -98,4 +98,4 @@ std::optional<AcceleratorAction> acceleratorActionFromName(std::string_view name
     return std::nullopt;
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

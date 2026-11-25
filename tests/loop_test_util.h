@@ -13,7 +13,7 @@
 #include "base/timer.h"
 #include "core/main_loop.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 // Runs the main loop until done() holds or the timeout passes; returns done().
 bool runUntil(const std::function<bool()>& done,
@@ -24,4 +24,4 @@ void runFor(std::chrono::milliseconds duration);
 // Runs whatever is ready on the main loop once, without waiting.
 void processPendingEvents();
 
-} // namespace cutefish::test
+} // namespace properdesktop::test

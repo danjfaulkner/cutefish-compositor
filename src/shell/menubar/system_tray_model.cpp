@@ -11,7 +11,7 @@
 #include "shell/menubar/status_notifier_watcher.h"
 #include "ui/icon.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 bool themeIconExists(const std::string &name, const std::string &themePath)
 {
@@ -125,4 +125,4 @@ void SystemTrayModel::move(int from, int to)
     rowMoved(from, to);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

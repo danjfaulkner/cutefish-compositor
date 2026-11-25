@@ -34,16 +34,16 @@
 #include <cstring>
 #include <format>
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 namespace {
 
-cutefish::base::Rect logicalBounds(const cutefish::compositor::Output &model)
+properdesktop::base::Rect logicalBounds(const properdesktop::compositor::Output &model)
 {
-    return cutefish::base::Rect(model.position, model.logicalSize());
+    return properdesktop::base::Rect(model.position, model.logicalSize());
 }
 
-cutefish::render::OutputRenderContext renderContext(const cutefish::compositor::Output &model,
+properdesktop::render::OutputRenderContext renderContext(const properdesktop::compositor::Output &model,
                                                     uint64_t frame)
 {
     return {model.name, logicalBounds(model), model.pixelSize, model.renderScale,
@@ -141,17 +141,17 @@ HardwareSnapshot DisplayRuntime::discover(backend::DrmBackend *backend,
                                           const std::string &instance, uint64_t generation,
                                           DisplayIdentity &identity)
 {
-    std::vector<cutefish::display::DisplaySnapshot> physicalDisplays;
+    std::vector<properdesktop::display::DisplaySnapshot> physicalDisplays;
     for (size_t index = 0; index < models.size(); ++index) {
         const auto *model = models[index];
         auto *nativeBackend = backend && index < backend->allOutputs().size()
                 ? backend->allOutputs()[index]->backend()
                 : nullptr;
         const auto displayMode = [](const drmModeModeInfo &nativeMode) {
-            cutefish::display::DisplayMode mode;
+            properdesktop::display::DisplayMode mode;
             mode.pixelSize = base::Size(nativeMode.hdisplay, nativeMode.vdisplay);
             mode.refreshMilliHz = static_cast<int>(
-                    std::lround(cutefish::backend::refreshRate(nativeMode) * 1000.0));
+                    std::lround(properdesktop::backend::refreshRate(nativeMode) * 1000.0));
             mode.pixelClockKHz = nativeMode.clock;
             mode.horizontalTotal = nativeMode.htotal;
             mode.verticalTotal = nativeMode.vtotal;
@@ -161,8 +161,8 @@ HardwareSnapshot DisplayRuntime::discover(backend::DrmBackend *backend,
             mode.preferred = nativeMode.type & DRM_MODE_TYPE_PREFERRED;
             return mode;
         };
-        cutefish::display::DisplayMode mode;
-        std::vector<cutefish::display::DisplayMode> modes;
+        properdesktop::display::DisplayMode mode;
+        std::vector<properdesktop::display::DisplayMode> modes;
         if (backend && index < backend->allOutputs().size()) {
             const auto *drmOutput = backend->allOutputs()[index];
             mode = displayMode(drmOutput->mode());
@@ -190,7 +190,7 @@ HardwareSnapshot DisplayRuntime::discover(backend::DrmBackend *backend,
                     modes.push_back(alternative);
             }
         }
-        cutefish::display::DisplaySnapshot physical;
+        properdesktop::display::DisplaySnapshot physical;
         EdidInfo edid;
         const std::string modelName = model->model;
         const std::string outputName = model->name;
@@ -225,18 +225,18 @@ HardwareSnapshot DisplayRuntime::discover(backend::DrmBackend *backend,
         physical.connectionType =
                 (!nativeBackend || driver == "virtio_gpu" || driver == "vmwgfx" || driver == "qxl"
                  || driver == "vkms")
-                ? cutefish::display::DisplayConnectionType::Virtual
+                ? properdesktop::display::DisplayConnectionType::Virtual
                 : (base::strings::startsWith(connector, "eDP", CaseSensitivity::Insensitive)
                    || base::strings::startsWith(connector, "LVDS", CaseSensitivity::Insensitive)
                    || base::strings::startsWith(connector, "DSI", CaseSensitivity::Insensitive))
-                ? cutefish::display::DisplayConnectionType::Internal
-                : cutefish::display::DisplayConnectionType::External;
-        physical.capabilities = cutefish::display::DisplayCapability::Scale
-                | cutefish::display::DisplayCapability::Rotation
-                | cutefish::display::DisplayCapability::SoftwareMirror
-                | cutefish::display::DisplayCapability::Power;
+                ? properdesktop::display::DisplayConnectionType::Internal
+                : properdesktop::display::DisplayConnectionType::External;
+        physical.capabilities = properdesktop::display::DisplayCapability::Scale
+                | properdesktop::display::DisplayCapability::Rotation
+                | properdesktop::display::DisplayCapability::SoftwareMirror
+                | properdesktop::display::DisplayCapability::Power;
         if (backend && index < backend->allOutputs().size())
-            physical.capabilities |= cutefish::display::DisplayCapability::ColorTransform;
+            physical.capabilities |= properdesktop::display::DisplayCapability::ColorTransform;
         physical.modes = modes;
         physical.currentMode = mode;
         physical.nativeMode = mode;
@@ -271,13 +271,13 @@ void DisplayRuntime::initialize(DisplayManager &displayManager, backend::DrmBack
     if (!displayManager.installHardware(snapshot))
         return;
 
-    std::vector<cutefish::display::LogicalDisplay> logicalDisplays;
-    std::vector<cutefish::compositor::Compositor::OutputView> views;
+    std::vector<properdesktop::display::LogicalDisplay> logicalDisplays;
+    std::vector<properdesktop::compositor::Compositor::OutputView> views;
     std::vector<base::Rect> topology;
     for (size_t index = 0; index < models.size(); ++index) {
         const auto *model = models[index];
-        const cutefish::display::DisplayId id(model->displayId);
-        cutefish::display::LogicalDisplay logical;
+        const properdesktop::display::DisplayId id(model->displayId);
+        properdesktop::display::LogicalDisplay logical;
         logical.id = id;
         logical.destinations = {id};
         logical.waylandName = model->name;
@@ -289,7 +289,7 @@ void DisplayRuntime::initialize(DisplayManager &displayManager, backend::DrmBack
         views.push_back({model->displayId, logical.bounds, logical.scale, model->name});
         topology.push_back(logical.bounds);
     }
-    cutefish::display::AppliedConfiguration applied;
+    properdesktop::display::AppliedConfiguration applied;
     applied.compositorInstanceId = compositorInstanceId;
     applied.topologyGeneration = 1;
     applied.revision = displayManager.applied() ? displayManager.applied()->revision + 1 : 1;
@@ -298,7 +298,7 @@ void DisplayRuntime::initialize(DisplayManager &displayManager, backend::DrmBack
     for (size_t index = 1; index < applied.logicalDisplays.size(); ++index)
         applied.placements.push_back({applied.logicalDisplays[index].id,
                                    applied.logicalDisplays[index - 1].id,
-                                   cutefish::display::LayoutEdge::Right, 0});
+                                   properdesktop::display::LayoutEdge::Right, 0});
     displayManager.installApplied(std::move(applied));
     compositor.setOutputViews(std::move(views));
     inputManager.setTopology(topology, topology.empty() ? base::Rect() : topology.front());
@@ -908,16 +908,16 @@ ConfigurationResult DisplayRuntime::configureExact(const DisplayConfiguration &c
                                                    NativeDisplayDelegate::ConfigureMode mode)
 {
     const uint64_t revision = displayManager.applied() ? displayManager.applied()->revision : 0;
-    const auto result = cutefish::display::DisplayConfigurationValidator::validateExtended(
+    const auto result = properdesktop::display::DisplayConfigurationValidator::validateExtended(
             *displayManager.hardware(), revision, configuration);
     if (!result.succeeded)
-        return cutefish::display::ConfigurationResult {false, false, result.error, std::nullopt};
+        return properdesktop::display::ConfigurationResult {false, false, result.error, std::nullopt};
     if (backend) {
-        std::vector<cutefish::backend::DrmOutput::Configuration> changes;
+        std::vector<properdesktop::backend::DrmOutput::Configuration> changes;
         bool changed = false;
         for (size_t index = 0; index < backend->allOutputs().size(); ++index) {
             auto *output = backend->allOutputs()[index];
-            const cutefish::display::DisplayId id(outputModels.at(index)->displayId);
+            const properdesktop::display::DisplayId id(outputModels.at(index)->displayId);
             for (const auto &request : configuration.displays) {
                 if (request.display != id)
                     continue;
@@ -935,10 +935,10 @@ ConfigurationResult DisplayRuntime::configureExact(const DisplayConfiguration &c
                     }
                 }
                 if (!found)
-                    return cutefish::display::ConfigurationResult {
+                    return properdesktop::display::ConfigurationResult {
                             false,
                             false,
-                            {cutefish::display::DisplayErrorCode::UnsupportedMode,
+                            {properdesktop::display::DisplayErrorCode::UnsupportedMode,
                              "The requested native mode is unavailable",
                              {id}},
                             std::nullopt};
@@ -958,9 +958,9 @@ ConfigurationResult DisplayRuntime::configureExact(const DisplayConfiguration &c
         backend::DrmDeviceApi *failedDevice = nullptr;
         std::string diagnostic;
         if (changed
-            && !cutefish::backend::DrmOutput::configure(
+            && !properdesktop::backend::DrmOutput::configure(
                     changes,
-                    mode == cutefish::display::NativeDisplayDelegate::ConfigureMode::TestOnly,
+                    mode == properdesktop::display::NativeDisplayDelegate::ConfigureMode::TestOnly,
                     &status, &diagnostic, &failedDevice)) {
             std::vector<DisplayId> affected;
             const auto outputs = backend->allOutputs();
@@ -969,7 +969,7 @@ ConfigurationResult DisplayRuntime::configureExact(const DisplayConfiguration &c
                     affected.push_back(DisplayId(outputModels[i]->displayId));
             if (status == backend::DrmCommitStatus::RollbackFailed)
                 requireNativeRecovery();
-            return cutefish::display::ConfigurationResult {
+            return properdesktop::display::ConfigurationResult {
                     false,
                     false,
                     {status == backend::DrmCommitStatus::RollbackFailed
@@ -986,7 +986,7 @@ ConfigurationResult DisplayRuntime::configureExact(const DisplayConfiguration &c
                     std::nullopt};
         }
     }
-    return cutefish::display::ConfigurationResult {true, false, {}, std::nullopt};
+    return properdesktop::display::ConfigurationResult {true, false, {}, std::nullopt};
 }
 
 ConfigurationResult DisplayRuntime::setPower(const std::vector<DisplayId> &displays,
@@ -1143,13 +1143,13 @@ void DisplayRuntime::publish()
     // The empty baseline between a reprobe and its configuration disables no
     // display, so no global is withdrawn.
     const bool baseline = displayManager.applied()->logicalDisplays.empty();
-    std::vector<cutefish::compositor::Compositor::OutputView> views;
+    std::vector<properdesktop::compositor::Compositor::OutputView> views;
     std::vector<base::Rect> topology;
     std::set<std::string> logicalViews;
     base::Rect desktop;
     for (int index = 0; index < models.size(); ++index) {
         auto *model = models.at(index);
-        const cutefish::display::DisplayId destination(models.at(index)->displayId);
+        const properdesktop::display::DisplayId destination(models.at(index)->displayId);
         for (const auto &physical : displayManager.applied()->physicalDisplays) {
             if (physical.sessionId == destination && physical.currentMode) {
                 model->pixelSize = physical.currentMode->pixelSize;
@@ -1157,7 +1157,7 @@ void DisplayRuntime::publish()
                 model->preferred = physical.currentMode->preferred;
             }
         }
-        const cutefish::display::LogicalDisplay *logical = nullptr;
+        const properdesktop::display::LogicalDisplay *logical = nullptr;
         for (const auto &candidate : displayManager.applied()->logicalDisplays) {
             if (candidate.hasDestination(destination)) {
                 logical = &candidate;
@@ -1173,7 +1173,7 @@ void DisplayRuntime::publish()
         if (!published && !baseline && index < int(outputGlobals.size()) && outputGlobals[index]) {
             if (outputGlobal == outputGlobals[index])
                 outputGlobal = nullptr;
-            cutefish::wayland::removeOutputGlobal(outputGlobals[index]);
+            properdesktop::wayland::removeOutputGlobal(outputGlobals[index]);
             outputGlobals[index] = nullptr;
         }
         if (!logical)
@@ -1181,7 +1181,7 @@ void DisplayRuntime::publish()
         model->logicalExtent = logical->bounds.size();
         model->position = logical->bounds.topLeft();
         model->scale = logical->scale;
-        model->transform = static_cast<cutefish::compositor::Output::Transform>(logical->rotation);
+        model->transform = static_cast<properdesktop::compositor::Output::Transform>(logical->rotation);
         const auto mapping = displayManager.mappingFor(destination);
         assert(mapping);
         model->renderScale = mapping->renderScale;
@@ -1193,9 +1193,9 @@ void DisplayRuntime::publish()
         }
         desktop = desktop.united(bounds);
         if (published && index < int(outputGlobals.size()) && !outputGlobals[index])
-            outputGlobals[index] = cutefish::wayland::createOutputGlobal(waylandDisplay, model);
+            outputGlobals[index] = properdesktop::wayland::createOutputGlobal(waylandDisplay, model);
         if (published && index < int(outputGlobals.size()))
-            cutefish::wayland::updateOutputGlobal(outputGlobals[index], model);
+            properdesktop::wayland::updateOutputGlobal(outputGlobals[index], model);
     }
     for (auto *global : outputGlobals) {
         if (global) {
@@ -1217,11 +1217,11 @@ void DisplayRuntime::publish()
     if (startupCover)
         startupCover->setGeometry(base::Rect(desktop.size()));
     if (cursorRouter && backend) {
-        std::vector<cutefish::cursor::OutputCursorRouter::Target> targets;
+        std::vector<properdesktop::cursor::OutputCursorRouter::Target> targets;
         for (int index = 0; index < models.size() && index < int(backend->allOutputs().size());
              ++index) {
-            const cutefish::display::DisplayId destination(models.at(index)->displayId);
-            const cutefish::display::LogicalDisplay *logical = nullptr;
+            const properdesktop::display::DisplayId destination(models.at(index)->displayId);
+            const properdesktop::display::LogicalDisplay *logical = nullptr;
             for (const auto &candidate : displayManager.applied()->logicalDisplays) {
                 if (candidate.hasDestination(destination)) {
                     logical = &candidate;
@@ -1238,7 +1238,7 @@ void DisplayRuntime::publish()
         bool uniform = primary != nullptr;
         for (const auto &logical : displayManager.applied()->logicalDisplays) {
             uniform &= primary && logical.scale == primary->scale
-                    && logical.rotation == cutefish::display::DisplayRotation::Normal
+                    && logical.rotation == properdesktop::display::DisplayRotation::Normal
                     && logical.destinations.size() == 1;
         }
         cursor.setSink(uniform ? cursorRouter : nullptr);
@@ -1247,6 +1247,6 @@ void DisplayRuntime::publish()
     }
     updatingOutput = false;
     for (auto *global : outputGlobals)
-        cutefish::wayland::updateOutputMembership(global);
+        properdesktop::wayland::updateOutputMembership(global);
 }
-} // namespace cutefish::display
+} // namespace properdesktop::display

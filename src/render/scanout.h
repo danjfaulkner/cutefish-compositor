@@ -6,8 +6,8 @@
 //           (GbmPixmap::framebuffer(), the framebuffer cached on the buffer)
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_RENDER_SCANOUT_H_
-#define CUTEFISH_RENDER_SCANOUT_H_
+#ifndef PROPERDESKTOP_RENDER_SCANOUT_H_
+#define PROPERDESKTOP_RENDER_SCANOUT_H_
 
 #include <memory>
 #include <utility>
@@ -16,7 +16,7 @@
 #include "render/dmabuf.h"
 #include "render/sync_fence.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // Importing for scanout must not disturb the renderer's EGLImage import or the
 // plane fds either import holds.
@@ -76,6 +76,6 @@ private:
     std::vector<std::pair<const void*, std::unique_ptr<Import>>> m_imports;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_SCANOUT_H_
+#endif // PROPERDESKTOP_RENDER_SCANOUT_H_

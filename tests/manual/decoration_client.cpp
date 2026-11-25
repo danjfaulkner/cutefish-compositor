@@ -78,7 +78,7 @@ Buffer createBuffer(Client* client, int width, int height)
     const int stride = width * 4;
     buffer.bytes = static_cast<size_t>(stride) * height;
 
-    const int fd = memfd_create("cutefish-decoration-demo", MFD_CLOEXEC);
+    const int fd = memfd_create("properdesktop-decoration-demo", MFD_CLOEXEC);
     if (fd < 0 || ftruncate(fd, static_cast<off_t>(buffer.bytes)) != 0) {
         if (fd >= 0)
             close(fd);
@@ -326,7 +326,7 @@ void runScriptStep(Client* client)
     switch (client->scriptStep++) {
     case 0:
         printf("script: set_title\n");
-        xdg_toplevel_set_title(client->toplevel, "Cutefish decoration demo");
+        xdg_toplevel_set_title(client->toplevel, "Proper Desktop decoration demo");
         break;
     case 1:
         printf("script: set_maximized\n");
@@ -430,8 +430,8 @@ int main(int argc, char** argv)
     xdg_surface_add_listener(client.xdgSurface, &surfaceListener, &client);
     client.toplevel = xdg_surface_get_toplevel(client.xdgSurface);
     xdg_toplevel_add_listener(client.toplevel, &toplevelListener, &client);
-    xdg_toplevel_set_title(client.toplevel, "Cutefish decoration demo");
-    xdg_toplevel_set_app_id(client.toplevel, "org.cutefish.DecorationDemo");
+    xdg_toplevel_set_title(client.toplevel, "Proper Desktop decoration demo");
+    xdg_toplevel_set_app_id(client.toplevel, "org.properdesktop.DecorationDemo");
     xdg_toplevel_set_min_size(client.toplevel, 240, 160);
 
     // Before the first buffer: the protocol forbids attaching one to a toplevel

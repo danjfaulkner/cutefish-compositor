@@ -4,7 +4,7 @@
 
 #include "render/rounded_shape.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 bool s_continuousCorners = true;
@@ -20,4 +20,4 @@ void setContinuousCorners(bool continuous)
     s_continuousCorners = continuous;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

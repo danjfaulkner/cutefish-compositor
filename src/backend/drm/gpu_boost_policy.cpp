@@ -4,7 +4,7 @@
 
 #include "backend/drm/gpu_boost_policy.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 void GpuBoostPolicy::compositorFrame(Time now)
 {
@@ -40,4 +40,4 @@ std::optional<GpuBoostPolicy::Time> GpuBoostPolicy::releaseTime() const
     return m_holdUntil;
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

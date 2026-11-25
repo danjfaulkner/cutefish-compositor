@@ -11,7 +11,7 @@
 #include "base/geometry.h"
 #include "ui/bitmap.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

@@ -13,7 +13,7 @@
 #include "input/key_translator.h"
 #include "ui/event.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 std::string menuShortcutText(const std::string &key, uint32_t modifiers, input::ShortcutConvention convention,
                              bool terminal, bool bindsCommand, const AcceleratorConfiguration *configuration)
@@ -64,4 +64,4 @@ std::string menuShortcutText(const std::string &key, uint32_t modifiers, input::
     return text;
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

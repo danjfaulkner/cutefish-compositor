@@ -13,11 +13,11 @@
 #include "render/cursor_sink.h"
 #include "scene/node.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
 }
 
-namespace cutefish::cursor {
+namespace properdesktop::cursor {
 
 class Cursor final : public input::SeatObserver
 {
@@ -70,4 +70,4 @@ private:
     ImageNode *m_node;
 };
 
-} // namespace cutefish::cursor
+} // namespace properdesktop::cursor

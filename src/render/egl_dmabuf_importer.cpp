@@ -14,7 +14,7 @@
 #include "core/logging.h"
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 
@@ -222,4 +222,4 @@ std::shared_ptr<Texture> EglDmaBufImporter::import(const DmaBufAttributes &attri
     return texture;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

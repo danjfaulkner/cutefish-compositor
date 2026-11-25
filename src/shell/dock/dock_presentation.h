@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_DOCK_DOCK_PRESENTATION_H_
-#define CUTEFISH_SHELL_DOCK_DOCK_PRESENTATION_H_
+#ifndef PROPERDESKTOP_SHELL_DOCK_DOCK_PRESENTATION_H_
+#define PROPERDESKTOP_SHELL_DOCK_DOCK_PRESENTATION_H_
 
 #include <cstdint>
 #include <functional>
@@ -12,7 +12,7 @@
 
 #include "ui/frame_client.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class DockPresentation : public ui::FrameClient
 {
@@ -132,6 +132,6 @@ private:
     bool m_placeholderPinned = true;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_DOCK_DOCK_PRESENTATION_H_
+#endif // PROPERDESKTOP_SHELL_DOCK_DOCK_PRESENTATION_H_

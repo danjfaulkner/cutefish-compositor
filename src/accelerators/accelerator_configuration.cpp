@@ -14,7 +14,7 @@
 #include "core/logging.h"
 #include "core/preferences.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 namespace {
 
@@ -623,4 +623,4 @@ int AcceleratorConfiguration::totalNumberOfModifications() const
     return count;
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

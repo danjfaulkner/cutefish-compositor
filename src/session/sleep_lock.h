@@ -8,7 +8,7 @@
 #include "base/timer.h"
 #include "session/session_state.h"
 
-namespace cutefish::session {
+namespace properdesktop::session {
 class SessionController;
 
 // A logind delay inhibitor holds sleep back until the lock is on every output, so
@@ -47,4 +47,4 @@ private:
     bool m_lockedHint = false;
     bool m_started = false;
 };
-} // namespace cutefish::session
+} // namespace properdesktop::session

@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ash/accelerators/accelerator_controller_impl.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_CONTROLLER_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_CONTROLLER_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_CONTROLLER_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_CONTROLLER_H_
 
 #include <functional>
 #include <memory>
@@ -21,7 +21,7 @@
 #include "accelerators/accelerator_history.h"
 #include "base/signal.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 class AcceleratorConfiguration;
 
@@ -97,6 +97,6 @@ private:
     base::Subscription m_configurationUpdates;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_CONTROLLER_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_CONTROLLER_H_

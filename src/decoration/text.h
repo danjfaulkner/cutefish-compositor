@@ -7,8 +7,8 @@
 //           chromium/src/ui/gfx/font_fallback_linux.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_DECORATION_TEXT_H_
-#define CUTEFISH_DECORATION_TEXT_H_
+#ifndef PROPERDESKTOP_DECORATION_TEXT_H_
+#define PROPERDESKTOP_DECORATION_TEXT_H_
 
 #include <memory>
 #include <string>
@@ -18,7 +18,7 @@
 
 #include "decoration/raster.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 // Owned by the decoration theme on the compositor thread.
 class TextRenderer
@@ -41,6 +41,6 @@ private:
     std::unique_ptr<Impl> m_impl;
 };
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-#endif // CUTEFISH_DECORATION_TEXT_H_
+#endif // PROPERDESKTOP_DECORATION_TEXT_H_

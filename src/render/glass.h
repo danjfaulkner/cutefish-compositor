@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_RENDER_GLASS_H_
-#define CUTEFISH_RENDER_GLASS_H_
+#ifndef PROPERDESKTOP_RENDER_GLASS_H_
+#define PROPERDESKTOP_RENDER_GLASS_H_
 
 #include <algorithm>
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // Lengths are logical pixels and angles degrees; the defaults are the shell
 // panel material.
@@ -95,6 +95,6 @@ inline bool operator!=(const GlassParams &a, const GlassParams &b)
     return !(a == b);
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_GLASS_H_
+#endif // PROPERDESKTOP_RENDER_GLASS_H_

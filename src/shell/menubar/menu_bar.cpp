@@ -9,16 +9,16 @@
 #include "base/locale.h"
 #include "base/logging.h"
 #include "base/settings.h"
-#include "cutefish/powerprofiles/power_profiles.h"
-#include "cutefish/upower/battery_status.h"
+#include "properdesktop/powerprofiles/power_profiles.h"
+#include "properdesktop/upower/battery_status.h"
 #include "shell/common/file_thread.h"
 #include "shell/menubar/clock_format.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfMenuBar("cutefish.shell.menubar");
+static const base::LogCategory cfMenuBar("properdesktop.shell.menubar");
 
 static const char *const kControlKeys[] = {"MenuBar/ShowWiFi", "MenuBar/ShowBattery", "MenuBar/ShowSound",
                                            "MenuBar/ShowBluetooth"};
@@ -46,9 +46,9 @@ MenuBar::MenuBar(dbus::Connection *sessionBus, dbus::Connection *systemBus, Task
 
     if (m_bus) {
         dbus::MatchRule rule;
-        rule.sender = "org.cutefish.Services";
-        rule.path = "/org/cutefish/Services/Language";
-        rule.interface = "org.cutefish.Services.Language";
+        rule.sender = "org.properdesktop.Services";
+        rule.path = "/org/properdesktop/Services/Language";
+        rule.interface = "org.properdesktop.Services.Language";
         rule.member = "languageChanged";
         m_languageChanged = m_bus->subscribe(rule, [this](const dbus::Message &) { reloadLanguage(); });
     }
@@ -78,7 +78,7 @@ MenuBar::MenuBar(dbus::Connection *sessionBus, dbus::Connection *systemBus, Task
 MenuBar::~MenuBar()
 {
     if (m_object && m_bus)
-        m_bus->releaseName("org.cutefish.MenuBar");
+        m_bus->releaseName("org.properdesktop.MenuBar");
 }
 
 bool MenuBar::registerServices()
@@ -86,7 +86,7 @@ bool MenuBar::registerServices()
     if (!m_object) {
         if (!m_bus)
             return false;
-        auto object = std::make_unique<dbus::Object>(m_bus, "/MenuBar", "org.cutefish.MenuBar");
+        auto object = std::make_unique<dbus::Object>(m_bus, "/MenuBar", "org.properdesktop.MenuBar");
         object->addMethod("setBatteryPercentage", [this](bool enabled) { m_battery->setShowPercentage(enabled); },
                           dbus::ArgumentNames{{"batteryPercentage"}, {}});
         object->addMethod(
@@ -119,8 +119,8 @@ bool MenuBar::registerServices()
         object->addMethod("requestLogout", [this] { m_powerActions.request(PowerActions::Logout); });
         object->addMethod("requestReboot", [this] { m_powerActions.request(PowerActions::Reboot); });
         object->addMethod("requestShutdown", [this] { m_powerActions.request(PowerActions::Shutdown); });
-        if (!object->publish() || !m_bus->requestName("org.cutefish.MenuBar", dbus::Connection::DoNotQueue)) {
-            CF_WARNING(cfMenuBar) << "Cannot own org.cutefish.MenuBar";
+        if (!object->publish() || !m_bus->requestName("org.properdesktop.MenuBar", dbus::Connection::DoNotQueue)) {
+            CF_WARNING(cfMenuBar) << "Cannot own org.properdesktop.MenuBar";
             return false;
         }
         m_object = std::move(object);
@@ -201,4 +201,4 @@ void MenuBar::updateTimeFormat()
     timeFormatChanged();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

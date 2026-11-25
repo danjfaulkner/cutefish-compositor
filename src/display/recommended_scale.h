@@ -9,9 +9,9 @@
 
 #include "display/display_types.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 // Snapped to the steps Settings offers.
 compositor::OutputScale recommendedScale(const DisplaySnapshot &display);
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

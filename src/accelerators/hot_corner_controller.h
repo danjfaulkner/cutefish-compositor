@@ -11,11 +11,11 @@
 #include "accelerators/hot_corner_settings.h"
 #include "base/geometry.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 // Only the outer corners of the whole layout count. A corner fires once per visit.
 class HotCornerController
@@ -53,4 +53,4 @@ private:
     base::PointF m_lastPosition {-1e9, -1e9};
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

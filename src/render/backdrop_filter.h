@@ -14,7 +14,7 @@
 #include "render/shape_mask.h"
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class BackdropFilter
 {
@@ -140,4 +140,4 @@ private:
     Color m_opaqueColor;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

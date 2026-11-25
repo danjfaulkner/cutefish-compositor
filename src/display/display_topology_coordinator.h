@@ -11,7 +11,7 @@
 #include <functional>
 #include <memory>
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayTopologyCoordinator
 {
@@ -49,4 +49,4 @@ private:
     uint64_t m_revision = 0;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

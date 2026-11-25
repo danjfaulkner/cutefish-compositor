@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/display.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_COMPOSITOR_COMPOSITOR_H_
-#define CUTEFISH_COMPOSITOR_COMPOSITOR_H_
+#ifndef PROPERDESKTOP_COMPOSITOR_COMPOSITOR_H_
+#define PROPERDESKTOP_COMPOSITOR_COMPOSITOR_H_
 
 #include <cstdint>
 #include <memory>
@@ -20,19 +20,19 @@
 
 #include "compositor/output_scale.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class DmaBufDevice;
 class PresentationSubmission;
 class Renderer;
 struct DmaBufAttributes;
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 class SurfaceNode;
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 class Buffer;
 class ShmPool;
@@ -153,6 +153,6 @@ private:
     int m_placementIndex = 0;
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-#endif // CUTEFISH_COMPOSITOR_COMPOSITOR_H_
+#endif // PROPERDESKTOP_COMPOSITOR_COMPOSITOR_H_

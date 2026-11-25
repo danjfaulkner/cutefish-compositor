@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TESTS_PIXEL_TEST_UTIL_H_
-#define CUTEFISH_TESTS_PIXEL_TEST_UTIL_H_
+#ifndef PROPERDESKTOP_TESTS_PIXEL_TEST_UTIL_H_
+#define PROPERDESKTOP_TESTS_PIXEL_TEST_UTIL_H_
 
 #include <GLES3/gl3.h>
 
@@ -12,7 +12,7 @@
 #include "base/geometry.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 // Bitmap::pixel() values: 0xAARRGGBB.
 constexpr uint32_t kRed = 0xffff0000;
@@ -55,6 +55,6 @@ inline ui::Bitmap readFramebuffer(const base::Size &size)
     return image;
 }
 
-} // namespace cutefish::test
+} // namespace properdesktop::test
 
-#endif // CUTEFISH_TESTS_PIXEL_TEST_UTIL_H_
+#endif // PROPERDESKTOP_TESTS_PIXEL_TEST_UTIL_H_

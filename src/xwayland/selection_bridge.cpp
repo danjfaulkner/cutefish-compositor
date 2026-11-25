@@ -19,7 +19,7 @@
 
 #include "clipboard/stored_source.h"
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 namespace {
 constexpr uint32_t chunkSize = 64 * 1024;
 constexpr size_t transferLimit = 64;
@@ -170,7 +170,7 @@ void SelectionBridge::start(uint8_t eventBase)
     static constexpr const char *names[] = {"CLIPBOARD",     "CLIPBOARD_MANAGER",
                                             "TARGETS",       "TIMESTAMP",
                                             "UTF8_STRING",   "TEXT",
-                                            "INCR",          "_CUTEFISH_SELECTION",
+                                            "INCR",          "_PROPERDESKTOP_SELECTION",
                                             "SAVE_TARGETS",  "XdndSelection"};
     for (auto name : names) {
         poll(xcb_intern_atom(m_connection, 0, strlen(name), name).sequence, [this, name](void *p) {
@@ -267,7 +267,7 @@ void SelectionBridge::discover(xcb_timestamp_t time)
     m_transfers[{window, XCB_ATOM_NONE}] = std::move(transfer);
     // A unique requestor prevents delayed conversions from matching a newer owner.
     xcb_convert_selection(m_connection, window, selection(), atom("TARGETS"),
-                          atom("_CUTEFISH_SELECTION"), time);
+                          atom("_PROPERDESKTOP_SELECTION"), time);
     auto source = std::make_shared<Source>();
     source->bridge = m_weakFactory.getWeakPtr();
     source->generation = generation;
@@ -295,7 +295,7 @@ void SelectionBridge::receive(xcb_atom_t target, int fd, uint64_t generation,
     });
     transfer->timer = transferTimeout([this, window] { finish(window); });
     m_transfers[{window, XCB_ATOM_NONE}] = std::move(transfer);
-    xcb_convert_selection(m_connection, window, selection(), target, atom("_CUTEFISH_SELECTION"),
+    xcb_convert_selection(m_connection, window, selection(), target, atom("_PROPERDESKTOP_SELECTION"),
                           time ? time : m_timestamp);
     xcb_flush(m_connection);
 }
@@ -324,7 +324,7 @@ void SelectionBridge::readProperty(xcb_window_t window)
     it->second->pending = true;
     const auto generation = it->second->generation;
     const auto propertyOffset = it->second->propertyOffset;
-    poll(xcb_get_property(m_connection, 0, window, atom("_CUTEFISH_SELECTION"), XCB_ATOM_ANY,
+    poll(xcb_get_property(m_connection, 0, window, atom("_PROPERDESKTOP_SELECTION"), XCB_ATOM_ANY,
                           propertyOffset, chunkSize / 4)
                  .sequence,
          [this, window, generation](void *p) {
@@ -389,7 +389,7 @@ void SelectionBridge::readProperty(xcb_window_t window)
              if (r->type == atom("INCR") && !t.incremental && r->format == 32
                  && r->value_len == 1) {
                  t.incremental = true;
-                 xcb_delete_property(m_connection, window, atom("_CUTEFISH_SELECTION"));
+                 xcb_delete_property(m_connection, window, atom("_PROPERDESKTOP_SELECTION"));
                  return;
              }
              if (r->format != 8) {
@@ -443,7 +443,7 @@ void SelectionBridge::writePipe(xcb_window_t window)
         finish(window, XCB_ATOM_NONE, true);
         return;
     }
-    xcb_delete_property(m_connection, window, atom("_CUTEFISH_SELECTION"));
+    xcb_delete_property(m_connection, window, atom("_PROPERDESKTOP_SELECTION"));
     xcb_flush(m_connection);
 }
 
@@ -761,7 +761,7 @@ bool SelectionBridge::event(xcb_generic_event_t *generic)
             return false;
         if (e->selection != selection() || e->target != it->second->target)
             return true;
-        if (e->property == atom("_CUTEFISH_SELECTION"))
+        if (e->property == atom("_PROPERDESKTOP_SELECTION"))
             readProperty(e->requestor);
         else
             finish(e->requestor);
@@ -770,7 +770,7 @@ bool SelectionBridge::event(xcb_generic_event_t *generic)
     if (type == XCB_PROPERTY_NOTIFY) {
         auto *e = reinterpret_cast<xcb_property_notify_event_t *>(generic);
         auto it = m_transfers.find({e->window, XCB_ATOM_NONE});
-        if (it != m_transfers.end() && e->atom == atom("_CUTEFISH_SELECTION")) {
+        if (it != m_transfers.end() && e->atom == atom("_PROPERDESKTOP_SELECTION")) {
             if (e->state == XCB_PROPERTY_NEW_VALUE && it->second->incremental)
                 readProperty(e->window);
             return true;
@@ -794,4 +794,4 @@ bool SelectionBridge::event(xcb_generic_event_t *generic)
     return false;
 }
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

@@ -7,7 +7,7 @@
 #include <functional>
 #include <wayland-server-core.h>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 struct WaylandSeat;
 
@@ -36,4 +36,4 @@ private:
     wl_global* m_wlr;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

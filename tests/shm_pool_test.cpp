@@ -17,10 +17,10 @@
 #include "compositor/shm_pool.h"
 #include "shm_test_util.h"
 
-using namespace cutefish;
-using namespace cutefish::compositor;
-using cutefish::testsupport::makeMemfd;
-using cutefish::testsupport::makePool;
+using namespace properdesktop;
+using namespace properdesktop::compositor;
+using properdesktop::testsupport::makeMemfd;
+using properdesktop::testsupport::makePool;
 
 namespace {
 

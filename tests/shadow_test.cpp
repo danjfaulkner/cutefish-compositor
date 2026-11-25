@@ -18,8 +18,8 @@
 #include "ui/path.h"
 #include "wm/shadow_types.h"
 
-using namespace cutefish;
-using namespace cutefish::decoration;
+using namespace properdesktop;
+using namespace properdesktop::decoration;
 
 namespace {
 

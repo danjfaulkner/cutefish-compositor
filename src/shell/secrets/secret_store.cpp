@@ -12,13 +12,13 @@
 #include "base/event_loop.h"
 #include "core/main_loop.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 using namespace std::chrono_literals;
 using base::dbus::ObjectPath;
 using base::dbus::Variant;
 
-static const base::LogCategory cfSecrets("cutefish.shell.secrets");
+static const base::LogCategory cfSecrets("properdesktop.shell.secrets");
 
 static const std::string kService = "org.freedesktop.secrets";
 static const std::string kServicePath = "/org/freedesktop/secrets";
@@ -348,4 +348,4 @@ void SecretStore::prompt(const std::string &prompt, std::function<void(bool dism
     });
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

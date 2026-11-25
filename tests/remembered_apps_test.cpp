@@ -13,7 +13,7 @@
 
 #include "computer_control/remembered_apps.h"
 
-using namespace cutefish::computer_control;
+using namespace properdesktop::computer_control;
 
 namespace {
 

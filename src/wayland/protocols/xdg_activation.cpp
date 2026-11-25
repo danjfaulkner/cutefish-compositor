@@ -17,7 +17,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 constexpr size_t kMaxTokens = 128;
@@ -239,4 +239,4 @@ wl_global *createXdgActivationGlobal(wl_display *display, WaylandXdgActivation *
     return wl_global_create(display, &xdg_activation_v1_interface, 1, activation, bind);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -20,7 +20,7 @@
 #include "wm/window_manager.h"
 #include "toolkit/compositor_colors.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static ui::Color bannerSurface()
 {
@@ -288,4 +288,4 @@ void NotificationPopups::positionPopups()
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_MENU_BAR_PANELS_H_
-#define CUTEFISH_SHELL_MENUBAR_MENU_BAR_PANELS_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_PANELS_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_PANELS_H_
 
 #include <string>
 
 #include "base/geometry.h"
 #include "base/signal.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ShellWindow;
 
@@ -77,6 +77,6 @@ public:
     base::Signal<> changed;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_MENU_BAR_PANELS_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_PANELS_H_

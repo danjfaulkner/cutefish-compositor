@@ -18,7 +18,7 @@
 #include "base/timer.h"
 #include "core/main_loop.h"
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 
 namespace {
 
@@ -97,4 +97,4 @@ void StoredSource::send(const std::string &mime, int fd)
     new Writer(*core::mainLoop(), fd, it->second);
 }
 
-} // namespace cutefish::clipboard
+} // namespace properdesktop::clipboard

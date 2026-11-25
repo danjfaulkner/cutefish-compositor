@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_WINDOW_SHADOW_H_
-#define CUTEFISH_WM_WINDOW_SHADOW_H_
+#ifndef PROPERDESKTOP_WM_WINDOW_SHADOW_H_
+#define PROPERDESKTOP_WM_WINDOW_SHADOW_H_
 
 #include <memory>
 
 #include "base/geometry.h"
 #include "wm/shadow_types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 
@@ -42,6 +42,6 @@ public:
     virtual std::unique_ptr<WindowShadow> createShadow(Window* window) = 0;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WINDOW_SHADOW_H_
+#endif // PROPERDESKTOP_WM_WINDOW_SHADOW_H_

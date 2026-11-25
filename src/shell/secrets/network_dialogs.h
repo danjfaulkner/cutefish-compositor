@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SECRETS_NETWORK_DIALOGS_H_
-#define CUTEFISH_SHELL_SECRETS_NETWORK_DIALOGS_H_
+#ifndef PROPERDESKTOP_SHELL_SECRETS_NETWORK_DIALOGS_H_
+#define PROPERDESKTOP_SHELL_SECRETS_NETWORK_DIALOGS_H_
 
 #include <string>
 #include <vector>
@@ -11,12 +11,12 @@
 #include "shell/secrets/network_secret_agent.h"
 #include "shell/secrets/secret_dialog.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class CheckBox;
 class TextField;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Connect stays off until the field holds a valid WEP key or WPA passphrase.
 class WirelessPasswordDialog final : public SecretDialog
@@ -81,6 +81,6 @@ private:
     ui::CheckBox *m_show = nullptr;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SECRETS_NETWORK_DIALOGS_H_
+#endif // PROPERDESKTOP_SHELL_SECRETS_NETWORK_DIALOGS_H_

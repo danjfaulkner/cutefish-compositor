@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <utility>
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 
 bool DataSource::offer(const std::string &mime)
 {
@@ -196,4 +196,4 @@ void DataOffer::receive(const std::string &mime, int fd)
     source->send(mime, fd);
 }
 
-} // namespace cutefish::clipboard
+} // namespace properdesktop::clipboard

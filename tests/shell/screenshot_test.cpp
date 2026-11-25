@@ -47,7 +47,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -109,7 +109,7 @@ protected:
 
     void SetUp() override
     {
-        shell::setShellDataDirectoryForTesting(CUTEFISH_SOURCE_DIR "/data/shell");
+        shell::setShellDataDirectoryForTesting(PROPERDESKTOP_SOURCE_DIR "/data/shell");
         scene.setSize(kOutput.size());
         manager.setOutputBounds(kOutput);
         input.setBounds(kOutput.size());
@@ -223,7 +223,7 @@ protected:
 
 } // namespace
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ScreenCaptureTestAccess
 {
@@ -236,7 +236,7 @@ public:
     static bool expiryPending(const ScreenCapture &capture) { return capture.m_overlayExpiry.isActive(); }
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
 TEST_F(ScreenshotTest, CaptureModeCoversTheOutputWithTheToolbarAndASelection)
 {
@@ -600,7 +600,7 @@ TEST_F(ScreenshotTest, ARecordingGoesOnWithoutTheOverlays)
     EXPECT_TRUE(test::runUntil([&] { return !capture->isRecording(); }));
 }
 
-TEST_F(ScreenshotTest, ServesOrgCutefishScreenshot)
+TEST_F(ScreenshotTest, ServesOrgProperDesktopScreenshot)
 {
     base::dbus::Connection *bus = base::dbus::Connection::session(core::mainLoop());
     ASSERT_NE(nullptr, bus);
@@ -608,22 +608,22 @@ TEST_F(ScreenshotTest, ServesOrgCutefishScreenshot)
     ASSERT_TRUE(capture->registerService());
 
     test::DBusTestClient client;
-    const std::string xml = client.introspect("org.cutefish.Screenshot", "/Screenshot");
-    EXPECT_NE(std::string::npos, xml.find("<interface name=\"org.cutefish.Screenshot\">")) << xml;
+    const std::string xml = client.introspect("org.properdesktop.Screenshot", "/Screenshot");
+    EXPECT_NE(std::string::npos, xml.find("<interface name=\"org.properdesktop.Screenshot\">")) << xml;
     EXPECT_NE(std::string::npos, xml.find("name=\"toClipboard\"")) << xml;
     EXPECT_NE(std::string::npos, xml.find("name=\"recording\"")) << xml;
-    EXPECT_FALSE(client.getProperty("org.cutefish.Screenshot", "/Screenshot", "org.cutefish.Screenshot", "recording")
+    EXPECT_FALSE(client.getProperty("org.properdesktop.Screenshot", "/Screenshot", "org.properdesktop.Screenshot", "recording")
                          .value<base::dbus::Variant>()
                          ->value<bool>(true));
 
-    client.call("org.cutefish.Screenshot", "/Screenshot", "org.cutefish.Screenshot", "startCaptureMode");
+    client.call("org.properdesktop.Screenshot", "/Screenshot", "org.properdesktop.Screenshot", "startCaptureMode");
     EXPECT_TRUE(capture->isActive());
-    client.call("org.cutefish.Screenshot", "/Screenshot", "org.cutefish.Screenshot", "startCaptureMode");
+    client.call("org.properdesktop.Screenshot", "/Screenshot", "org.properdesktop.Screenshot", "startCaptureMode");
     EXPECT_FALSE(capture->isActive());
-    client.call("org.cutefish.Screenshot", "/Screenshot", "org.cutefish.Screenshot", "takePartialScreenshot", true);
+    client.call("org.properdesktop.Screenshot", "/Screenshot", "org.properdesktop.Screenshot", "takePartialScreenshot", true);
     EXPECT_TRUE(capture->isActive());
     EXPECT_FALSE(capture->isToolbarStyle());
-    client.call("org.cutefish.Screenshot", "/Screenshot", "org.cutefish.Screenshot", "takeScreenshot", true);
+    client.call("org.properdesktop.Screenshot", "/Screenshot", "org.properdesktop.Screenshot", "takeScreenshot", true);
     EXPECT_FALSE(capture->isActive());
     ASSERT_TRUE(test::runUntil([this] { return seat.selection()->source() != nullptr; }));
     EXPECT_EQ("outputs 1", grabber->calls.back());
@@ -692,7 +692,7 @@ TEST(ScreenshotHelpers, TheRecorderIsToldWhatToRecord)
     shell::ScreenRecording::Target window;
     window.window = 42;
     window.cursor = false;
-    EXPECT_EQ((std::vector<std::string> {"--window", "cutefish-42", "/tmp/b.mp4"}),
+    EXPECT_EQ((std::vector<std::string> {"--window", "properdesktop-42", "/tmp/b.mp4"}),
               shell::ScreenRecording::arguments(window, "/tmp/b.mp4"));
 }
 

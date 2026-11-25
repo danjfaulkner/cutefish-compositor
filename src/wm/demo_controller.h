@@ -4,8 +4,8 @@
 
 // Development-only WM controls, installed only by explicit demo options.
 
-#ifndef CUTEFISH_WM_DEMO_CONTROLLER_H_
-#define CUTEFISH_WM_DEMO_CONTROLLER_H_
+#ifndef PROPERDESKTOP_WM_DEMO_CONTROLLER_H_
+#define PROPERDESKTOP_WM_DEMO_CONTROLLER_H_
 
 #include <functional>
 #include <vector>
@@ -14,11 +14,11 @@
 #include "base/timer.h"
 #include "input/event_sink.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class InputManager;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 class WindowManager;
@@ -64,6 +64,6 @@ private:
     base::Timer m_scriptTimer;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_DEMO_CONTROLLER_H_
+#endif // PROPERDESKTOP_WM_DEMO_CONTROLLER_H_

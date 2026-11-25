@@ -13,7 +13,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 bool canIncludeWindowInMruList(const Window *window)
 {
@@ -97,4 +97,4 @@ void MruWindowTracker::setActiveWindow(Window *window)
     m_mruWindows.push_back(window);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

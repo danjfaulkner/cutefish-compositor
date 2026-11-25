@@ -12,7 +12,7 @@
 #include "wayland/protocols/wayland_pointer_delegate.h"
 #include "wayland/protocols/wl_seat.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -110,4 +110,4 @@ wl_global* createCursorShapeGlobal(wl_display* display)
                             bindManager);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

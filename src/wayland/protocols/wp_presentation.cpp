@@ -16,7 +16,7 @@
 #include "compositor/surface.h"
 #include "wayland/protocols/wl_output.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 struct Feedback {
@@ -92,4 +92,4 @@ wl_global* createPresentationGlobal(wl_display* display)
     return wl_global_create(display, &wp_presentation_interface, 1, nullptr, bind);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

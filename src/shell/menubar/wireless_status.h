@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_WIRELESS_STATUS_H_
-#define CUTEFISH_SHELL_MENUBAR_WIRELESS_STATUS_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_WIRELESS_STATUS_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_WIRELESS_STATUS_H_
 
 #include <memory>
 #include <string>
@@ -12,12 +12,12 @@
 #include "base/signal.h"
 #include "shell/menubar/menu_bar_panels.h"
 
-namespace cutefish::networkmanager {
+namespace properdesktop::networkmanager {
 class Client;
 class Handler;
-} // namespace cutefish::networkmanager
+} // namespace properdesktop::networkmanager
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class WirelessStatus
 {
@@ -45,6 +45,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_WIRELESS_STATUS_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_WIRELESS_STATUS_H_

@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <iterator>
 
-namespace cutefish::scene::motion {
+namespace properdesktop::scene::motion {
 
 void FingerTrack::add(double timeMs, double position)
 {
@@ -103,4 +103,4 @@ double FingerTrack::predictionEnd() const
                                     : newest.timeMs + std::min(kResampleMaxPredictionMs, dt / 2);
 }
 
-} // namespace cutefish::scene::motion
+} // namespace properdesktop::scene::motion

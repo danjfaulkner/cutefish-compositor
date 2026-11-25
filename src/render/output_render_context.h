@@ -12,7 +12,7 @@
 #include <string>
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 struct OutputRenderContext {
     std::string outputId;
@@ -24,4 +24,4 @@ struct OutputRenderContext {
     base::Rect nativeContentRect;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

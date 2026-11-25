@@ -6,10 +6,10 @@
 
 #include "base/i18n.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
@@ -52,7 +52,7 @@ void VpnNotifier::vpnFailed(const std::string &name, const std::string &message)
         return;
     dbus::VariantMap hints;
     hints["urgency"] = dbus::Variant(uint8_t(1));
-    hints["desktop-entry"] = dbus::Variant(std::string("cutefish-settings"));
+    hints["desktop-entry"] = dbus::Variant(std::string("properdesktop-settings"));
     // TRANSLATORS: {reason} is a sentence of its own, such as "The VPN service stopped."
     const std::string body = format(tr("“{name}” could not connect. {reason}"), {{"name", name}, {"reason", message}});
     m_calls.track([&](std::function<void()> finished) {
@@ -69,4 +69,4 @@ void VpnNotifier::vpnFailed(const std::string &name, const std::string &message)
     });
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

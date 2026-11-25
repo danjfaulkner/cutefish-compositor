@@ -8,11 +8,11 @@
 #include "core/preferences.h"
 #include "shell/common/file_thread.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfNotificationService("cutefish.shell.notifications.service");
+static const base::LogCategory cfNotificationService("properdesktop.shell.notifications.service");
 
 Notifications::Files Notifications::Files::defaults()
 {
@@ -40,7 +40,7 @@ Notifications::Notifications(dbus::Connection *bus, Applications &applications, 
 Notifications::~Notifications()
 {
     if (m_object && m_bus)
-        m_bus->releaseName("org.cutefish.Notification");
+        m_bus->releaseName("org.properdesktop.Notification");
     waitForFileThread();
 }
 
@@ -51,7 +51,7 @@ bool Notifications::registerServices()
     if (m_object)
         return true;
 
-    auto object = std::make_unique<dbus::Object>(m_bus, "/Notification", "org.cutefish.Notification");
+    auto object = std::make_unique<dbus::Object>(m_bus, "/Notification", "org.properdesktop.Notification");
     object->addMethod("setDoNotDisturb", [this](bool enabled) { m_settings.setDoNotDisturb(enabled); },
                       dbus::ArgumentNames{{"enabled"}, {}});
     object->addMethod("applications", [this] {
@@ -74,12 +74,12 @@ bool Notifications::registerServices()
         CF_WARNING(cfNotificationService) << "Cannot export /Notification";
         return false;
     }
-    if (!m_bus->requestName("org.cutefish.Notification", dbus::Connection::DoNotQueue)) {
-        CF_WARNING(cfNotificationService) << "Cannot own org.cutefish.Notification";
+    if (!m_bus->requestName("org.properdesktop.Notification", dbus::Connection::DoNotQueue)) {
+        CF_WARNING(cfNotificationService) << "Cannot own org.properdesktop.Notification";
         return false;
     }
     m_object = std::move(object);
     return true;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

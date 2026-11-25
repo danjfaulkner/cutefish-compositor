@@ -6,8 +6,8 @@
 // drag-lifecycle half of ash/wm/workspace/workspace_window_resizer.*
 // (revision 7acd40ddefff49c9d36144999aafdbb674dbd07a).
 
-#ifndef CUTEFISH_WM_TOPLEVEL_EVENT_HANDLER_H_
-#define CUTEFISH_WM_TOPLEVEL_EVENT_HANDLER_H_
+#ifndef PROPERDESKTOP_WM_TOPLEVEL_EVENT_HANDLER_H_
+#define PROPERDESKTOP_WM_TOPLEVEL_EVENT_HANDLER_H_
 
 #include <memory>
 #include <optional>
@@ -16,7 +16,7 @@
 #include "base/signal.h"
 #include "wm/window_snap.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class SnapDragController;
 class Window;
@@ -89,6 +89,6 @@ private:
     WindowStateType m_initialStateType = WindowStateType::Normal;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_TOPLEVEL_EVENT_HANDLER_H_
+#endif // PROPERDESKTOP_WM_TOPLEVEL_EVENT_HANDLER_H_

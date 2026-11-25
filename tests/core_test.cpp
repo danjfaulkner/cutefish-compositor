@@ -18,12 +18,12 @@
 #include "core/preferences.h"
 #include "core/process_environment.h"
 
-namespace cutefish {
+namespace properdesktop {
 namespace {
 
 std::optional<core::CompositorOptions> parse(std::vector<std::string> arguments)
 {
-    arguments.insert(arguments.begin(), "cutefish-compositor");
+    arguments.insert(arguments.begin(), "properdesktop-compositor");
     std::vector<char *> argv;
     for (std::string &argument : arguments)
         argv.push_back(argument.data());
@@ -40,7 +40,7 @@ TEST(CompositorOptionsTest, Defaults)
     EXPECT_EQ(options->headlessOutputs, 1);
     EXPECT_EQ(options->readyFd, -1);
     EXPECT_EQ(options->scale.numerator(), 120u);
-    EXPECT_EQ(options->displayConfigService, "org.cutefish.DisplayConfig");
+    EXPECT_EQ(options->displayConfigService, "org.properdesktop.DisplayConfig");
     EXPECT_TRUE(options->clipboardClients.empty());
     EXPECT_TRUE(options->logRules.empty());
 }
@@ -50,7 +50,7 @@ TEST(CompositorOptionsTest, ReadsValuesAndRepeats)
     const auto options = parse({"--socket", "wayland-9", "--no-drm", "--headless-outputs=3",
                                 "--scale", "1.5", "--capture-client", "/a", "--capture-client=/b",
                                 "--login", "--input-method", "fcitx5", "--log-rules",
-                                "cutefish.drm.debug=true"});
+                                "properdesktop.drm.debug=true"});
     ASSERT_TRUE(options);
     EXPECT_EQ(options->socketName, "wayland-9");
     EXPECT_TRUE(options->noDrm);
@@ -59,20 +59,20 @@ TEST(CompositorOptionsTest, ReadsValuesAndRepeats)
     EXPECT_EQ(options->captureClients, (std::vector<std::string> {"/a", "/b"}));
     EXPECT_TRUE(options->login);
     EXPECT_EQ(options->inputMethodId, "fcitx5");
-    EXPECT_EQ(options->logRules, "cutefish.drm.debug=true");
+    EXPECT_EQ(options->logRules, "properdesktop.drm.debug=true");
 }
 
 TEST(CompositorOptionsTest, OnlyThePortalBackendCapturesByItsPath)
 {
     const auto defaults = parse({});
     ASSERT_TRUE(defaults);
-    EXPECT_EQ(core::captureExecutables(*defaults), (std::vector<std::string> {CUTEFISH_PORTAL_BACKEND}));
+    EXPECT_EQ(core::captureExecutables(*defaults), (std::vector<std::string> {PROPERDESKTOP_PORTAL_BACKEND}));
     const auto added = parse({"--capture-client", "/a"});
     ASSERT_TRUE(added);
     const std::vector<std::string> executables = core::captureExecutables(*added);
-    EXPECT_EQ(executables, (std::vector<std::string> {CUTEFISH_PORTAL_BACKEND, "/a"}));
-    for (const std::string &tool : {std::string(CUTEFISH_BINDIR "/cutefish-screenshot"),
-                                    std::string(CUTEFISH_SCREEN_RECORDER)})
+    EXPECT_EQ(executables, (std::vector<std::string> {PROPERDESKTOP_PORTAL_BACKEND, "/a"}));
+    for (const std::string &tool : {std::string(PROPERDESKTOP_BINDIR "/properdesktop-screenshot"),
+                                    std::string(PROPERDESKTOP_SCREEN_RECORDER)})
         EXPECT_EQ(std::find(executables.begin(), executables.end(), tool), executables.end()) << tool;
 }
 
@@ -105,7 +105,7 @@ TEST(LoggingTest, RulesReachTheCategories)
     EXPECT_TRUE(cfDrm.isEnabled(base::LogLevel::Info));
     EXPECT_FALSE(cfDrm.isEnabled(base::LogLevel::Debug));
 
-    core::setLoggingRules("cutefish.drm.debug=true;cutefish.scene=false");
+    core::setLoggingRules("properdesktop.drm.debug=true;properdesktop.scene=false");
     EXPECT_TRUE(cfDrm.isEnabled(base::LogLevel::Debug));
     EXPECT_FALSE(cfScene.isEnabled(base::LogLevel::Warning));
 
@@ -124,7 +124,7 @@ TEST(LoggingTest, TheMacroWritesOneLine)
     CF_INFO(cfWayland) << "started" << 3;
     base::logging::setHandler(nullptr);
     ASSERT_EQ(lines.size(), 1u);
-    EXPECT_EQ(lines.front(), "cutefish.wayland: started 3");
+    EXPECT_EQ(lines.front(), "properdesktop.wayland: started 3");
 }
 
 TEST(PreferencesTest, TestsWriteUnderTheirOwnConfigHome)
@@ -132,28 +132,28 @@ TEST(PreferencesTest, TestsWriteUnderTheirOwnConfigHome)
     const std::string scratch = std::filesystem::path(preferencesDirectory()).parent_path();
     EXPECT_NE(scratch, base::paths::configHome());
 
-    setConfigHomeForTesting("/tmp/cutefish-core-test");
-    EXPECT_EQ(preferencesDirectory(), "/tmp/cutefish-core-test/cutefish");
-    EXPECT_EQ(preferencesFile("compositor"), "/tmp/cutefish-core-test/cutefish/compositor.conf");
+    setConfigHomeForTesting("/tmp/properdesktop-core-test");
+    EXPECT_EQ(preferencesDirectory(), "/tmp/properdesktop-core-test/properdesktop");
+    EXPECT_EQ(preferencesFile("compositor"), "/tmp/properdesktop-core-test/properdesktop/compositor.conf");
 
     setConfigHomeForTesting({});
-    EXPECT_EQ(preferencesFile("shell"), base::paths::configHome() + "/cutefish/shell.conf");
+    EXPECT_EQ(preferencesFile("shell"), base::paths::configHome() + "/properdesktop/shell.conf");
     setConfigHomeForTesting(scratch);
 }
 
 TEST(ProcessEnvironmentTest, ChildrenGetTheCurrentEnvironment)
 {
-    setenv("CUTEFISH_CORE_TEST_SET", "outer", 1);
-    unsetenv("CUTEFISH_CORE_TEST_UNSET");
+    setenv("PROPERDESKTOP_CORE_TEST_SET", "outer", 1);
+    unsetenv("PROPERDESKTOP_CORE_TEST_UNSET");
 
     const std::vector<std::string> child = childEnvironment();
-    EXPECT_EQ(std::count(child.begin(), child.end(), "CUTEFISH_CORE_TEST_SET=outer"), 1);
+    EXPECT_EQ(std::count(child.begin(), child.end(), "PROPERDESKTOP_CORE_TEST_SET=outer"), 1);
     EXPECT_EQ(std::count_if(child.begin(), child.end(), [](const std::string &entry) {
-                  return entry.starts_with("CUTEFISH_CORE_TEST_UNSET=");
+                  return entry.starts_with("PROPERDESKTOP_CORE_TEST_UNSET=");
               }),
               0);
     EXPECT_GT(child.size(), 1u);
 }
 
 } // namespace
-} // namespace cutefish
+} // namespace properdesktop

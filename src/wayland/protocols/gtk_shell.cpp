@@ -16,7 +16,7 @@
 #include "wayland/protocols/dbus_address.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 // Version 2 and later change how GTK tiles, focuses and moves its windows.
@@ -132,4 +132,4 @@ wl_global* createGtkShellGlobal(wl_display* display)
     return wl_global_create(display, &gtk_shell1_interface, kGtkShellVersion, nullptr, bindGtkShell);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

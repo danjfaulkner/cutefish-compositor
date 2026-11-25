@@ -7,12 +7,12 @@
 #include <chrono>
 
 #include "base/logging.h"
-#include "cutefish/networkmanager/client.h"
-#include "cutefish/networkmanager/handler.h"
-#include "cutefish/networkmanager/variants.h"
+#include "properdesktop/networkmanager/client.h"
+#include "properdesktop/networkmanager/handler.h"
+#include "properdesktop/networkmanager/variants.h"
 #include "shell/secrets/secret_store.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 using base::dbus::ObjectPath;
 using base::dbus::Variant;
@@ -20,17 +20,17 @@ using base::dbus::VariantMap;
 using networkmanager::Settings;
 namespace variants = networkmanager::variants;
 
-static const base::LogCategory cfSecrets("cutefish.shell.secrets");
+static const base::LogCategory cfSecrets("properdesktop.shell.secrets");
 
 static const std::string kAgentPath = "/org/freedesktop/NetworkManager/SecretAgent";
 static const std::string kAgentInterface = "org.freedesktop.NetworkManager.SecretAgent";
 static const std::string kAgentManagerPath = "/org/freedesktop/NetworkManager/AgentManager";
 static const std::string kAgentManagerInterface = "org.freedesktop.NetworkManager.AgentManager";
-static const std::string kAgentIdentifier = "org.cutefish.network";
+static const std::string kAgentIdentifier = "org.properdesktop.network";
 
-static const std::string kPromptService = "org.cutefish.SecretAgent";
+static const std::string kPromptService = "org.properdesktop.SecretAgent";
 static const std::string kPromptPath = "/SecretAgent";
-static const std::string kPromptInterface = "org.cutefish.SecretAgent";
+static const std::string kPromptInterface = "org.properdesktop.SecretAgent";
 
 static const std::string kConnectionSetting = "connection";
 static const std::string kWirelessSecurity = "802-11-wireless-security";
@@ -661,4 +661,4 @@ void NetworkSecretAgent::dismissStalePrompts()
         requestChanged.emit();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -10,7 +10,7 @@
 #include "base/file.h"
 #include "display/display_preferences.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

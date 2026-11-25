@@ -20,7 +20,7 @@
 #include "wayland/protocols/wl_seat.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -268,4 +268,4 @@ wl_global *createPointerConstraintsGlobal(wl_display *display, WaylandSeat *seat
                             bind_pointer_constraints);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

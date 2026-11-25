@@ -4,7 +4,7 @@
 
 #pragma once
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 // Hidden is internal, never a protocol shape.
 enum class CursorShape {
@@ -45,4 +45,4 @@ enum class CursorShape {
     ZoomOut
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

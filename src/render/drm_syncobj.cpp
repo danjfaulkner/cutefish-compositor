@@ -11,7 +11,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 
@@ -151,4 +151,4 @@ bool DrmSyncobj::signal(uint64_t point, const SyncFence& fence)
     return drmSyncobjTransfer(m_drmFd, m_handle, point, binary.handle(), 0, 0) == 0;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

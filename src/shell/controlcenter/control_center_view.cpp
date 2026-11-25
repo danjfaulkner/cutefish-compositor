@@ -17,9 +17,9 @@
 #include "ui/theme.h"
 #include "ui/window.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 ControlCenterView::ControlCenterView(ControlCenterServices &services)
     : m_services(services)
@@ -376,4 +376,4 @@ std::string volumeIconName(bool hasSink, double volume)
     return "audio-volume-high-symbolic";
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

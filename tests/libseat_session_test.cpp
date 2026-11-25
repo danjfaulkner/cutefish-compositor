@@ -12,7 +12,7 @@
 
 #include "backend/session/libseat_session.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

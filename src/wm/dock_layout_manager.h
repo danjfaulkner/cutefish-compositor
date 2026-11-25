@@ -6,8 +6,8 @@
 // Upstream: chromium/src/ash/shelf/shelf_layout_manager.{h,cc}
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WM_DOCK_LAYOUT_MANAGER_H_
-#define CUTEFISH_WM_DOCK_LAYOUT_MANAGER_H_
+#ifndef PROPERDESKTOP_WM_DOCK_LAYOUT_MANAGER_H_
+#define PROPERDESKTOP_WM_DOCK_LAYOUT_MANAGER_H_
 
 #include <chrono>
 #include <map>
@@ -22,7 +22,7 @@
 #include "wm/types.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 class WindowManager;
@@ -92,8 +92,8 @@ public:
     void onWindowTransientParentChanged(Window *window, Window *oldParent) override;
 
 private:
-    void onWindowAdded(cutefish::wm::Window *window);
-    void onWindowRemoved(cutefish::wm::Window *window);
+    void onWindowAdded(properdesktop::wm::Window *window);
+    void onWindowRemoved(properdesktop::wm::Window *window);
     void onPointerMoved(const base::PointF &location);
     void onPointerPushedPastEdge(const base::PointF &overshoot);
 
@@ -153,6 +153,6 @@ private:
     std::vector<base::Subscription> m_managerSignals;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_DOCK_LAYOUT_MANAGER_H_
+#endif // PROPERDESKTOP_WM_DOCK_LAYOUT_MANAGER_H_

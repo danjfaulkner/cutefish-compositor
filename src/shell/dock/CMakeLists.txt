@@ -1,4 +1,4 @@
-add_library(cutefish-shell-dock STATIC
+add_library(properdesktop-shell-dock STATIC
     dock.cpp
     dock.h
     dock_model.cpp
@@ -10,4 +10,4 @@ add_library(cutefish-shell-dock STATIC
     trash_monitor.cpp
     trash_monitor.h
 )
-target_link_libraries(cutefish-shell-dock PUBLIC cutefish-shell-common)
+target_link_libraries(properdesktop-shell-dock PUBLIC properdesktop-shell-common)

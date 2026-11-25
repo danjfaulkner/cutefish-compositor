@@ -10,7 +10,7 @@
 #include "shell/dock/dock_magnification.h"
 #include "shell/dock/dock_presentation.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using shell::DockMagnification;
 using shell::DockMagnifier;
 

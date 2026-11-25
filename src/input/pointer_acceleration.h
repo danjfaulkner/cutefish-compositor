@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_INPUT_POINTER_ACCELERATION_H_
-#define CUTEFISH_INPUT_POINTER_ACCELERATION_H_
+#ifndef PROPERDESKTOP_INPUT_POINTER_ACCELERATION_H_
+#define PROPERDESKTOP_INPUT_POINTER_ACCELERATION_H_
 
 #include <vector>
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 // Logical pixels per inch of mouse travel at a hand speed in inches per second.
 // `speed` is the settings slider, -1 to 1, with a step per table entry; 0 is the default.
@@ -25,6 +25,6 @@ AccelerationPoints accelerationPoints(int dotsPerInch, double speed);
 // the default starred, "400 *800 1600@125"); libinput's 1000 when absent.
 int mouseDpi(const char *property);
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_POINTER_ACCELERATION_H_
+#endif // PROPERDESKTOP_INPUT_POINTER_ACCELERATION_H_

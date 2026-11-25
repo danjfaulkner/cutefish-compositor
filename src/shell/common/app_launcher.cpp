@@ -9,14 +9,14 @@
 #include "base/desktop_entry.h"
 #include "base/process.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // A runtime that stops answering must not hold a start for the bus's default
 // timeout.
 static constexpr std::chrono::seconds kRuntimeTimeout(5);
 
 ApplicationLauncher::ApplicationLauncher(base::dbus::Connection *bus, TokenSource createToken)
-    : m_runtime(bus, "org.cutefish.AppRuntime", "/AppRuntime", "org.cutefish.AppRuntime")
+    : m_runtime(bus, "org.properdesktop.AppRuntime", "/AppRuntime", "org.properdesktop.AppRuntime")
     , m_createToken(std::move(createToken))
 {
     m_runtime.setTimeout(kRuntimeTimeout);
@@ -106,7 +106,7 @@ void ApplicationLauncher::openInFileManager(const std::string &path)
     if (!bus)
         return;
     base::dbus::Message message =
-            bus->newMethodCall("org.cutefish.FileManager", "/FileManager", "org.cutefish.FileManager", "openFiles");
+            bus->newMethodCall("org.properdesktop.FileManager", "/FileManager", "org.properdesktop.FileManager", "openFiles");
     message.append(std::vector<std::string>{path});
     bus->send(message);
 }
@@ -117,4 +117,4 @@ bool ApplicationLauncher::startDetached(const std::string &program, const std::v
     return base::Process::startDetached(program, arguments, {}, environment) > 0;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

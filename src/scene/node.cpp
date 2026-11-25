@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include "base/region.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 uint64_t Node::s_mutations = 0;
 
@@ -362,4 +362,4 @@ void TextureNode::paint(render::Renderer &renderer, const base::Rect &absoluteGe
     }
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

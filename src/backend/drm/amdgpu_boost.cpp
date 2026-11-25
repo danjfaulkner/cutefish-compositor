@@ -7,7 +7,7 @@
 #include <amdgpu_drm.h>
 #include <xf86drm.h>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -124,4 +124,4 @@ void AmdgpuBoost::run()
     }
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

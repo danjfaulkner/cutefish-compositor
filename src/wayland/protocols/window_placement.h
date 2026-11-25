@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_WINDOW_PLACEMENT_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_WINDOW_PLACEMENT_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_WINDOW_PLACEMENT_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_WINDOW_PLACEMENT_H_
 
 #include <functional>
 #include <vector>
@@ -12,12 +12,12 @@
 
 #include "base/signal.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 class WindowManager;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class WaylandWindowPlacement
 {
@@ -47,6 +47,6 @@ private:
     base::Subscription m_windowMoved;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_WINDOW_PLACEMENT_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_WINDOW_PLACEMENT_H_

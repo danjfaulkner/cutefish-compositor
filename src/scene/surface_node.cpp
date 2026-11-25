@@ -5,7 +5,7 @@
 #include "scene/surface_node.h"
 #include "base/region.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 SurfaceNode::SurfaceNode(std::string name)
     : Node(std::move(name))
@@ -132,4 +132,4 @@ void SurfaceNode::paintOverChildrenBelow(render::Renderer &renderer, const base:
                                 renderer.suppressBackgroundBlur ? 0 : m_subsurfaceBlurId);
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

@@ -16,7 +16,7 @@
 #include "base/signal.h"
 #include "base/weak_ptr.h"
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 
 // send() always consumes the supplied fd.
 class DataSource
@@ -146,4 +146,4 @@ private:
     base::Subscription m_recipientChanged;
 };
 
-} // namespace cutefish::clipboard
+} // namespace properdesktop::clipboard

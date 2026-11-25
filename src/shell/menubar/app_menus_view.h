@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_APP_MENUS_VIEW_H_
-#define CUTEFISH_SHELL_MENUBAR_APP_MENUS_VIEW_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_APP_MENUS_VIEW_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_APP_MENUS_VIEW_H_
 
 #include <memory>
 #include <string>
@@ -14,15 +14,15 @@
 #include "shell/menubar/menu_bar_app_menus.h"
 #include "ui/geometry.h"
 
-namespace cutefish::accounts {
+namespace properdesktop::accounts {
 class UserAccount;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Menu;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class BarItem;
 class Shell;
@@ -77,6 +77,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_APP_MENUS_VIEW_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_APP_MENUS_VIEW_H_

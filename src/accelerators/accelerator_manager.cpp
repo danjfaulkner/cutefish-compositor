@@ -12,7 +12,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 AcceleratorManager::AcceleratorManager() = default;
 
@@ -127,4 +127,4 @@ bool AcceleratorManager::TargetInfo::contains(AcceleratorTarget *target) const
     return std::find(m_targets.begin(), m_targets.end(), target) != m_targets.end();
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

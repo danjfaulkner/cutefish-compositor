@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_CUTEFISH_COMPUTER_CONTROL_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_CUTEFISH_COMPUTER_CONTROL_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_PROPERDESKTOP_COMPUTER_CONTROL_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_PROPERDESKTOP_COMPUTER_CONTROL_H_
 
 #include <functional>
 
 #include <wayland-server-core.h>
 
-namespace cutefish::computer_control {
+namespace properdesktop::computer_control {
 class Controller;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class WaylandComputerControl
 {
@@ -37,6 +37,6 @@ private:
     wl_global *m_global = nullptr;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_CUTEFISH_COMPUTER_CONTROL_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_PROPERDESKTOP_COMPUTER_CONTROL_H_

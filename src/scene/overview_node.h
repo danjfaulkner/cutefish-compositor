@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SCENE_OVERVIEW_NODE_H_
-#define CUTEFISH_SCENE_OVERVIEW_NODE_H_
+#ifndef PROPERDESKTOP_SCENE_OVERVIEW_NODE_H_
+#define PROPERDESKTOP_SCENE_OVERVIEW_NODE_H_
 
 #include <functional>
 #include <list>
@@ -20,7 +20,7 @@
 #include "base/geometry.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 class WindowAnimation;
 
@@ -313,6 +313,6 @@ private:
     mutable OverviewChromeCache m_chromeCache;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_OVERVIEW_NODE_H_
+#endif // PROPERDESKTOP_SCENE_OVERVIEW_NODE_H_

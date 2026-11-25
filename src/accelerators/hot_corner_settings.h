@@ -15,11 +15,11 @@
 #include "base/settings.h"
 #include "base/signal.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class DBusExport;
 }
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 enum class HotCorner {
     TopLeft,
@@ -78,4 +78,4 @@ private:
     std::unique_ptr<input::DBusExport> m_object;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

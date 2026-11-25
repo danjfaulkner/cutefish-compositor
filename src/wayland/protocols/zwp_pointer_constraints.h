@@ -9,7 +9,7 @@
 struct wl_display;
 struct wl_global;
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 struct WaylandSeat;
 wl_global *createPointerConstraintsGlobal(wl_display *display, WaylandSeat *seat);
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

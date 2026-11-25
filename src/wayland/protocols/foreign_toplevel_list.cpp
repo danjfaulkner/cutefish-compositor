@@ -13,7 +13,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 struct ForeignToplevelList::Client {
     ForeignToplevelList *list = nullptr;
@@ -169,7 +169,7 @@ ForeignToplevelList::Entry &ForeignToplevelList::entryFor(wm::Window *window)
     entry->window = window;
     // The window id is never reused, so the identifier names one window for
     // the life of the compositor.
-    entry->identifier = "cutefish-" + std::to_string(window->id());
+    entry->identifier = "properdesktop-" + std::to_string(window->id());
     entry->source = std::make_shared<compositor::CaptureSource>();
     entry->source->kind = compositor::CaptureSource::Kind::Window;
     entry->source->node = window->node();
@@ -335,4 +335,4 @@ void ForeignToplevelList::onWindowTitleChanged(wm::Window *window)
     }
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

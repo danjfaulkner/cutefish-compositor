@@ -16,8 +16,8 @@
 
 #include <gtest/gtest.h>
 
-using namespace cutefish;
-using namespace cutefish::auth;
+using namespace properdesktop;
+using namespace properdesktop::auth;
 using base::json::Value;
 
 TEST(GreetdBackendTest, CancellationAcknowledgementCannotAuthenticate)

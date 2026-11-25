@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_RENDER_TEXTURE_H_
-#define CUTEFISH_RENDER_TEXTURE_H_
+#ifndef PROPERDESKTOP_RENDER_TEXTURE_H_
+#define PROPERDESKTOP_RENDER_TEXTURE_H_
 
 #include <cstdint>
 #include "base/geometry.h"
 
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // In increasing address order; wl_shm's ARGB8888 is Bgra8888 here. Alpha is
 // premultiplied.
@@ -52,6 +52,6 @@ inline std::unique_ptr<Texture> labelled(std::unique_ptr<Texture> texture, const
     return texture;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_TEXTURE_H_
+#endif // PROPERDESKTOP_RENDER_TEXTURE_H_

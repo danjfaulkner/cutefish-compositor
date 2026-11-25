@@ -12,7 +12,7 @@
 
 #include "clipboard/selection.h"
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 
 class StoredSource : public DataSource
 {
@@ -22,4 +22,4 @@ public:
     void send(const std::string &mime, int fd) override;
 };
 
-} // namespace cutefish::clipboard
+} // namespace properdesktop::clipboard

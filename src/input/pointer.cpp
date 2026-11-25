@@ -19,7 +19,7 @@
 #include "scene/node.h"
 #include "scene/surface_node.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 namespace {
 
@@ -480,4 +480,4 @@ void Pointer::onSurfaceCommit(compositor::Surface *surface)
         traceCursor("cursor-commit");
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

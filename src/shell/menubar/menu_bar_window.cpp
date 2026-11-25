@@ -19,7 +19,7 @@
 #include "base/i18n.h"
 #include "base/locale.h"
 #include "core/main_loop.h"
-#include "cutefish/powerprofiles/power_profiles.h"
+#include "properdesktop/powerprofiles/power_profiles.h"
 #include "shell/shell_window.h"
 #include "shell/menubar/clock_format.h"
 #include "shell/menubar/device_usage.h"
@@ -42,9 +42,9 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 using Panel = MenuBarPanels::Panel;
 
@@ -89,7 +89,7 @@ private:
     uint64_t m_themeGeneration = 0;
 };
 
-// A Cutefish title bar for a fullscreen window: its title and window controls in the style the
+// A Proper Desktop title bar for a fullscreen window: its title and window controls in the style the
 // settings pick, the green one leaving fullscreen.
 class MenuBarWindow::FullscreenFrame final : public ui::View
 {
@@ -877,4 +877,4 @@ ui::RectF MenuBarWindow::availableGeometry() const
             double(area.height())};
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

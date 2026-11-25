@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_DOCK_PREFERENCES_H_
-#define CUTEFISH_WM_DOCK_PREFERENCES_H_
+#ifndef PROPERDESKTOP_WM_DOCK_PREFERENCES_H_
+#define PROPERDESKTOP_WM_DOCK_PREFERENCES_H_
 
 #include "base/file_watcher.h"
 #include "base/settings.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class DockLayoutManager;
 class WindowManager;
@@ -27,6 +27,6 @@ private:
     base::FileWatch m_watch;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_DOCK_PREFERENCES_H_
+#endif // PROPERDESKTOP_WM_DOCK_PREFERENCES_H_

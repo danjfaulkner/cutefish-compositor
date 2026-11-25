@@ -11,10 +11,10 @@
 #include "base/geometry.h"
 #include "wayland/protocols/xdg_positioner.h"
 
-using cutefish::base::Point;
-using cutefish::base::Rect;
-using cutefish::base::Size;
-using cutefish::wayland::WaylandPositioner;
+using properdesktop::base::Point;
+using properdesktop::base::Rect;
+using properdesktop::base::Size;
+using properdesktop::wayland::WaylandPositioner;
 
 namespace {
 

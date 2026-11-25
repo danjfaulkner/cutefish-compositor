@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include <deque>
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 namespace {
 
@@ -167,4 +167,4 @@ DisplayLayout::Result DisplayLayout::resolve(const DisplayId& primary,
     return result;
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

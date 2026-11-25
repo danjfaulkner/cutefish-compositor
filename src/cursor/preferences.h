@@ -10,7 +10,7 @@
 #include "base/file_watcher.h"
 #include "base/settings.h"
 
-namespace cutefish::cursor {
+namespace properdesktop::cursor {
 class Cursor;
 
 class Preferences
@@ -26,4 +26,4 @@ private:
     base::FileWatch m_watch;
     std::vector<base::dbus::Match> m_appearanceSignals;
 };
-} // namespace cutefish::cursor
+} // namespace properdesktop::cursor

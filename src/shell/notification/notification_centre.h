@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_CENTRE_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_CENTRE_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_CENTRE_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_CENTRE_H_
 
 #include <functional>
 #include <optional>
@@ -20,12 +20,12 @@
 #include "ui/view.h"
 #include "ui/window.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Label;
 class ScrollView;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ClearButton;
 class PillButton;
@@ -235,6 +235,6 @@ private:
     Tween m_opacity;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_CENTRE_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_CENTRE_H_

@@ -12,7 +12,7 @@
 #include "input/seat.h"
 #include "input/touch_delegate.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 Touch::Touch(TouchDelegate* delegate, Seat* seat)
     : m_delegate(delegate)
@@ -99,4 +99,4 @@ void Touch::cancelAllTouches()
     m_surfaceCounts.clear();
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

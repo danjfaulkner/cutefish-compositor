@@ -6,11 +6,11 @@
 
 #include "base/logging.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfAppMenu("cutefish.shell.appmenu");
+static const base::LogCategory cfAppMenu("properdesktop.shell.appmenu");
 
 static constexpr const char *kService = "com.canonical.AppMenu.Registrar";
 static constexpr const char *kPath = "/com/canonical/AppMenu/Registrar";
@@ -171,4 +171,4 @@ void AppMenuRegistrar::serviceUnregistered(const std::string &service)
     m_watches.erase(service);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -5,13 +5,13 @@
 // Upstream: chromium/src/ash/accelerators/accelerator_launcher_state_machine.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_LAUNCHPAD_STATE_MACHINE_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_LAUNCHPAD_STATE_MACHINE_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_LAUNCHPAD_STATE_MACHINE_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_LAUNCHPAD_STATE_MACHINE_H_
 
 #include <cstdint>
 #include <functional>
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 // Releasing Meta may open the launchpad only when nothing else was pressed or
 // clicked while it was down.
@@ -43,6 +43,6 @@ private:
     std::function<bool()> m_anyKeysPressed;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_LAUNCHPAD_STATE_MACHINE_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_LAUNCHPAD_STATE_MACHINE_H_

@@ -6,8 +6,8 @@
 //           chromium/src/components/exo/keyboard_modifiers.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_TYPES_H_
-#define CUTEFISH_INPUT_TYPES_H_
+#ifndef PROPERDESKTOP_INPUT_TYPES_H_
+#define PROPERDESKTOP_INPUT_TYPES_H_
 
 #include <chrono>
 #include <cstdint>
@@ -15,7 +15,7 @@
 
 #include "base/geometry.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 // libinput timestamps come from CLOCK_MONOTONIC, which is what steady_clock
 // reads on Linux, so the two are directly comparable.
@@ -101,6 +101,6 @@ inline bool fuzzyEqual(const base::PointF &a, const base::PointF &b)
     return equal(a.x(), b.x()) && equal(a.y(), b.y());
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_TYPES_H_
+#endif // PROPERDESKTOP_INPUT_TYPES_H_

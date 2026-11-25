@@ -16,7 +16,7 @@
 
 #include "server.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -121,4 +121,4 @@ bool isClientDestroyed(wl_client* client)
     return server ? server->isClientDestroyed(client) : true;
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

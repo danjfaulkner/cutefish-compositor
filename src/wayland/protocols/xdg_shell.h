@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/wayland/xdg_shell.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_XDG_SHELL_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_XDG_SHELL_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_SHELL_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_SHELL_H_
 
 #include <wayland-server-core.h>
 
@@ -16,20 +16,20 @@
 
 #include "base/geometry.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Compositor;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class ShellSurface;
 class WindowManager;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class SerialTracker;
 
@@ -92,6 +92,6 @@ ParentlessPopupResult adoptParentlessPopup(wl_resource* popupResource, wm::Shell
                                            const base::Point& anchorOffset,
                                            const std::function<bool(wm::ShellSurface*, const base::Rect&)>& adopt);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_XDG_SHELL_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_SHELL_H_

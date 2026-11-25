@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_APP_LAUNCHER_H_
-#define CUTEFISH_SHELL_COMMON_APP_LAUNCHER_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_APP_LAUNCHER_H_
+#define PROPERDESKTOP_SHELL_COMMON_APP_LAUNCHER_H_
 
 #include <functional>
 #include <string>
@@ -12,13 +12,13 @@
 #include "base/dbus.h"
 #include "shell/common/pending_calls.h"
 
-namespace cutefish::base {
+namespace properdesktop::base {
 struct DesktopEntry;
-} // namespace cutefish::base
+} // namespace properdesktop::base
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
-// Starts applications through org.cutefish.AppRuntime, or directly when it does
+// Starts applications through org.properdesktop.AppRuntime, or directly when it does
 // not answer.
 class ApplicationLauncher
 {
@@ -50,6 +50,6 @@ private:
     PendingCalls m_calls;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_APP_LAUNCHER_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_APP_LAUNCHER_H_

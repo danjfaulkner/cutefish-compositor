@@ -9,7 +9,7 @@
 #include <chrono>
 #include <optional>
 
-namespace cutefish::session {
+namespace properdesktop::session {
 class SessionController;
 
 // logind is asked to leave the key alone, or it would power the machine off.
@@ -55,4 +55,4 @@ private:
     bool m_ignoreRelease = false;
     bool m_started = false;
 };
-} // namespace cutefish::session
+} // namespace properdesktop::session

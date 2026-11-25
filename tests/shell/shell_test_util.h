@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TESTS_SHELL_SHELL_TEST_UTIL_H_
-#define CUTEFISH_TESTS_SHELL_SHELL_TEST_UTIL_H_
+#ifndef PROPERDESKTOP_TESTS_SHELL_SHELL_TEST_UTIL_H_
+#define PROPERDESKTOP_TESTS_SHELL_SHELL_TEST_UTIL_H_
 
 #include <algorithm>
 #include <map>
@@ -16,7 +16,7 @@
 #include "shell/common/task_windows.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 class FakeApplications : public shell::Applications
 {
@@ -128,7 +128,7 @@ private:
     {
         m_applications.clear();
         for (const auto &entry : m_entries) {
-            if (entry->shouldShow({"Cutefish"}) || (entry->bundle && entry->exec.empty() && !entry->noDisplay))
+            if (entry->shouldShow({"ProperDesktop"}) || (entry->bundle && entry->exec.empty() && !entry->noDisplay))
                 m_applications.push_back(entry);
         }
         std::sort(m_applications.begin(), m_applications.end(),
@@ -217,6 +217,6 @@ inline std::string fromHex(std::string_view hex)
     return base::strings::fromHex(hex).value_or(std::string());
 }
 
-} // namespace cutefish::test
+} // namespace properdesktop::test
 
-#endif // CUTEFISH_TESTS_SHELL_SHELL_TEST_UTIL_H_
+#endif // PROPERDESKTOP_TESTS_SHELL_SHELL_TEST_UTIL_H_

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: cutefish-compositor\n"
-"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"Project-Id-Version: properdesktop-compositor\n"
+"Report-Msgid-Bugs-To: https://github.com/danjfaulkner\n"
 "POT-Creation-Date: 2026-11-18 12:59+0800\n"
 "PO-Revision-Date: 2026-11-13 12:00+0800\n"
 "Last-Translator: \n"
@@ -449,7 +449,7 @@ msgstr "Aguardar"
 msgid "Screen Recording"
 msgstr "Gravação de tela"
 
-#: src/shell/screenshot/capture_notifier.cpp data/cutefish-screenshot.desktop
+#: src/shell/screenshot/capture_notifier.cpp data/properdesktop-screenshot.desktop
 msgid "Screenshot"
 msgstr "Captura de tela"
 
@@ -754,10 +754,10 @@ msgstr "Senha de uso único"
 msgid "Desk {number}"
 msgstr "Mesa {number}"
 
-#: data/cutefish-screenshot.desktop
+#: data/properdesktop-screenshot.desktop
 msgid "Capture or record the screen, a window or a selected portion"
 msgstr "Capture ou grave a tela, uma janela ou uma área selecionada"
 
-#: data/cutefish-screenshot.desktop
+#: data/properdesktop-screenshot.desktop
 msgid "screenshot;screen recording;capture;record;"
 msgstr "captura de tela;gravação de tela;capturar;gravar;screenshot;print;"

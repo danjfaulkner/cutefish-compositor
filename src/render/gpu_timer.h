@@ -9,7 +9,7 @@
 #include <optional>
 #include <vector>
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class EglContext;
 
@@ -58,4 +58,4 @@ private:
     void *m_getQueryObjectui64 = nullptr;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_FILE_THREAD_H_
-#define CUTEFISH_SHELL_COMMON_FILE_THREAD_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_FILE_THREAD_H_
+#define PROPERDESKTOP_SHELL_COMMON_FILE_THREAD_H_
 
 #include <functional>
 #include <string>
@@ -11,7 +11,7 @@
 #include "base/settings.h"
 #include "base/thread_pool.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Runs work in order, so a write never overtakes an earlier one to the same
 // file.
@@ -29,6 +29,6 @@ void waitForFileThread();
 // shell.conf keep each other's keys.
 void writeSettings(const std::string &path, std::function<void(base::Settings &settings)> change);
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_FILE_THREAD_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_FILE_THREAD_H_

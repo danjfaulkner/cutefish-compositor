@@ -42,9 +42,9 @@
 #include "wm/window_manager.h"
 #include "toolkit/compositor_colors.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -52,7 +52,7 @@ void callLaunchpad(base::dbus::Connection *bus, const char *method)
 {
     if (!bus)
         return;
-    bus->send(bus->newMethodCall("org.cutefish.Launchpad", "/Launchpad", "org.cutefish.Launchpad",
+    bus->send(bus->newMethodCall("org.properdesktop.Launchpad", "/Launchpad", "org.properdesktop.Launchpad",
                                  method));
 }
 
@@ -2046,4 +2046,4 @@ void DockWindow::updateDropGap()
     m_drop.hasLastAlong = false;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

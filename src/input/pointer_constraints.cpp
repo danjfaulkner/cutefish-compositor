@@ -19,7 +19,7 @@
 #include "input/seat.h"
 #include "input/session_gate.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 namespace {
 
@@ -252,4 +252,4 @@ void PointerConstraints::onSurfaceDestroying(compositor::Surface *surface)
     delegate->onDefunct();
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

@@ -8,7 +8,7 @@
 
 #include "wm/shadow_types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 const char *toString(ShadowElevation elevation)
 {
@@ -29,4 +29,4 @@ const char *toString(ShadowElevation elevation)
     return "";
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

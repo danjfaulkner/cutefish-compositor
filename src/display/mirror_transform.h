@@ -13,7 +13,7 @@
 
 #include "display/display_types.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class MirrorTransform
 {
@@ -34,4 +34,4 @@ private:
     DisplayRotation m_rotation = DisplayRotation::Normal;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

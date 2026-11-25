@@ -20,8 +20,8 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
-using namespace cutefish::wm;
+using namespace properdesktop;
+using namespace properdesktop::wm;
 
 namespace {
 

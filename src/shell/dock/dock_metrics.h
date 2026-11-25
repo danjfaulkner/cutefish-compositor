@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_DOCK_DOCK_METRICS_H_
-#define CUTEFISH_SHELL_DOCK_DOCK_METRICS_H_
+#ifndef PROPERDESKTOP_SHELL_DOCK_DOCK_METRICS_H_
+#define PROPERDESKTOP_SHELL_DOCK_DOCK_METRICS_H_
 
 #include <algorithm>
 #include <cmath>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 struct DockMetrics {
     static constexpr int kBaseIconSize = 54;
@@ -91,6 +91,6 @@ struct DrawnDockMetrics {
     }
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_DOCK_DOCK_METRICS_H_
+#endif // PROPERDESKTOP_SHELL_DOCK_DOCK_METRICS_H_

@@ -21,7 +21,7 @@
 #include "input/seat_observer.h"
 #include "input/touch.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 Seat::Seat(compositor::Compositor *compositor)
     : m_drag(this)
@@ -725,4 +725,4 @@ void Seat::onKey(Timestamp timestamp, uint32_t evdevCode, bool pressed)
         dispatchKey(timestamp, evdevCode, pressed);
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

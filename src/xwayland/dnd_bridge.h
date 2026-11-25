@@ -23,19 +23,19 @@
 #include "clipboard/selection.h"
 #include "xwayland/selection_bridge.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class DragOffer;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowManager;
 }
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 // For an X11 drag over a Wayland surface, an XdndAware proxy window is mapped over the output while
 // the pointer is off every X11 window.
@@ -130,4 +130,4 @@ private:
     base::WeakPtrFactory<DndBridge> m_weakFactory {this};
 };
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

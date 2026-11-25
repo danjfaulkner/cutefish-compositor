@@ -19,7 +19,7 @@
 #include "wm/window_state.h"
 #include "wm/wm_event.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 FullscreenDesks::FullscreenDesks(WindowManager *manager)
     : m_manager(manager)
@@ -553,4 +553,4 @@ void FullscreenDesks::onWindowStateTypeChanged(Window *window, WindowStateType o
     });
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

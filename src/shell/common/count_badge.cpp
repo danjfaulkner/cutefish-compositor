@@ -10,7 +10,7 @@
 #include "ui/label.h"
 #include "ui/painter.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr int64_t kMaximum = 99;
 
@@ -102,4 +102,4 @@ void CountBadge::paint(ui::Painter &painter)
     painter.fillRoundedRect(rect, rect.height / 2, kColor);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -7,8 +7,8 @@
 //           chromium/src/ash/wm/desks/desks_animations.cc (PerformHitTheWallAnimation)
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_SCENE_DESK_SWITCH_NODE_H_
-#define CUTEFISH_SCENE_DESK_SWITCH_NODE_H_
+#ifndef PROPERDESKTOP_SCENE_DESK_SWITCH_NODE_H_
+#define PROPERDESKTOP_SCENE_DESK_SWITCH_NODE_H_
 
 #include <functional>
 #include <map>
@@ -23,7 +23,7 @@
 #include "scene/node.h"
 #include "base/geometry.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 // Positions are in desk frames: frame k of the strip is fully on screen at position k.
 class DeskSwitchNode : public Node
@@ -169,6 +169,6 @@ private:
     std::function<void()> m_finished;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_DESK_SWITCH_NODE_H_
+#endif // PROPERDESKTOP_SCENE_DESK_SWITCH_NODE_H_

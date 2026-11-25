@@ -31,7 +31,7 @@
 #include "scene/overlay_candidate.h"
 #include "scene/surface_node.h"
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace {
 
@@ -1049,11 +1049,11 @@ TEST_F(ScanoutTest, AClientDestroyedMidScanoutLeavesItsBufferOnTheScreen)
     EXPECT_TRUE(m_device->openHandles.empty());
 }
 
-} // namespace cutefish
+} // namespace properdesktop
 
 TEST(CrossGpuScanout, CpuTransferCopiesRowsAndRetiresFramebufferBeforeDumbBuffer)
 {
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     const uint8_t pixels[] = {1, 2,  3,  4,  5,  6,  7,  8,  99, 99, 99, 99,
                               9, 10, 11, 12, 13, 14, 15, 16, 99, 99, 99, 99};
     std::vector<uint8_t> copied;
@@ -1061,7 +1061,7 @@ TEST(CrossGpuScanout, CpuTransferCopiesRowsAndRetiresFramebufferBeforeDumbBuffer
         const auto *bytes = static_cast<const uint8_t *>(data);
         copied.assign(bytes, bytes + 16);
     };
-    auto framebuffer = cutefish::backend::DrmFramebuffer::fromPixels(&device, {2, 2}, pixels, 12);
+    auto framebuffer = properdesktop::backend::DrmFramebuffer::fromPixels(&device, {2, 2}, pixels, 12);
     ASSERT_TRUE(framebuffer);
     EXPECT_EQ(copied,
               std::vector<uint8_t>({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}));
@@ -1085,17 +1085,17 @@ TEST(CrossGpuScanout, EachBufferIsImportedOrCopiedOnceAndRetiredWithIt)
     }
     gbm_bo *bo = gbm_bo_create(gbm, 4, 4, GBM_FORMAT_XRGB8888,
                                GBM_BO_USE_RENDERING | GBM_BO_USE_LINEAR);
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     if (bo) {
-        auto *imported = cutefish::backend::DrmFramebuffer::importForBuffer(&device, bo);
+        auto *imported = properdesktop::backend::DrmFramebuffer::importForBuffer(&device, bo);
         ASSERT_NE(imported, nullptr);
-        EXPECT_EQ(cutefish::backend::DrmFramebuffer::importForBuffer(&device, bo), imported);
+        EXPECT_EQ(properdesktop::backend::DrmFramebuffer::importForBuffer(&device, bo), imported);
         EXPECT_EQ(device.addFramebufferCalls.size(), 1u);
         const std::vector<uint8_t> pixels(4 * 4 * 4, 7);
-        auto *copy = cutefish::backend::DrmFramebuffer::copyForBuffer(&device, bo, pixels.data(),
+        auto *copy = properdesktop::backend::DrmFramebuffer::copyForBuffer(&device, bo, pixels.data(),
                                                                       16);
         ASSERT_NE(copy, nullptr);
-        EXPECT_EQ(cutefish::backend::DrmFramebuffer::copyForBuffer(&device, bo, pixels.data(), 16),
+        EXPECT_EQ(properdesktop::backend::DrmFramebuffer::copyForBuffer(&device, bo, pixels.data(), 16),
                   copy);
         EXPECT_EQ(device.addFramebufferCalls.size(), 2u);
         EXPECT_EQ(device.liveFramebuffers.size(), 1u);
@@ -1122,15 +1122,15 @@ TEST(SharedFileScanout, AClientBufferTakesTheRenderersHandleAndNeverClosesIt)
     }
     gbm_bo *bo = gbm_bo_create(gbm, 64, 64, GBM_FORMAT_XRGB8888,
                                GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING | GBM_BO_USE_LINEAR);
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     device.gbm = gbm;
     if (bo) {
-        cutefish::render::DmaBufAttributes attributes;
-        attributes.size = cutefish::base::Size(gbm_bo_get_width(bo), gbm_bo_get_height(bo));
+        properdesktop::render::DmaBufAttributes attributes;
+        attributes.size = properdesktop::base::Size(gbm_bo_get_width(bo), gbm_bo_get_height(bo));
         attributes.format = gbm_bo_get_format(bo);
         attributes.modifier = gbm_bo_get_modifier(bo);
         for (int plane = 0; plane < gbm_bo_get_plane_count(bo); ++plane)
-            attributes.planes.push_back({cutefish::ScopedFd(gbm_bo_get_fd_for_plane(bo, plane)),
+            attributes.planes.push_back({properdesktop::ScopedFd(gbm_bo_get_fd_for_plane(bo, plane)),
                                          gbm_bo_get_offset(bo, plane),
                                          gbm_bo_get_stride_for_plane(bo, plane)});
         const uint32_t handle = gbm_bo_get_handle(bo).u32;
@@ -1142,7 +1142,7 @@ TEST(SharedFileScanout, AClientBufferTakesTheRenderersHandleAndNeverClosesIt)
             return true;
         };
 
-        auto framebuffer = cutefish::backend::DrmFramebuffer::fromDmaBuf(&device, attributes);
+        auto framebuffer = properdesktop::backend::DrmFramebuffer::fromDmaBuf(&device, attributes);
         ASSERT_TRUE(framebuffer);
         ASSERT_EQ(device.addFramebufferCalls.size(), 1u);
         EXPECT_EQ(device.addFramebufferCalls.back().handles[0], handle);
@@ -1153,7 +1153,7 @@ TEST(SharedFileScanout, AClientBufferTakesTheRenderersHandleAndNeverClosesIt)
         EXPECT_TRUE(handleIsOpen());
 
         device.addFramebufferFails = true;
-        EXPECT_FALSE(cutefish::backend::DrmFramebuffer::fromDmaBuf(&device, attributes));
+        EXPECT_FALSE(properdesktop::backend::DrmFramebuffer::fromDmaBuf(&device, attributes));
         EXPECT_TRUE(device.closedHandles.empty());
         EXPECT_TRUE(handleIsOpen());
         gbm_bo_destroy(bo);
@@ -1165,19 +1165,19 @@ TEST(SharedFileScanout, AClientBufferTakesTheRenderersHandleAndNeverClosesIt)
 
 TEST(CrossGpuScanout, CpuTransferRejectsOversizeAndCleansFailedFramebufferAllocation)
 {
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     uint8_t pixels[16] = {};
     EXPECT_FALSE(
-            cutefish::backend::DrmFramebuffer::fromPixels(&device, {5120, 2880}, pixels, 5120 * 4));
+            properdesktop::backend::DrmFramebuffer::fromPixels(&device, {5120, 2880}, pixels, 5120 * 4));
     EXPECT_EQ(device.liveDumbBuffers, 0);
     EXPECT_TRUE(device.addFramebufferCalls.empty());
     device.addFramebufferFails = true;
-    EXPECT_FALSE(cutefish::backend::DrmFramebuffer::fromPixels(&device, {2, 2}, pixels, 8));
+    EXPECT_FALSE(properdesktop::backend::DrmFramebuffer::fromPixels(&device, {2, 2}, pixels, 8));
     EXPECT_EQ(device.liveDumbBuffers, 0);
     EXPECT_EQ(device.liveMappings, 0);
 }
 
-namespace cutefish {
+namespace properdesktop {
 TEST_F(ScanoutTest, ExplicitAcquireWithoutPlaneFencePropertyFallsBack)
 {
     auto config = makeConfig();
@@ -1222,9 +1222,9 @@ TEST_F(ScanoutTest, NonIdentityPlaneStateFallsBackEvenIfKernelWouldAccept)
         EXPECT_FALSE(result.front().isDirectScanout());
     }
 }
-} // namespace cutefish
+} // namespace properdesktop
 
-namespace cutefish {
+namespace properdesktop {
 TEST_F(ScanoutTest, YuvNeedsColorStateEvenWhenAdvertisedByThePlane)
 {
     auto config = makeConfig();
@@ -1238,9 +1238,9 @@ TEST_F(ScanoutTest, YuvNeedsColorStateEvenWhenAdvertisedByThePlane)
     EXPECT_FALSE(result.front().isDirectScanout());
     EXPECT_EQ(m_device->testCommitCount(), 0u);
 }
-} // namespace cutefish
+} // namespace properdesktop
 
-namespace cutefish {
+namespace properdesktop {
 namespace {
 
 void expectPlaneDisabled(const backend::AtomicRequest &request, uint32_t planeId)
@@ -1305,4 +1305,4 @@ TEST_F(ScanoutTest, ASecureDirectScanoutConfigurationIsNotSecure)
             backend::DrmOutput::isSecureConfiguration({compositedContent(), compositedContent()}));
 }
 
-} // namespace cutefish
+} // namespace properdesktop

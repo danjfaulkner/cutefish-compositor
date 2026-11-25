@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/surface.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_COMPOSITOR_SURFACE_H_
-#define CUTEFISH_COMPOSITOR_SURFACE_H_
+#ifndef PROPERDESKTOP_COMPOSITOR_SURFACE_H_
+#define PROPERDESKTOP_COMPOSITOR_SURFACE_H_
 
 #include <cstdint>
 #include <deque>
@@ -28,19 +28,19 @@
 #include "render/presentation.h"
 #include "ui/path.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class DrmSyncobj;
 class Renderer;
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 class Node;
 class SurfaceNode;
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 class Compositor;
 class SubSurface;
@@ -535,6 +535,6 @@ private:
     std::deque<std::unique_ptr<CommitRequest>> m_heldCommits;
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-#endif // CUTEFISH_COMPOSITOR_SURFACE_H_
+#endif // PROPERDESKTOP_COMPOSITOR_SURFACE_H_

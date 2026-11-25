@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TESTS_SHELL_MENUBAR_FAKES_H_
-#define CUTEFISH_TESTS_SHELL_MENUBAR_FAKES_H_
+#ifndef PROPERDESKTOP_TESTS_SHELL_MENUBAR_FAKES_H_
+#define PROPERDESKTOP_TESTS_SHELL_MENUBAR_FAKES_H_
 
 #include <algorithm>
 #include <map>
@@ -15,7 +15,7 @@
 
 #include "base/dbus.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 namespace dbus = base::dbus;
 
@@ -219,6 +219,6 @@ public:
 };
 
 
-} // namespace cutefish::test
+} // namespace properdesktop::test
 
-#endif // CUTEFISH_TESTS_SHELL_MENUBAR_FAKES_H_
+#endif // PROPERDESKTOP_TESTS_SHELL_MENUBAR_FAKES_H_

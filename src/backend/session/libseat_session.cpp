@@ -23,7 +23,7 @@ extern "C" {
 #include "core/logging.h"
 #include "core/main_loop.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -172,4 +172,4 @@ void LibseatSession::onDisableSeat(libseat* seat, void* userData)
     libseat_disable_seat(seat);
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

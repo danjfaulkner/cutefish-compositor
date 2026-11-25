@@ -13,7 +13,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -135,4 +135,4 @@ void QuitAll::finish(const Result &result)
     done(result);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

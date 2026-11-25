@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_AUTH_AUTH_BACKEND_H
-#define CUTEFISH_AUTH_AUTH_BACKEND_H
+#ifndef PROPERDESKTOP_AUTH_AUTH_BACKEND_H
+#define PROPERDESKTOP_AUTH_AUTH_BACKEND_H
 
 #include "auth/login_sessions.h"
 #include "auth/secret.h"
@@ -11,7 +11,7 @@
 
 #include <string>
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 class AuthBackend
 {
@@ -72,6 +72,6 @@ public:
     base::Signal<const std::string &> failed;
 };
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth
 
-#endif // CUTEFISH_AUTH_AUTH_BACKEND_H
+#endif // PROPERDESKTOP_AUTH_AUTH_BACKEND_H

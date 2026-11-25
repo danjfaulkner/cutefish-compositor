@@ -14,9 +14,9 @@
 #include "ui/painter.h"
 #include "ui/path.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static const ui::Color kWhite {255, 255, 255, 255};
 static constexpr double kPillScale = 0.985;
@@ -220,4 +220,4 @@ void LaunchpadSearchField::paint(ui::Painter &painter)
     painter.fillPath(shape.subtracted(core), gradient);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

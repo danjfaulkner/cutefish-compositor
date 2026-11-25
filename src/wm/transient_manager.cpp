@@ -10,7 +10,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 bool TransientManager::wouldCreateCycle(const Window *child, const Window *parent)
 {
@@ -63,4 +63,4 @@ void TransientManager::windowDestroying(Window *window)
         setTransientParent(child, nullptr);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

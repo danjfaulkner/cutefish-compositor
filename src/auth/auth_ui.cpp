@@ -25,7 +25,7 @@
 #include <unistd.h>
 #include <xkbcommon/xkbcommon.h>
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 namespace {
 class AuthNode final : public scene::Node
 {
@@ -617,4 +617,4 @@ bool AuthUi::onPointerButton(input::Timestamp, const base::PointF &position, uin
     m_window->pointerButton(ui::MouseButton::Left, pressed, m_xkb ? toolkitModifiers(m_xkb) : 0);
     return true;
 }
-} // namespace cutefish::auth
+} // namespace properdesktop::auth

@@ -1,4 +1,4 @@
-file(WRITE "${OUTPUT}" "#pragma once\n\nnamespace cutefish::render::shaders {\n")
+file(WRITE "${OUTPUT}" "#pragma once\n\nnamespace properdesktop::render::shaders {\n")
 foreach(name IN LISTS SHADERS)
     file(READ "${SOURCE_DIR}/${name}.glsl" source)
     file(APPEND "${OUTPUT}" "inline constexpr char ${name}[] = R\"GLSL(${source})GLSL\";\n")

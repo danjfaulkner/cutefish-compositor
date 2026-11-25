@@ -14,7 +14,7 @@
 #include <memory>
 #include <xcb/xcb.h>
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 class SelectionBridge
 {
@@ -86,4 +86,4 @@ private:
     base::WeakPtrFactory<SelectionBridge> m_weakFactory {this};
 };
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

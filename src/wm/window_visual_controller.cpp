@@ -14,7 +14,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_modality_controller.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -154,4 +154,4 @@ void WindowVisualController::onWindowTransientParentChanged(Window *window, Wind
     refresh(window->transientParent());
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

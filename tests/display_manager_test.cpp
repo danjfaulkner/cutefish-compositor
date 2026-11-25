@@ -10,7 +10,7 @@
 
 #include "display/display_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -43,7 +43,7 @@ display::LogicalDisplay logical(const char *name, base::Rect bounds, bool primar
 {
     return {id(name),
             {id(name)},
-            "Cutefish-" + std::string(name),
+            "ProperDesktop-" + std::string(name),
             bounds,
             bounds.adjusted(0, 24, 0, 0),
             {},

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_XWAYLAND_FD_WATCH_H_
-#define CUTEFISH_XWAYLAND_FD_WATCH_H_
+#ifndef PROPERDESKTOP_XWAYLAND_FD_WATCH_H_
+#define PROPERDESKTOP_XWAYLAND_FD_WATCH_H_
 
 #include <cstdint>
 #include <functional>
@@ -13,7 +13,7 @@
 #include "base/event_loop.h"
 #include "core/main_loop.h"
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 // Created disabled; disabled means not watched at all, since epoll reports a hang-up whatever events
 // are asked for. Destroy it before its descriptor is closed: epoll keeps watching a closed descriptor
@@ -56,6 +56,6 @@ private:
     int m_watch = 0;
 };
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland
 
-#endif // CUTEFISH_XWAYLAND_FD_WATCH_H_
+#endif // PROPERDESKTOP_XWAYLAND_FD_WATCH_H_

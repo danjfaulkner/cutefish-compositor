@@ -16,7 +16,7 @@
 
 #include "input/xkb_tracker.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 namespace {
 
 enum Role : uint32_t {
@@ -103,7 +103,7 @@ uint32_t defaultCode(ModifierKind kind)
 bool isTerminal(std::string_view applicationId)
 {
     static const std::set<std::string, std::less<>> terminals = {
-            "cutefish-terminal",
+            "properdesktop-terminal",
             "alacritty",
             "kitty",
             "foot",
@@ -501,4 +501,4 @@ std::vector<uint32_t> KeyTranslator::deliveredKeys() const
     return keys;
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

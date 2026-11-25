@@ -15,9 +15,9 @@
 #include "ui/path.h"
 #include "ui/theme.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static double linear(double channel)
 {
@@ -299,4 +299,4 @@ void PillButton::paint(ui::Painter &painter)
     painter.drawSmoothRectangle(rect, rect.height / 2, pillFill(ui::Theme::current().background, m_hovered, m_pressed));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

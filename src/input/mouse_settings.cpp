@@ -11,10 +11,10 @@
 #include "core/preferences.h"
 #include "input/dbus_export.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
-static constexpr auto service = "org.cutefish.Mouse1";
-static constexpr auto path = "/org/cutefish/Mouse1";
+static constexpr auto service = "org.properdesktop.Mouse1";
+static constexpr auto path = "/org/properdesktop/Mouse1";
 static constexpr auto group = "Mouse/";
 
 MouseSettings::MouseSettings(const std::string &settingsFile)
@@ -127,4 +127,4 @@ void MouseSettings::setPointerAcceleration(double value)
     save("pointerAcceleration", value);
     notify(pointerAccelerationChanged, "pointerAccelerationChanged");
 }
-} // namespace cutefish::input
+} // namespace properdesktop::input

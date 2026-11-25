@@ -19,10 +19,10 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr std::chrono::milliseconds kChevronFade {150};
 
@@ -569,4 +569,4 @@ void DeviceUsersTile::paint(ui::Painter &painter)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

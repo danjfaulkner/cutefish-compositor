@@ -21,7 +21,7 @@
 #include "ui/text_field.h"
 #include "ui/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static const ui::Color kWhite {255, 255, 255, 255};
 static constexpr double kNameScale = 2.0;
@@ -689,4 +689,4 @@ void LaunchpadFolderView::retire(std::unique_ptr<ui::View> view)
     });
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

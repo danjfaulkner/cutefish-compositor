@@ -13,11 +13,11 @@
 #include "core/preferences.h"
 #include "input/dbus_export.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 namespace {
 
-constexpr auto service = "org.cutefish.HotCorners1";
-constexpr auto path = "/org/cutefish/HotCorners1";
+constexpr auto service = "org.properdesktop.HotCorners1";
+constexpr auto path = "/org/properdesktop/HotCorners1";
 
 // The D-Bus names, also the stem of the preference keys.
 constexpr std::array<std::pair<HotCorner, const char *>, 4> kCorners = {{
@@ -141,4 +141,4 @@ int HotCornerSettings::modifiers(HotCorner corner) const
     return int(m_bindings[indexOf(corner)].modifiers);
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

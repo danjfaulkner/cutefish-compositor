@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_METRICS_H_
-#define CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_METRICS_H_
+#ifndef PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_METRICS_H_
+#define PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_METRICS_H_
 
 #include "base/geometry.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // In logical pixels.
 struct LaunchpadMetrics {
@@ -77,6 +77,6 @@ enum class LaunchpadDirection {
 int moveLaunchpadSelection(int selected, int page, int total, int columns, int pageCount,
                            LaunchpadDirection direction);
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_METRICS_H_
+#endif // PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_METRICS_H_

@@ -1,14 +1,14 @@
-# Cutefish Compositor
+# Proper Desktop Compositor
 
-The Cutefish Wayland compositor, with window management, the desktop shell,
+The Proper Desktop Wayland compositor, with window management, the desktop shell,
 the lock screen and Xwayland in one process. Its Wayland server and window
 management are designed after Chromium's Exo and Ash.
 
-<img src="screenshots/desktop.jpg" alt="Cutefish desktop" width="1080">
+<img src="screenshots/desktop.jpg" alt="Proper Desktop" width="1080">
 
 ## Dependencies
 
-cutefish-toolkit, the cutefish-framework clients and libwayland 1.23 or newer.
+properdesktop-toolkit, the properdesktop-framework clients and libwayland 1.23 or newer.
 At runtime it needs `adwaita-icon-theme` and `xwayland`. Tests also need
 `libgtest-dev`.
 

@@ -5,12 +5,12 @@
 // Upstream: chromium/src/ui/ozone/platform/drm/common/drm_wrapper.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_DEVICE_H_
-#define CUTEFISH_BACKEND_DRM_DRM_DEVICE_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_DEVICE_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_DEVICE_H_
 
 #include "backend/drm/drm_device_api.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 // The fd is owned by the session and the GBM device by DrmBackend.
 class DrmDevice final : public DrmDeviceApi
@@ -60,6 +60,6 @@ private:
     bool m_flipTimesMarkRefresh = false;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_DEVICE_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_DEVICE_H_

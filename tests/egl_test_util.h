@@ -8,7 +8,7 @@
 #include <EGL/eglext.h>
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 struct TargetRetirement {
     EglRenderer *renderer;
@@ -78,4 +78,4 @@ public:
     }
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

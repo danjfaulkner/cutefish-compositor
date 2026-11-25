@@ -7,7 +7,7 @@
 #include "input/cursor_shape.h"
 #include "wm/types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 inline input::CursorShape resizeCursor(ResizeEdge edge)
 {
@@ -30,4 +30,4 @@ inline input::CursorShape resizeCursor(ResizeEdge edge)
     }
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

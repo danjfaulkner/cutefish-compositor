@@ -91,7 +91,7 @@ const wl_buffer_listener bufferListener = {[](void* data, wl_buffer*) {
 bool makeBuffer(State& s, Buffer& b, int w, int h, uint32_t color, int stripe = 0)
 {
     b.bytes = static_cast<size_t>(w) * h * 4;
-    int fd = memfd_create("cutefish-subsurface-demo", MFD_CLOEXEC);
+    int fd = memfd_create("properdesktop-subsurface-demo", MFD_CLOEXEC);
     if (fd < 0)
         return false;
     if (ftruncate(fd, b.bytes) < 0) {

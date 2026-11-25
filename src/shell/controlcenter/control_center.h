@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_H_
-#define CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_H_
+#ifndef PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_H_
+#define PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_H_
 
 #include <array>
 #include <memory>
@@ -15,11 +15,11 @@
 #include "shell/shell.h"
 #include "shell/menubar/menu_bar_panels.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Window;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ControlCenterPager;
 class ControlCenterView;
@@ -104,6 +104,6 @@ private:
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CONTROLCENTER_CONTROL_CENTER_H_
+#endif // PROPERDESKTOP_SHELL_CONTROLCENTER_CONTROL_CENTER_H_

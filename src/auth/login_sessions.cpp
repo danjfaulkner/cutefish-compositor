@@ -20,12 +20,12 @@
 #include "base/settings.h"
 #include "base/strings.h"
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 namespace {
 
-const std::string kStatePath = "/var/lib/cutefish-dm/state.conf";
-const std::string kBackgroundDirectory = "/var/lib/cutefish-dm/backgrounds";
+const std::string kStatePath = "/var/lib/properdesktop-dm/state.conf";
+const std::string kBackgroundDirectory = "/var/lib/properdesktop-dm/backgrounds";
 
 constexpr std::array<std::string_view, 14> kLanguageKeys = {
     "LANG",       "LANGUAGE",   "LC_CTYPE",    "LC_NUMERIC", "LC_TIME",
@@ -328,4 +328,4 @@ std::map<std::string, std::string> currentLanguageEnvironment()
     return variables;
 }
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth

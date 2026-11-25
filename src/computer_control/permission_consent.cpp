@@ -10,13 +10,13 @@
 #include <climits>
 #include <utility>
 
-namespace cutefish::computer_control {
+namespace properdesktop::computer_control {
 
 namespace {
 
-const std::string serviceName = "org.cutefish.Services";
-const std::string permissionsPath = "/org/cutefish/Services/Permissions";
-const std::string permissionsInterface = "org.cutefish.Services.Permissions";
+const std::string serviceName = "org.properdesktop.Services";
+const std::string permissionsPath = "/org/properdesktop/Services/Permissions";
+const std::string permissionsInterface = "org.properdesktop.Services.Permissions";
 
 } // namespace
 
@@ -156,4 +156,4 @@ void PermissionConsent::prompt(const std::shared_ptr<Request> &request, const st
             owner);
 }
 
-} // namespace cutefish::computer_control
+} // namespace properdesktop::computer_control

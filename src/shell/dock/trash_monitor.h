@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_DOCK_TRASH_MONITOR_H_
-#define CUTEFISH_SHELL_DOCK_TRASH_MONITOR_H_
+#ifndef PROPERDESKTOP_SHELL_DOCK_TRASH_MONITOR_H_
+#define PROPERDESKTOP_SHELL_DOCK_TRASH_MONITOR_H_
 
 #include <chrono>
 #include <map>
@@ -16,7 +16,7 @@
 #include "base/thread_pool.h"
 #include "base/timer.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Looked into on a worker, since a slow mount must not hold the compositor.
 class TrashMonitor
@@ -72,6 +72,6 @@ private:
     int m_mountFd = -1;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_DOCK_TRASH_MONITOR_H_
+#endif // PROPERDESKTOP_SHELL_DOCK_TRASH_MONITOR_H_

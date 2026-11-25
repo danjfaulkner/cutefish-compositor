@@ -16,7 +16,7 @@
 #include "base/transform.h"
 #include "ui/geometry_conversions.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 bool BackdropFilter::initialize(const char *fragmentOverride)
 {
@@ -662,4 +662,4 @@ void BackdropFilter::draw(Renderer &renderer, const base::RectF &exactLens, int 
         glDisable(GL_SCISSOR_TEST);
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

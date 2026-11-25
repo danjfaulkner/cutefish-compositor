@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_COMPOSITOR_MENU_MODEL_H_
-#define CUTEFISH_COMPOSITOR_MENU_MODEL_H_
+#ifndef PROPERDESKTOP_COMPOSITOR_MENU_MODEL_H_
+#define PROPERDESKTOP_COMPOSITOR_MENU_MODEL_H_
 
 #include <cstdint>
 #include <memory>
@@ -13,7 +13,7 @@
 #include "base/signal.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 struct MenuItem {
     enum class Toggle {
@@ -111,6 +111,6 @@ public:
     base::Signal<int32_t> activationRequested;
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-#endif // CUTEFISH_COMPOSITOR_MENU_MODEL_H_
+#endif // PROPERDESKTOP_COMPOSITOR_MENU_MODEL_H_

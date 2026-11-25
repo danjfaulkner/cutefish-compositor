@@ -10,7 +10,7 @@
 #include "base/event_loop.h"
 #include "core/main_loop.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 CallbackNativeDisplayDelegate::CallbackNativeDisplayDelegate(HardwareSnapshot snapshot,
                                                              ConfigureHandler configure,
@@ -107,4 +107,4 @@ void CallbackNativeDisplayDelegate::setDisplayPower(const std::vector<DisplayId>
             });
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

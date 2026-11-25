@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_MALLOC_POLICY_H_
-#define CUTEFISH_CORE_MALLOC_POLICY_H_
+#ifndef PROPERDESKTOP_CORE_MALLOC_POLICY_H_
+#define PROPERDESKTOP_CORE_MALLOC_POLICY_H_
 
 #include <malloc.h>
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 // Before any thread starts. Keeps glibc from raising its mmap threshold to the
 // largest block freed and from giving each thread an arena that keeps its frees.
@@ -17,6 +17,6 @@ inline void applyMallocPolicy()
     mallopt(M_ARENA_MAX, 4);
 }
 
-} // namespace cutefish::core
+} // namespace properdesktop::core
 
-#endif // CUTEFISH_CORE_MALLOC_POLICY_H_
+#endif // PROPERDESKTOP_CORE_MALLOC_POLICY_H_

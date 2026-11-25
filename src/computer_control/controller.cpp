@@ -17,7 +17,7 @@
 #include "input/input_manager.h"
 #include "input/seat.h"
 
-namespace cutefish::computer_control {
+namespace properdesktop::computer_control {
 
 namespace {
 
@@ -598,4 +598,4 @@ void Control::stroke(const input::KeyStroke &stroke)
         send(*it, false);
 }
 
-} // namespace cutefish::computer_control
+} // namespace properdesktop::computer_control

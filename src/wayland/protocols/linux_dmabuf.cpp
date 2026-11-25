@@ -26,7 +26,7 @@
 #include "wayland/protocols/wl_shm.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -375,4 +375,4 @@ std::unique_ptr<LinuxDmabufGlobal> LinuxDmabufGlobal::create(wl_display* display
         new LinuxDmabufGlobal(global, std::move(manager)));
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

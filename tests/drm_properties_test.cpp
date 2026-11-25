@@ -7,7 +7,7 @@
 #include "backend/drm/drm_output.h"
 #include "backend/drm/drm_properties.h"
 
-using namespace cutefish::backend;
+using namespace properdesktop::backend;
 
 namespace {
 

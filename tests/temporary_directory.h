@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TESTS_TEMPORARY_DIRECTORY_H
-#define CUTEFISH_TESTS_TEMPORARY_DIRECTORY_H
+#ifndef PROPERDESKTOP_TESTS_TEMPORARY_DIRECTORY_H
+#define PROPERDESKTOP_TESTS_TEMPORARY_DIRECTORY_H
 
 #include <filesystem>
 #include <fstream>
@@ -12,14 +12,14 @@
 
 #include "base/file.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 class TemporaryDirectory : public base::file::TemporaryDirectory
 {
 public:
     TemporaryDirectory()
         : base::file::TemporaryDirectory(std::filesystem::temp_directory_path().string(),
-                                         "cutefish-test-")
+                                         "properdesktop-test-")
     {
     }
 
@@ -37,6 +37,6 @@ public:
     }
 };
 
-} // namespace cutefish::test
+} // namespace properdesktop::test
 
-#endif // CUTEFISH_TESTS_TEMPORARY_DIRECTORY_H
+#endif // PROPERDESKTOP_TESTS_TEMPORARY_DIRECTORY_H

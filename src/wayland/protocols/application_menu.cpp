@@ -15,7 +15,7 @@
 #include "wayland/protocols/dbus_address.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 constexpr uint32_t kAppMenuVersion = 2;
@@ -114,4 +114,4 @@ wl_global* createAppMenuGlobal(wl_display* display)
                             nullptr, bindAppMenu);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

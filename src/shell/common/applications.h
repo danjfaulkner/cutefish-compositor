@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_APPLICATIONS_H_
-#define CUTEFISH_SHELL_COMMON_APPLICATIONS_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_APPLICATIONS_H_
+#define PROPERDESKTOP_SHELL_COMMON_APPLICATIONS_H_
 
 #include <memory>
 #include <string>
@@ -12,11 +12,11 @@
 #include "base/desktop_entry.h"
 #include "base/signal.h"
 
-namespace cutefish::base {
+namespace properdesktop::base {
 class ApplicationRegistry;
-} // namespace cutefish::base
+} // namespace properdesktop::base
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 using DesktopEntryPtr = std::shared_ptr<const base::DesktopEntry>;
 
@@ -60,6 +60,6 @@ private:
     base::Subscription m_changed;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_APPLICATIONS_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_APPLICATIONS_H_

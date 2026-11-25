@@ -25,8 +25,8 @@
 #include "scene/node.h"
 #include "scene/scene.h"
 
-using namespace cutefish;
-using namespace cutefish::computer_control;
+using namespace properdesktop;
+using namespace properdesktop::computer_control;
 using namespace std::chrono_literals;
 
 namespace {

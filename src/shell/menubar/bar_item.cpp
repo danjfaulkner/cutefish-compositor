@@ -11,7 +11,7 @@
 #include "ui/theme.h"
 #include "ui/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 ui::Color BarContext::textColor() const
 {
@@ -380,4 +380,4 @@ void BarLabel::layout()
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

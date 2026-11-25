@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SCREENSHOT_SCREEN_CAPTURE_H_
-#define CUTEFISH_SHELL_SCREENSHOT_SCREEN_CAPTURE_H_
+#ifndef PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_CAPTURE_H_
+#define PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_CAPTURE_H_
 
 #include <chrono>
 #include <cstdint>
@@ -21,27 +21,27 @@
 #include "shell/shell.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::base::dbus {
+namespace properdesktop::base::dbus {
 class Object;
 }
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 class SelectionController;
 }
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class CaptureSource;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class FileChooser;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class CaptureClipboard;
 class CaptureNotifier;
@@ -234,6 +234,6 @@ private:
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SCREENSHOT_SCREEN_CAPTURE_H_
+#endif // PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_CAPTURE_H_

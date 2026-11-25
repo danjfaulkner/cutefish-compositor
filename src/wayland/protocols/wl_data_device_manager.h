@@ -10,11 +10,11 @@
 #include <memory>
 #include <wayland-server-core.h>
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 class DataSource;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 struct WaylandSeat;
 constexpr uint32_t kWlDataDeviceManagerVersion = 3;
@@ -23,4 +23,4 @@ wl_global* createDataDeviceManagerGlobal(wl_display* display, WaylandSeat* seat)
 // For xdg_toplevel_drag_v1. Null when `resource` is not a source of `client`, or was already used or claimed.
 std::shared_ptr<clipboard::DataSource> claimDragSource(wl_client* client, wl_resource* resource);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

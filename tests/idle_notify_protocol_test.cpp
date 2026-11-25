@@ -28,7 +28,7 @@
 #include "wayland/protocols/zwp_idle_inhibit_manager.h"
 #include <idle-inhibit-unstable-v1-client-protocol.h>
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -287,7 +287,7 @@ TEST_F(IdleNotifyProtocolTest, SurfaceVisibilityAndResourceLifetimes)
     class Buffer : public compositor::Buffer
     {
     public:
-        cutefish::base::Size size() const override { return {10, 10}; }
+        properdesktop::base::Size size() const override { return {10, 10}; }
 
         render::PixelFormat format() const override { return render::PixelFormat::Bgra8888; }
 

@@ -6,7 +6,7 @@
 
 #include "shell/common/text_match.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 std::string Notification::applicationKey() const
 {
@@ -75,4 +75,4 @@ Notification Notification::fromJson(const base::json::Value &value)
     return notification;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

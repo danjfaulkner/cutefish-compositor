@@ -46,7 +46,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -285,7 +285,7 @@ struct Client {
                 [](void *, wl_data_source *, uint32_t) {},
         };
         wl_data_source_add_listener(source, &sourceListener, this);
-        wl_data_source_offer(source, "application/x-cutefish-tab");
+        wl_data_source_offer(source, "application/x-properdesktop-tab");
         wl_data_source_set_actions(source, WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE);
         return source;
     }
@@ -670,7 +670,7 @@ TEST_F(XdgToplevelDragProtocolTest, HidingTheWindowTheDragStartedFromDoesNotEndI
         });
         c.sync();
         ASSERT_EQ(target->surface, c.dragEnterSurface);
-        wl_data_offer_accept(c.dragOffer, c.dragEnterSerial, "application/x-cutefish-tab");
+        wl_data_offer_accept(c.dragOffer, c.dragEnterSerial, "application/x-properdesktop-tab");
         wl_data_offer_set_actions(c.dragOffer, WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
                                   WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE);
         c.sync();
@@ -752,7 +752,7 @@ TEST_F(XdgToplevelDragProtocolTest, OverAWindowOfItsOwnThatTakesTheDropThePrevie
         c.map(detached, base::Size(200, 150));
 
         ASSERT_EQ(origin->surface, c.dragEnterSurface);
-        wl_data_offer_accept(c.dragOffer, c.dragEnterSerial, "application/x-cutefish-tab");
+        wl_data_offer_accept(c.dragOffer, c.dragEnterSerial, "application/x-properdesktop-tab");
         wl_data_offer_set_actions(c.dragOffer, WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
                                   WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE);
         c.sync();
@@ -812,7 +812,7 @@ TEST_F(XdgToplevelDragProtocolTest, AWindowDockedOnThenAttachedAndDestroyedIsLet
         });
         c.sync();
         ASSERT_EQ(child, c.dragEnterSurface);
-        wl_data_offer_accept(c.dragOffer, c.dragEnterSerial, "application/x-cutefish-tab");
+        wl_data_offer_accept(c.dragOffer, c.dragEnterSerial, "application/x-properdesktop-tab");
         wl_data_offer_set_actions(c.dragOffer, WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
                                   WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE);
         c.sync();
@@ -930,7 +930,7 @@ TEST_F(XdgToplevelDragProtocolTest, SelfDropReachesDestinationBeforeSourceComple
         wl_data_device_start_drag(c.dataDevice, source, origin->surface, nullptr, c.buttonSerial);
         c.sync();
         ASSERT_NE(nullptr, c.dragOffer);
-        wl_data_offer_accept(c.dragOffer, c.dragEnterSerial, "application/x-cutefish-tab");
+        wl_data_offer_accept(c.dragOffer, c.dragEnterSerial, "application/x-properdesktop-tab");
         wl_data_offer_set_actions(c.dragOffer, WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
                                  WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE);
         c.sync();

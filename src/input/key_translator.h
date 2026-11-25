@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_INPUT_KEY_TRANSLATOR_H_
-#define CUTEFISH_INPUT_KEY_TRANSLATOR_H_
+#ifndef PROPERDESKTOP_INPUT_KEY_TRANSLATOR_H_
+#define PROPERDESKTOP_INPUT_KEY_TRANSLATOR_H_
 
 #include <cstdint>
 #include <functional>
@@ -15,7 +15,7 @@
 
 #include "input/types.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class XkbTracker;
 
@@ -113,6 +113,6 @@ private:
     bool m_secondaryClick = false;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_KEY_TRANSLATOR_H_
+#endif // PROPERDESKTOP_INPUT_KEY_TRANSLATOR_H_

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_BAR_ITEM_H_
-#define CUTEFISH_SHELL_MENUBAR_BAR_ITEM_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_BAR_ITEM_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_BAR_ITEM_H_
 
 #include <functional>
 #include <optional>
@@ -16,11 +16,11 @@
 #include "ui/styled_label.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Icon;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class BarContext
 {
@@ -154,6 +154,6 @@ private:
     int m_weight = 400;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_BAR_ITEM_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_BAR_ITEM_H_

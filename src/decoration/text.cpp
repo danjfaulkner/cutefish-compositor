@@ -27,7 +27,7 @@
 #include <unicode/uscript.h>
 #include <unicode/utf16.h>
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 namespace {
 
 constexpr int kMaxTitleLength = 4096;
@@ -493,4 +493,4 @@ std::string TextRenderer::elideText(std::string_view text, int pixelSize, int ma
     return base::strings::utf16ToUtf8(best);
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

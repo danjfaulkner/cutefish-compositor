@@ -14,7 +14,7 @@
 #include "backend/drm/drm_mode_fallback_planner.h"
 #include "fake_drm_device.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(DrmConfigurationPlanner, BacktracksAcrossAsymmetricCrtcCompatibility)
 {
@@ -75,7 +75,7 @@ TEST(DrmConfigurationPlanner, RejectsSharedOrInsufficientResources)
 
 TEST(DrmCommitCoordinator, TestAndCommitAreAtomicFromPublishedStatesPerspective)
 {
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     backend::DrmCommitCoordinator coordinator(&device);
     backend::AtomicRequest first;
     first.add(1, 2, 3);
@@ -96,7 +96,7 @@ TEST(DrmCommitCoordinator, TestAndCommitAreAtomicFromPublishedStatesPerspective)
 
 TEST(DrmCommitCoordinator, FailedRealCommitDoesNotPublishCandidate)
 {
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     backend::DrmCommitCoordinator coordinator(&device);
     backend::AtomicRequest request;
     request.add(1, 2, 3);
@@ -112,7 +112,7 @@ TEST(DrmCommitCoordinator, FailedRealCommitDoesNotPublishCandidate)
 
 TEST(DrmCommitCoordinator, InvalidationAfterTestKeepsThePreviousRequest)
 {
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     backend::DrmCommitCoordinator coordinator(&device);
     backend::AtomicRequest first;
     first.add(1, 2, 3);
@@ -136,7 +136,7 @@ TEST(DrmCommitCoordinator, InvalidationAfterTestKeepsThePreviousRequest)
 
 TEST(DrmCommitCoordinator, RejectsConflictingPropertiesBeforeTesting)
 {
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     backend::DrmCommitCoordinator coordinator(&device);
     backend::AtomicRequest request;
     request.add(1, 2, 3);
@@ -147,7 +147,7 @@ TEST(DrmCommitCoordinator, RejectsConflictingPropertiesBeforeTesting)
 
 TEST(DrmCommitCoordinator, TestOnlyDoesNotPublishAndStripsPageFlipEventFlag)
 {
-    cutefish::testing::FakeDrmDevice device;
+    properdesktop::testing::FakeDrmDevice device;
     backend::DrmCommitCoordinator coordinator(&device);
     backend::AtomicRequest request;
     request.add(1, 2, 3);

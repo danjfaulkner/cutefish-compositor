@@ -5,7 +5,7 @@
 #include <atomic>
 #include <chrono>
 #include <cstring>
-#include <cutefish-surface-blur-v1-client-protocol.h>
+#include <properdesktop-surface-blur-v1-client-protocol.h>
 #include <gtest/gtest.h>
 #include <sys/socket.h>
 #include <thread>
@@ -18,7 +18,7 @@
 #include "wayland/protocols/surface_blur.h"
 #include "wayland/protocols/wl_compositor.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -31,7 +31,7 @@ protected:
     wl_display *client = nullptr;
     wl_registry *registry = nullptr;
     wl_compositor *clientCompositor = nullptr;
-    cutefish_surface_blur_v1 *blur = nullptr;
+    properdesktop_surface_blur_v1 *blur = nullptr;
 
     void SetUp() override
     {
@@ -52,9 +52,9 @@ protected:
                     if (std::strcmp(interface, "wl_compositor") == 0)
                         self->clientCompositor = static_cast<wl_compositor *>(
                                 wl_registry_bind(registry, name, &wl_compositor_interface, 4));
-                    else if (std::strcmp(interface, "cutefish_surface_blur_v1") == 0)
-                        self->blur = static_cast<cutefish_surface_blur_v1 *>(wl_registry_bind(
-                                registry, name, &cutefish_surface_blur_v1_interface, 1));
+                    else if (std::strcmp(interface, "properdesktop_surface_blur_v1") == 0)
+                        self->blur = static_cast<properdesktop_surface_blur_v1 *>(wl_registry_bind(
+                                registry, name, &properdesktop_surface_blur_v1_interface, 1));
                 },
                 [](void *, wl_registry *, uint32_t) {}};
         wl_registry_add_listener(registry, &listener, this);
@@ -85,7 +85,7 @@ protected:
     void TearDown() override
     {
         if (blur)
-            cutefish_surface_blur_v1_destroy(blur);
+            properdesktop_surface_blur_v1_destroy(blur);
         if (clientCompositor)
             wl_compositor_destroy(clientCompositor);
         if (registry)
@@ -102,7 +102,7 @@ protected:
 TEST_F(SurfaceBlurProtocolTest, SetUnsetAndBindingDestructionFollowSurfaceCommits)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_surface_blur_v1_set(blur, surface, 3, 4, 120, 80, 100);
+    properdesktop_surface_blur_v1_set(blur, surface, 3, 4, 120, 80, 100);
     ASSERT_GE(roundtrip(), 0);
     ASSERT_EQ(compositor.surfaces().size(), 1u);
     auto *model = compositor.surfaces().front();
@@ -111,14 +111,14 @@ TEST_F(SurfaceBlurProtocolTest, SetUnsetAndBindingDestructionFollowSurfaceCommit
     ASSERT_GE(roundtrip(), 0);
     EXPECT_EQ(model->backgroundBlurRect(), base::Rect(3, 4, 120, 80));
     EXPECT_EQ(model->backgroundBlurRadius(), 40);
-    cutefish_surface_blur_v1_unset(blur, surface);
+    properdesktop_surface_blur_v1_unset(blur, surface);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_FALSE(model->backgroundBlurRect().isEmpty());
     wl_surface_commit(surface);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->backgroundBlurRect().isEmpty());
-    cutefish_surface_blur_v1_set(blur, surface, 0, 0, 30, 20, 4);
-    cutefish_surface_blur_v1_destroy(blur);
+    properdesktop_surface_blur_v1_set(blur, surface, 0, 0, 30, 20, 4);
+    properdesktop_surface_blur_v1_destroy(blur);
     blur = nullptr;
     wl_surface_commit(surface);
     ASSERT_GE(roundtrip(), 0);
@@ -144,22 +144,22 @@ TEST_F(SurfaceBlurProtocolTest, ShapeIsPendingStateClippedToTheRectangle)
     wl_array path;
     wl_array_init(&path);
     append(&path,
-           {CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, wl_fixed_from_int(0),
+           {PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, wl_fixed_from_int(0),
             wl_fixed_from_int(0)});
     append(&path,
-           {CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, wl_fixed_from_int(100),
+           {PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, wl_fixed_from_int(100),
             wl_fixed_from_int(0)});
     append(&path,
-           {CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CUBIC_TO, wl_fixed_from_int(100),
+           {PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CUBIC_TO, wl_fixed_from_int(100),
             wl_fixed_from_int(30), wl_fixed_from_int(80), wl_fixed_from_int(60),
             wl_fixed_from_int(50), wl_fixed_from_int(70)});
     append(&path,
-           {CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, wl_fixed_from_int(0),
+           {PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, wl_fixed_from_int(0),
             wl_fixed_from_int(60)});
-    append(&path, {CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE});
-    cutefish_surface_blur_v1_set_shape(blur, surface, &path);
+    append(&path, {PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE});
+    properdesktop_surface_blur_v1_set_shape(blur, surface, &path);
     wl_array_release(&path);
-    cutefish_surface_blur_v1_set(blur, surface, 0, 0, 100, 60, 8);
+    properdesktop_surface_blur_v1_set(blur, surface, 0, 0, 100, 60, 8);
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_TRUE(model->backgroundBlurShape().isEmpty());
@@ -171,12 +171,12 @@ TEST_F(SurfaceBlurProtocolTest, ShapeIsPendingStateClippedToTheRectangle)
     EXPECT_FALSE(shape.contains(ui::PointF {98, 55}));
     EXPECT_LE(shape.boundingRect().bottom(), 60.0001);
 
-    cutefish_surface_blur_v1_set_glass(blur, surface);
+    properdesktop_surface_blur_v1_set_glass(blur, surface);
     wl_surface_commit(surface);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_FALSE(model->backgroundBlurShape().isEmpty());
-    cutefish_surface_blur_v1_unset_glass(blur, surface);
-    cutefish_surface_blur_v1_unset_shape(blur, surface);
+    properdesktop_surface_blur_v1_unset_glass(blur, surface);
+    properdesktop_surface_blur_v1_unset_shape(blur, surface);
     wl_surface_commit(surface);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->backgroundBlurShape().isEmpty());
@@ -187,38 +187,38 @@ TEST_F(SurfaceBlurProtocolTest, ShapeIsPendingStateClippedToTheRectangle)
 TEST_F(SurfaceBlurProtocolTest, ShapeKeepsItsElementRules)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_surface_blur_v1_set(blur, surface, 0, 0, 100, 60, 8);
-    cutefish_surface_blur_v1_set_glass(blur, surface);
+    properdesktop_surface_blur_v1_set(blur, surface, 0, 0, 100, 60, 8);
+    properdesktop_surface_blur_v1_set_glass(blur, surface);
     const auto shapeOf = [&](std::initializer_list<int32_t> values) {
         wl_array path;
         wl_array_init(&path);
         append(&path, values);
-        cutefish_surface_blur_v1_set_shape(blur, surface, &path);
+        properdesktop_surface_blur_v1_set_shape(blur, surface, &path);
         wl_array_release(&path);
         wl_surface_commit(surface);
         EXPECT_GE(roundtrip(), 0);
         return compositor.surfaces().front()->backgroundBlurShape();
     };
 
-    ui::Path shape = shapeOf({CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, wl_fixed_from_int(10),
-                              wl_fixed_from_int(10), CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO,
+    ui::Path shape = shapeOf({PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, wl_fixed_from_int(10),
+                              wl_fixed_from_int(10), PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO,
                               wl_fixed_from_int(10), wl_fixed_from_int(0)});
     EXPECT_FALSE(shape.isEmpty());
     EXPECT_EQ(shape.controlPointRect(), (ui::RectF {0, 0, 10, 10}));
 
-    shape = shapeOf({CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, wl_fixed_from_int(90),
-                     wl_fixed_from_int(50), CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO,
+    shape = shapeOf({PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, wl_fixed_from_int(90),
+                     wl_fixed_from_int(50), PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO,
                      wl_fixed_from_int(5), wl_fixed_from_int(5),
-                     CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, wl_fixed_from_int(10),
+                     PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, wl_fixed_from_int(10),
                      wl_fixed_from_int(10)});
     EXPECT_EQ(shape.controlPointRect(), (ui::RectF {5, 5, 5, 5}));
 
-    shape = shapeOf({CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, wl_fixed_from_int(1),
-                     wl_fixed_from_int(1), CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE});
+    shape = shapeOf({PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, wl_fixed_from_int(1),
+                     wl_fixed_from_int(1), PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE});
     EXPECT_TRUE(shape.isEmpty());
 
-    shape = shapeOf({CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, wl_fixed_from_int(1),
-                     wl_fixed_from_int(1), CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO,
+    shape = shapeOf({PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, wl_fixed_from_int(1),
+                     wl_fixed_from_int(1), PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO,
                      wl_fixed_from_int(1), wl_fixed_from_int(1)});
     EXPECT_TRUE(shape.isEmpty());
     wl_surface_destroy(surface);
@@ -228,10 +228,10 @@ TEST_F(SurfaceBlurProtocolTest, ShapeKeepsItsElementRules)
 TEST_F(SurfaceBlurProtocolTest, SaturationAndRimArePendingMaterialState)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_surface_blur_v1_set(blur, surface, 0, 0, 100, 60, 8);
-    cutefish_surface_blur_v1_set_glass_saturation(blur, surface, wl_fixed_from_double(1.5));
-    cutefish_surface_blur_v1_set_glass_rim(blur, surface, wl_fixed_from_int(3));
-    cutefish_surface_blur_v1_set_glass(blur, surface);
+    properdesktop_surface_blur_v1_set(blur, surface, 0, 0, 100, 60, 8);
+    properdesktop_surface_blur_v1_set_glass_saturation(blur, surface, wl_fixed_from_double(1.5));
+    properdesktop_surface_blur_v1_set_glass_rim(blur, surface, wl_fixed_from_int(3));
+    properdesktop_surface_blur_v1_set_glass(blur, surface);
     ASSERT_GE(roundtrip(), 0);
     auto *model = compositor.surfaces().front();
     EXPECT_FALSE(model->glass().enabled);
@@ -247,10 +247,10 @@ TEST_F(SurfaceBlurProtocolTest, SaturationAndRimArePendingMaterialState)
 TEST_F(SurfaceBlurProtocolTest, NegativeRimPostsProtocolError)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_surface_blur_v1_set_glass_rim(blur, surface, wl_fixed_from_int(-1));
+    properdesktop_surface_blur_v1_set_glass_rim(blur, surface, wl_fixed_from_int(-1));
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY);
+              PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY);
     wl_proxy_destroy(reinterpret_cast<wl_proxy *>(surface));
 }
 
@@ -260,20 +260,20 @@ TEST_F(SurfaceBlurProtocolTest, MalformedShapePostsProtocolError)
     wl_array path;
     wl_array_init(&path);
     append(&path,
-           {CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, 0, 0,
-            CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, 0});
-    cutefish_surface_blur_v1_set_shape(blur, surface, &path);
+           {PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO, 0, 0,
+            PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO, 0});
+    properdesktop_surface_blur_v1_set_shape(blur, surface, &path);
     wl_array_release(&path);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY);
+              PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY);
     wl_proxy_destroy(reinterpret_cast<wl_proxy *>(surface));
 }
 
 TEST_F(SurfaceBlurProtocolTest, BlurOverSubsurfacesIsPendingStateApartFromTheBackgroundBlur)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_surface_blur_v1_set_over_subsurfaces(blur, surface, 10, 20, 200, 60, 50);
+    properdesktop_surface_blur_v1_set_over_subsurfaces(blur, surface, 10, 20, 200, 60, 50);
     ASSERT_GE(roundtrip(), 0);
     ASSERT_EQ(compositor.surfaces().size(), 1u);
     auto *model = compositor.surfaces().front();
@@ -283,16 +283,16 @@ TEST_F(SurfaceBlurProtocolTest, BlurOverSubsurfacesIsPendingStateApartFromTheBac
     EXPECT_EQ(model->subsurfaceBlurRect(), base::Rect(10, 20, 200, 60));
     EXPECT_EQ(model->subsurfaceBlurRadius(), 30);
     EXPECT_TRUE(model->backgroundBlurRect().isEmpty());
-    cutefish_surface_blur_v1_set(blur, surface, 0, 0, 30, 20, 4);
-    cutefish_surface_blur_v1_unset_over_subsurfaces(blur, surface);
+    properdesktop_surface_blur_v1_set(blur, surface, 0, 0, 30, 20, 4);
+    properdesktop_surface_blur_v1_unset_over_subsurfaces(blur, surface);
     wl_surface_commit(surface);
     ASSERT_GE(roundtrip(), 0);
     EXPECT_TRUE(model->subsurfaceBlurRect().isEmpty());
     EXPECT_EQ(model->backgroundBlurRect(), base::Rect(0, 0, 30, 20));
-    cutefish_surface_blur_v1_set_over_subsurfaces(blur, surface, 0, 0, 10, 0, 0);
+    properdesktop_surface_blur_v1_set_over_subsurfaces(blur, surface, 0, 0, 10, 0, 0);
     EXPECT_LT(roundtrip(), 0);
     EXPECT_EQ(wl_display_get_protocol_error(client, nullptr, nullptr),
-              CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY);
+              PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY);
     wl_proxy_destroy(reinterpret_cast<wl_proxy *>(surface));
 }
 
@@ -305,29 +305,29 @@ TEST_F(SurfaceBlurProtocolTest, BlurOverSubsurfacesTakesAShape)
         *static_cast<int32_t *>(wl_array_add(&path, sizeof(int32_t))) = value;
     };
     for (const int top : {10, 60}) {
-        add(CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO);
+        add(PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_MOVE_TO);
         add(wl_fixed_from_int(0));
         add(wl_fixed_from_int(top));
-        add(CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO);
+        add(PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO);
         add(wl_fixed_from_int(100));
         add(wl_fixed_from_int(top));
-        add(CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO);
+        add(PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_LINE_TO);
         add(wl_fixed_from_int(100));
         add(wl_fixed_from_int(top + 20));
-        add(CUTEFISH_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE);
+        add(PROPERDESKTOP_SURFACE_BLUR_V1_PATH_COMMAND_CLOSE);
     }
-    cutefish_surface_blur_v1_set_over_subsurfaces(blur, surface, 0, 0, 100, 100, 0);
-    cutefish_surface_blur_v1_set_over_subsurfaces_shape(blur, surface, &path);
+    properdesktop_surface_blur_v1_set_over_subsurfaces(blur, surface, 0, 0, 100, 100, 0);
+    properdesktop_surface_blur_v1_set_over_subsurfaces_shape(blur, surface, &path);
     wl_surface_commit(surface);
     ASSERT_GE(roundtrip(), 0);
     ASSERT_EQ(compositor.surfaces().size(), 1u);
     auto *model = compositor.surfaces().front();
     EXPECT_FALSE(model->subsurfaceBlurShape().isEmpty());
     EXPECT_TRUE(model->backgroundBlurShape().isEmpty());
-    cutefish_surface_blur_v1_unset_over_subsurfaces_shape(blur, surface);
-    cutefish_surface_blur_v1_set_over_subsurfaces_fill(
+    properdesktop_surface_blur_v1_unset_over_subsurfaces_shape(blur, surface);
+    properdesktop_surface_blur_v1_set_over_subsurfaces_fill(
             blur, surface, wl_fixed_from_double(1), wl_fixed_from_double(1), wl_fixed_from_double(1),
-            wl_fixed_from_double(0.5), CUTEFISH_SURFACE_BLUR_V1_BACKDROP_BLEND_COLOR, wl_fixed_from_double(0.2),
+            wl_fixed_from_double(0.5), PROPERDESKTOP_SURFACE_BLUR_V1_BACKDROP_BLEND_COLOR, wl_fixed_from_double(0.2),
             wl_fixed_from_double(0.4), wl_fixed_from_double(0.6), wl_fixed_from_double(1));
     wl_surface_commit(surface);
     ASSERT_GE(roundtrip(), 0);
@@ -343,13 +343,13 @@ TEST_F(SurfaceBlurProtocolTest, BlurOverSubsurfacesTakesAShape)
 TEST_F(SurfaceBlurProtocolTest, InvalidGeometryPostsProtocolError)
 {
     auto *surface = wl_compositor_create_surface(clientCompositor);
-    cutefish_surface_blur_v1_set(blur, surface, 0, 0, -1, 80, 5);
+    properdesktop_surface_blur_v1_set(blur, surface, 0, 0, -1, 80, 5);
     EXPECT_LT(roundtrip(), 0);
     const wl_interface *interface = nullptr;
     EXPECT_EQ(wl_display_get_protocol_error(client, &interface, nullptr),
-              CUTEFISH_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY);
+              PROPERDESKTOP_SURFACE_BLUR_V1_ERROR_INVALID_GEOMETRY);
     ASSERT_TRUE(interface);
-    EXPECT_STREQ(interface->name, "cutefish_surface_blur_v1");
+    EXPECT_STREQ(interface->name, "properdesktop_surface_blur_v1");
     wl_proxy_destroy(reinterpret_cast<wl_proxy *>(surface));
 }
 

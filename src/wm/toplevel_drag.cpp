@@ -17,7 +17,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -307,4 +307,4 @@ void ToplevelDrag::detach()
     m_surface = nullptr;
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

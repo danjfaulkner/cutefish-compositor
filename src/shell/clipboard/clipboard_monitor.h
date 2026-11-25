@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_MONITOR_H_
-#define CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_MONITOR_H_
+#ifndef PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_MONITOR_H_
+#define PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_MONITOR_H_
 
 #include <memory>
 #include <string>
@@ -13,12 +13,12 @@
 #include "base/timer.h"
 #include "shell/clipboard/clipboard_store.h"
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 class DataSource;
 class SelectionController;
-} // namespace cutefish::clipboard
+} // namespace properdesktop::clipboard
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // A newer selection cancels a read in progress, so a program that writes the
 // clipboard twice in a row leaves one copy.
@@ -27,10 +27,10 @@ class ClipboardMonitor
 public:
     static constexpr std::chrono::milliseconds kReadDeadline{2000};
     // Carries the history entry's key, so the selection coming back is known.
-    static constexpr const char *kEntryType = "application/x-cutefish-clipboard-history";
-    // cutefish-services takes over every selection to keep it after its owner
+    static constexpr const char *kEntryType = "application/x-properdesktop-clipboard-history";
+    // properdesktop-services takes over every selection to keep it after its owner
     // quits, except one that carries this.
-    static constexpr const char *kServicesType = "application/x-cutefish-clipboard";
+    static constexpr const char *kServicesType = "application/x-properdesktop-clipboard";
 
     explicit ClipboardMonitor(clipboard::SelectionController &selection);
     ~ClipboardMonitor();
@@ -65,6 +65,6 @@ private:
     std::string m_ownKey;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_MONITOR_H_
+#endif // PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_MONITOR_H_

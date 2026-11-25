@@ -22,11 +22,11 @@
 #include "input/cursor_shape.h"
 #include "input/types.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class SurfaceNode;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class Seat;
 
@@ -238,4 +238,4 @@ private:
     base::WeakPtrFactory<DragController> m_weakFactory {this};
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

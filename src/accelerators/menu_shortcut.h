@@ -9,7 +9,7 @@
 
 #include "input/types.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 class AcceleratorConfiguration;
 
@@ -20,4 +20,4 @@ class AcceleratorConfiguration;
 std::string menuShortcutText(const std::string &key, uint32_t modifiers, input::ShortcutConvention convention,
                              bool terminal, bool bindsCommand, const AcceleratorConfiguration *configuration);
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

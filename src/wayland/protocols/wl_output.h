@@ -21,13 +21,13 @@ struct wl_client;
 struct wl_display;
 struct wl_global;
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 struct Output;
 class Surface;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 void forEachOutputBinding(wl_client *client,
                           const std::shared_ptr<render::PresentationOutput> &output,
@@ -43,4 +43,4 @@ void removeOutputGlobal(wl_global *global);
 std::shared_ptr<compositor::CaptureSource> outputCaptureSource(wl_resource *resource);
 std::optional<std::string> outputNameFromResource(wl_resource *resource);
 wl_global *createXdgOutputManagerGlobal(wl_display *display);
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -18,7 +18,7 @@
 #include <vector>
 #include <wayland-client.h>
 #include <wayland-server-core.h>
-#include <cutefish-status-item-v1-client-protocol.h>
+#include <properdesktop-status-item-v1-client-protocol.h>
 #include <xdg-shell-client-protocol.h>
 
 #include "compositor/compositor.h"
@@ -40,7 +40,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -54,7 +54,7 @@ constexpr int kBarHeight = 32;
 
 struct Item {
     wl_surface *surface = nullptr;
-    cutefish_status_item_v1 *item = nullptr;
+    properdesktop_status_item_v1 *item = nullptr;
     wl_buffer *buffer = nullptr;
     struct Configure {
         uint32_t serial;
@@ -67,17 +67,17 @@ struct Item {
     std::vector<base::Rect> places;
 };
 
-const cutefish_status_item_v1_listener itemListener = {
-        [](void *data, cutefish_status_item_v1 *, uint32_t serial, int32_t height, int32_t maxWidth) {
+const properdesktop_status_item_v1_listener itemListener = {
+        [](void *data, properdesktop_status_item_v1 *, uint32_t serial, int32_t height, int32_t maxWidth) {
             static_cast<Item *>(data)->configures.push_back({serial, height, maxWidth});
         },
-        [](void *data, cutefish_status_item_v1 *, uint32_t appearance, uint32_t foreground) {
+        [](void *data, properdesktop_status_item_v1 *, uint32_t appearance, uint32_t foreground) {
             static_cast<Item *>(data)->appearances.emplace_back(appearance, foreground);
         },
-        [](void *data, cutefish_status_item_v1 *, uint32_t highlighted) {
+        [](void *data, properdesktop_status_item_v1 *, uint32_t highlighted) {
             static_cast<Item *>(data)->highlights.push_back(highlighted);
         },
-        [](void *data, cutefish_status_item_v1 *, int32_t x, int32_t y, int32_t width, int32_t height) {
+        [](void *data, properdesktop_status_item_v1 *, int32_t x, int32_t y, int32_t width, int32_t height) {
             static_cast<Item *>(data)->places.emplace_back(x, y, width, height);
         },
 };
@@ -117,7 +117,7 @@ struct Client {
     wl_pointer *pointer = nullptr;
     wl_keyboard *keyboard = nullptr;
     xdg_wm_base *wmBase = nullptr;
-    cutefish_status_item_manager_v1 *items = nullptr;
+    properdesktop_status_item_manager_v1 *items = nullptr;
     std::map<std::string, std::pair<uint32_t, uint32_t>> globals;
     std::vector<std::unique_ptr<Item>> made;
     std::vector<std::unique_ptr<Popup>> popups;
@@ -143,9 +143,9 @@ struct Client {
         shm = static_cast<wl_shm *>(wl_registry_bind(registry, globals["wl_shm"].first, &wl_shm_interface, 1));
         wmBase = static_cast<xdg_wm_base *>(
                 wl_registry_bind(registry, globals["xdg_wm_base"].first, &xdg_wm_base_interface, 3));
-        items = static_cast<cutefish_status_item_manager_v1 *>(
-                wl_registry_bind(registry, globals["cutefish_status_item_manager_v1"].first,
-                                 &cutefish_status_item_manager_v1_interface, 1));
+        items = static_cast<properdesktop_status_item_manager_v1 *>(
+                wl_registry_bind(registry, globals["properdesktop_status_item_manager_v1"].first,
+                                 &properdesktop_status_item_manager_v1_interface, 1));
         seat = static_cast<wl_seat *>(wl_registry_bind(registry, globals["wl_seat"].first, &wl_seat_interface, 5));
         pointer = wl_seat_get_pointer(seat);
         static const wl_pointer_listener pointerListener = {
@@ -201,7 +201,7 @@ struct Client {
         }
         for (auto &item : made) {
             if (item->item)
-                cutefish_status_item_v1_destroy(item->item);
+                properdesktop_status_item_v1_destroy(item->item);
             wl_surface_destroy(item->surface);
             if (item->buffer)
                 wl_buffer_destroy(item->buffer);
@@ -209,7 +209,7 @@ struct Client {
         wl_keyboard_destroy(keyboard);
         wl_pointer_destroy(pointer);
         wl_seat_destroy(seat);
-        cutefish_status_item_manager_v1_destroy(items);
+        properdesktop_status_item_manager_v1_destroy(items);
         xdg_wm_base_destroy(wmBase);
         wl_shm_destroy(shm);
         wl_compositor_destroy(compositor);
@@ -235,10 +235,10 @@ struct Client {
         made.push_back(std::make_unique<Item>());
         Item *item = made.back().get();
         item->surface = wl_compositor_create_surface(compositor);
-        item->item = cutefish_status_item_manager_v1_get_status_item(items, item->surface);
-        cutefish_status_item_v1_add_listener(item->item, &itemListener, item);
+        item->item = properdesktop_status_item_manager_v1_get_status_item(items, item->surface);
+        properdesktop_status_item_v1_add_listener(item->item, &itemListener, item);
         if (identifier)
-            cutefish_status_item_v1_set_identifier(item->item, identifier);
+            properdesktop_status_item_v1_set_identifier(item->item, identifier);
         sync();
         return item;
     }
@@ -246,7 +246,7 @@ struct Client {
     void draw(Item *item, int width)
     {
         const Item::Configure configure = item->configures.back();
-        cutefish_status_item_v1_ack_configure(item->item, configure.serial);
+        properdesktop_status_item_v1_ack_configure(item->item, configure.serial);
         if (item->buffer)
             wl_buffer_destroy(item->buffer);
         item->buffer = makeBuffer({width, configure.height});
@@ -273,7 +273,7 @@ struct Client {
         xdg_popup_add_listener(popup->popup, &popupListener, popup);
         if (grab)
             xdg_popup_grab(popup->popup, seat, lastButtonSerial);
-        cutefish_status_item_v1_get_popup(item->item, popup->popup);
+        properdesktop_status_item_v1_get_popup(item->item, popup->popup);
         sync();
         if (!popup->surfaceConfigures.empty()) {
             xdg_surface_ack_configure(popup->xdgSurface, popup->surfaceConfigures.back());
@@ -461,7 +461,7 @@ TEST_F(StatusItemProtocolTest, AnItemIsConfiguredOnceThereIsABarAndPlacedOnceItD
         EXPECT_EQ(kBarHeight, item->configures.back().height);
         EXPECT_EQ(300, item->configures.back().maxWidth);
         ASSERT_EQ(1u, item->appearances.size());
-        EXPECT_EQ(uint32_t(CUTEFISH_STATUS_ITEM_V1_APPEARANCE_DARK), item->appearances.back().first);
+        EXPECT_EQ(uint32_t(PROPERDESKTOP_STATUS_ITEM_V1_APPEARANCE_DARK), item->appearances.back().first);
         EXPECT_EQ(0xffffffffu, item->appearances.back().second);
         ASSERT_EQ(1u, item->highlights.size());
         EXPECT_EQ(0u, item->highlights.back());
@@ -488,7 +488,7 @@ TEST_F(StatusItemProtocolTest, AnItemIsConfiguredOnceThereIsABarAndPlacedOnceItD
             items()->setLimits(28, 300);
         });
         c.sync();
-        EXPECT_EQ(uint32_t(CUTEFISH_STATUS_ITEM_V1_APPEARANCE_LIGHT), item->appearances.back().first);
+        EXPECT_EQ(uint32_t(PROPERDESKTOP_STATUS_ITEM_V1_APPEARANCE_LIGHT), item->appearances.back().first);
         EXPECT_EQ(0xd9000000u, item->appearances.back().second);
         EXPECT_EQ(28, item->configures.back().height);
     });
@@ -520,8 +520,8 @@ TEST_F(StatusItemProtocolTest, ABufferBeforeTheFirstConfigureIsAProtocolError)
         wl_surface_attach(item->surface, item->buffer, 0, 0);
         wl_surface_commit(item->surface);
         const wl_interface *interface = nullptr;
-        EXPECT_EQ(uint32_t(CUTEFISH_STATUS_ITEM_V1_ERROR_UNCONFIGURED_BUFFER), c.syncExpectingError(&interface));
-        EXPECT_EQ(&cutefish_status_item_v1_interface, interface);
+        EXPECT_EQ(uint32_t(PROPERDESKTOP_STATUS_ITEM_V1_ERROR_UNCONFIGURED_BUFFER), c.syncExpectingError(&interface));
+        EXPECT_EQ(&properdesktop_status_item_v1_interface, interface);
     });
 }
 
@@ -531,11 +531,11 @@ TEST_F(StatusItemProtocolTest, ASurfaceWithARoleCannotBecomeAnItem)
         wl_surface *surface = wl_compositor_create_surface(c.compositor);
         xdg_surface *xdgSurface = xdg_wm_base_get_xdg_surface(c.wmBase, surface);
         xdg_toplevel *toplevel = xdg_surface_get_toplevel(xdgSurface);
-        cutefish_status_item_v1 *item = cutefish_status_item_manager_v1_get_status_item(c.items, surface);
+        properdesktop_status_item_v1 *item = properdesktop_status_item_manager_v1_get_status_item(c.items, surface);
         const wl_interface *interface = nullptr;
-        EXPECT_EQ(uint32_t(CUTEFISH_STATUS_ITEM_MANAGER_V1_ERROR_ROLE), c.syncExpectingError(&interface));
-        EXPECT_EQ(&cutefish_status_item_manager_v1_interface, interface);
-        cutefish_status_item_v1_destroy(item);
+        EXPECT_EQ(uint32_t(PROPERDESKTOP_STATUS_ITEM_MANAGER_V1_ERROR_ROLE), c.syncExpectingError(&interface));
+        EXPECT_EQ(&properdesktop_status_item_manager_v1_interface, interface);
+        properdesktop_status_item_v1_destroy(item);
         xdg_toplevel_destroy(toplevel);
         xdg_surface_destroy(xdgSurface);
         wl_surface_destroy(surface);
@@ -641,10 +641,10 @@ TEST_F(StatusItemProtocolTest, AParentedPopupCannotBeHungFromAnItem)
         check([&] { layOut(); });
         Popup *popup = c.openPopup(item, {40, kBarHeight}, {100, 60}, false);
         ASSERT_EQ(1u, popup->configures.size());
-        cutefish_status_item_v1_get_popup(item->item, popup->popup);
+        properdesktop_status_item_v1_get_popup(item->item, popup->popup);
         const wl_interface *interface = nullptr;
-        EXPECT_EQ(uint32_t(CUTEFISH_STATUS_ITEM_V1_ERROR_INVALID_POPUP), c.syncExpectingError(&interface));
-        EXPECT_EQ(&cutefish_status_item_v1_interface, interface);
+        EXPECT_EQ(uint32_t(PROPERDESKTOP_STATUS_ITEM_V1_ERROR_INVALID_POPUP), c.syncExpectingError(&interface));
+        EXPECT_EQ(&properdesktop_status_item_v1_interface, interface);
     });
 }
 
@@ -657,7 +657,7 @@ TEST_F(StatusItemProtocolTest, DestroyingTheItemTakesItOutAndDismissesItsPopups)
         check([&] { layOut(); });
         Popup *popup = c.openPopup(item, {40, kBarHeight}, {100, 60}, false);
         ASSERT_EQ(1u, popup->configures.size());
-        cutefish_status_item_v1_destroy(item->item);
+        properdesktop_status_item_v1_destroy(item->item);
         item->item = nullptr;
         c.sync();
         EXPECT_EQ(1, popup->dones);
@@ -670,12 +670,12 @@ TEST_F(StatusItemProtocolTest, AskingForTheHighlightShowsIt)
     run([&](Client &c) {
         check([&] { showBar(); });
         Item *item = c.makeItem();
-        cutefish_status_item_v1_set_highlight(item->item, 1);
+        properdesktop_status_item_v1_set_highlight(item->item, 1);
         c.sync();
         EXPECT_EQ(1u, item->highlights.back());
         check([&] { EXPECT_TRUE(items()->items().front()->isHighlighted()); });
-        cutefish_status_item_v1_set_highlight(item->item, 2);
-        EXPECT_EQ(uint32_t(CUTEFISH_STATUS_ITEM_V1_ERROR_INVALID_VALUE), c.syncExpectingError());
+        properdesktop_status_item_v1_set_highlight(item->item, 2);
+        EXPECT_EQ(uint32_t(PROPERDESKTOP_STATUS_ITEM_V1_ERROR_INVALID_VALUE), c.syncExpectingError());
     });
 }
 
@@ -699,7 +699,7 @@ TEST_F(StatusItemProtocolTest, NewItemsStandLeftmostAndComeBackToTheirPlaceByIde
         c.draw(third, 30);
         EXPECT_EQ((std::vector<int> {30, 20, 10}), order());
 
-        cutefish_status_item_v1_destroy(second->item);
+        properdesktop_status_item_v1_destroy(second->item);
         second->item = nullptr;
         c.sync();
         EXPECT_EQ((std::vector<int> {30, 10}), order());

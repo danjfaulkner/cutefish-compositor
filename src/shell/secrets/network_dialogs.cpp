@@ -15,10 +15,10 @@
 #include "ui/dialog_window.h"
 #include "ui/text_field.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static bool printable(const std::string &text)
 {
@@ -270,4 +270,4 @@ void VpnPasswordDialog::requestChanged()
     open();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

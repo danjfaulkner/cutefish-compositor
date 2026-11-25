@@ -7,7 +7,7 @@
 
 #include "accelerators/accelerator_history.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 AcceleratorHistory::AcceleratorHistory() = default;
 
@@ -31,4 +31,4 @@ void AcceleratorHistory::storeCurrentAccelerator(const Accelerator &accelerator)
     }
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

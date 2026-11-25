@@ -22,7 +22,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 DesksController::DesksController(WindowManager *manager)
     : m_manager(manager)
@@ -593,4 +593,4 @@ void DesksController::performHitTheWallAnimation(bool goingLeft)
     m_switchNode->hitTheWall(goingLeft, std::move(frames), referenceWidth());
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

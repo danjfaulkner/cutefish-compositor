@@ -14,7 +14,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 DrmCursor::DrmCursor(DrmDeviceApi* device, uint32_t crtcId, const base::Size& size,
                      std::array<Buffer, 2> buffers)
@@ -194,4 +194,4 @@ void DrmCursor::setFlipPending(bool pending)
         m_device->moveCursor(m_crtcId, m_position - m_hotspot);
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

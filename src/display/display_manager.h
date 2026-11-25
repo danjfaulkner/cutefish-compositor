@@ -17,7 +17,7 @@
 #include "display/display_types.h"
 #include "display/mirror_transform.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayManager
 {
@@ -91,4 +91,4 @@ private:
     std::optional<AppliedConfiguration> m_applied;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

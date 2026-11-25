@@ -9,7 +9,7 @@
 
 #include "display/display_transform.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(DisplayTransform, FractionalScaleUsesRotatedLogicalExtent)
 {

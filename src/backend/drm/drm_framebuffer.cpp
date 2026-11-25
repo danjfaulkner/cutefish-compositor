@@ -19,7 +19,7 @@
 #include "backend/drm/drm_multi_device_planner.h"
 #include "core/logging.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -297,4 +297,4 @@ DrmFramebuffer::fromDmaBuf(DrmDeviceApi *device, const render::DmaBufAttributes 
             std::move(handles)));
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

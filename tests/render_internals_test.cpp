@@ -24,8 +24,8 @@
 #include "base/strings.h"
 #include "ui/geometry_conversions.h"
 
-using namespace cutefish;
-using namespace cutefish::render;
+using namespace properdesktop;
+using namespace properdesktop::render;
 
 namespace {
 
@@ -808,10 +808,10 @@ TEST_F(RenderInternals, AMarkTellsWhenTheGpuGotPastTheFrame)
 
 TEST(EglNativeFence, AcquirePreservesDescriptorsAndReleaseRequiresAFrame)
 {
-    const char *path = std::getenv("CUTEFISH_TEST_DRM_DEVICE");
+    const char *path = std::getenv("PROPERDESKTOP_TEST_DRM_DEVICE");
     if (!path || !*path)
-        GTEST_SKIP() << "Set CUTEFISH_TEST_DRM_DEVICE to test native EGL fences";
-    cutefish::ScopedFd fd(open(path, O_RDWR | O_CLOEXEC));
+        GTEST_SKIP() << "Set PROPERDESKTOP_TEST_DRM_DEVICE to test native EGL fences";
+    properdesktop::ScopedFd fd(open(path, O_RDWR | O_CLOEXEC));
     ASSERT_TRUE(fd.isValid());
     std::unique_ptr<gbm_device, decltype(&gbm_device_destroy)> device(gbm_create_device(fd.get()),
                                                                       gbm_device_destroy);
@@ -868,7 +868,7 @@ TEST(EglExtensions, WholeNamesOnlyAsTheSplitListWould)
                 << prefix;
     }
     EXPECT_FALSE(context->supportsGl(""));
-    EXPECT_FALSE(context->supportsGl("GL_CUTEFISH_not_an_extension"));
+    EXPECT_FALSE(context->supportsGl("GL_PROPERDESKTOP_not_an_extension"));
 }
 
 TEST(GlassPixels, NotificationOnUniformBackdropHasNoBlackPixels)
@@ -896,7 +896,7 @@ TEST(GlassPixels, NotificationOnUniformBackdropHasNoBlackPixels)
         renderer->clear({0.5, 0.5, 0.5, 1});
         renderer->drawBackgroundBlur({20, 20, 380, 82}, 22, base::Rect(size), glass, {});
     });
-    if (const char *path = std::getenv("CUTEFISH_GLASS_TEST_IMAGE"))
+    if (const char *path = std::getenv("PROPERDESKTOP_GLASS_TEST_IMAGE"))
         image.savePng(path);
     int black = 0;
     for (int y = 0; y < image.height(); ++y)

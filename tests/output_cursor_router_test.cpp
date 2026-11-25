@@ -9,7 +9,7 @@
 
 #include "cursor/output_cursor_router.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 class Sink final : public render::CursorSink

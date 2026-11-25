@@ -9,7 +9,7 @@
 #include "core/logging.h"
 #include "render_shaders.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 
@@ -134,7 +134,7 @@ std::string fragmentPrecisionDefines()
     GLint range[2] = {};
     GLint precision = 0;
     glGetShaderPrecisionFormat(GL_FRAGMENT_SHADER, GL_HIGH_FLOAT, range, &precision);
-    return precision > 0 ? "#define CUTEFISH_FRAGMENT_HIGHP 1\n" : "";
+    return precision > 0 ? "#define PROPERDESKTOP_FRAGMENT_HIGHP 1\n" : "";
 }
 
 std::string clippedFragment(const char *body, const char *extensions)
@@ -144,4 +144,4 @@ std::string clippedFragment(const char *body, const char *extensions)
             + shaders::clipped_main;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

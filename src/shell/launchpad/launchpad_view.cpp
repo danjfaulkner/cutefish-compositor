@@ -28,10 +28,10 @@
 #include "ui/theme.h"
 #include "ui/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 using Clock = std::chrono::steady_clock;
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
 static const ui::Color kWhite {255, 255, 255, 255};
 static constexpr std::chrono::milliseconds kSlideDuration {300};
@@ -1318,4 +1318,4 @@ void LaunchpadView::retire(std::unique_ptr<ui::View> view)
     });
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -6,16 +6,16 @@
 
 #include "input/touchpad_click.h"
 
-using namespace cutefish::input;
+using namespace properdesktop::input;
 using namespace std::chrono_literals;
 
 namespace {
 
 // Millimetres; the presses below were recorded on this clickpad.
-const cutefish::base::SizeF kPad(116.2, 60.9);
+const properdesktop::base::SizeF kPad(116.2, 60.9);
 const Timestamp kPress = Timestamp(10s);
 
-TouchpadContact finger(cutefish::base::PointF position, std::chrono::milliseconds age)
+TouchpadContact finger(properdesktop::base::PointF position, std::chrono::milliseconds age)
 {
     return {position, position, kPress - age};
 }
@@ -52,7 +52,7 @@ TEST(TouchpadClick, IgnoresARestingThumb)
                                  kPad));
 
     TouchpadContact moved = thumb;
-    moved.origin = cutefish::base::PointF(60.0, 30.0);
+    moved.origin = properdesktop::base::PointF(60.0, 30.0);
     EXPECT_TRUE(isTwoFingerClick(moved, finger({50.0, 40.0}, 150ms), kPress, kPad));
 
     EXPECT_FALSE(isTwoFingerClick(finger({45.0, 55.0}, 300ms), finger({50.0, 30.0}, 150ms),
@@ -62,6 +62,6 @@ TEST(TouchpadClick, IgnoresARestingThumb)
 TEST(TouchpadClick, IgnoresAFingerFromThePalmEdge)
 {
     TouchpadContact palm = finger({30.0, 30.0}, 60ms);
-    palm.origin = cutefish::base::PointF(3.0, 30.0);
+    palm.origin = properdesktop::base::PointF(3.0, 30.0);
     EXPECT_FALSE(isTwoFingerClick(palm, finger({45.0, 25.0}, 60ms), kPress, kPad));
 }

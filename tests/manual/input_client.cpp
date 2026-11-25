@@ -84,7 +84,7 @@ Buffer createBuffer(State& state, int width, int height)
 {
     const int stride = width * 4;
     const size_t size = static_cast<size_t>(stride) * height;
-    const int fd = memfd_create("cutefish-input-demo", MFD_CLOEXEC);
+    const int fd = memfd_create("properdesktop-input-demo", MFD_CLOEXEC);
     if (fd < 0 || ftruncate(fd, static_cast<off_t>(size)) != 0) {
         std::printf("failed to create a buffer fd\n");
         state.failed = true;

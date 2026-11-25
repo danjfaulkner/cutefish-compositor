@@ -11,7 +11,7 @@
 
 #include "ui/bitmap.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Width the strip is averaged at; the detail thresholds hold for it.
 static constexpr int kSampleWidth = 256;
@@ -122,4 +122,4 @@ BarBackdrop::Style BarBackdrop::styleForSample(const Sample &sample)
     return style;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

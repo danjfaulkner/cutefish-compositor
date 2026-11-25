@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_AUTH_AUTH_CONTROLLER_H
-#define CUTEFISH_AUTH_AUTH_CONTROLLER_H
+#ifndef PROPERDESKTOP_AUTH_AUTH_CONTROLLER_H
+#define PROPERDESKTOP_AUTH_AUTH_CONTROLLER_H
 
 #include <map>
 #include <memory>
@@ -13,11 +13,11 @@
 #include "auth/login_sessions.h"
 #include "base/signal.h"
 
-namespace cutefish::accounts {
+namespace properdesktop::accounts {
 class UserAccount;
 }
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 class AuthBackend;
 
@@ -150,6 +150,6 @@ private:
     std::map<std::string, WatchedAccount> m_accounts;
 };
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth
 
-#endif // CUTEFISH_AUTH_AUTH_CONTROLLER_H
+#endif // PROPERDESKTOP_AUTH_AUTH_CONTROLLER_H

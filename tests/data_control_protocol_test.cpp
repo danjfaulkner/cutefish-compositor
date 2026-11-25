@@ -316,11 +316,11 @@ TEST(DataControl, UsedSourceAndLateMimeAreProtocolErrors)
 
 TEST(DataControl, ClipboardServicePreservesBytesAfterSourceExitWithExtAndWlr)
 {
-    const char* helper = std::getenv("CUTEFISH_CLIPBOARD_TEST_HELPER");
+    const char* helper = std::getenv("PROPERDESKTOP_CLIPBOARD_TEST_HELPER");
     if (!helper || !*helper)
-        GTEST_SKIP() << "Set CUTEFISH_CLIPBOARD_TEST_HELPER to the standalone clipboard helper";
+        GTEST_SKIP() << "Set PROPERDESKTOP_CLIPBOARD_TEST_HELPER to the standalone clipboard helper";
     for (bool ext : {true, false}) {
-        cutefish::test::TemporaryDirectory runtime;
+        properdesktop::test::TemporaryDirectory runtime;
         ASSERT_TRUE(runtime.isValid());
         chmod(runtime.path().c_str(), 0700);
         const char* runtimeVariable = std::getenv("XDG_RUNTIME_DIR");
@@ -352,7 +352,7 @@ TEST(DataControl, ClipboardServicePreservesBytesAfterSourceExitWithExtAndWlr)
             {"text/uri-list", "file:///not-opened\r\n"},
             {"application/x-empty", ""}};
         h.publish(a, bytes);
-        cutefish::base::Process child;
+        properdesktop::base::Process child;
         std::vector<std::string> env;
         for (char** entry = environ; *entry; ++entry) {
             const std::string_view variable(*entry);
@@ -367,7 +367,7 @@ TEST(DataControl, ClipboardServicePreservesBytesAfterSourceExitWithExtAndWlr)
         EXPECT_TRUE(h.until(
             [&] {
                 auto source = h.seat.selection()->source();
-                return source && source->supports("application/x-cutefish-clipboard");
+                return source && source->supports("application/x-properdesktop-clipboard");
             },
             10000))
             << child.standardError();

@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_INPUT_TOUCHPAD_CLICK_H_
-#define CUTEFISH_INPUT_TOUCHPAD_CLICK_H_
+#ifndef PROPERDESKTOP_INPUT_TOUCHPAD_CLICK_H_
+#define PROPERDESKTOP_INPUT_TOUCHPAD_CLICK_H_
 
 #include "base/geometry.h"
 #include "input/types.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 // A finger on a touchpad, in millimetres from the pad's top-left corner.
 struct TouchpadContact {
@@ -22,6 +22,6 @@ struct TouchpadContact {
 bool isTwoFingerClick(const TouchpadContact &first, const TouchpadContact &second,
                       Timestamp pressTime, const base::SizeF &padSize);
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_TOUCHPAD_CLICK_H_
+#endif // PROPERDESKTOP_INPUT_TOUCHPAD_CLICK_H_

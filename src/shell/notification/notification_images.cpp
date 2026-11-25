@@ -14,7 +14,7 @@
 #include "base/paths.h"
 #include "base/uuid.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace fs = std::filesystem;
 
@@ -66,7 +66,7 @@ namespace notification_images {
 
 std::string defaultDirectory()
 {
-    return base::paths::cacheHome() + "/cutefish/notification-images";
+    return base::paths::cacheHome() + "/properdesktop/notification-images";
 }
 
 static std::string cleanPath(const std::string &path)
@@ -133,4 +133,4 @@ void prune(const std::string &directory, const std::vector<std::string> &keep)
 
 } // namespace notification_images
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

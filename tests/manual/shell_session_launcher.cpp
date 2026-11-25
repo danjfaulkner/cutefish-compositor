@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Usage: cutefish-shell-session-launcher <control-socket> <program> [args...]
+// Usage: properdesktop-shell-session-launcher <control-socket> <program> [args...]
 //
 // This duplicates a few lines of core/session's ShellConnection on purpose: the
 // compositor repository must not depend on the session repository.

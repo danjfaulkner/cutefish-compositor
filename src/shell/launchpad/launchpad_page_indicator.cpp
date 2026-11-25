@@ -9,7 +9,7 @@
 
 #include "ui/painter.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static const ui::Color kWhite {255, 255, 255, 255};
 
@@ -97,4 +97,4 @@ void LaunchpadPageIndicator::pick(ui::PointF position)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

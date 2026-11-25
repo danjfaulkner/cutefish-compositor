@@ -19,7 +19,7 @@
 #include "shell_test_util.h"
 #include "temporary_directory.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using shell::ClipboardEntry;
 using shell::ClipboardPayload;
 using shell::ClipboardStore;
@@ -103,7 +103,7 @@ TEST(ClipboardStoreTest, ReadsAndWritesItsHistory)
     EXPECT_EQ(store.entries()[0].copied, 1760000000123LL);
     EXPECT_FALSE(std::filesystem::exists(directory.filePath("history/" + orphan)));
     EXPECT_TRUE(std::filesystem::exists(directory.filePath("history/index")));
-    EXPECT_EQ(ClipboardStore::defaultDirectory(), base::paths::dataHome() + "/cutefish/clipboard-history");
+    EXPECT_EQ(ClipboardStore::defaultDirectory(), base::paths::dataHome() + "/properdesktop/clipboard-history");
 
     std::optional<ClipboardPayload> body;
     store.payload("abc", [&](ClipboardPayload payload) { body = payload; });

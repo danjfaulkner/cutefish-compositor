@@ -14,7 +14,7 @@
 #include "input/seat.h"
 #include "input/xkb_tracker.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 namespace {
 
 bool onAnyOutput(const std::vector<base::Rect> &outputs, const base::Point &point)
@@ -116,4 +116,4 @@ uint32_t HotCornerController::heldModifiers() const
     return modifiers;
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

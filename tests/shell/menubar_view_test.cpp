@@ -53,7 +53,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_visual_controller.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 namespace dbus = base::dbus;
 using Panel = shell::MenuBarPanels::Panel;
 
@@ -136,7 +136,7 @@ protected:
 
     void SetUp() override
     {
-        shell::setShellDataDirectoryForTesting(CUTEFISH_SOURCE_DIR "/data/shell");
+        shell::setShellDataDirectoryForTesting(PROPERDESKTOP_SOURCE_DIR "/data/shell");
         scene.setSize(kOutput.size());
         manager.setOutputBounds(kOutput);
         input.setBounds(kOutput.size());
@@ -780,7 +780,7 @@ TEST_F(MenuBarViewTest, OverAWindowFullscreenOnItsOwnDeskTheBarIsBlackAndCarries
     test::processPendingEvents();
 }
 
-TEST_F(MenuBarViewTest, ACutefishApplicationFullscreenOnItsOwnDeskGetsTheTitleBarRowToo)
+TEST_F(MenuBarViewTest, AProperDesktopApplicationFullscreenOnItsOwnDeskGetsTheTitleBarRowToo)
 {
     std::shared_ptr<compositor::ShmPool> pool = testsupport::makePool(1 << 20);
     std::unique_ptr<compositor::Surface> surface = compositor.createSurface();
@@ -789,7 +789,7 @@ TEST_F(MenuBarViewTest, ACutefishApplicationFullscreenOnItsOwnDeskGetsTheTitleBa
     frame();
     // Its header slides in with the bar by itself.
     surface->setFullscreenBars(40, /*push=*/false);
-    wm::Window *app = manager.createWindow(surface.get(), {.requestedSize = {300, 200}, .applicationId = "cutefish-files"});
+    wm::Window *app = manager.createWindow(surface.get(), {.requestedSize = {300, 200}, .applicationId = "properdesktop-files"});
     app->activate();
 
     ASSERT_TRUE(manager.fullscreenDesks()->enter(app));

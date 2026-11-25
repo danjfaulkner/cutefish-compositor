@@ -12,7 +12,7 @@
 #include <filesystem>
 #include <system_error>
 
-namespace cutefish::cursor {
+namespace properdesktop::cursor {
 Preferences::Preferences(Cursor &cursor)
     : m_cursor(cursor)
     , m_settings(preferencesFile("services"))
@@ -30,9 +30,9 @@ Preferences::Preferences(Cursor &cursor)
         if (base::dbus::Connection *bus = base::dbus::Connection::session(loop)) {
             for (const char *signal : {"cursorThemeChanged", "cursorSizeChanged"}) {
                 base::dbus::MatchRule rule;
-                rule.sender = "org.cutefish.Services";
-                rule.path = "/org/cutefish/Services/Appearance";
-                rule.interface = "org.cutefish.Services.Appearance";
+                rule.sender = "org.properdesktop.Services";
+                rule.path = "/org/properdesktop/Services/Appearance";
+                rule.interface = "org.properdesktop.Services.Appearance";
                 rule.member = signal;
                 m_appearanceSignals.push_back(
                         bus->subscribe(rule, [this](const base::dbus::Message &) { reload(); }));
@@ -51,4 +51,4 @@ void Preferences::reload()
             m_settings.contains(sizeKey) ? m_settings.intValue(sizeKey, 0) : defaultSize();
     m_cursor.setTheme(theme, size >= INT_MIN && size <= INT_MAX ? int(size) : 0);
 }
-} // namespace cutefish::cursor
+} // namespace properdesktop::cursor

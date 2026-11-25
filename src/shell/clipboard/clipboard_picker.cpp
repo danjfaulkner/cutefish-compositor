@@ -13,7 +13,7 @@
 #include "ui/theme.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 ClipboardPicker::ClipboardPicker(Shell *shell, std::unique_ptr<ClipboardHistory> history)
     : m_shell(shell)
@@ -117,4 +117,4 @@ void ClipboardPicker::toggle()
         open();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

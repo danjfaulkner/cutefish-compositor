@@ -11,15 +11,15 @@
 
 #include <gtest/gtest.h>
 
-using namespace cutefish::auth;
-using cutefish::test::TemporaryDirectory;
+using namespace properdesktop::auth;
+using properdesktop::test::TemporaryDirectory;
 
 TEST(AuthControllerTest, LoginStartsTheChosenSession)
 {
     FakeBackend backend;
     AuthController controller(AuthController::Login, &backend);
-    controller.setSessions({{"gnome", "GNOME", {}, {}}, {"cutefish-wayland", "Cutefish", {}, {}}});
-    EXPECT_EQ(controller.sessionNames(), (std::vector<std::string> {"GNOME", "Cutefish"}));
+    controller.setSessions({{"gnome", "GNOME", {}, {}}, {"properdesktop-wayland", "ProperDesktop", {}, {}}});
+    EXPECT_EQ(controller.sessionNames(), (std::vector<std::string> {"GNOME", "ProperDesktop"}));
     EXPECT_TRUE(controller.canSelectSession());
     EXPECT_EQ(controller.sessionIndex(), 1);
 
@@ -96,17 +96,17 @@ TEST(AuthControllerTest, EveryDesktopNameReachesTheSessionEnvironment)
 {
     TemporaryDirectory directory;
     ASSERT_TRUE(directory.isValid());
-    ASSERT_TRUE(directory.write("cutefish-wayland.desktop",
-                                "[Desktop Entry]\nName=Cutefish\nExec=/bin/true\n"
-                                "DesktopNames=CutefishDesktopSession; SecondDesktopName ;;\n"));
+    ASSERT_TRUE(directory.write("properdesktop-wayland.desktop",
+                                "[Desktop Entry]\nName=ProperDesktop\nExec=/bin/true\n"
+                                "DesktopNames=ProperDesktopDesktopSession; SecondDesktopName ;;\n"));
     const auto sessions = findLoginSessions({directory.path()});
     ASSERT_EQ(sessions.size(), 1u);
     const auto &environment = sessions.front().environment;
     EXPECT_NE(std::find(environment.begin(), environment.end(),
-                        "XDG_SESSION_DESKTOP=CutefishDesktopSession"),
+                        "XDG_SESSION_DESKTOP=ProperDesktopDesktopSession"),
               environment.end());
     EXPECT_NE(std::find(environment.begin(), environment.end(),
-                        "XDG_CURRENT_DESKTOP=CutefishDesktopSession:SecondDesktopName"),
+                        "XDG_CURRENT_DESKTOP=ProperDesktopDesktopSession:SecondDesktopName"),
               environment.end());
 }
 

@@ -16,7 +16,7 @@
 #include "wayland/serial_tracker.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -206,4 +206,4 @@ void WaylandPointerDelegate::onPointerFrame()
     wl_client_flush(client());
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

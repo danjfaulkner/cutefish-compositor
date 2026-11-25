@@ -18,7 +18,7 @@
 #include "scene/window_animation.h"
 #include "base/geometry.h"
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace {
 
@@ -261,9 +261,9 @@ TEST_F(OverlayCandidateTest, BackgroundBlurKeepsUnderlyingSurfacesInComposition)
     EXPECT_TRUE(propose().hasDirectScanout());
 }
 
-} // namespace cutefish
+} // namespace properdesktop
 
-namespace cutefish {
+namespace properdesktop {
 TEST_F(OverlayCandidateTest, CroppingAndRotationFallBackAndResetRestoresPromotion)
 {
     auto *surface = addSurface(m_scene.root(), base::Rect(base::Point(), kOutputSize));
@@ -338,9 +338,9 @@ TEST_F(OverlayCandidateTest, WindowVisualEffectsBlockOnlyTheirSubtreeAndRestoreE
     EXPECT_EQ(propose().primary.node, surface);
 }
 
-} // namespace cutefish
+} // namespace properdesktop
 
-namespace cutefish {
+namespace properdesktop {
 TEST_F(OverlayCandidateTest, AnimationBelowFullscreenMustAdvanceThroughComposition)
 {
     auto *animation = m_scene.root()->addChild(std::make_unique<scene::WindowAnimation>());
@@ -364,9 +364,9 @@ TEST_F(OverlayCandidateTest, ATranslucentWindowIsComposited)
     animation->setOpacity(1);
     EXPECT_EQ(propose().primary.node, surface);
 }
-} // namespace cutefish
+} // namespace properdesktop
 
-namespace cutefish {
+namespace properdesktop {
 TEST_F(OverlayCandidateTest, AMinimizeOfAHiddenWindowStillNeedsComposition)
 {
     addSurface(m_scene.root(), base::Rect(base::Point(), kOutputSize));
@@ -382,9 +382,9 @@ TEST_F(OverlayCandidateTest, AMinimizeOfAHiddenWindowStillNeedsComposition)
     animation->finish();
     EXPECT_TRUE(propose().hasDirectScanout());
 }
-} // namespace cutefish
+} // namespace properdesktop
 
-namespace cutefish {
+namespace properdesktop {
 TEST_F(OverlayCandidateTest, InvertedDmaBufRequiresComposition)
 {
     auto *surface = addSurface(m_scene.root(), base::Rect(base::Point(), kOutputSize));
@@ -398,4 +398,4 @@ TEST_F(OverlayCandidateTest, OpacityAboveOneCannotBeReproducedByScanout)
     surface->setAlpha(1.5f);
     EXPECT_TRUE(propose().isEmpty());
 }
-} // namespace cutefish
+} // namespace properdesktop

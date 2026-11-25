@@ -31,7 +31,7 @@
 #include "wm/desks/fullscreen_desks.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class Shell::ThemeFollower : public decoration::ThemeObserver
 {
@@ -42,13 +42,13 @@ public:
         , m_settingsPath(settingsPath.empty() ? preferencesFile("services") : settingsPath)
     {
         const base::Settings settings(m_settingsPath);
-        m_iconTheme = settings.stringValue("Appearance/IconTheme", "Cutefish");
+        m_iconTheme = settings.stringValue("Appearance/IconTheme", "ProperDesktop");
         m_fontFamily = settings.stringValue("Appearance/Font", "");
         m_fontPointSize = settings.doubleValue("Appearance/FontSize", 9);
         if (bus) {
-            m_appearance = base::dbus::Proxy(bus, "org.cutefish.Services",
-                                             "/org/cutefish/Services/Appearance",
-                                             "org.cutefish.Services.Appearance");
+            m_appearance = base::dbus::Proxy(bus, "org.properdesktop.Services",
+                                             "/org/properdesktop/Services/Appearance",
+                                             "org.properdesktop.Services.Appearance");
             // The service writes services.conf before it signals.
             m_iconThemeChanged = m_appearance.onSignal(
                     "iconThemeChanged", [this](const base::dbus::Message &) { reloadIconTheme(); });
@@ -70,7 +70,7 @@ private:
     void reloadIconTheme()
     {
         const base::Settings settings(m_settingsPath);
-        std::string iconTheme = settings.stringValue("Appearance/IconTheme", "Cutefish");
+        std::string iconTheme = settings.stringValue("Appearance/IconTheme", "ProperDesktop");
         if (iconTheme == m_iconTheme)
             return;
         m_iconTheme = std::move(iconTheme);
@@ -225,7 +225,7 @@ void Shell::openSettings(const std::vector<std::string> &arguments)
 {
     const std::string token = m_environment.createActivationToken ? m_environment.createActivationToken()
                                                                   : std::string();
-    ApplicationLauncher::startDetached("cutefish-settings", arguments,
+    ApplicationLauncher::startDetached("properdesktop-settings", arguments,
                                        token.empty() ? std::vector<std::string>()
                                                      : std::vector<std::string> {"XDG_ACTIVATION_TOKEN=" + token});
 }
@@ -284,4 +284,4 @@ void Shell::updateOutputs()
     outputsChanged();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

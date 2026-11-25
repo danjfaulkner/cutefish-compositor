@@ -5,15 +5,15 @@
 // Upstream: chromium/src/components/exo/wayland/client_tracker.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_CLIENT_TRACKER_H_
-#define CUTEFISH_WAYLAND_CLIENT_TRACKER_H_
+#ifndef PROPERDESKTOP_WAYLAND_CLIENT_TRACKER_H_
+#define PROPERDESKTOP_WAYLAND_CLIENT_TRACKER_H_
 
 #include <wayland-server-core.h>
 
 #include <memory>
 #include <unordered_map>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 // Resources of a wl_client are freed while it is destroyed, so they must not be accessed once that begins.
 class ClientTracker
@@ -52,6 +52,6 @@ private:
     std::unordered_map<wl_client*, std::unique_ptr<ClientListener>> m_clientDestroyedListeners;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_CLIENT_TRACKER_H_
+#endif // PROPERDESKTOP_WAYLAND_CLIENT_TRACKER_H_

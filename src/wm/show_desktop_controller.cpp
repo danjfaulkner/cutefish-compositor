@@ -12,7 +12,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -225,4 +225,4 @@ void ShowDesktopController::requestFrame()
         compositor->scheduleRepaint();
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

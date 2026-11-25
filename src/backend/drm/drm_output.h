@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_OUTPUT_H_
-#define CUTEFISH_BACKEND_DRM_DRM_OUTPUT_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_OUTPUT_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_OUTPUT_H_
 
 #include <chrono>
 #include <ctime>
@@ -36,14 +36,14 @@
 struct gbm_bo;
 struct gbm_surface;
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class EglRenderer;
 class EglRenderTarget;
 class Renderer;
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 class DrmBackend;
 class DrmCursor;
@@ -404,6 +404,6 @@ private:
     base::WeakPtrFactory<DrmOutput> m_weakFactory {this};
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_OUTPUT_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_OUTPUT_H_

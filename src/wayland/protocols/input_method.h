@@ -10,11 +10,11 @@
 #include <string>
 #include <wayland-server-core.h>
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 struct WaylandSeat;
 class InputMethodRelay;
 
@@ -67,4 +67,4 @@ private:
     struct Impl;
     std::unique_ptr<Impl> m_impl;
 };
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

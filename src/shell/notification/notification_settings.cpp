@@ -12,7 +12,7 @@
 #include "shell/common/applications.h"
 #include "shell/common/file_thread.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static NotificationSettings::ApplicationMode toApplicationMode(int64_t value)
 {
@@ -152,4 +152,4 @@ std::string NotificationSettings::applicationGroup(const std::string &key)
     return "Notifications/Applications/" + base::url::percentEncoded(key);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

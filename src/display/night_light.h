@@ -15,7 +15,7 @@
 #include "base/timer.h"
 #include "render/color_transform.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 // Strength 0 leaves the screen untouched; 1 is the warmest.
 class NightLight
@@ -55,4 +55,4 @@ private:
     std::chrono::milliseconds m_duration {0};
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

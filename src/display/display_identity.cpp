@@ -9,7 +9,7 @@
 
 #include "base/uuid.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 namespace {
 std::string baseKey(const DisplaySnapshot &display)
 {
@@ -75,4 +75,4 @@ void DisplayIdentity::assign(std::vector<DisplaySnapshot> &displays)
             *it = display;
     }
 }
-} // namespace cutefish::display
+} // namespace properdesktop::display

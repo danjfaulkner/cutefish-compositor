@@ -6,10 +6,10 @@
 // Upstream: chromium/src/ui/wm/core/shadow_types.{h,cc}
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WM_SHADOW_TYPES_H_
-#define CUTEFISH_WM_SHADOW_TYPES_H_
+#ifndef PROPERDESKTOP_WM_SHADOW_TYPES_H_
+#define PROPERDESKTOP_WM_SHADOW_TYPES_H_
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 enum class ShadowElevation {
     None,
@@ -22,6 +22,6 @@ enum class ShadowElevation {
 
 const char *toString(ShadowElevation elevation);
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_SHADOW_TYPES_H_
+#endif // PROPERDESKTOP_WM_SHADOW_TYPES_H_

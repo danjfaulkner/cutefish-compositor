@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SCENE_MOTION_H_
-#define CUTEFISH_SCENE_MOTION_H_
+#ifndef PROPERDESKTOP_SCENE_MOTION_H_
+#define PROPERDESKTOP_SCENE_MOTION_H_
 
-namespace cutefish::scene::motion {
+namespace properdesktop::scene::motion {
 
 // `response` is the undamped period in seconds; dampingRatio 1 is critically damped.
 struct SpringParameters {
@@ -88,6 +88,6 @@ private:
 
 Spring settlingSpring(double time, double from, double target, double velocity, double response);
 
-} // namespace cutefish::scene::motion
+} // namespace properdesktop::scene::motion
 
-#endif // CUTEFISH_SCENE_MOTION_H_
+#endif // PROPERDESKTOP_SCENE_MOTION_H_

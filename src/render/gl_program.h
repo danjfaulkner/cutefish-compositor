@@ -9,7 +9,7 @@
 #include <string>
 #include <string_view>
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class GlProgram
 {
@@ -43,4 +43,4 @@ std::string fragmentPrecisionDefines();
 
 std::string clippedFragment(const char *body, const char *extensions = "");
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

@@ -110,10 +110,10 @@ TEST(DndProtocol, ViewportDestinationKeepsDragCoordinatesSurfaceLocal)
     start(h, a);
     h.seat.onPointerMotion({}, {250, 50});
     h.sync(b);
-    EXPECT_EQ(b.dragEnterPosition, cutefish::base::PointF(100, 50));
+    EXPECT_EQ(b.dragEnterPosition, properdesktop::base::PointF(100, 50));
     h.seat.onPointerMotion({}, {275.5, 60.25});
     h.sync(b);
-    EXPECT_EQ(b.dragMotionPosition, cutefish::base::PointF(125.5, 60.25));
+    EXPECT_EQ(b.dragMotionPosition, properdesktop::base::PointF(125.5, 60.25));
     h.seat.onKey({}, KEY_ESC, true);
 }
 

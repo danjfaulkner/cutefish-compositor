@@ -8,8 +8,8 @@
 //               (CreateMergedGpuFenceFromFDs)
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_RENDER_SYNC_FENCE_H_
-#define CUTEFISH_RENDER_SYNC_FENCE_H_
+#ifndef PROPERDESKTOP_RENDER_SYNC_FENCE_H_
+#define PROPERDESKTOP_RENDER_SYNC_FENCE_H_
 
 #include <cstdint>
 #include <optional>
@@ -18,7 +18,7 @@
 
 #include "core/scoped_fd.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // An invalid fence means nothing to wait for and counts as signalled.
 class SyncFence
@@ -62,6 +62,6 @@ private:
     ScopedFd m_fd;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_SYNC_FENCE_H_
+#endif // PROPERDESKTOP_RENDER_SYNC_FENCE_H_

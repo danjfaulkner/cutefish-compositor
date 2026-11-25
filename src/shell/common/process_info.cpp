@@ -10,7 +10,7 @@
 #include "base/file.h"
 #include "base/strings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static bool isScriptInterpreter(const std::string &name)
 {
@@ -80,4 +80,4 @@ int64_t parentProcess(int64_t pid)
     return base::strings::toNumber<int64_t>(fields[1]).value_or(0);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

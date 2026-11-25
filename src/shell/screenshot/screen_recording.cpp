@@ -17,9 +17,9 @@
 #include "base/strings.h"
 #include "core/main_loop.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Completing the file moves its index to the front, which reads it once more.
 static constexpr std::chrono::milliseconds kFinishTimeout {30000};
@@ -51,7 +51,7 @@ std::vector<std::string> ScreenRecording::arguments(const Target &target, const 
     std::vector<std::string> arguments;
     if (target.window) {
         arguments.push_back("--window");
-        arguments.push_back("cutefish-" + std::to_string(target.window));
+        arguments.push_back("properdesktop-" + std::to_string(target.window));
     } else {
         arguments.push_back("--output");
         arguments.push_back(target.output);
@@ -163,4 +163,4 @@ void ScreenRecording::onFinished(int exitCode, bool crashed)
     finished(ok, error);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

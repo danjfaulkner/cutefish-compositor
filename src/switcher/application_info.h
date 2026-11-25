@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SWITCHER_APPLICATION_INFO_H_
-#define CUTEFISH_SWITCHER_APPLICATION_INFO_H_
+#ifndef PROPERDESKTOP_SWITCHER_APPLICATION_INFO_H_
+#define PROPERDESKTOP_SWITCHER_APPLICATION_INFO_H_
 
 #include <cstdint>
 #include <optional>
@@ -14,7 +14,7 @@
 
 #include "base/lru_cache.h"
 
-namespace cutefish::switcher {
+namespace properdesktop::switcher {
 
 inline const std::string kFallbackIcon = "application-x-desktop";
 
@@ -49,6 +49,6 @@ private:
     std::optional<std::unordered_map<std::string, std::string>> m_wmClasses;
 };
 
-} // namespace cutefish::switcher
+} // namespace properdesktop::switcher
 
-#endif // CUTEFISH_SWITCHER_APPLICATION_INFO_H_
+#endif // PROPERDESKTOP_SWITCHER_APPLICATION_INFO_H_

@@ -11,7 +11,7 @@
 
 #include "display/native_display_delegate.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 class FakeNativeDisplayDelegate : public display::NativeDisplayDelegate
 {
@@ -49,4 +49,4 @@ private:
     int m_configureCount = 0;
 };
 
-} // namespace cutefish::test
+} // namespace properdesktop::test

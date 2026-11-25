@@ -5,15 +5,15 @@
 // Upstream: chromium/src/ash/wm/mru_window_tracker.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_WM_MRU_WINDOW_TRACKER_H_
-#define CUTEFISH_WM_MRU_WINDOW_TRACKER_H_
+#ifndef PROPERDESKTOP_WM_MRU_WINDOW_TRACKER_H_
+#define PROPERDESKTOP_WM_MRU_WINDOW_TRACKER_H_
 
 #include <vector>
 
 #include "base/signal.h"
 #include "wm/activation.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 class WindowManager;
@@ -50,6 +50,6 @@ private:
     WindowList m_mruWindows;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_MRU_WINDOW_TRACKER_H_
+#endif // PROPERDESKTOP_WM_MRU_WINDOW_TRACKER_H_

@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ui/ozone/platform/drm/gpu/fake_drm_device.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_TESTS_FAKE_DRM_DEVICE_H_
-#define CUTEFISH_TESTS_FAKE_DRM_DEVICE_H_
+#ifndef PROPERDESKTOP_TESTS_FAKE_DRM_DEVICE_H_
+#define PROPERDESKTOP_TESTS_FAKE_DRM_DEVICE_H_
 
 #include <algorithm>
 #include <cstdlib>
@@ -17,7 +17,7 @@
 
 #include "backend/drm/drm_device_api.h"
 
-namespace cutefish::testing {
+namespace properdesktop::testing {
 
 class FakeDrmDevice final : public backend::DrmDeviceApi
 {
@@ -224,6 +224,6 @@ private:
     uint32_t m_nextHandle = 1;
 };
 
-} // namespace cutefish::testing
+} // namespace properdesktop::testing
 
-#endif // CUTEFISH_TESTS_FAKE_DRM_DEVICE_H_
+#endif // PROPERDESKTOP_TESTS_FAKE_DRM_DEVICE_H_

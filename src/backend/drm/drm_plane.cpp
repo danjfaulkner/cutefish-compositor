@@ -11,7 +11,7 @@
 
 #include <algorithm>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 std::vector<std::string> DrmPlane::requiredProperties()
 {
@@ -40,4 +40,4 @@ bool DrmPlane::supportsFormat(uint32_t format, uint64_t modifier) const
     return std::find(entry->second.begin(), entry->second.end(), modifier) != entry->second.end();
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

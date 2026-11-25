@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_CLIENT_WORK_H_
-#define CUTEFISH_CORE_CLIENT_WORK_H_
+#ifndef PROPERDESKTOP_CORE_CLIENT_WORK_H_
+#define PROPERDESKTOP_CORE_CLIENT_WORK_H_
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 // Scene changes made inside the scope are the clients' work, not the compositor's.
 class ClientWorkScope
@@ -23,6 +23,6 @@ private:
     static inline int s_depth = 0;
 };
 
-} // namespace cutefish::core
+} // namespace properdesktop::core
 
-#endif // CUTEFISH_CORE_CLIENT_WORK_H_
+#endif // PROPERDESKTOP_CORE_CLIENT_WORK_H_

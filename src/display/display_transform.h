@@ -13,7 +13,7 @@
 #include "compositor/output_scale.h"
 #include "display/display_types.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayTransform
 {
@@ -47,4 +47,4 @@ private:
     DisplayRotation m_rotation = DisplayRotation::Normal;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

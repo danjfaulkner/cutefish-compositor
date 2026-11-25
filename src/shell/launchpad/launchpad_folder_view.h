@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_FOLDER_VIEW_H_
-#define CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_FOLDER_VIEW_H_
+#ifndef PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_FOLDER_VIEW_H_
+#define PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_FOLDER_VIEW_H_
 
 #include <chrono>
 #include <map>
@@ -18,11 +18,11 @@
 #include "ui/scroller.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class TextField;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ApplicationBadges;
 class LaunchpadCell;
@@ -164,6 +164,6 @@ private:
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_FOLDER_VIEW_H_
+#endif // PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_FOLDER_VIEW_H_

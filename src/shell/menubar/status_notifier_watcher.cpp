@@ -10,11 +10,11 @@
 
 #include "base/logging.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfTray("cutefish.shell.tray");
+static const base::LogCategory cfTray("properdesktop.shell.tray");
 
 static constexpr const char *kService = "org.kde.StatusNotifierWatcher";
 static constexpr const char *kPath = "/StatusNotifierWatcher";
@@ -185,4 +185,4 @@ void StatusNotifierWatcher::serviceUnregistered(const std::string &service)
     m_watches.erase(service);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

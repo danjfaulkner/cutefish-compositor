@@ -13,7 +13,7 @@
 #include "base/locale.h"
 #include "base/strings.h"
 
-namespace cutefish::switcher {
+namespace properdesktop::switcher {
 
 namespace {
 
@@ -187,4 +187,4 @@ const std::unordered_map<std::string, std::string> &ApplicationInfoCache::wmClas
     return *m_wmClasses;
 }
 
-} // namespace cutefish::switcher
+} // namespace properdesktop::switcher

@@ -23,7 +23,7 @@
 #include "render/egl_renderer.h"
 #include "base/geometry.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -32,9 +32,9 @@ class CaptureDmaBuf : public testing::Test
 protected:
     void SetUp() override
     {
-        const char *devicePath = std::getenv("CUTEFISH_TEST_DRM_DEVICE");
+        const char *devicePath = std::getenv("PROPERDESKTOP_TEST_DRM_DEVICE");
         if (!devicePath || !*devicePath)
-            GTEST_SKIP() << "Set CUTEFISH_TEST_DRM_DEVICE to an accessible DRM device";
+            GTEST_SKIP() << "Set PROPERDESKTOP_TEST_DRM_DEVICE to an accessible DRM device";
         m_fd = open(devicePath, O_RDWR | O_CLOEXEC);
         ASSERT_GE(m_fd, 0);
         m_device.reset(gbm_create_device(m_fd));

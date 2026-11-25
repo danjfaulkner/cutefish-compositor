@@ -9,7 +9,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 
@@ -113,4 +113,4 @@ SyncFence EglFence::release(bool inFrame)
     return SyncFence(ScopedFd(fd));
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

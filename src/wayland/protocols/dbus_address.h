@@ -6,10 +6,10 @@
 
 #include <string_view>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 // A unique name (":1.42") or a well-known one ("org.example.Menu").
 bool validBusName(std::string_view name);
 bool validObjectPath(std::string_view path);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -13,7 +13,7 @@
 #include "scene/slide_out_node.h"
 #include "base/geometry.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using Node = scene::DeskSwitchNode;
 
 namespace {

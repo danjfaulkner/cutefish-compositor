@@ -15,7 +15,7 @@
 #include "input/seat.h"
 #include "input/types.h"
 
-namespace cutefish::cursor {
+namespace properdesktop::cursor {
 
 class Cursor::ImageNode final : public scene::Node
 {
@@ -328,4 +328,4 @@ void Cursor::onCursorPositionChanged()
     m_node->setPointerPosition(m_seat.cursorPosition());
 }
 
-} // namespace cutefish::cursor
+} // namespace properdesktop::cursor

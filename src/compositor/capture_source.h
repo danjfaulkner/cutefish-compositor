@@ -11,11 +11,11 @@
 
 #include "base/signal.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 // The owner keeps the fields current and emits changed() when the buffer
 // constraints move or the source goes away.
@@ -49,4 +49,4 @@ public:
     base::Signal<> changed;
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

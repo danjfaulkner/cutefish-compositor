@@ -18,7 +18,7 @@
 #include "wm/window.h"
 #include "wm/window_visual_controller.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 namespace {
 
@@ -193,4 +193,4 @@ std::unique_ptr<wm::WindowShadow> ShadowProvider::createShadow(wm::Window *windo
     return std::make_unique<Shadow>(window, m_theme);
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

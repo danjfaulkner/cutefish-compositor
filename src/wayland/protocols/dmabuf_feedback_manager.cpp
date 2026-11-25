@@ -26,7 +26,7 @@
 #include "render/dmabuf.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -73,7 +73,7 @@ ScopedFd createFormatTable(const std::vector<DmaBufFeedbackFormat>& table)
     if (size == 0)
         return ScopedFd();
 
-    ScopedFd fd(memfd_create("cutefish-dmabuf-format-table",
+    ScopedFd fd(memfd_create("properdesktop-dmabuf-format-table",
                              MFD_CLOEXEC | MFD_ALLOW_SEALING));
     if (!fd.isValid()) {
         CF_WARNING(cfWayland) << "memfd_create failed for the dmabuf format table";
@@ -523,4 +523,4 @@ void DmaBufFeedbackManager::sendTranche(const DmaBufFeedbackTranche* tranche,
     zwp_linux_dmabuf_feedback_v1_send_tranche_done(resource);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

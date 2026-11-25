@@ -5,23 +5,23 @@
 // Upstream: chromium/src/components/exo/wayland/zwp_linux_dmabuf.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_LINUX_DMABUF_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_LINUX_DMABUF_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_LINUX_DMABUF_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_LINUX_DMABUF_H_
 
 #include <wayland-server-core.h>
 
 #include <cstdint>
 #include <memory>
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Compositor;
 }
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class DmaBufDevice;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class DmaBufFeedbackManager;
 
@@ -53,6 +53,6 @@ private:
     std::unique_ptr<DmaBufFeedbackManager> m_feedbackManager;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_LINUX_DMABUF_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_LINUX_DMABUF_H_

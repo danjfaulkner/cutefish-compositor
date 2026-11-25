@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/buffer.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_COMPOSITOR_BUFFER_H_
-#define CUTEFISH_COMPOSITOR_BUFFER_H_
+#ifndef PROPERDESKTOP_COMPOSITOR_BUFFER_H_
+#define PROPERDESKTOP_COMPOSITOR_BUFFER_H_
 
 #include <cstdint>
 #include <functional>
@@ -19,7 +19,7 @@
 #include "render/sync_fence.h"
 #include "render/texture.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 class ShmPool;
 
@@ -169,6 +169,6 @@ private:
     render::PixelFormat m_format = render::PixelFormat::Bgrx8888;
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-#endif // CUTEFISH_COMPOSITOR_BUFFER_H_
+#endif // PROPERDESKTOP_COMPOSITOR_BUFFER_H_

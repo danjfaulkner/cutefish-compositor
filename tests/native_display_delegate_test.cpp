@@ -6,7 +6,7 @@
 
 #include "fake_native_display_delegate.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(NativeDisplayDelegate, FakeCompletesEveryOperation)
 {

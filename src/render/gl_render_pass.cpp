@@ -16,7 +16,7 @@
 #include <cassert>
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 namespace {
 
 // Every draw sets its own program, textures, blend and attributes, so only the
@@ -542,4 +542,4 @@ void GlRenderPass::limitMipmapLevel(Texture *texture, int level)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

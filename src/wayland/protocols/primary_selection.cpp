@@ -11,7 +11,7 @@
 #include "wayland/server_util.h"
 #include <unistd.h>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 class Source : public clipboard::DataSource
 {
@@ -203,4 +203,4 @@ wl_global *createPrimarySelectionGlobal(wl_display *display, WaylandSeat *seat)
     return wl_global_create(display, &zwp_primary_selection_device_manager_v1_interface, 1, seat,
                             bind);
 }
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

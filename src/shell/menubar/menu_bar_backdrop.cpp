@@ -6,7 +6,7 @@
 
 #include "shell/wallpaper/wallpaper.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 MenuBarBackdrop::MenuBarBackdrop() = default;
 
@@ -42,4 +42,4 @@ void MenuBarBackdrop::setUnavailable()
     present(false, Style());
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -6,7 +6,7 @@
 
 #include "ui/theme.h"
 
-namespace cutefish::toolkit {
+namespace properdesktop::toolkit {
 
 namespace {
 
@@ -44,4 +44,4 @@ void addCompositorColors(ui::ColorMixer &mixer, const ui::Theme &theme)
     mixer[CompositorColor::NotificationCentreEmptyText] = dark ? kWhite.withAlpha(0.5) : kBlack.withAlpha(0.45);
 }
 
-} // namespace cutefish::toolkit
+} // namespace properdesktop::toolkit

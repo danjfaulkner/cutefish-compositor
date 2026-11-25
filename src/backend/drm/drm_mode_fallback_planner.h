@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 struct DrmModeCandidate {
     std::string key;
@@ -55,4 +55,4 @@ public:
                                                  Tester tester, int maximumAttempts = 64);
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

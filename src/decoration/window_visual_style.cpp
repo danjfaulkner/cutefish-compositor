@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <iterator>
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 namespace {
 
@@ -75,4 +75,4 @@ int WindowVisualStyle::radiusFor(const base::Size &size)
     return std::max(0, std::min({kRadius, size.width() / 2, size.height() / 2}));
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

@@ -36,9 +36,9 @@
 #include "wm/window_state.h"
 #include "wm/wm_shadow_controller_delegate.h"
 
-using namespace cutefish;
-using namespace cutefish::wm;
-using cutefish::decoration::Corners;
+using namespace properdesktop;
+using namespace properdesktop::wm;
+using properdesktop::decoration::Corners;
 
 namespace {
 

@@ -17,8 +17,8 @@
 #include "wayland/protocols/application_menu.h"
 #include "wayland/protocols/main_menu.h"
 #include "wayland/protocols/cursor_shape.h"
-#include "wayland/protocols/cutefish_computer_control.h"
-#include "wayland/protocols/cutefish_shell.h"
+#include "wayland/protocols/properdesktop_computer_control.h"
+#include "wayland/protocols/properdesktop_shell.h"
 #include "wayland/protocols/data_control.h"
 #include "wayland/protocols/idle_notify.h"
 #include "wayland/protocols/foreign_toplevel_list.h"
@@ -56,7 +56,7 @@
 #include "wayland/security_delegate.h"
 #include "wayland/server.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 ProtocolGlobals::ProtocolGlobals(const Dependencies &dependencies)
     : m_deps(dependencies)
@@ -253,9 +253,9 @@ bool ProtocolGlobals::registerWindowPlacement()
 
 bool ProtocolGlobals::registerPrivateShell()
 {
-    m_cutefishShell =
-            std::make_unique<WaylandCutefishShell>(m_deps.windowManager, m_privileged.get());
-    if (!createCutefishShellGlobal(m_deps.server->display(), m_cutefishShell.get())) {
+    m_properdesktopShell =
+            std::make_unique<WaylandProperDesktopShell>(m_deps.windowManager, m_privileged.get());
+    if (!createProperDesktopShellGlobal(m_deps.server->display(), m_properdesktopShell.get())) {
         CF_CRITICAL(cfWayland) << "Failed to register the private shell global";
         return false;
     }
@@ -352,4 +352,4 @@ void ProtocolGlobals::shutdown()
         m_privileged->shutdown();
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

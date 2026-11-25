@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_COMPUTER_CONTROL_REMEMBERED_APPS_H_
-#define CUTEFISH_COMPUTER_CONTROL_REMEMBERED_APPS_H_
+#ifndef PROPERDESKTOP_COMPUTER_CONTROL_REMEMBERED_APPS_H_
+#define PROPERDESKTOP_COMPUTER_CONTROL_REMEMBERED_APPS_H_
 
 #include <cstdint>
 #include <memory>
@@ -14,11 +14,11 @@
 #include "base/settings.h"
 #include "base/signal.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class DBusExport;
 }
 
-namespace cutefish::computer_control {
+namespace properdesktop::computer_control {
 
 std::optional<int64_t> parentProcess(int64_t pid);
 
@@ -65,6 +65,6 @@ private:
     std::unique_ptr<input::DBusExport> m_object;
 };
 
-} // namespace cutefish::computer_control
+} // namespace properdesktop::computer_control
 
-#endif // CUTEFISH_COMPUTER_CONTROL_REMEMBERED_APPS_H_
+#endif // PROPERDESKTOP_COMPUTER_CONTROL_REMEMBERED_APPS_H_

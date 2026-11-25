@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_DRM_GPU_BOOST_POLICY_H_
-#define CUTEFISH_BACKEND_DRM_GPU_BOOST_POLICY_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_GPU_BOOST_POLICY_H_
+#define PROPERDESKTOP_BACKEND_DRM_GPU_BOOST_POLICY_H_
 
 #include <chrono>
 #include <optional>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 // Holds the clock from the second of two compositor frames within kStreakGap
 // until kLinger after the last, never while inactive; client frames do not
@@ -38,6 +38,6 @@ private:
     std::optional<Time> m_holdUntil;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_GPU_BOOST_POLICY_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_GPU_BOOST_POLICY_H_

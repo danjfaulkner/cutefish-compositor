@@ -21,9 +21,9 @@
 #include "ui/theme.h"
 #include "wm/shell_surface.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr double kTitleGap = 4;
 static constexpr double kButtonSpacing = 8;
@@ -255,4 +255,4 @@ void SecretDialog::refresh()
     m_frame->requestLayout();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

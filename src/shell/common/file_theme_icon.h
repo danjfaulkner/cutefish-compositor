@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_FILE_THEME_ICON_H_
-#define CUTEFISH_SHELL_COMMON_FILE_THEME_ICON_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_FILE_THEME_ICON_H_
+#define PROPERDESKTOP_SHELL_COMMON_FILE_THEME_ICON_H_
 
 #include <functional>
 #include <memory>
@@ -12,7 +12,7 @@
 
 #include "ui/icon.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Reads icon files on the pool: a bundle's icon may sit on a mounted disk image
 // whose reads can hang.
@@ -33,6 +33,6 @@ private:
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_FILE_THEME_ICON_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_FILE_THEME_ICON_H_

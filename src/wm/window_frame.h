@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_WINDOW_FRAME_H_
-#define CUTEFISH_WM_WINDOW_FRAME_H_
+#ifndef PROPERDESKTOP_WM_WINDOW_FRAME_H_
+#define PROPERDESKTOP_WM_WINDOW_FRAME_H_
 
 #include <memory>
 #include <vector>
@@ -13,7 +13,7 @@
 #include "input/types.h"
 #include "wm/types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 
@@ -72,6 +72,6 @@ public:
     virtual Insets defaultExtents() const = 0;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WINDOW_FRAME_H_
+#endif // PROPERDESKTOP_WM_WINDOW_FRAME_H_

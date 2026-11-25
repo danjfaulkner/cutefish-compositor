@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TESTS_FAKE_LOGIND_H
-#define CUTEFISH_TESTS_FAKE_LOGIND_H
+#ifndef PROPERDESKTOP_TESTS_FAKE_LOGIND_H
+#define PROPERDESKTOP_TESTS_FAKE_LOGIND_H
 
 #include <fcntl.h>
 #include <memory>
@@ -15,7 +15,7 @@
 #include "base/dbus.h"
 #include "core/main_loop.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 class FakeLogind
 {
@@ -77,6 +77,6 @@ private:
     bool m_valid = false;
 };
 
-} // namespace cutefish::test
+} // namespace properdesktop::test
 
-#endif // CUTEFISH_TESTS_FAKE_LOGIND_H
+#endif // PROPERDESKTOP_TESTS_FAKE_LOGIND_H

@@ -11,7 +11,7 @@
 
 #include <algorithm>
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -115,4 +115,4 @@ base::Rect Placement::placeTransient(const base::Size &requestedSize, const base
     return bounds;
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

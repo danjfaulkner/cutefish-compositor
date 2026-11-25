@@ -7,8 +7,8 @@
 //           chromium/src/components/exo/xdg_shell_surface.{h,cc}
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WM_SHELL_SURFACE_H_
-#define CUTEFISH_WM_SHELL_SURFACE_H_
+#ifndef PROPERDESKTOP_WM_SHELL_SURFACE_H_
+#define PROPERDESKTOP_WM_SHELL_SURFACE_H_
 
 #include <cstdint>
 #include <deque>
@@ -24,11 +24,11 @@
 #include "wm/types.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 class WindowManager;
@@ -362,6 +362,6 @@ private:
     bool m_popupMapped = false;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_SHELL_SURFACE_H_
+#endif // PROPERDESKTOP_WM_SHELL_SURFACE_H_

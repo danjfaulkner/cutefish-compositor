@@ -5,15 +5,15 @@
 // Upstream: chromium/src/ui/base/accelerators/accelerator_map.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_MAP_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_MAP_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_MAP_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_MAP_H_
 
 #include <unordered_map>
 #include <utility>
 
 #include "accelerators/accelerator.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 // Punctuation shortcuts are defined against the US layout; on other layouts the key
 // at the same physical position triggers them.
@@ -90,6 +90,6 @@ private:
     bool m_usePositionalLookup = false;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_MAP_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_MAP_H_

@@ -4,10 +4,10 @@
 
 // Session state follows Ash at revision 7acd40ddefff49c9d36144999aafdbb674dbd07a.
 
-#ifndef CUTEFISH_SESSION_SESSION_STATE_H_
-#define CUTEFISH_SESSION_SESSION_STATE_H_
+#ifndef PROPERDESKTOP_SESSION_SESSION_STATE_H_
+#define PROPERDESKTOP_SESSION_SESSION_STATE_H_
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 enum class SessionState {
     Active,
@@ -35,6 +35,6 @@ public:
     virtual void onSessionOutputsChanged() { }
 };
 
-} // namespace cutefish::session
+} // namespace properdesktop::session
 
-#endif // CUTEFISH_SESSION_SESSION_STATE_H_
+#endif // PROPERDESKTOP_SESSION_SESSION_STATE_H_

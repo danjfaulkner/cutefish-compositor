@@ -16,7 +16,7 @@
 #include "ui/embedded_gpu.h"
 #include "ui/embedded_window.h"
 
-namespace cutefish::toolkit {
+namespace properdesktop::toolkit {
 
 namespace {
 
@@ -315,4 +315,4 @@ void PanelTexture::releaseRenderResources()
     }
 }
 
-} // namespace cutefish::toolkit
+} // namespace properdesktop::toolkit

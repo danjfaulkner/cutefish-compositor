@@ -25,7 +25,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 WindowCycleController::WindowCycleController(WindowManager *manager, MruWindowTracker *mruTracker)
     : m_manager(manager)
@@ -309,4 +309,4 @@ void WindowCycleController::onWindowRemoved(Window *window)
         showView();
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

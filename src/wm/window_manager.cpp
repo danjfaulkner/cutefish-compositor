@@ -49,7 +49,7 @@
 #include "wm/window_state.h"
 #include "wm/wm_event.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -1930,4 +1930,4 @@ void WindowManager::onWindowActivated(Window *gainedActive, Window *)
     activeWindowChanged(gainedActive);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

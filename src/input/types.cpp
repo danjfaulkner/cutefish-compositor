@@ -10,7 +10,7 @@
 
 #include <linux/input-event-codes.h>
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 ButtonFlags buttonFlagFromEvdev(uint32_t code)
 {
@@ -30,4 +30,4 @@ ButtonFlags buttonFlagFromEvdev(uint32_t code)
     }
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

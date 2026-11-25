@@ -18,9 +18,9 @@
 #include "shell/common/task_windows.h"
 #include "shell/common/text_match.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace pinned_applications {
 
@@ -29,8 +29,8 @@ static constexpr const char *kKey = "Dock/Pinned";
 const std::vector<std::string> &defaults()
 {
     static const std::vector<std::string> list = {
-            "cutefish-filemanager", "cutefish-terminal",     "chromium",            "cutefish-settings",
-            "cutefish-calculator",  "cutefish-debinstaller", "cutefish-screenshot", "cutefish-videoplayer",
+            "properdesktop-filemanager", "properdesktop-terminal",     "chromium",            "properdesktop-settings",
+            "properdesktop-calculator",  "properdesktop-debinstaller", "properdesktop-screenshot", "properdesktop-videoplayer",
     };
     return list;
 }
@@ -786,4 +786,4 @@ void DockModel::onActiveChanged(uint64_t window)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

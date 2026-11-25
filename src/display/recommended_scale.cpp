@@ -9,7 +9,7 @@
 
 #include <array>
 
-namespace cutefish::display {
+namespace properdesktop::display {
 namespace {
 
 struct Threshold {
@@ -66,4 +66,4 @@ compositor::OutputScale recommendedScale(const DisplaySnapshot &display)
                                                                       : pick(kExternal);
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

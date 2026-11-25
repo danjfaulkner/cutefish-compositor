@@ -22,7 +22,7 @@
 #include <unistd.h>
 #include <vector>
 
-#include <cutefish-shell-v1-client-protocol.h>
+#include <properdesktop-shell-v1-client-protocol.h>
 #include <wayland-client.h>
 #include <wayland-server-core.h>
 #include <xdg-shell-client-protocol.h>
@@ -36,7 +36,7 @@
 #include "scene/scene.h"
 #include "shm_test_util.h"
 #include "wayland/privileged_client.h"
-#include "wayland/protocols/cutefish_shell.h"
+#include "wayland/protocols/properdesktop_shell.h"
 #include "wayland/protocols/wl_compositor.h"
 #include "wayland/protocols/wl_seat.h"
 #include "wayland/protocols/wl_shm.h"
@@ -49,7 +49,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -61,7 +61,7 @@ struct XdgWindow {
     wl_surface *surface = nullptr;
     xdg_surface *xdgSurface = nullptr;
     xdg_toplevel *toplevel = nullptr;
-    cutefish_shell_surface_v1 *shellSurface = nullptr;
+    properdesktop_shell_surface_v1 *shellSurface = nullptr;
     wl_buffer *buffer = nullptr;
     std::vector<uint32_t> surfaceConfigures;
     std::vector<base::Size> bounds;
@@ -93,7 +93,7 @@ struct Client {
     wl_compositor *compositor = nullptr;
     wl_shm *shm = nullptr;
     xdg_wm_base *wmBase = nullptr;
-    cutefish_shell_v1 *shell = nullptr;
+    properdesktop_shell_v1 *shell = nullptr;
     std::map<std::string, std::pair<uint32_t, uint32_t>> globals;
 
     std::vector<std::unique_ptr<XdgWindow>> windows;
@@ -132,7 +132,7 @@ struct Client {
             destroyWindowObjects(window.get());
         windows.clear();
         if (shell)
-            cutefish_shell_v1_destroy(shell);
+            properdesktop_shell_v1_destroy(shell);
         xdg_wm_base_destroy(wmBase);
         wl_shm_destroy(shm);
         wl_compositor_destroy(compositor);
@@ -142,11 +142,11 @@ struct Client {
 
     bool bindShell()
     {
-        if (!globals.contains("cutefish_shell_v1"))
+        if (!globals.contains("properdesktop_shell_v1"))
             return false;
-        shell = static_cast<cutefish_shell_v1 *>(wl_registry_bind(
-                registry, globals["cutefish_shell_v1"].first, &cutefish_shell_v1_interface,
-                globals["cutefish_shell_v1"].second));
+        shell = static_cast<properdesktop_shell_v1 *>(wl_registry_bind(
+                registry, globals["properdesktop_shell_v1"].first, &properdesktop_shell_v1_interface,
+                globals["properdesktop_shell_v1"].second));
         sync();
         return true;
     }
@@ -196,7 +196,7 @@ struct Client {
     void destroyWindowObjects(XdgWindow *window)
     {
         if (window->shellSurface) {
-            cutefish_shell_surface_v1_destroy(window->shellSurface);
+            properdesktop_shell_surface_v1_destroy(window->shellSurface);
             window->shellSurface = nullptr;
         }
         if (window->toplevel) {
@@ -353,15 +353,15 @@ protected:
         auto waylandSeat = std::make_unique<wayland::WaylandSeat>(&seat, server.serialTracker());
         auto xdgShell = std::make_unique<wayland::WaylandXdgShell>(&compositor, &windowManager,
                                                                    &seat, server.serialTracker());
-        auto cutefishShell =
-                std::make_unique<wayland::WaylandCutefishShell>(&windowManager, privileged.get());
+        auto properdesktopShell =
+                std::make_unique<wayland::WaylandProperDesktopShell>(&windowManager, privileged.get());
 
         ASSERT_TRUE(wayland::createCompositorGlobal(server.display(), &compositor));
         ASSERT_TRUE(wayland::createSubcompositorGlobal(server.display()));
         ASSERT_TRUE(wayland::createShmGlobal(server.display(), &compositor));
         ASSERT_TRUE(wayland::createSeatGlobal(server.display(), waylandSeat.get()));
         ASSERT_TRUE(wayland::createXdgShellGlobal(server.display(), xdgShell.get()));
-        ASSERT_TRUE(wayland::createCutefishShellGlobal(server.display(), cutefishShell.get()));
+        ASSERT_TRUE(wayland::createProperDesktopShellGlobal(server.display(), properdesktopShell.get()));
         int shellFds[2];
         ASSERT_EQ(0, socketpair(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0, shellFds));
         ASSERT_TRUE(privileged->adoptShellConnection(shellFds[0]));
@@ -437,8 +437,8 @@ protected:
 TEST_F(PrivateShellProtocolTest, TheTrustedClientSeesThePrivateGlobal)
 {
     run([&](Client &c) {
-        EXPECT_TRUE(c.globals.contains("cutefish_shell_v1"));
-        EXPECT_FALSE(c.globals.contains("cutefish_window_management_v1"));
+        EXPECT_TRUE(c.globals.contains("properdesktop_shell_v1"));
+        EXPECT_FALSE(c.globals.contains("properdesktop_window_management_v1"));
         EXPECT_TRUE(c.globals.contains("wl_compositor"));
         EXPECT_TRUE(c.globals.contains("xdg_wm_base"));
         EXPECT_TRUE(c.globals.contains("wl_seat"));
@@ -448,7 +448,7 @@ TEST_F(PrivateShellProtocolTest, TheTrustedClientSeesThePrivateGlobal)
 TEST_F(PrivateShellProtocolTest, AnOrdinaryClientNeverSeesThePrivateGlobal)
 {
     run({}, [&](Client &c) {
-        EXPECT_FALSE(c.globals.contains("cutefish_shell_v1"));
+        EXPECT_FALSE(c.globals.contains("properdesktop_shell_v1"));
         EXPECT_TRUE(c.globals.contains("wl_compositor"));
         EXPECT_TRUE(c.globals.contains("xdg_wm_base"));
     });
@@ -461,13 +461,13 @@ TEST_F(PrivateShellProtocolTest, AnOrdinaryClientCannotBindThePrivateGlobalByNam
 
     run(
             [&](Client &c) {
-                namePromise.set_value(c.globals["cutefish_shell_v1"]);
+                namePromise.set_value(c.globals["properdesktop_shell_v1"]);
             },
             [&](Client &c) {
                 ASSERT_EQ(nameFuture.wait_for(std::chrono::seconds(5)), std::future_status::ready);
                 const auto [name, version] = nameFuture.get();
-                auto *shell = static_cast<cutefish_shell_v1 *>(
-                        wl_registry_bind(c.registry, name, &cutefish_shell_v1_interface, version));
+                auto *shell = static_cast<properdesktop_shell_v1 *>(
+                        wl_registry_bind(c.registry, name, &properdesktop_shell_v1_interface, version));
                 // libwayland reports wl_display.error rather than a per-interface code, so any protocol error passes.
                 EXPECT_NE(0, c.roundtrip());
                 EXPECT_EQ(EPROTO, wl_display_get_error(c.display));
@@ -480,9 +480,9 @@ namespace {
 
 XdgWindow *makeDesktop(Client &c)
 {
-    XdgWindow *desktop = c.makeToplevel("Desktop", "cutefish-filemanager");
-    desktop->shellSurface = cutefish_shell_v1_get_shell_surface(c.shell, desktop->surface);
-    cutefish_shell_surface_v1_set_role(desktop->shellSurface, CUTEFISH_SHELL_SURFACE_V1_ROLE_DESKTOP);
+    XdgWindow *desktop = c.makeToplevel("Desktop", "properdesktop-filemanager");
+    desktop->shellSurface = properdesktop_shell_v1_get_shell_surface(c.shell, desktop->surface);
+    properdesktop_shell_surface_v1_set_role(desktop->shellSurface, PROPERDESKTOP_SHELL_SURFACE_V1_ROLE_DESKTOP);
     return desktop;
 }
 
@@ -520,10 +520,10 @@ TEST_F(PrivateShellProtocolTest, AnUnknownRoleIsAnError)
 {
     run([&](Client &c) {
         ASSERT_TRUE(c.bindShell());
-        XdgWindow *window = c.makeToplevel("Panel", "cutefish-filemanager");
-        window->shellSurface = cutefish_shell_v1_get_shell_surface(c.shell, window->surface);
-        cutefish_shell_surface_v1_set_role(window->shellSurface, 1);
-        EXPECT_EQ(uint32_t(CUTEFISH_SHELL_SURFACE_V1_ERROR_INVALID_ROLE), c.syncExpectingError());
+        XdgWindow *window = c.makeToplevel("Panel", "properdesktop-filemanager");
+        window->shellSurface = properdesktop_shell_v1_get_shell_surface(c.shell, window->surface);
+        properdesktop_shell_surface_v1_set_role(window->shellSurface, 1);
+        EXPECT_EQ(uint32_t(PROPERDESKTOP_SHELL_SURFACE_V1_ERROR_INVALID_ROLE), c.syncExpectingError());
         // Nothing more can be sent on the broken connection.
         for (auto &w : c.windows) {
             for (wl_proxy *proxy : {reinterpret_cast<wl_proxy *>(w->shellSurface),
@@ -546,8 +546,8 @@ TEST_F(PrivateShellProtocolTest, AnUnknownOutputIsAnError)
     run([&](Client &c) {
         ASSERT_TRUE(c.bindShell());
         XdgWindow *desktop = makeDesktop(c);
-        cutefish_shell_surface_v1_set_output(desktop->shellSurface, "nowhere");
-        EXPECT_EQ(uint32_t(CUTEFISH_SHELL_SURFACE_V1_ERROR_INVALID_OUTPUT), c.syncExpectingError());
+        properdesktop_shell_surface_v1_set_output(desktop->shellSurface, "nowhere");
+        EXPECT_EQ(uint32_t(PROPERDESKTOP_SHELL_SURFACE_V1_ERROR_INVALID_OUTPUT), c.syncExpectingError());
         for (wl_proxy *proxy : {reinterpret_cast<wl_proxy *>(desktop->shellSurface),
                                 reinterpret_cast<wl_proxy *>(desktop->toplevel),
                                 reinterpret_cast<wl_proxy *>(desktop->xdgSurface),
@@ -585,7 +585,7 @@ TEST_F(PrivateShellProtocolTest, DestroyingTheShellSurfaceLeavesTheMappedDesktop
         c.map(desktop, kOutput.size());
         check([&] { ASSERT_NE(nullptr, windowWithRole(wm::WindowRole::Desktop)); });
 
-        cutefish_shell_surface_v1_destroy(desktop->shellSurface);
+        properdesktop_shell_surface_v1_destroy(desktop->shellSurface);
         desktop->shellSurface = nullptr;
         c.sync();
 
@@ -602,8 +602,8 @@ TEST_F(PrivateShellProtocolTest, TheDesktopTakesTheKeyboardThroughActivate)
     run([&](Client &c) {
         ASSERT_TRUE(c.bindShell());
         XdgWindow *desktop = makeDesktop(c);
-        cutefish_shell_surface_v1_set_focus_policy(desktop->shellSurface,
-                                                   CUTEFISH_SHELL_SURFACE_V1_FOCUS_POLICY_NORMAL);
+        properdesktop_shell_surface_v1_set_focus_policy(desktop->shellSurface,
+                                                   PROPERDESKTOP_SHELL_SURFACE_V1_FOCUS_POLICY_NORMAL);
         c.map(desktop, kOutput.size());
 
         check([&] {
@@ -613,7 +613,7 @@ TEST_F(PrivateShellProtocolTest, TheDesktopTakesTheKeyboardThroughActivate)
             EXPECT_FALSE(window->isActive());
         });
 
-        cutefish_shell_surface_v1_activate(desktop->shellSurface);
+        properdesktop_shell_surface_v1_activate(desktop->shellSurface);
         c.sync();
         check([&] {
             wm::Window *window = windowWithRole(wm::WindowRole::Desktop);
@@ -628,17 +628,17 @@ TEST_F(PrivateShellProtocolTest, ADesktopHearsItsWorkArea)
 {
     run([&](Client &c) {
         ASSERT_TRUE(c.bindShell());
-        static const cutefish_shell_surface_v1_listener listener = {
-            [](void *data, cutefish_shell_surface_v1 *, int32_t x, int32_t y, int32_t width,
+        static const properdesktop_shell_surface_v1_listener listener = {
+            [](void *data, properdesktop_shell_surface_v1 *, int32_t x, int32_t y, int32_t width,
                int32_t height) {
                 static_cast<std::vector<base::Rect> *>(data)->push_back(base::Rect(x, y, width, height));
             },
         };
         std::vector<base::Rect> areas;
-        XdgWindow *desktop = c.makeToplevel("Desktop", "cutefish-filemanager");
-        desktop->shellSurface = cutefish_shell_v1_get_shell_surface(c.shell, desktop->surface);
-        cutefish_shell_surface_v1_add_listener(desktop->shellSurface, &listener, &areas);
-        cutefish_shell_surface_v1_set_role(desktop->shellSurface, CUTEFISH_SHELL_SURFACE_V1_ROLE_DESKTOP);
+        XdgWindow *desktop = c.makeToplevel("Desktop", "properdesktop-filemanager");
+        desktop->shellSurface = properdesktop_shell_v1_get_shell_surface(c.shell, desktop->surface);
+        properdesktop_shell_surface_v1_add_listener(desktop->shellSurface, &listener, &areas);
+        properdesktop_shell_surface_v1_set_role(desktop->shellSurface, PROPERDESKTOP_SHELL_SURFACE_V1_ROLE_DESKTOP);
         c.sync();
         ASSERT_EQ(1u, areas.size());
         EXPECT_EQ(base::Rect(0, 0, 800, 600), areas.back());
@@ -682,7 +682,7 @@ TEST_F(PrivateShellProtocolTest, ADesktopOnANamedOutputHearsTheShellsReservation
     ASSERT_TRUE(displays.installHardware({"instance", "seat0", 1, {physical}}));
     const display::LogicalDisplay logical {display::DisplayId("a"),
                                            {display::DisplayId("a")},
-                                           "Cutefish-a",
+                                           "ProperDesktop-a",
                                            kOutput,
                                            kOutput,
                                            *compositor::OutputScale::fromNumerator(120),
@@ -693,29 +693,29 @@ TEST_F(PrivateShellProtocolTest, ADesktopOnANamedOutputHearsTheShellsReservation
 
     int bar = 0;
     int dock = 0;
-    windowManager.setExclusiveZone(&bar, wm::ScreenEdge::Top, 32, "Cutefish-a");
+    windowManager.setExclusiveZone(&bar, wm::ScreenEdge::Top, 32, "ProperDesktop-a");
 
     run([&](Client &c) {
         ASSERT_TRUE(c.bindShell());
-        static const cutefish_shell_surface_v1_listener listener = {
-            [](void *data, cutefish_shell_surface_v1 *, int32_t x, int32_t y, int32_t width,
+        static const properdesktop_shell_surface_v1_listener listener = {
+            [](void *data, properdesktop_shell_surface_v1 *, int32_t x, int32_t y, int32_t width,
                int32_t height) {
                 static_cast<std::vector<base::Rect> *>(data)->push_back(base::Rect(x, y, width, height));
             },
         };
         std::vector<base::Rect> areas;
-        XdgWindow *desktop = c.makeToplevel("Desktop", "cutefish-filemanager");
-        desktop->shellSurface = cutefish_shell_v1_get_shell_surface(c.shell, desktop->surface);
-        cutefish_shell_surface_v1_add_listener(desktop->shellSurface, &listener, &areas);
-        cutefish_shell_surface_v1_set_role(desktop->shellSurface, CUTEFISH_SHELL_SURFACE_V1_ROLE_DESKTOP);
-        cutefish_shell_surface_v1_set_output(desktop->shellSurface, "Cutefish-a");
+        XdgWindow *desktop = c.makeToplevel("Desktop", "properdesktop-filemanager");
+        desktop->shellSurface = properdesktop_shell_v1_get_shell_surface(c.shell, desktop->surface);
+        properdesktop_shell_surface_v1_add_listener(desktop->shellSurface, &listener, &areas);
+        properdesktop_shell_surface_v1_set_role(desktop->shellSurface, PROPERDESKTOP_SHELL_SURFACE_V1_ROLE_DESKTOP);
+        properdesktop_shell_surface_v1_set_output(desktop->shellSurface, "ProperDesktop-a");
         c.sync();
         ASSERT_FALSE(areas.empty());
         EXPECT_EQ(base::Rect(0, 32, 800, 568), areas.front());
         EXPECT_EQ(1u, areas.size());
         c.map(desktop, kOutput.size());
 
-        check([&] { windowManager.setExclusiveZone(&dock, wm::ScreenEdge::Bottom, 92, "Cutefish-a"); });
+        check([&] { windowManager.setExclusiveZone(&dock, wm::ScreenEdge::Bottom, 92, "ProperDesktop-a"); });
         c.sync();
         EXPECT_EQ(base::Rect(0, 32, 800, 476), areas.back());
         check([&] { windowManager.clearExclusiveZone(&dock); });

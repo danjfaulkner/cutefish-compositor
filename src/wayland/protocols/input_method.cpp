@@ -29,7 +29,7 @@
 #include "wayland/protocols/wl_seat.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 void destroy(wl_client *, wl_resource *resource)
 {
@@ -414,7 +414,7 @@ struct InputMethodManager::Impl : InputMethodRelay, input::SeatObserver {
         const auto &keymap = m_seat->clientXkbTracker()->keymap();
         // The trailing NUL is part of the advertised size.
         const size_t size = keymap.size() + 1;
-        const int fd = memfd_create("cutefish-keymap", MFD_CLOEXEC);
+        const int fd = memfd_create("properdesktop-keymap", MFD_CLOEXEC);
         size_t written = 0;
         while (fd >= 0 && written < size) {
             const ssize_t count = write(fd, keymap.c_str() + written, size - written);
@@ -862,4 +862,4 @@ wl_global *InputMethodManager::virtualKeyboardGlobal() const
 {
     return m_impl ? m_impl->keyboardGlobal : nullptr;
 }
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

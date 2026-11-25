@@ -12,7 +12,7 @@
 
 #include "render/egl_context.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 GpuTimer::Mark::Mark(std::shared_ptr<std::vector<unsigned int>> pool, unsigned int query)
     : m_pool(std::move(pool))
@@ -100,4 +100,4 @@ std::optional<GpuTimer::Time> GpuTimer::reached(const Mark &mark)
     return cpuNow - std::chrono::nanoseconds(gpuNow - GLint64(reachedNs));
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

@@ -18,7 +18,7 @@
 #include "wayland/serial_tracker.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -532,4 +532,4 @@ wl_global* createDataDeviceManagerGlobal(wl_display* display, WaylandSeat* seat)
                             seat, bind);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

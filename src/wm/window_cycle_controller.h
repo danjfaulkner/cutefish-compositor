@@ -6,10 +6,10 @@
 //           window_cycle_list.h and window_cycle_event_filter.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 //
-// Adapted for Cutefish: one entry per application, not per window.
+// Adapted for Proper Desktop: one entry per application, not per window.
 
-#ifndef CUTEFISH_WM_WINDOW_CYCLE_CONTROLLER_H_
-#define CUTEFISH_WM_WINDOW_CYCLE_CONTROLLER_H_
+#ifndef PROPERDESKTOP_WM_WINDOW_CYCLE_CONTROLLER_H_
+#define PROPERDESKTOP_WM_WINDOW_CYCLE_CONTROLLER_H_
 
 #include <cstdint>
 #include <optional>
@@ -21,7 +21,7 @@
 #include "base/signal.h"
 #include "base/timer.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class MruWindowTracker;
 class Window;
@@ -104,6 +104,6 @@ private:
     std::optional<base::PointF> m_pointerOrigin;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WINDOW_CYCLE_CONTROLLER_H_
+#endif // PROPERDESKTOP_WM_WINDOW_CYCLE_CONTROLLER_H_

@@ -10,7 +10,7 @@
 
 #include "wm/quit_all.h"
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 namespace {
 
@@ -19,8 +19,8 @@ const base::LogCategory &logs()
     return base::LogCategory::defaultCategory();
 }
 
-const std::string serviceName = "org.cutefish.Applications1";
-const std::string objectPath = "/org/cutefish/Applications1";
+const std::string serviceName = "org.properdesktop.Applications1";
+const std::string objectPath = "/org/properdesktop/Applications1";
 
 std::string outcomeName(wm::QuitAll::Outcome outcome)
 {
@@ -95,4 +95,4 @@ void ApplicationsService::quitAll(base::dbus::MethodCall &call)
     });
 }
 
-} // namespace cutefish::session
+} // namespace properdesktop::session

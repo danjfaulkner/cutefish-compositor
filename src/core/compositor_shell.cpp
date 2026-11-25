@@ -111,11 +111,11 @@
 #include "wm/window.h"
 #include "wm/window_cycle_controller.h"
 
-#ifdef CUTEFISH_ENABLE_XWAYLAND
+#ifdef PROPERDESKTOP_ENABLE_XWAYLAND
 #include "xwayland/xwayland_server.h"
 #endif
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 namespace {
 constexpr int kSwitcherPreloadDelayMs = 3000;
@@ -132,8 +132,8 @@ void callAppRuntime(const std::string &method, int64_t pid)
     base::dbus::Connection *bus = base::dbus::Connection::session(mainLoop());
     if (!bus)
         return;
-    base::dbus::Message message = bus->newMethodCall("org.cutefish.AppRuntime", "/AppRuntime",
-                                                     "org.cutefish.AppRuntime", method);
+    base::dbus::Message message = bus->newMethodCall("org.properdesktop.AppRuntime", "/AppRuntime",
+                                                     "org.properdesktop.AppRuntime", method);
     message.append(uint32_t(pid));
     bus->send(message);
 }
@@ -619,7 +619,7 @@ bool CompositorShell::init()
         m_windowDebugService = std::make_unique<session::WindowDebugService>(&m_windowManager);
         m_windowDebugService->setInput(&m_inputManager);
         if (!m_options.noDrm)
-            m_windowDebugService->setInputGate("/etc/cutefish/window-debug-input");
+            m_windowDebugService->setInputGate("/etc/properdesktop/window-debug-input");
         m_windowDebugService->setOutputStats([this] {
             std::vector<std::string> lines;
             if (m_backend) {
@@ -807,7 +807,7 @@ shell::ScreenCaptureServices CompositorShell::screenCaptureServices(shell::DockW
         services.grabber = shell::createScreenGrabber(m_globals->imageCapture(), m_globals->toplevelList());
     services.selection = m_seat.selection();
     services.settingsPath = preferencesFile("shell");
-    services.recorder = CUTEFISH_SCREEN_RECORDER;
+    services.recorder = PROPERDESKTOP_SCREEN_RECORDER;
     services.recorderEnvironment = childEnvironment();
     services.recorderConnection = [this] {
         return m_globals ? m_globals->privileged()->createCaptureConnection() : -1;
@@ -832,12 +832,12 @@ bool CompositorShell::initWayland()
         return false;
 
     m_security = std::make_unique<wayland::ExecutableSecurityDelegate>(
-            withExecutables({"/usr/bin/cutefish-services"}, m_options.clipboardClients),
+            withExecutables({"/usr/bin/properdesktop-services"}, m_options.clipboardClients),
             captureExecutables(m_options),
-            std::vector<std::string> {"/usr/bin/cutefish-services",
-                                      "/usr/bin/cutefish-polkit-agent"},
+            std::vector<std::string> {"/usr/bin/properdesktop-services",
+                                      "/usr/bin/properdesktop-polkit-agent"},
             !m_options.noDrm,
-            withExecutables({"/usr/bin/cutefish-computer-use"}, m_options.computerControlClients),
+            withExecutables({"/usr/bin/properdesktop-computer-use"}, m_options.computerControlClients),
             withExecutables({"/usr/bin/reef"}, m_options.windowPlacementClients));
 
     wayland::ProtocolGlobals::Dependencies dependencies;
@@ -951,7 +951,7 @@ bool CompositorShell::initWayland()
 
 void CompositorShell::initXwayland()
 {
-#ifdef CUTEFISH_ENABLE_XWAYLAND
+#ifdef PROPERDESKTOP_ENABLE_XWAYLAND
     m_xwayland = std::make_unique<xwayland::XwaylandServer>(
             m_server->display(), m_globals->privileged(), &m_windowManager);
     // Xwayland starts on demand, so the input method runs without X11 until it does.
@@ -1068,7 +1068,7 @@ void CompositorShell::applyScale()
     m_cursor.setScale(m_outputModel.scale.value());
     if (m_backend && m_backend->renderer())
         m_backend->renderer()->setRasterScale(m_outputModel.scale.value());
-#ifdef CUTEFISH_ENABLE_XWAYLAND
+#ifdef PROPERDESKTOP_ENABLE_XWAYLAND
     // Before the outputs are re-sent: Xwayland sizes its screen from them.
     if (m_xwayland)
         m_xwayland->setScale(m_outputModel.scale.value());
@@ -1240,7 +1240,7 @@ bool CompositorShell::initDisplay()
                 m_dockLayout.setSessionStarting(false);
         }));
     }
-#ifdef CUTEFISH_ENABLE_XWAYLAND
+#ifdef PROPERDESKTOP_ENABLE_XWAYLAND
     m_displayRuntime->maximumScaleChanged = [this](double scale) {
         if (m_xwayland)
             m_xwayland->setScale(scale);
@@ -1436,4 +1436,4 @@ void CompositorShell::onKeyboardLayoutUpdated()
     }
 }
 
-} // namespace cutefish::core
+} // namespace properdesktop::core

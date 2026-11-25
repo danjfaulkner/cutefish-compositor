@@ -28,7 +28,7 @@
 #include <cstdlib>
 #include <string>
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 namespace {
 
@@ -185,4 +185,4 @@ int mouseDpi(const char *property)
     return dpi > 0 ? dpi : kDefaultDpi;
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

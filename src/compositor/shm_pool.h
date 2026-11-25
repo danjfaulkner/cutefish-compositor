@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/shared_memory.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_COMPOSITOR_SHM_POOL_H_
-#define CUTEFISH_COMPOSITOR_SHM_POOL_H_
+#ifndef PROPERDESKTOP_COMPOSITOR_SHM_POOL_H_
+#define PROPERDESKTOP_COMPOSITOR_SHM_POOL_H_
 
 #include "base/geometry.h"
 
@@ -20,7 +20,7 @@
 
 #include "render/texture.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 class ShmBuffer;
 
@@ -86,6 +86,6 @@ private:
     volatile std::sig_atomic_t m_faulted = 0;
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-#endif // CUTEFISH_COMPOSITOR_SHM_POOL_H_
+#endif // PROPERDESKTOP_COMPOSITOR_SHM_POOL_H_

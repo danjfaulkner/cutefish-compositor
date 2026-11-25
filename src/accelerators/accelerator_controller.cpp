@@ -18,7 +18,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 namespace {
 
@@ -383,4 +383,4 @@ AcceleratorController::acceleratorProcessingRestriction(AcceleratorAction action
     return Restriction::None;
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

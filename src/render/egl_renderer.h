@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_RENDER_EGL_RENDERER_H_
-#define CUTEFISH_RENDER_EGL_RENDERER_H_
+#ifndef PROPERDESKTOP_RENDER_EGL_RENDERER_H_
+#define PROPERDESKTOP_RENDER_EGL_RENDERER_H_
 
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
@@ -34,7 +34,7 @@
 struct gbm_device;
 struct gbm_surface;
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // DRM/KMS lives entirely outside it.
 class EglRenderer : public Renderer, public DmaBufDevice
@@ -250,6 +250,6 @@ private:
     uint64_t m_framesAtRelease = 0;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_EGL_RENDERER_H_
+#endif // PROPERDESKTOP_RENDER_EGL_RENDERER_H_

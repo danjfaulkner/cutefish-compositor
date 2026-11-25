@@ -6,8 +6,8 @@
 // Upstream: chromium/src/ash/wm/desks/desks_animations.cc (WindowMoveToDeskAnimation)
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_SCENE_SLIDE_OUT_NODE_H_
-#define CUTEFISH_SCENE_SLIDE_OUT_NODE_H_
+#ifndef PROPERDESKTOP_SCENE_SLIDE_OUT_NODE_H_
+#define PROPERDESKTOP_SCENE_SLIDE_OUT_NODE_H_
 
 #include <functional>
 #include <vector>
@@ -15,7 +15,7 @@
 #include "scene/desk_switch_node.h"
 #include "base/geometry.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 class SlideOutNode : public Node
 {
@@ -48,6 +48,6 @@ private:
     mutable std::vector<Slide> m_slides;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_SLIDE_OUT_NODE_H_
+#endif // PROPERDESKTOP_SCENE_SLIDE_OUT_NODE_H_

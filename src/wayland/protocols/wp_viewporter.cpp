@@ -15,7 +15,7 @@
 #include "compositor/surface_observer.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 using compositor::Surface;
@@ -167,4 +167,4 @@ wl_global* createViewporterGlobal(wl_display* display)
     return wl_global_create(display, &wp_viewporter_interface, 1, nullptr, bind);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

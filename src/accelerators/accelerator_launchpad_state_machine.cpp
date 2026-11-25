@@ -11,7 +11,7 @@
 
 #include <xkbcommon/xkbcommon-keysyms.h>
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 namespace {
 
@@ -81,4 +81,4 @@ void AcceleratorLaunchpadStateMachine::onPointerButton(bool pressed)
     }
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

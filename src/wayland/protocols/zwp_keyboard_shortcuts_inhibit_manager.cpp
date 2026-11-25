@@ -16,7 +16,7 @@
 #include "wayland/protocols/wl_seat.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -132,4 +132,4 @@ wl_global *createKeyboardShortcutsInhibitManagerGlobal(wl_display *display, Wayl
                             bind_keyboard_shortcuts_inhibit_manager);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

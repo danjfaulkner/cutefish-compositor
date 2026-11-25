@@ -14,7 +14,7 @@
 #include "render/egl_context.h"
 #include "base/region.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 // Repack scratch space kept between uploads without shrinking.
@@ -201,4 +201,4 @@ bool GlTextureUploader::update(Texture *texture, const uint8_t *pixels, int stri
     return true;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

@@ -7,7 +7,7 @@
 #include "render/egl_context.h"
 #include "render/sync_fence.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class EglFence
 {
 public:
@@ -22,4 +22,4 @@ private:
     void *m_dupNativeFence = nullptr;
     void *m_waitSyncServer = nullptr;
 };
-} // namespace cutefish::render
+} // namespace properdesktop::render

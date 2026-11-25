@@ -19,7 +19,7 @@
 #include "render/egl_renderer.h"
 #include "base/geometry.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -59,9 +59,9 @@ render::DmaBufAttributes attributesFor(gbm_bo *bo, uint32_t format, uint64_t mod
 
 TEST(DmaBufFormatGbm, EveryAdvertisedFormatThatAllocatesImportsAndDraws)
 {
-    const char *devicePath = std::getenv("CUTEFISH_TEST_DRM_DEVICE");
+    const char *devicePath = std::getenv("PROPERDESKTOP_TEST_DRM_DEVICE");
     if (!devicePath || !*devicePath)
-        GTEST_SKIP() << "Set CUTEFISH_TEST_DRM_DEVICE to an accessible DRM device";
+        GTEST_SKIP() << "Set PROPERDESKTOP_TEST_DRM_DEVICE to an accessible DRM device";
     const int fd = open(devicePath, O_RDWR | O_CLOEXEC);
     ASSERT_GE(fd, 0);
 

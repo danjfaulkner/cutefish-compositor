@@ -12,8 +12,8 @@
 #include "base/geometry.h"
 #include "wm/overview/overview_layout.h"
 
-using namespace cutefish;
-using namespace cutefish::wm::overview;
+using namespace properdesktop;
+using namespace properdesktop::wm::overview;
 
 namespace {
 

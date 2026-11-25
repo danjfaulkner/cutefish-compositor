@@ -10,12 +10,12 @@
 
 #include "surface_association.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 class PrivilegedClients;
 class Server;
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 class XwaylandShell
 {
@@ -43,4 +43,4 @@ private:
     std::vector<std::unique_ptr<Role>> m_roles;
 };
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

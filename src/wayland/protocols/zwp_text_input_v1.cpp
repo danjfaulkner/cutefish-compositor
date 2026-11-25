@@ -18,7 +18,7 @@
 #include "wayland/protocols/wl_seat.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 // Consistent with X.h.
@@ -323,4 +323,4 @@ wl_global *createTextInputV1Global(wl_display *display, InputMethodRelay *relay)
                                         });
                             });
 }
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_SERVICE_OWNER_H_
-#define CUTEFISH_SHELL_COMMON_SERVICE_OWNER_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_SERVICE_OWNER_H_
+#define PROPERDESKTOP_SHELL_COMMON_SERVICE_OWNER_H_
 
 #include <functional>
 #include <string>
@@ -11,7 +11,7 @@
 
 #include "base/dbus.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // The session's services are not D-Bus activatable and start after the
 // compositor: `appeared` runs each time `name` gets an owner.
@@ -26,6 +26,6 @@ inline base::dbus::NameWatch followServiceOwner(base::dbus::Connection *bus, con
     });
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_SERVICE_OWNER_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_SERVICE_OWNER_H_

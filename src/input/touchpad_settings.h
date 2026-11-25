@@ -10,11 +10,11 @@
 #include "base/settings.h"
 #include "base/signal.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class DBusExport;
 
-// Exported as org.cutefish.Touchpad1.
+// Exported as org.properdesktop.Touchpad1.
 class TouchpadSettings
 {
 public:
@@ -97,4 +97,4 @@ private:
     std::unique_ptr<DBusExport> m_object;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

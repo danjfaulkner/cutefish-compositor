@@ -16,7 +16,7 @@
 #include "scene/wallpaper_node.h"
 #include "scene/window_animation.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 namespace {
 
@@ -1040,4 +1040,4 @@ void OverviewDeskBarNode::releaseRenderResources()
     Node::releaseRenderResources();
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

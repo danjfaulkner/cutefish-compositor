@@ -13,10 +13,10 @@
 #include <unistd.h>
 
 namespace {
-constexpr const char *kPasswordService = "cutefish-auth";
+constexpr const char *kPasswordService = "properdesktop-auth";
 // A stack of its own, holding nothing but pam_fprintd: verifying against
 // common-auth would put the reader's waiting in front of every password.
-constexpr const char *kFingerprintService = "cutefish-auth-fingerprint";
+constexpr const char *kFingerprintService = "properdesktop-auth-fingerprint";
 
 struct Credential {
     std::array<char, 4097> bytes {};

@@ -13,7 +13,7 @@
 #include "scene/scene.h"
 #include "shm_test_util.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

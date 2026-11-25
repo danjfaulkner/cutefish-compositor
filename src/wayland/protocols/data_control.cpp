@@ -16,7 +16,7 @@
 #include "wayland/server_util.h"
 #include "wlr-data-control-unstable-v1-server-protocol.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -318,4 +318,4 @@ void DataControlManager::shutdown()
     m_wlr = nullptr;
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

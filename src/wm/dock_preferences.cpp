@@ -12,7 +12,7 @@
 #include "wm/dock_layout_manager.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -57,4 +57,4 @@ void DockPreferences::reload()
     m_manager.setDockTransitionsAbovePanels(m_settings.boolValue("Dock/MinimizedArea", true));
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_WORK_AREA_H_
-#define CUTEFISH_WM_WORK_AREA_H_
+#ifndef PROPERDESKTOP_WM_WORK_AREA_H_
+#define PROPERDESKTOP_WM_WORK_AREA_H_
 
 #include <map>
 #include <string>
@@ -11,7 +11,7 @@
 #include "base/geometry.h"
 #include "wm/types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 // Keys are opaque tokens owned by the caller.
 class ExclusiveZones
@@ -41,6 +41,6 @@ private:
     std::map<const void*, Zone> m_zones;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WORK_AREA_H_
+#endif // PROPERDESKTOP_WM_WORK_AREA_H_

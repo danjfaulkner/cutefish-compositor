@@ -19,9 +19,9 @@
 #include "display/display_configuration_controller.h"
 #include "ipc/display_dbus_types.h"
 
-namespace cutefish::display::ipc {
+namespace properdesktop::display::ipc {
 
-// org.cutefish.DisplayConfig1 at /org/cutefish/DisplayConfig1.
+// org.properdesktop.DisplayConfig1 at /org/properdesktop/DisplayConfig1.
 class DisplayConfigService
 {
 public:
@@ -64,4 +64,4 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::display::ipc
+} // namespace properdesktop::display::ipc

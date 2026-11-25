@@ -14,7 +14,7 @@
 #include "clipboard/selection.h"
 #include "clipboard/stored_source.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static const char kPngType[] = "image/png";
 
@@ -75,4 +75,4 @@ bool CaptureClipboard::setImage(const ui::Bitmap &image)
     return true;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -7,7 +7,7 @@
 #include "base/hash.h"
 #include "base/strings.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 namespace {
 
@@ -73,4 +73,4 @@ EdidInfo parseEdid(std::string_view edid)
     return info;
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

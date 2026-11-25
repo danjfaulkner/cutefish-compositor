@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// A Cutefish stand-in for chromium/src/components/exo/wayland/test/
+// A Proper Desktop stand-in for chromium/src/components/exo/wayland/test/
 // wayland_server_test_base.*: a real libwayland client on its own thread,
 // driven by a Server running on the event loop of the main thread.
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
@@ -22,7 +22,7 @@
 #include <string>
 #include <thread>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 // Runs the client on its own thread; the server dispatches on the main thread.
@@ -119,8 +119,8 @@ TEST_F(WaylandServerTest, AddSocketAutoPicksAName)
 
 TEST_F(WaylandServerTest, AddSocketHonoursAnExplicitName)
 {
-    ASSERT_TRUE(m_server->addSocket("cutefish-test-0"));
-    EXPECT_EQ("cutefish-test-0", m_server->socketName());
+    ASSERT_TRUE(m_server->addSocket("properdesktop-test-0"));
+    EXPECT_EQ("properdesktop-test-0", m_server->socketName());
 }
 
 TEST_F(WaylandServerTest, EventLoopFdIsExposedOnlyWithADisplay)
@@ -253,12 +253,12 @@ TEST_F(WaylandServerTest, FlushDoesNotCrashDuringClientDisconnect)
 }
 
 } // namespace
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
 TEST(ClientRect, EdgesStayWithinRangeAndNegativeSizesAreEmpty)
 {
-    using cutefish::base::Rect;
-    using cutefish::wayland::clientRect;
+    using properdesktop::base::Rect;
+    using properdesktop::wayland::clientRect;
     EXPECT_EQ(clientRect(10, 20, 30, 40), Rect(10, 20, 30, 40));
     EXPECT_EQ(clientRect(-5, -6, 10, 12), Rect(-5, -6, 10, 12));
     EXPECT_TRUE(clientRect(10, 20, -30, 40).isEmpty());

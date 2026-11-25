@@ -11,15 +11,15 @@
 #include <string>
 #include <vector>
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class InputManager;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowManager;
 }
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 class WindowDebugService
 {
@@ -76,4 +76,4 @@ private:
     bool m_registered = false;
 };
 
-} // namespace cutefish::session
+} // namespace properdesktop::session

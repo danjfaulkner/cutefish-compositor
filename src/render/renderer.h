@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_RENDER_RENDERER_H_
-#define CUTEFISH_RENDER_RENDERER_H_
+#ifndef PROPERDESKTOP_RENDER_RENDERER_H_
+#define PROPERDESKTOP_RENDER_RENDERER_H_
 
 #include <algorithm>
 #include <cmath>
@@ -29,7 +29,7 @@
 #include "ui/bitmap.h"
 #include "ui/path.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 struct Color {
     float r = 0.0f;
@@ -432,6 +432,6 @@ private:
     uint64_t m_saved;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-#endif // CUTEFISH_RENDER_RENDERER_H_
+#endif // PROPERDESKTOP_RENDER_RENDERER_H_

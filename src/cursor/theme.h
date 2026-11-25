@@ -12,7 +12,7 @@
 #include "input/cursor_shape.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::cursor {
+namespace properdesktop::cursor {
 
 struct Frame {
     // Argb32Premultiplied.
@@ -35,4 +35,4 @@ void setThemePathsForTesting(std::vector<std::string> paths);
 bool validThemeName(std::string_view theme);
 int defaultSize();
 
-} // namespace cutefish::cursor
+} // namespace properdesktop::cursor

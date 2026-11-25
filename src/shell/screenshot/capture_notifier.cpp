@@ -13,9 +13,9 @@
 #include "base/process.h"
 #include "base/url.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
@@ -140,7 +140,7 @@ void CaptureNotifier::notify(const std::string &summary, const std::string &body
         return;
     dbus::VariantMap hints;
     hints["urgency"] = dbus::Variant(uint8_t(1));
-    hints["desktop-entry"] = dbus::Variant(std::string("cutefish-screenshot"));
+    hints["desktop-entry"] = dbus::Variant(std::string("properdesktop-screenshot"));
     if (!image.empty())
         hints["image-path"] = dbus::Variant(image);
     if (!thumbnail.isNull()) {
@@ -202,4 +202,4 @@ void CaptureNotifier::actionInvoked(uint32_t id, const std::string &action)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -5,16 +5,16 @@
 // Upstream: chromium/src/ash/wm/desks/desk.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 //
-// Adapted for Cutefish: a desk owns no container; Window::setDeskHidden hides its windows.
+// Adapted for Proper Desktop: a desk owns no container; Window::setDeskHidden hides its windows.
 
-#ifndef CUTEFISH_WM_DESKS_DESK_H_
-#define CUTEFISH_WM_DESKS_DESK_H_
+#ifndef PROPERDESKTOP_WM_DESKS_DESK_H_
+#define PROPERDESKTOP_WM_DESKS_DESK_H_
 
 #include <cstdint>
 #include <string>
 #include <vector>
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class DesksController;
 class Window;
@@ -71,6 +71,6 @@ private:
     bool m_fullscreenDesk = false;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_DESKS_DESK_H_
+#endif // PROPERDESKTOP_WM_DESKS_DESK_H_

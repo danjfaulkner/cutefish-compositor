@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_INPUT_SHORTCUTS_INHIBITION_H_
-#define CUTEFISH_INPUT_SHORTCUTS_INHIBITION_H_
+#ifndef PROPERDESKTOP_INPUT_SHORTCUTS_INHIBITION_H_
+#define PROPERDESKTOP_INPUT_SHORTCUTS_INHIBITION_H_
 
 #include <map>
 
 #include "compositor/surface_observer.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class Seat;
 
@@ -58,6 +58,6 @@ private:
     bool m_permitted = true;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_SHORTCUTS_INHIBITION_H_
+#endif // PROPERDESKTOP_INPUT_SHORTCUTS_INHIBITION_H_

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOL_GLOBALS_H_
-#define CUTEFISH_WAYLAND_PROTOCOL_GLOBALS_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOL_GLOBALS_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOL_GLOBALS_H_
 
 #include <memory>
 #include <string>
@@ -12,7 +12,7 @@
 
 #include "base/signal.h"
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace compositor {
 class Compositor;
@@ -50,7 +50,7 @@ class SecurityDelegate;
 class Server;
 class WaylandComputerControl;
 class WaylandWindowPlacement;
-class WaylandCutefishShell;
+class WaylandProperDesktopShell;
 class WaylandXdgActivation;
 class WaylandXdgShell;
 struct WaylandSeat;
@@ -144,10 +144,10 @@ private:
     std::unique_ptr<ForeignToplevelList> m_toplevelList;
     std::unique_ptr<WaylandComputerControl> m_computerControl;
     std::unique_ptr<WaylandWindowPlacement> m_windowPlacement;
-    std::unique_ptr<WaylandCutefishShell> m_cutefishShell;
+    std::unique_ptr<WaylandProperDesktopShell> m_properdesktopShell;
 };
 
 } // namespace wayland
-} // namespace cutefish
+} // namespace properdesktop
 
-#endif // CUTEFISH_WAYLAND_PROTOCOL_GLOBALS_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOL_GLOBALS_H_

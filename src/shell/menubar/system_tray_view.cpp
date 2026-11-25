@@ -19,12 +19,12 @@
 #include "ui/painter.h"
 #include "ui/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr std::chrono::milliseconds kMenuWait {250};
 static constexpr double kMenuGap = 6;
 static constexpr double kDragThreshold = 10;
-static constexpr char kTrayItemMimeType[] = "application/x-cutefish-tray-item";
+static constexpr char kTrayItemMimeType[] = "application/x-properdesktop-tray-item";
 
 static constexpr int kMonochromeSlack = 8;
 
@@ -582,4 +582,4 @@ void TrayItemView::paint(ui::Painter &painter)
     painter.drawImage(m_monochrome && !m_tinted.isNull() ? m_tinted : m_image, rect);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

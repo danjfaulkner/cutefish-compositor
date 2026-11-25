@@ -8,7 +8,7 @@
 #include "base/logging.h"
 #include <algorithm>
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 namespace {
 
@@ -183,4 +183,4 @@ void ScreenSaverService::onSessionStateChanged(SessionState state)
             request.reply();
     }
 }
-} // namespace cutefish::session
+} // namespace properdesktop::session

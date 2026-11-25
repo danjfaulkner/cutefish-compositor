@@ -5,11 +5,11 @@
 #include "shell/menubar/wireless_status.h"
 
 #include "base/dbus.h"
-#include "cutefish/networkmanager/client.h"
-#include "cutefish/networkmanager/handler.h"
-#include "cutefish/networkmanager/wifi_utils.h"
+#include "properdesktop/networkmanager/client.h"
+#include "properdesktop/networkmanager/handler.h"
+#include "properdesktop/networkmanager/wifi_utils.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 namespace nm = networkmanager;
@@ -94,4 +94,4 @@ void WirelessStatus::updateActiveConnection()
     m_wirelessIcon = icon;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

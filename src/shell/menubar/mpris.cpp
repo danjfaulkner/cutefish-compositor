@@ -8,7 +8,7 @@
 
 #include "base/strings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
@@ -335,4 +335,4 @@ void MprisManager::show(std::shared_ptr<MprisPlayer> player)
     currentChanged();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

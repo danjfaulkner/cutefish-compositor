@@ -10,7 +10,7 @@
 #include "shell/common/task_manager.h"
 #include "shell/menubar/dbus_menu.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
@@ -267,4 +267,4 @@ void StatusNotifierItem::requestContextMenu(int x, int y)
     m_proxy.send("ContextMenu", int32_t(x), int32_t(y));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

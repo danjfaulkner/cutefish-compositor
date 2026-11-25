@@ -6,7 +6,7 @@
 
 #include "backend/drm/drm_selection.h"
 
-using namespace cutefish::backend;
+using namespace properdesktop::backend;
 
 namespace {
 

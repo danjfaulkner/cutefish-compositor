@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <numbers>
 
-namespace cutefish::scene::motion {
+namespace properdesktop::scene::motion {
 
 namespace {
 
@@ -209,4 +209,4 @@ Spring settlingSpring(double time, double from, double target, double velocity, 
     return spring;
 }
 
-} // namespace cutefish::scene::motion
+} // namespace properdesktop::scene::motion

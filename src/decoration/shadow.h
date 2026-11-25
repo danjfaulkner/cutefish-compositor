@@ -7,8 +7,8 @@
 //           chromium/src/ui/compositor_extra/{shadow,decoration_util}.cc
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_DECORATION_SHADOW_H_
-#define CUTEFISH_DECORATION_SHADOW_H_
+#ifndef PROPERDESKTOP_DECORATION_SHADOW_H_
+#define PROPERDESKTOP_DECORATION_SHADOW_H_
 
 #include <array>
 #include <memory>
@@ -18,7 +18,7 @@
 #include "decoration/raster.h"
 #include "ui/path.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 struct ShadowLayer {
     float sigma = 0; // Gaussian standard deviation, logical px.
@@ -78,6 +78,6 @@ void paintShadow(render::Renderer &renderer, const ShadowGeometry &geometry,
 void paintStretchedShadow(render::Renderer &renderer, const ShadowGeometry &geometry,
                           const base::Rect &window, float opacity = 1);
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-#endif // CUTEFISH_DECORATION_SHADOW_H_
+#endif // PROPERDESKTOP_DECORATION_SHADOW_H_

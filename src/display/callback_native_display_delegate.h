@@ -11,7 +11,7 @@
 
 #include "display/native_display_delegate.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class CallbackNativeDisplayDelegate : public NativeDisplayDelegate
 {
@@ -42,4 +42,4 @@ private:
     PowerHandler m_power;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

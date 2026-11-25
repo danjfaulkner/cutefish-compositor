@@ -4,7 +4,7 @@
 
 #include "wm/window_snap.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -107,4 +107,4 @@ const char *toString(SnapType type)
     return "unknown";
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

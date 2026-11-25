@@ -22,7 +22,7 @@
 #include "base/region.h"
 #include "base/transform.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 namespace {
 
@@ -1145,4 +1145,4 @@ void WindowAnimation::render(render::Renderer &renderer) const
     }
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

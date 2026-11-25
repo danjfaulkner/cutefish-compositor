@@ -17,7 +17,7 @@
 #include "toolkit/toolkit_host.h"
 #include "ui/application.h"
 
-namespace cutefish {
+namespace properdesktop {
 namespace {
 
 using namespace std::chrono_literals;
@@ -88,4 +88,4 @@ TEST(MainLoopTest, RunForReturnsAfterItsTime)
 }
 
 } // namespace
-} // namespace cutefish
+} // namespace properdesktop

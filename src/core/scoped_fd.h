@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_SCOPED_FD_H_
-#define CUTEFISH_CORE_SCOPED_FD_H_
+#ifndef PROPERDESKTOP_CORE_SCOPED_FD_H_
+#define PROPERDESKTOP_CORE_SCOPED_FD_H_
 
 #include <unistd.h>
 
 #include <utility>
 
-namespace cutefish {
+namespace properdesktop {
 
 class ScopedFd
 {
@@ -55,6 +55,6 @@ private:
     int m_fd = -1;
 };
 
-} // namespace cutefish
+} // namespace properdesktop
 
-#endif // CUTEFISH_CORE_SCOPED_FD_H_
+#endif // PROPERDESKTOP_CORE_SCOPED_FD_H_

@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_OSD_LEVEL_TRACK_H_
-#define CUTEFISH_SHELL_OSD_LEVEL_TRACK_H_
+#ifndef PROPERDESKTOP_SHELL_OSD_LEVEL_TRACK_H_
+#define PROPERDESKTOP_SHELL_OSD_LEVEL_TRACK_H_
 
 #include <memory>
 #include <string>
 
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Animation;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class LevelTrack : public ui::View
 {
@@ -50,6 +50,6 @@ private:
     std::unique_ptr<ui::Animation> m_animation;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_OSD_LEVEL_TRACK_H_
+#endif // PROPERDESKTOP_SHELL_OSD_LEVEL_TRACK_H_

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_VIEW_H_
-#define CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_VIEW_H_
+#ifndef PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_VIEW_H_
+#define PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_VIEW_H_
 
 #include <chrono>
 #include <map>
@@ -19,12 +19,12 @@
 #include "ui/scroller.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Label;
 class Menu;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ApplicationBadges;
 class Launchpad;
@@ -38,7 +38,7 @@ class LaunchpadView final : public ui::View, private ui::Scroller::Target
 {
 public:
     // Carries the desktop id as UTF-8.
-    static constexpr const char *kDesktopIdMimeType = "application/x-cutefish-desktop-id";
+    static constexpr const char *kDesktopIdMimeType = "application/x-properdesktop-desktop-id";
 
     LaunchpadView(Launchpad &launchpad, LaunchpadWallpaper &wallpaper, ApplicationBadges &badges);
     ~LaunchpadView() override;
@@ -211,6 +211,6 @@ private:
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_VIEW_H_
+#endif // PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_VIEW_H_

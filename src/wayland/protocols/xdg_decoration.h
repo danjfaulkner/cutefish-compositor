@@ -6,19 +6,19 @@
 //           (WaylandXdgToplevelDecoration and the manager request table)
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_XDG_DECORATION_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_XDG_DECORATION_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_DECORATION_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_DECORATION_H_
 
 #include <wayland-server-core.h>
 
 #include <cstdint>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 constexpr uint32_t kZxdgDecorationManagerVersion = 1;
 
 wl_global* createXdgDecorationGlobal(wl_display* display);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_XDG_DECORATION_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_DECORATION_H_

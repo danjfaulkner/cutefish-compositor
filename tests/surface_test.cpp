@@ -19,9 +19,9 @@
 #include "scene/surface_node.h"
 #include "shm_test_util.h"
 
-using namespace cutefish;
-using namespace cutefish::compositor;
-using cutefish::testsupport::makePool;
+using namespace properdesktop;
+using namespace properdesktop::compositor;
+using properdesktop::testsupport::makePool;
 
 namespace {
 
@@ -55,7 +55,7 @@ protected:
     Compositor m_compositor {m_scene.root()};
     std::unique_ptr<Surface> m_surface;
     std::shared_ptr<ShmPool> m_pool = makePool(4 * 1024 * 1024);
-    cutefish::testsupport::FakeRenderer m_renderer;
+    properdesktop::testsupport::FakeRenderer m_renderer;
     int32_t m_offset = 0;
 };
 

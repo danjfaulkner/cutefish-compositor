@@ -12,7 +12,7 @@
 #include <optional>
 #include <vector>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 struct DrmRouteCandidate {
     uint32_t connectorId = 0;
@@ -41,4 +41,4 @@ public:
            int alternative = 0);
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

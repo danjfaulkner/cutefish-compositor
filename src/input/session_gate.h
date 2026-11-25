@@ -7,18 +7,18 @@
 // chromium/src/ash/wm/window_util.cc (GetBlockingContainersForRoot).
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_SESSION_GATE_H_
-#define CUTEFISH_INPUT_SESSION_GATE_H_
+#ifndef PROPERDESKTOP_INPUT_SESSION_GATE_H_
+#define PROPERDESKTOP_INPUT_SESSION_GATE_H_
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class EventSink;
 
@@ -40,6 +40,6 @@ public:
     virtual bool allowsActivation() const = 0;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_SESSION_GATE_H_
+#endif // PROPERDESKTOP_INPUT_SESSION_GATE_H_

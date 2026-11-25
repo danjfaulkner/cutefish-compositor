@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <vector>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 class ClientTrackerTest : public testing::Test
@@ -126,4 +126,4 @@ TEST_F(ClientTrackerTest, TrackerOutlivedByItsClients)
 }
 
 } // namespace
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

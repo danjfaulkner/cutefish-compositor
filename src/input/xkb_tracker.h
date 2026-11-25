@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/xkb_tracker.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_XKB_TRACKER_H_
-#define CUTEFISH_INPUT_XKB_TRACKER_H_
+#ifndef PROPERDESKTOP_INPUT_XKB_TRACKER_H_
+#define PROPERDESKTOP_INPUT_XKB_TRACKER_H_
 
 #include <memory>
 #include <optional>
@@ -17,7 +17,7 @@
 
 #include "input/types.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 // The evdev key that types a keysym, with the modifier keys to hold for it.
 struct KeyStroke {
@@ -94,6 +94,6 @@ private:
     std::string m_layoutName;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_XKB_TRACKER_H_
+#endif // PROPERDESKTOP_INPUT_XKB_TRACKER_H_

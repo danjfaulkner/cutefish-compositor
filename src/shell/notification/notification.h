@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_H_
 
 #include <cstdint>
 #include <optional>
@@ -12,7 +12,7 @@
 
 #include "base/json.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 struct Notification {
     uint32_t id = 0;
@@ -49,6 +49,6 @@ struct Notification {
     static Notification fromJson(const base::json::Value &value);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_H_

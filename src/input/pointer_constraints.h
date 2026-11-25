@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/pointer.h (pointer constraints)
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_POINTER_CONSTRAINTS_H_
-#define CUTEFISH_INPUT_POINTER_CONSTRAINTS_H_
+#ifndef PROPERDESKTOP_INPUT_POINTER_CONSTRAINTS_H_
+#define PROPERDESKTOP_INPUT_POINTER_CONSTRAINTS_H_
 
 #include <functional>
 #include <map>
@@ -17,7 +17,7 @@
 #include "base/geometry.h"
 #include "base/region.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class PointerConstraintDelegate;
 class Seat;
@@ -74,6 +74,6 @@ private:
     bool m_capturePermitted = true;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_POINTER_CONSTRAINTS_H_
+#endif // PROPERDESKTOP_INPUT_POINTER_CONSTRAINTS_H_

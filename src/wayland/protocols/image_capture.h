@@ -16,23 +16,23 @@ struct wl_display;
 struct wl_global;
 struct wl_resource;
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class CaptureSource;
 }
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class Renderer;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Bitmap;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class ImageCaptureManager
 {
@@ -110,4 +110,4 @@ private:
     wl_global *m_copyGlobal = nullptr;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -11,7 +11,7 @@
 #include "shell/shell_window.h"
 #include "ui/embedded_window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -124,4 +124,4 @@ void ShellTextInput::focusChanged(compositor::Surface *, compositor::Surface *)
     m_state = {};
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/wayland/server_util.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_SERVER_UTIL_H_
-#define CUTEFISH_WAYLAND_SERVER_UTIL_H_
+#ifndef PROPERDESKTOP_WAYLAND_SERVER_UTIL_H_
+#define PROPERDESKTOP_WAYLAND_SERVER_UTIL_H_
 
 #include <wayland-server-core.h>
 
@@ -16,11 +16,11 @@
 
 #include "base/geometry.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 // Registered when the wl_surface is created and cleared when the resource dies.
 compositor::Surface* surfaceFromResource(wl_resource* resource);
@@ -80,6 +80,6 @@ base::Point clientToLogical(const base::Point& point, double scale);
 // Logical surface coordinates in a scaled client's units.
 base::PointF logicalToClient(const base::PointF& point, double scale);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_SERVER_UTIL_H_
+#endif // PROPERDESKTOP_WAYLAND_SERVER_UTIL_H_

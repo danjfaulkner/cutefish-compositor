@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/wayland/wayland_dmabuf_feedback_manager.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_DMABUF_FEEDBACK_MANAGER_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_DMABUF_FEEDBACK_MANAGER_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_DMABUF_FEEDBACK_MANAGER_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_DMABUF_FEEDBACK_MANAGER_H_
 
 #include <sys/types.h>
 
@@ -24,16 +24,16 @@
 struct wl_client;
 struct wl_resource;
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Compositor;
 class Surface;
 }
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class DmaBufDevice;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class DmaBufFeedback;
 class DmaBufFeedbackTranche;
@@ -113,6 +113,6 @@ private:
     std::map<compositor::Surface*, std::unique_ptr<DmaBufSurfaceFeedback>> m_surfaceFeedbacks;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_DMABUF_FEEDBACK_MANAGER_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_DMABUF_FEEDBACK_MANAGER_H_

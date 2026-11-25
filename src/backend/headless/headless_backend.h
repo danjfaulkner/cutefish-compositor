@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_HEADLESS_BACKEND_H_
-#define CUTEFISH_BACKEND_HEADLESS_BACKEND_H_
+#ifndef PROPERDESKTOP_BACKEND_HEADLESS_BACKEND_H_
+#define PROPERDESKTOP_BACKEND_HEADLESS_BACKEND_H_
 
 #include <memory>
 #include <vector>
@@ -12,7 +12,7 @@
 #include "base/signal.h"
 #include "base/timer.h"
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace compositor {
 class Compositor;
@@ -48,6 +48,6 @@ private:
 };
 
 } // namespace backend
-} // namespace cutefish
+} // namespace properdesktop
 
-#endif // CUTEFISH_BACKEND_HEADLESS_BACKEND_H_
+#endif // PROPERDESKTOP_BACKEND_HEADLESS_BACKEND_H_

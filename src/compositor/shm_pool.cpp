@@ -21,7 +21,7 @@
 #include "compositor/buffer.h"
 #include "core/logging.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 namespace {
 
@@ -200,9 +200,9 @@ void ShmPool::handleSigbus(int, siginfo_t *info, void *)
     pool->m_faulted = 1;
 }
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 // The client may have truncated the file since create_pool.
 bool ShmPool::fileCovers(size_t offset, size_t length) const
@@ -271,4 +271,4 @@ bool ShmPool::writeRows(size_t offset, size_t stride, size_t rows, size_t rowByt
     return true;
 }
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

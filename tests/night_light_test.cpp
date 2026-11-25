@@ -8,7 +8,7 @@
 
 #include "display/night_light.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using namespace std::chrono_literals;
 
 namespace {

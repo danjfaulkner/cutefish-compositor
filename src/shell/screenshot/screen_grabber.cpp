@@ -16,7 +16,7 @@
 #include "wayland/protocols/foreign_toplevel_list.h"
 #include "wayland/protocols/image_capture.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr int kAttempts = 3;
 static constexpr std::chrono::milliseconds kRetryDelay {50};
@@ -204,4 +204,4 @@ std::unique_ptr<ScreenGrabber> createScreenGrabber(wayland::ImageCaptureManager 
     return std::make_unique<CompositorScreenGrabber>(capture, windows);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

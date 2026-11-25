@@ -16,7 +16,7 @@
 #include "scene/window_animation.h"
 #include "base/geometry.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using Node = scene::OverviewNode;
 using Track = scene::motion::FingerTrack;
 

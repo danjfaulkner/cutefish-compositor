@@ -21,10 +21,10 @@
 #include "ui/theme.h"
 #include "ui/window.h"
 
-using cutefish::i18n::tr;
-using cutefish::i18n::trNoop;
+using properdesktop::i18n::tr;
+using properdesktop::i18n::trNoop;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 using namespace status_panel;
 
@@ -1103,4 +1103,4 @@ void BatteryPanel::layoutBody(double top)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -7,7 +7,7 @@
 #include <future>
 #include <memory>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 base::ThreadPool &fileThread()
 {
@@ -32,4 +32,4 @@ void writeSettings(const std::string &path, std::function<void(base::Settings &s
     });
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

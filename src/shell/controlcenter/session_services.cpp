@@ -13,34 +13,34 @@
 #include "base/logging.h"
 #include "base/thread_pool.h"
 #include "base/timer.h"
-#include "cutefish/audio/audio_model.h"
-#include "cutefish/audio/backend.h"
-#include "cutefish/bluez/devices_model.h"
-#include "cutefish/bluez/manager.h"
-#include "cutefish/networkmanager/client.h"
-#include "cutefish/networkmanager/handler.h"
-#include "cutefish/networkmanager/hotspot.h"
-#include "cutefish/networkmanager/network_model.h"
-#include "cutefish/powerprofiles/power_profiles.h"
-#include "cutefish/upower/battery_status.h"
+#include "properdesktop/audio/audio_model.h"
+#include "properdesktop/audio/backend.h"
+#include "properdesktop/bluez/devices_model.h"
+#include "properdesktop/bluez/manager.h"
+#include "properdesktop/networkmanager/client.h"
+#include "properdesktop/networkmanager/handler.h"
+#include "properdesktop/networkmanager/hotspot.h"
+#include "properdesktop/networkmanager/network_model.h"
+#include "properdesktop/powerprofiles/power_profiles.h"
+#include "properdesktop/upower/battery_status.h"
 #include "shell/common/pending_calls.h"
 #include "shell/notification/notification_settings.h"
 #include "shell/shell.h"
 #include "shell/menubar/menu_bar.h"
 #include "shell/menubar/wireless_status.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 namespace nm = networkmanager;
 
-static const base::LogCategory cfControlCenter("cutefish.shell.controlcenter");
+static const base::LogCategory cfControlCenter("properdesktop.shell.controlcenter");
 
-static const char kPrivacyService[] = "org.cutefish.Privacy";
-static const char kPrivacyPath[] = "/org/cutefish/Privacy";
-static const char kPrivacyInterface[] = "org.cutefish.Privacy";
+static const char kPrivacyService[] = "org.properdesktop.Privacy";
+static const char kPrivacyPath[] = "/org/properdesktop/Privacy";
+static const char kPrivacyInterface[] = "org.properdesktop.Privacy";
 // Read directly so that showing the switches starts no root process.
-static const char kPrivacyState[] = "/var/lib/cutefish-privacy/";
+static const char kPrivacyState[] = "/var/lib/properdesktop-privacy/";
 
 struct PendingJoin {
     std::string accessPoint;
@@ -62,8 +62,8 @@ public:
         , m_bluetooth(bluez::Manager::shared())
         , m_pairedDevices(std::make_unique<bluez::DevicesModel>(m_bluetooth))
         , m_audio(std::make_unique<audio::AudioModel>(audio::AudioObject::Sink, audio::Backend::shared()))
-        , m_appearance(shell->bus(), "org.cutefish.Services", "/org/cutefish/Services/Appearance",
-                       "org.cutefish.Services.Appearance")
+        , m_appearance(shell->bus(), "org.properdesktop.Services", "/org/properdesktop/Services/Appearance",
+                       "org.properdesktop.Services.Appearance")
         , m_privacy(dbus::Connection::system(), kPrivacyService, kPrivacyPath, kPrivacyInterface)
     {
         const auto notify = [this] { scheduleChanged(); };
@@ -501,4 +501,4 @@ std::unique_ptr<ControlCenterServices> createSessionServices(Shell *shell, MenuB
     return std::make_unique<SessionServices>(shell, menuBar, notifications);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

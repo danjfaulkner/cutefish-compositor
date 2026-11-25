@@ -10,7 +10,7 @@
 #include "shell/shell_window.h"
 #include "toolkit/toolkit_host.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 WindowRenderer::WindowRenderer(compositor::Compositor *compositor)
     : m_compositor(compositor)
@@ -82,4 +82,4 @@ void WindowRenderer::produceContent(render::Renderer &renderer)
     ++m_passCount;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

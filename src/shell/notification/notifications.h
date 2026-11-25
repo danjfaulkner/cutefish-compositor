@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATIONS_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATIONS_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATIONS_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATIONS_H_
 
 #include <memory>
 #include <string>
@@ -14,13 +14,13 @@
 #include "shell/notification/notification_server.h"
 #include "shell/notification/notification_settings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ApplicationLauncher;
 class Applications;
 class TaskManager;
 
-// Exports org.cutefish.Notification at /Notification, which Settings and the
+// Exports org.properdesktop.Notification at /Notification, which Settings and the
 // session call.
 class Notifications
 {
@@ -42,7 +42,7 @@ public:
     Notifications(const Notifications &) = delete;
     Notifications &operator=(const Notifications &) = delete;
 
-    // org.freedesktop.Notifications, then org.cutefish.Notification.
+    // org.freedesktop.Notifications, then org.properdesktop.Notification.
     bool registerServices();
 
     NotificationSettings &settings() { return m_settings; }
@@ -59,6 +59,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATIONS_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATIONS_H_

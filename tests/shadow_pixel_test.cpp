@@ -35,8 +35,8 @@
 
 #include "egl_test_util.h"
 
-using namespace cutefish;
-using namespace cutefish::decoration;
+using namespace properdesktop;
+using namespace properdesktop::decoration;
 
 namespace {
 
@@ -383,7 +383,7 @@ TEST_F(ShadowPixelTest, ActiveInactiveAndTransientOverlapUseWindowStacking)
     }
     scene.render(*renderer);
     image = pixels();
-    const char *artifact = std::getenv("CUTEFISH_SHADOW_TEST_IMAGE");
+    const char *artifact = std::getenv("PROPERDESKTOP_SHADOW_TEST_IMAGE");
     if (artifact && *artifact) {
         const ui::Bitmap bottomUp = ui::Bitmap::copyOf(image.data(), width, height, width * 4,
                                                        ui::Bitmap::Format::Rgba8888Premultiplied);

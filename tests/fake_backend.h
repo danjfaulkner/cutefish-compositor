@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TESTS_FAKE_BACKEND_H
-#define CUTEFISH_TESTS_FAKE_BACKEND_H
+#ifndef PROPERDESKTOP_TESTS_FAKE_BACKEND_H
+#define PROPERDESKTOP_TESTS_FAKE_BACKEND_H
 
 #include "auth/auth_backend.h"
 
 #include <string>
 
-class FakeBackend : public cutefish::auth::AuthBackend
+class FakeBackend : public properdesktop::auth::AuthBackend
 {
 
 public:
@@ -17,7 +17,7 @@ public:
 
     void start() override { ++startCount; }
 
-    void authenticate(const std::string &userName, cutefish::auth::Secret secret) override
+    void authenticate(const std::string &userName, properdesktop::auth::Secret secret) override
     {
         lastUser = userName;
         lastSecret = std::string(secret.constData(), secret.size());
@@ -28,7 +28,7 @@ public:
 
     void accept() override { ++acceptCount; }
 
-    void setSession(const cutefish::auth::LoginSession &session) override { lastSession = session.id; }
+    void setSession(const properdesktop::auth::LoginSession &session) override { lastSession = session.id; }
 
     bool fingerprintAvailable(const std::string &) const override { return hasReader; }
 
@@ -91,4 +91,4 @@ public:
     std::string lastSession;
 };
 
-#endif // CUTEFISH_TESTS_FAKE_BACKEND_H
+#endif // PROPERDESKTOP_TESTS_FAKE_BACKEND_H

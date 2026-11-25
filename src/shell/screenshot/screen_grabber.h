@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SCREENSHOT_SCREEN_GRABBER_H_
-#define CUTEFISH_SHELL_SCREENSHOT_SCREEN_GRABBER_H_
+#ifndef PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_GRABBER_H_
+#define PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_GRABBER_H_
 
 #include <cstdint>
 #include <functional>
@@ -13,20 +13,20 @@
 
 #include "ui/bitmap.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 class ForeignToplevelList;
 class ImageCaptureManager;
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class CaptureSource;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ScreenGrabber
 {
@@ -55,6 +55,6 @@ std::unique_ptr<ScreenGrabber> createScreenGrabber(wayland::ImageCaptureManager 
 // From its buffer orientation and its wl_output transform.
 ui::Bitmap uprightImage(const ui::Bitmap &image, uint32_t transform);
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SCREENSHOT_SCREEN_GRABBER_H_
+#endif // PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_GRABBER_H_

@@ -5,14 +5,14 @@
 // Upstream: chromium/src/components/exo/seat_observer.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_SEAT_OBSERVER_H_
-#define CUTEFISH_INPUT_SEAT_OBSERVER_H_
+#ifndef PROPERDESKTOP_INPUT_SEAT_OBSERVER_H_
+#define PROPERDESKTOP_INPUT_SEAT_OBSERVER_H_
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class SeatObserver
 {
@@ -36,6 +36,6 @@ public:
     virtual void onKeyRepeatSettingsChanged() {}
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_SEAT_OBSERVER_H_
+#endif // PROPERDESKTOP_INPUT_SEAT_OBSERVER_H_

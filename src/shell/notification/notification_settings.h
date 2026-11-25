@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_SETTINGS_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_SETTINGS_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_SETTINGS_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_SETTINGS_H_
 
 #include <map>
 #include <string>
@@ -12,7 +12,7 @@
 #include "base/signal.h"
 #include "base/thread_pool.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class Applications;
 
@@ -73,6 +73,6 @@ private:
     base::Subscription m_applicationsChanged;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_SETTINGS_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_SETTINGS_H_

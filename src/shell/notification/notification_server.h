@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_SERVER_H_
-#define CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_SERVER_H_
+#ifndef PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_SERVER_H_
+#define PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_SERVER_H_
 
 #include <deque>
 #include <map>
@@ -19,7 +19,7 @@
 #include "shell/notification/notification.h"
 #include "shell/notification/notification_images.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ApplicationLauncher;
 class NotificationSettings;
@@ -39,8 +39,8 @@ public:
 
     // Sent back to a sender's application started for an action, as
     // "<scheme>:<id>?action=<key>", both percent-encoded.
-    static constexpr const char *kRelaunchHint = "x-cutefish-relaunch-id";
-    static constexpr const char *kRelaunchScheme = "cutefish-notification";
+    static constexpr const char *kRelaunchHint = "x-properdesktop-relaunch-id";
+    static constexpr const char *kRelaunchScheme = "properdesktop-notification";
 
     // `tasks` and `launcher` may be null.
     NotificationServer(base::dbus::Connection *bus, NotificationSettings &settings, Applications &applications,
@@ -111,6 +111,6 @@ private:
     base::Subscription m_settingsReady;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_NOTIFICATION_NOTIFICATION_SERVER_H_
+#endif // PROPERDESKTOP_SHELL_NOTIFICATION_NOTIFICATION_SERVER_H_

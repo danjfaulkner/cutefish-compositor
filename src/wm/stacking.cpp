@@ -6,7 +6,7 @@
 
 #include "wm/window.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 StackingLayer layerFor(WindowRole role, PanelBehavior behavior)
 {
@@ -64,4 +64,4 @@ StackingLayer layerFor(const Window *window)
     return layerFor(window->role(), window->panelBehavior());
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

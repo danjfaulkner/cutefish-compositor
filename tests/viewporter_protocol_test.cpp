@@ -23,7 +23,7 @@
 #include "wayland/protocols/wl_subcompositor.h"
 #include "wayland/protocols/wp_viewporter.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

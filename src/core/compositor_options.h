@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_COMPOSITOR_OPTIONS_H_
-#define CUTEFISH_CORE_COMPOSITOR_OPTIONS_H_
+#ifndef PROPERDESKTOP_CORE_COMPOSITOR_OPTIONS_H_
+#define PROPERDESKTOP_CORE_COMPOSITOR_OPTIONS_H_
 
 #include <optional>
 #include <string>
@@ -11,7 +11,7 @@
 
 #include "compositor/output_scale.h"
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 struct CompositorOptions {
     // Empty after reporting a validation failure; exits for --help, --version and unknown options.
@@ -39,7 +39,7 @@ struct CompositorOptions {
     bool xwayland = true;
     bool xwaylandSoftware = false;
     std::string xwaylandReadyFile;
-    // base::logging rules, e.g. "cutefish.compositor.debug=true".
+    // base::logging rules, e.g. "properdesktop.compositor.debug=true".
     std::string logRules;
 
     bool demoEnabled() const { return wmDemo || wmDemoScript; }
@@ -48,6 +48,6 @@ struct CompositorOptions {
 // The screenshot tool and the recorder are not among them: anyone could run them.
 std::vector<std::string> captureExecutables(const CompositorOptions &options);
 
-} // namespace cutefish::core
+} // namespace properdesktop::core
 
-#endif // CUTEFISH_CORE_COMPOSITOR_OPTIONS_H_
+#endif // PROPERDESKTOP_CORE_COMPOSITOR_OPTIONS_H_

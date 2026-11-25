@@ -12,7 +12,7 @@
 #include "render_shaders.h"
 #include "base/geometry.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 
@@ -142,4 +142,4 @@ void DropShadow::draw(Texture *texture, const base::RectF &rect, const base::Siz
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

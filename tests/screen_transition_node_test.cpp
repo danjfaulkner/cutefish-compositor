@@ -9,7 +9,7 @@
 #include "scene/screen_transition_node.h"
 #include "base/geometry.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using Transition = scene::ScreenTransitionNode;
 
 namespace {

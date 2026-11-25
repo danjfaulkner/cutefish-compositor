@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/wayland/wayland_pointer_delegate.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_WAYLAND_POINTER_DELEGATE_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_WAYLAND_POINTER_DELEGATE_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_WAYLAND_POINTER_DELEGATE_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_WAYLAND_POINTER_DELEGATE_H_
 
 #include <array>
 #include <optional>
@@ -15,11 +15,11 @@
 #include "clipboard/selection.h"
 #include "input/pointer_delegate.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class SerialTracker;
 
@@ -63,6 +63,6 @@ private:
     base::WeakPtr<clipboard::SelectionController> m_selection;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_WAYLAND_POINTER_DELEGATE_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_WAYLAND_POINTER_DELEGATE_H_

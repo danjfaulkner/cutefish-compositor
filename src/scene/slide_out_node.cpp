@@ -15,7 +15,7 @@
 #include "scene/motion.h"
 #include "base/geometry.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 static double slideDuration()
 {
@@ -86,4 +86,4 @@ void SlideOutNode::releaseRenderResources()
     Node::releaseRenderResources();
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

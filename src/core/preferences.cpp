@@ -6,7 +6,7 @@
 
 #include "base/paths.h"
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace {
 
@@ -21,7 +21,7 @@ std::string &testConfigHome()
 std::string preferencesDirectory()
 {
     const std::string &test = testConfigHome();
-    return (test.empty() ? base::paths::configHome() : test) + "/cutefish";
+    return (test.empty() ? base::paths::configHome() : test) + "/properdesktop";
 }
 
 std::string preferencesFile(std::string_view process)
@@ -34,4 +34,4 @@ void setConfigHomeForTesting(std::string configHome)
     testConfigHome() = std::move(configHome);
 }
 
-} // namespace cutefish
+} // namespace properdesktop

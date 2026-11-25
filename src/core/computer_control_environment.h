@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_COMPUTER_CONTROL_ENVIRONMENT_H_
-#define CUTEFISH_CORE_COMPUTER_CONTROL_ENVIRONMENT_H_
+#ifndef PROPERDESKTOP_CORE_COMPUTER_CONTROL_ENVIRONMENT_H_
+#define PROPERDESKTOP_CORE_COMPUTER_CONTROL_ENVIRONMENT_H_
 
 #include <functional>
 
 #include "computer_control/controller.h"
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace computer_control {
 class PermissionConsent;
@@ -49,6 +49,6 @@ struct ComputerControlHosts {
 computer_control::Environment computerControlEnvironment(ComputerControlHosts hosts);
 
 } // namespace core
-} // namespace cutefish
+} // namespace properdesktop
 
-#endif // CUTEFISH_CORE_COMPUTER_CONTROL_ENVIRONMENT_H_
+#endif // PROPERDESKTOP_CORE_COMPUTER_CONTROL_ENVIRONMENT_H_

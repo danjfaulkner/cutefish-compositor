@@ -9,7 +9,7 @@
 
 #include "compositor/surface.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 std::unique_ptr<SubSurface> SubSurface::create(Surface* surface, Surface* parent)
 {
@@ -103,4 +103,4 @@ void SubSurface::onSurfaceDestroying(Surface* surface)
     // No observer registration remains on the parent after the child dies.
     m_parent = nullptr;
 }
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

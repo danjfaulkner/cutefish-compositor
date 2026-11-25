@@ -14,7 +14,7 @@
 #include "wm/window_modality_controller.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 Activation::Activation(WindowManager *manager)
     : m_manager(manager)
@@ -138,4 +138,4 @@ void Activation::removeObserver(ActivationObserver *observer)
                       m_observers.end());
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

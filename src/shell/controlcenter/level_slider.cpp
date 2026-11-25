@@ -15,7 +15,7 @@
 #include "ui/theme.h"
 #include "ui/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr std::chrono::milliseconds kSettle {300};
 
@@ -251,4 +251,4 @@ bool TileSlider::scroll(const ui::ScrollEvent &event)
     return true;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

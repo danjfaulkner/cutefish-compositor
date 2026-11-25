@@ -9,11 +9,11 @@
 #include "ui/label.h"
 #include "ui/text_field.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
-using cutefish::i18n::trn;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
+using properdesktop::i18n::trn;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr int kDemiBold = 600;
 static constexpr int kNormal = 400;
@@ -119,4 +119,4 @@ void BluetoothPairingDialog::update()
     primaryButton()->setEnabled(!inputRequired() || !m_field->text().empty());
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

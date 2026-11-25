@@ -19,7 +19,7 @@
 #include "render/texture.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -189,4 +189,4 @@ wl_global* createShmGlobal(wl_display* display, compositor::Compositor* composit
     return wl_global_create(display, &wl_shm_interface, kWlShmVersion, compositor, bind_shm);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

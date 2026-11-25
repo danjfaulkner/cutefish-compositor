@@ -18,7 +18,7 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr double kStartDragDistance = 10;
 
@@ -447,4 +447,4 @@ void LaunchpadCell::iconReleased(const ui::PointerEvent &event)
     m_view->cellClicked(this, event.button, m_icon->mapToWindow(event.position));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

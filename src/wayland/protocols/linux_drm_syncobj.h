@@ -5,14 +5,14 @@
 // Upstream: chromium/src/components/exo/buffer.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_LINUX_DRM_SYNCOBJ_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_LINUX_DRM_SYNCOBJ_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_LINUX_DRM_SYNCOBJ_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_LINUX_DRM_SYNCOBJ_H_
 
 #include <wayland-server-core.h>
 
 #include <cstdint>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 constexpr uint32_t kLinuxDrmSyncobjVersion = 1;
 
@@ -31,6 +31,6 @@ struct SyncobjCommit {
 
 int syncobjCommitError(const SyncobjCommit& commit);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_LINUX_DRM_SYNCOBJ_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_LINUX_DRM_SYNCOBJ_H_

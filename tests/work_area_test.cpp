@@ -8,8 +8,8 @@
 #include "wm/stacking.h"
 #include "wm/work_area.h"
 
-using namespace cutefish;
-using namespace cutefish::wm;
+using namespace properdesktop;
+using namespace properdesktop::wm;
 
 namespace {
 

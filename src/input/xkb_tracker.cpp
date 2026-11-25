@@ -16,7 +16,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 XkbTracker::XkbTracker()
     // Empty rule names compile xkbcommon's built-in defaults (us), never ones from the
@@ -261,4 +261,4 @@ bool XkbTracker::modifierActive(const char *name) const
             && xkb_state_mod_name_is_active(m_state.get(), name, XKB_STATE_MODS_EFFECTIVE) > 0;
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

@@ -39,8 +39,8 @@
 #include "wayland/server.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
-using cutefish::testing::knownInterfaces;
+using namespace properdesktop;
+using properdesktop::testing::knownInterfaces;
 
 namespace {
 
@@ -95,12 +95,12 @@ protected:
         ASSERT_TRUE(m_home.isValid());
         for (const char *variable : {"XDG_DATA_HOME", "XDG_RUNTIME_DIR"})
             setenv(variable, m_home.path().c_str(), 1);
-        cutefish::setConfigHomeForTesting(m_home.path());
+        properdesktop::setConfigHomeForTesting(m_home.path());
 
-        m_scene.setSize(cutefish::base::Size(1280, 800));
-        m_manager.setBounds(cutefish::base::Size(1280, 800));
-        m_windowManager.setOutputBounds(cutefish::base::Rect(0, 0, 1280, 800));
-        m_output.pixelSize = cutefish::base::Size(1280, 800);
+        m_scene.setSize(properdesktop::base::Size(1280, 800));
+        m_manager.setBounds(properdesktop::base::Size(1280, 800));
+        m_windowManager.setOutputBounds(properdesktop::base::Rect(0, 0, 1280, 800));
+        m_output.pixelSize = properdesktop::base::Size(1280, 800);
         m_output.refreshMilliHz = 60000;
 
         wayland::ProtocolGlobals::Dependencies dependencies;
@@ -251,7 +251,7 @@ TEST_F(ProtocolBindingTest, OrdinaryClientsDoNotSeeRestrictedGlobals)
     auto ordinary = connect();
     auto trusted = connect(true);
     for (const char *restricted : {
-                 "cutefish_shell_v1",
+                 "properdesktop_shell_v1",
                  "ext_data_control_manager_v1",
                  "zwlr_data_control_manager_v1",
                  "ext_output_image_capture_source_manager_v1",
@@ -318,7 +318,7 @@ TEST_F(ProtocolBindingTest, ACaptureConnectionSeesTheCaptureGlobalsAlone)
         EXPECT_TRUE(recorder->globals.contains(capture)) << capture;
         EXPECT_FALSE(ordinary->globals.contains(capture)) << capture;
     }
-    for (const char *hidden : {"cutefish_shell_v1", "ext_data_control_manager_v1", "zwlr_data_control_manager_v1"})
+    for (const char *hidden : {"properdesktop_shell_v1", "ext_data_control_manager_v1", "zwlr_data_control_manager_v1"})
         EXPECT_FALSE(recorder->globals.contains(hidden)) << hidden;
     const auto global = recorder->globals.find(ext_image_copy_capture_manager_v1_interface.name);
     ASSERT_NE(recorder->globals.end(), global);

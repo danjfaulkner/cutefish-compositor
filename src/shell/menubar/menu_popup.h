@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_MENU_POPUP_H_
-#define CUTEFISH_SHELL_MENUBAR_MENU_POPUP_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_MENU_POPUP_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_MENU_POPUP_H_
 
 #include <cstdint>
 #include <functional>
@@ -14,15 +14,15 @@
 
 #include "base/signal.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class MenuModel;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Menu;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class MenuPopup
 {
@@ -59,6 +59,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_MENU_POPUP_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_MENU_POPUP_H_

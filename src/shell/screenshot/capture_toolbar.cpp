@@ -10,9 +10,9 @@
 #include "base/event_loop.h"
 #include "base/i18n.h"
 #include "core/main_loop.h"
-#include "cutefish/audio/audio_model.h"
-#include "cutefish/audio/audio_object.h"
-#include "cutefish/audio/backend.h"
+#include "properdesktop/audio/audio_model.h"
+#include "properdesktop/audio/audio_object.h"
+#include "properdesktop/audio/backend.h"
 #include "shell/screenshot/capture_overlay.h"
 #include "shell/screenshot/capture_settings.h"
 #include "shell/screenshot/screen_capture.h"
@@ -29,12 +29,12 @@
 #include "ui/theme.h"
 #include "ui/window.h"
 
-using cutefish::i18n::tr;
-using cutefish::i18n::trc;
-using cutefish::i18n::trn;
-using cutefish::i18n::trNoop;
+using properdesktop::i18n::tr;
+using properdesktop::i18n::trc;
+using properdesktop::i18n::trn;
+using properdesktop::i18n::trNoop;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr double kRadius = 18;
 static constexpr double kButtonWidth = 40;
@@ -761,4 +761,4 @@ void CaptureTooltip::apply()
     popup->setBackgroundBlur(region, int(std::lround(radius)), glass, bubble.path());
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

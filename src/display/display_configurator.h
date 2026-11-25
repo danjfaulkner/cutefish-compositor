@@ -15,7 +15,7 @@
 #include "display/display_configuration_validator.h"
 #include "display/native_display_delegate.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayConfigurator
 {
@@ -43,4 +43,4 @@ private:
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

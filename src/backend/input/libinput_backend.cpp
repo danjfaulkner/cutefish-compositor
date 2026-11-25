@@ -32,7 +32,7 @@
 #include "input/touchpad_click.h"
 #include "input/xkb_tracker.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -688,4 +688,4 @@ void LibinputBackend::processEvent(libinput_event *event)
     }
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

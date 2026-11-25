@@ -14,7 +14,7 @@
 #include "compositor/surface_observer.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 class FractionalScale final : public compositor::SurfaceObserver
@@ -107,4 +107,4 @@ wl_global* createFractionalScaleGlobal(wl_display* display)
     return wl_global_create(display, &wp_fractional_scale_manager_v1_interface, 1, nullptr, bind);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -15,7 +15,7 @@
 
 #include "backend/drm/drm_device_api.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 enum class DrmCommitStatus {
     Success,
@@ -50,4 +50,4 @@ private:
     uint64_t m_revision = 0;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

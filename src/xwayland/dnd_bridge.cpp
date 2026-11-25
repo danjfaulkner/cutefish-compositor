@@ -19,7 +19,7 @@
 #include "input/seat.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 namespace {
 
 constexpr uint32_t kMinXdndVersion = 3;
@@ -734,4 +734,4 @@ void DndBridge::resetIncoming()
         drag->cancel();
 }
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

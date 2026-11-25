@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WAYLAND_SHELL_CONTROL_CHANNEL_H_
-#define CUTEFISH_WAYLAND_SHELL_CONTROL_CHANNEL_H_
+#ifndef PROPERDESKTOP_WAYLAND_SHELL_CONTROL_CHANNEL_H_
+#define PROPERDESKTOP_WAYLAND_SHELL_CONTROL_CHANNEL_H_
 
 #include <functional>
 #include <string>
 
-namespace cutefish::base {
+namespace properdesktop::base {
 class EventLoop;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 // A SOCK_STREAM UNIX socket over which the session passes, by SCM_RIGHTS, one end of each
 // socketpair it gives a privileged client; it carries file descriptors and nothing else.
@@ -46,6 +46,6 @@ private:
     std::string m_path;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_SHELL_CONTROL_CHANNEL_H_
+#endif // PROPERDESKTOP_WAYLAND_SHELL_CONTROL_CHANNEL_H_

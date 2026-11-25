@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "wayland/protocols/cutefish_shell.h"
+#include "wayland/protocols/properdesktop_shell.h"
 
-#include <cutefish-shell-v1-server-protocol.h>
+#include <properdesktop-shell-v1-server-protocol.h>
 
 #include <algorithm>
 #include <memory>
@@ -21,18 +21,18 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
-using cutefish::wm::FocusPolicy;
-using cutefish::wm::ShellWindowMetadata;
-using cutefish::wm::WindowRole;
+using properdesktop::wm::FocusPolicy;
+using properdesktop::wm::ShellWindowMetadata;
+using properdesktop::wm::WindowRole;
 
 std::optional<WindowRole> roleFromWayland(uint32_t role)
 {
     switch (role) {
-    case CUTEFISH_SHELL_SURFACE_V1_ROLE_DESKTOP:
+    case PROPERDESKTOP_SHELL_SURFACE_V1_ROLE_DESKTOP:
         return WindowRole::Desktop;
     default:
         return std::nullopt;
@@ -40,10 +40,10 @@ std::optional<WindowRole> roleFromWayland(uint32_t role)
 }
 
 // Owns no window and no surface: the window manager outlives a client restart.
-class CutefishShellSurface : public compositor::SurfaceObserver
+class ProperDesktopShellSurface : public compositor::SurfaceObserver
 {
 public:
-    CutefishShellSurface(wm::WindowManager* manager, compositor::Surface* surface,
+    ProperDesktopShellSurface(wm::WindowManager* manager, compositor::Surface* surface,
                          wl_resource* resource)
         : m_manager(manager)
         , m_surface(surface)
@@ -57,7 +57,7 @@ public:
         m_zonesChanged = m_manager->exclusiveZonesChanged.connect([this] { sendWorkArea(); });
     }
 
-    ~CutefishShellSurface() override
+    ~ProperDesktopShellSurface() override
     {
         // The resource is going: nothing is sent on it any more.
         m_outputsChanged.reset();
@@ -174,7 +174,7 @@ private:
         if (m_sentWorkArea && *m_sentWorkArea == area)
             return;
         m_sentWorkArea = area;
-        cutefish_shell_surface_v1_send_work_area(m_resource, area.x(), area.y(), area.width(),
+        properdesktop_shell_surface_v1_send_work_area(m_resource, area.x(), area.y(), area.width(),
                                                  area.height());
     }
 
@@ -196,46 +196,46 @@ void shellSurfaceSetRole(wl_client*, wl_resource* resource, uint32_t role)
 {
     const std::optional<WindowRole> parsed = roleFromWayland(role);
     if (!parsed) {
-        wl_resource_post_error(resource, CUTEFISH_SHELL_SURFACE_V1_ERROR_INVALID_ROLE,
+        wl_resource_post_error(resource, PROPERDESKTOP_SHELL_SURFACE_V1_ERROR_INVALID_ROLE,
                                "unknown role %u", role);
         return;
     }
-    getUserDataAs<CutefishShellSurface>(resource)->setRole(*parsed);
+    getUserDataAs<ProperDesktopShellSurface>(resource)->setRole(*parsed);
 }
 
 void shellSurfaceSetFocusPolicy(wl_client*, wl_resource* resource, uint32_t policy)
 {
     FocusPolicy parsed = FocusPolicy::Normal;
     switch (policy) {
-    case CUTEFISH_SHELL_SURFACE_V1_FOCUS_POLICY_NORMAL:
+    case PROPERDESKTOP_SHELL_SURFACE_V1_FOCUS_POLICY_NORMAL:
         parsed = FocusPolicy::Normal;
         break;
-    case CUTEFISH_SHELL_SURFACE_V1_FOCUS_POLICY_NO_FOCUS:
+    case PROPERDESKTOP_SHELL_SURFACE_V1_FOCUS_POLICY_NO_FOCUS:
         parsed = FocusPolicy::NoFocus;
         break;
     default:
-        wl_resource_post_error(resource, CUTEFISH_SHELL_SURFACE_V1_ERROR_INVALID_FOCUS_POLICY,
+        wl_resource_post_error(resource, PROPERDESKTOP_SHELL_SURFACE_V1_ERROR_INVALID_FOCUS_POLICY,
                                "unknown focus policy %u", policy);
         return;
     }
-    getUserDataAs<CutefishShellSurface>(resource)->setFocusPolicy(parsed);
+    getUserDataAs<ProperDesktopShellSurface>(resource)->setFocusPolicy(parsed);
 }
 
 void shellSurfaceActivate(wl_client*, wl_resource* resource)
 {
-    getUserDataAs<CutefishShellSurface>(resource)->activate();
+    getUserDataAs<ProperDesktopShellSurface>(resource)->activate();
 }
 
 void shellSurfaceSetOutput(wl_client*, wl_resource* resource, const char* name)
 {
-    auto* surface = getUserDataAs<CutefishShellSurface>(resource);
+    auto* surface = getUserDataAs<ProperDesktopShellSurface>(resource);
     if (!surface->setOutput(base::strings::sanitizedUtf8(name))) {
-        wl_resource_post_error(resource, CUTEFISH_SHELL_SURFACE_V1_ERROR_INVALID_OUTPUT,
+        wl_resource_post_error(resource, PROPERDESKTOP_SHELL_SURFACE_V1_ERROR_INVALID_OUTPUT,
                                "unknown logical output %s", name);
     }
 }
 
-const struct cutefish_shell_surface_v1_interface kShellSurfaceImplementation = {
+const struct properdesktop_shell_surface_v1_interface kShellSurfaceImplementation = {
     shellSurfaceDestroy,
     shellSurfaceSetRole,
     shellSurfaceSetFocusPolicy,
@@ -251,21 +251,21 @@ void shellDestroy(wl_client*, wl_resource* resource)
 void shellGetShellSurface(wl_client* client, wl_resource* resource, uint32_t id,
                           wl_resource* surfaceResource)
 {
-    auto* shell = getUserDataAs<WaylandCutefishShell>(resource);
+    auto* shell = getUserDataAs<WaylandProperDesktopShell>(resource);
     compositor::Surface* surface = surfaceFromResource(surfaceResource);
     if (!surface) {
-        wl_resource_post_error(resource, CUTEFISH_SHELL_V1_ERROR_ROLE,
+        wl_resource_post_error(resource, PROPERDESKTOP_SHELL_V1_ERROR_ROLE,
                                "the surface is already gone");
         return;
     }
     if (shell->windowManager()->shellMetadata(surface)) {
-        wl_resource_post_error(resource, CUTEFISH_SHELL_V1_ERROR_ROLE,
-                               "the surface already has a cutefish_shell_surface_v1");
+        wl_resource_post_error(resource, PROPERDESKTOP_SHELL_V1_ERROR_ROLE,
+                               "the surface already has a properdesktop_shell_surface_v1");
         return;
     }
 
     wl_resource* shellSurfaceResource =
-        wl_resource_create(client, &cutefish_shell_surface_v1_interface,
+        wl_resource_create(client, &properdesktop_shell_surface_v1_interface,
                            wl_resource_get_version(resource), id);
     if (!shellSurfaceResource) {
         wl_client_post_no_memory(client);
@@ -273,31 +273,31 @@ void shellGetShellSurface(wl_client* client, wl_resource* resource, uint32_t id,
     }
 
     auto shellSurface =
-        std::make_unique<CutefishShellSurface>(shell->windowManager(), surface, shellSurfaceResource);
+        std::make_unique<ProperDesktopShellSurface>(shell->windowManager(), surface, shellSurfaceResource);
     // An unconfigured shell surface is already claimed, so a second
     // get_shell_surface on the same wl_surface is caught above.
     shell->windowManager()->setShellMetadata(surface, ShellWindowMetadata {});
     setImplementation(shellSurfaceResource, &kShellSurfaceImplementation, std::move(shellSurface));
 }
 
-const struct cutefish_shell_v1_interface kShellImplementation = {
+const struct properdesktop_shell_v1_interface kShellImplementation = {
     shellDestroy,
     shellGetShellSurface,
 };
 
 void bindShell(wl_client* client, void* data, uint32_t version, uint32_t id)
 {
-    auto* shell = static_cast<WaylandCutefishShell*>(data);
+    auto* shell = static_cast<WaylandProperDesktopShell*>(data);
 
     // The global filter already hides this interface; a bind must still be refused to anything but the trusted shell.
     if (!shell->privileged()->isTrusted(client)) {
-        wl_client_post_implementation_error(client, "cutefish_shell_v1 is not available");
+        wl_client_post_implementation_error(client, "properdesktop_shell_v1 is not available");
         return;
     }
 
     wl_resource* resource =
-        wl_resource_create(client, &cutefish_shell_v1_interface,
-                           std::min(version, kCutefishShellVersion), id);
+        wl_resource_create(client, &properdesktop_shell_v1_interface,
+                           std::min(version, kProperDesktopShellVersion), id);
     if (!resource) {
         wl_client_post_no_memory(client);
         return;
@@ -307,21 +307,21 @@ void bindShell(wl_client* client, void* data, uint32_t version, uint32_t id)
 
 } // namespace
 
-WaylandCutefishShell::WaylandCutefishShell(wm::WindowManager* windowManager,
+WaylandProperDesktopShell::WaylandProperDesktopShell(wm::WindowManager* windowManager,
                                            PrivilegedClients* privileged)
     : m_windowManager(windowManager)
     , m_privileged(privileged)
 {
 }
 
-wl_global* createCutefishShellGlobal(wl_display* display, WaylandCutefishShell* shell)
+wl_global* createProperDesktopShellGlobal(wl_display* display, WaylandProperDesktopShell* shell)
 {
-    wl_global* global = wl_global_create(display, &cutefish_shell_v1_interface,
-                                         kCutefishShellVersion, shell, bindShell);
+    wl_global* global = wl_global_create(display, &properdesktop_shell_v1_interface,
+                                         kProperDesktopShellVersion, shell, bindShell);
     if (!global)
         return nullptr;
     shell->privileged()->addPrivateGlobal(global);
     return global;
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

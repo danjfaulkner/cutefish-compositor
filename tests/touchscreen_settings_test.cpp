@@ -9,8 +9,8 @@
 #include "base/event_loop.h"
 #include "input_test_util.h"
 
-using cutefish::base::EventLoop;
-using cutefish::input::TouchscreenSettings;
+using properdesktop::base::EventLoop;
+using properdesktop::input::TouchscreenSettings;
 using input_test::RemoteObject;
 using input_test::TemporaryDirectory;
 using Names = std::vector<std::string>;
@@ -77,8 +77,8 @@ TEST(TouchscreenSettings, DBusPropertiesMethodsAndServiceRestart)
     for (int iteration = 0; iteration < 2; ++iteration) {
         TouchscreenSettings settings(file);
         ASSERT_TRUE(settings.registerService());
-        RemoteObject proxy(loop, "org.cutefish.Touchscreen1", "/org/cutefish/Touchscreen1",
-                           "org.cutefish.Touchscreen1");
+        RemoteObject proxy(loop, "org.properdesktop.Touchscreen1", "/org/properdesktop/Touchscreen1",
+                           "org.properdesktop.Touchscreen1");
         ASSERT_TRUE(proxy.isValid());
         EXPECT_EQ(proxy.property<Names>("disabledDevices").value_or(Names {"?"}).empty(),
                   iteration == 0);

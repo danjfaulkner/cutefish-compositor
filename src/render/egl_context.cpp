@@ -16,7 +16,7 @@
 #include "core/logging.h"
 #include "render/egl_render_target.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class EglDisplay
 {
@@ -230,4 +230,4 @@ ScopedEglCurrent::~ScopedEglCurrent()
         eglMakeCurrent(m_owner.display(), EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

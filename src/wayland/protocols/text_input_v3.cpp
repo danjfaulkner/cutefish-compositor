@@ -9,7 +9,7 @@
 #include "wayland/protocols/wl_seat.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 class TextInputV3 final : public TextInput
 {
@@ -192,4 +192,4 @@ wl_global *createTextInputV3Global(wl_display *display, InputMethodRelay *relay)
                                         });
                             });
 }
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

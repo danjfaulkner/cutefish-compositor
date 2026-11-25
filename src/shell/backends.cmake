@@ -1,4 +1,4 @@
-find_package(CutefishClients REQUIRED COMPONENTS upower powerprofiles audio networkmanager)
+find_package(ProperDesktopClients REQUIRED COMPONENTS upower powerprofiles audio networkmanager)
 
 add_subdirectory(src/shell/common)
 add_subdirectory(src/shell/notification)

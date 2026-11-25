@@ -21,7 +21,7 @@
 #include "core/preferences.h"
 #include "shell/common/file_thread.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static bool isBodyName(const std::string &name)
 {
@@ -167,8 +167,8 @@ ClipboardStore::~ClipboardStore()
 
 std::string ClipboardStore::defaultDirectory()
 {
-    // An older history in ~/.config/cutefish/clipboard-history is left alone.
-    return base::paths::dataHome() + "/cutefish/clipboard-history";
+    // An older history in ~/.config/properdesktop/clipboard-history is left alone.
+    return base::paths::dataHome() + "/properdesktop/clipboard-history";
 }
 
 std::vector<std::string> ClipboardStore::formatsToKeep(const std::vector<std::string> &offered)
@@ -414,4 +414,4 @@ void ClipboardStore::payload(const std::string &key, std::function<void(Clipboar
     m_jobs.push_back(runOnFileThread([path = bodyPath(key)] { return readBody(path); }, std::move(done)));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

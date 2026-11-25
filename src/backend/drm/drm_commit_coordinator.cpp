@@ -11,7 +11,7 @@
 #include <map>
 #include <xf86drmMode.h>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 DrmCommitCoordinator::DrmCommitCoordinator(DrmDeviceApi *device)
     : m_device(device)
@@ -78,4 +78,4 @@ bool DrmCommitCoordinator::testAndCommit(const AtomicRequest &request, uint32_t 
     return execute(request, false, flags, eventData) == DrmCommitStatus::Success;
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

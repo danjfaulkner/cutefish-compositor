@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/touch_delegate.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_TOUCH_DELEGATE_H_
-#define CUTEFISH_INPUT_TOUCH_DELEGATE_H_
+#ifndef PROPERDESKTOP_INPUT_TOUCH_DELEGATE_H_
+#define PROPERDESKTOP_INPUT_TOUCH_DELEGATE_H_
 
 #include <cstdint>
 
@@ -14,11 +14,11 @@
 #include "input/types.h"
 #include "base/geometry.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class Touch;
 
@@ -48,6 +48,6 @@ protected:
     virtual ~TouchDelegate() = default;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_TOUCH_DELEGATE_H_
+#endif // PROPERDESKTOP_INPUT_TOUCH_DELEGATE_H_

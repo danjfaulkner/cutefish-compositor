@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/keyboard.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_KEYBOARD_H_
-#define CUTEFISH_INPUT_KEYBOARD_H_
+#ifndef PROPERDESKTOP_INPUT_KEYBOARD_H_
+#define PROPERDESKTOP_INPUT_KEYBOARD_H_
 
 #include <memory>
 #include <set>
@@ -16,7 +16,7 @@
 #include "input/seat_observer.h"
 #include "input/types.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class Seat;
 
@@ -58,6 +58,6 @@ private:
     KeyboardDelegate::PressedKeys m_pressedKeys;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_KEYBOARD_H_
+#endif // PROPERDESKTOP_INPUT_KEYBOARD_H_

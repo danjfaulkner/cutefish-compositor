@@ -22,7 +22,7 @@
 #include "shell/shell_window.h"
 #include "ui/embedded_window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -574,4 +574,4 @@ void ShellInput::stopRepeat()
     m_repeatCode = 0;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

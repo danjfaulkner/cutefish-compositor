@@ -7,13 +7,13 @@
 #include "base/dbus.h"
 #include "core/main_loop.h"
 #include "core/preferences.h"
-#include "cutefish/powerprofiles/power_profiles.h"
-#include "cutefish/upower/battery_status.h"
+#include "properdesktop/powerprofiles/power_profiles.h"
+#include "properdesktop/upower/battery_status.h"
 #include "shell/menubar/battery.h"
 #include "shell/menubar/status_icon.h"
 #include "shell/menubar/wireless_status.h"
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 namespace {
 
@@ -109,4 +109,4 @@ void AuthStatus::layout()
     }
 }
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth

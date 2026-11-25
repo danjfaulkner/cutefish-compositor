@@ -26,10 +26,10 @@
 #include "ui/theme.h"
 #include "toolkit/compositor_colors.h"
 
-using cutefish::i18n::tr;
-using cutefish::i18n::trn;
+using properdesktop::i18n::tr;
+using properdesktop::i18n::trn;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static ui::Color cardColor()
 {
@@ -911,4 +911,4 @@ void NotificationCentre::disarmClears(std::optional<ui::PointF> windowPoint)
         header->disarmUnless(point);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

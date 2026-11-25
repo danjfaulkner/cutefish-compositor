@@ -23,7 +23,7 @@
 #include "shell/shell_window.h"
 #include "ui/embedded_window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -400,4 +400,4 @@ void ShellDrag::apply(uint32_t answer)
     offer->accept(accepted && !offer->formats().empty() ? offer->formats().front().c_str() : nullptr);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

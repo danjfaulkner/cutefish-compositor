@@ -20,7 +20,7 @@
 #include "base/region.h"
 #include "base/transform.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 EglRenderer::EglRenderer(std::shared_ptr<EglContext> context, gbm_device *device)
     : m_context(std::move(context))
@@ -1067,4 +1067,4 @@ void EglRenderer::drawBackgroundBlur(const base::Rect &bounds, int radius, const
             backdropScope, owner);
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

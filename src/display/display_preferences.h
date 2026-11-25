@@ -13,7 +13,7 @@
 
 #include "display/display_types.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayPreferences
 {
@@ -32,4 +32,4 @@ private:
     std::string m_path;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

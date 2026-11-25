@@ -11,7 +11,7 @@
 #include "compositor/compositor.h"
 #include "core/main_loop.h"
 #include "core/preferences.h"
-#include "cutefish/networkmanager/client.h"
+#include "properdesktop/networkmanager/client.h"
 #include "fake_backend.h"
 #include "fake_renderer.h"
 #include "input/input_manager.h"
@@ -46,7 +46,7 @@
 #include "ui/label.h"
 #include "ui/text_field.h"
 #include "ui/view.h"
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -130,7 +130,7 @@ std::vector<std::string> translationsOf(const std::string &msgid)
 {
     std::vector<std::string> translations;
     const std::string key = "msgid \"" + msgid + "\"\nmsgstr \"";
-    for (const auto &entry : std::filesystem::directory_iterator(CUTEFISH_PO_DIR)) {
+    for (const auto &entry : std::filesystem::directory_iterator(PROPERDESKTOP_PO_DIR)) {
         if (entry.path().extension() != ".po")
             continue;
         std::ifstream file(entry.path());
@@ -645,7 +645,7 @@ TEST(AuthUiTest, ChoiceMenuClosesOnAPressElsewhere)
     FakeBackend backend;
     auth::AuthUi ui(&controller, nullptr, &backend);
     ui.refresh();
-    ui.controller()->setSessions({{"cutefish-wayland", "Cutefish", {}, {}},
+    ui.controller()->setSessions({{"properdesktop-wayland", "ProperDesktop", {}, {}},
                                   {"plasma", "Plasma", {}, {}}});
     ui.window()->updateLayout();
     ui::View *screen = ui.window()->contentView();

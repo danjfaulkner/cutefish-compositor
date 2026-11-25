@@ -29,7 +29,7 @@
 #include "wm/window_state.h"
 #include "wm/wm_event.h"
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 computer_control::Environment computerControlEnvironment(ComputerControlHosts hosts)
 {
@@ -193,4 +193,4 @@ computer_control::Environment computerControlEnvironment(ComputerControlHosts ho
     return environment;
 }
 
-} // namespace cutefish::core
+} // namespace properdesktop::core

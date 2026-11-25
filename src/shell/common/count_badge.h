@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_COUNT_BADGE_H_
-#define CUTEFISH_SHELL_COMMON_COUNT_BADGE_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_COUNT_BADGE_H_
+#define PROPERDESKTOP_SHELL_COMMON_COUNT_BADGE_H_
 
 #include <cstdint>
 #include <string>
 
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Label;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class CountBadge final : public ui::View
 {
@@ -50,6 +50,6 @@ private:
     ui::RectF m_iconRect;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_COUNT_BADGE_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_COUNT_BADGE_H_

@@ -9,9 +9,9 @@
 
 #include "base/i18n.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static const std::string kServicePrefix = "org.freedesktop.NetworkManager.";
 
@@ -139,4 +139,4 @@ std::vector<VpnSecretField> vpnSecretFields(const std::string &serviceType,
     return fields;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

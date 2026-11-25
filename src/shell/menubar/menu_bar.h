@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_MENU_BAR_H_
-#define CUTEFISH_SHELL_MENUBAR_MENU_BAR_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_H_
 
 #include <array>
 #include <memory>
@@ -22,15 +22,15 @@
 #include "shell/menubar/status_notifier_watcher.h"
 #include "shell/menubar/system_tray_model.h"
 
-namespace cutefish::powerprofiles {
+namespace properdesktop::powerprofiles {
 class PowerProfiles;
-} // namespace cutefish::powerprofiles
+} // namespace properdesktop::powerprofiles
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class TaskManager;
 
-// Exports org.cutefish.MenuBar at /MenuBar.
+// Exports org.properdesktop.MenuBar at /MenuBar.
 class MenuBar
 {
 public:
@@ -105,6 +105,6 @@ private:
     std::string m_timeFormat;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_MENU_BAR_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_MENU_BAR_H_

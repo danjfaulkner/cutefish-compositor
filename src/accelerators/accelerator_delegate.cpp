@@ -6,7 +6,7 @@
 
 #include "base/dbus.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 namespace {
 
@@ -20,12 +20,12 @@ void call(const char *service, const char *path, const char *method, const Args 
 template<typename... Args>
 void callScreenshot(const char *method, const Args &...arguments)
 {
-    call("org.cutefish.Screenshot", "/Screenshot", method, arguments...);
+    call("org.properdesktop.Screenshot", "/Screenshot", method, arguments...);
 }
 
 void callOsd(const char *method)
 {
-    call("org.cutefish.Osd", "/Osd", method);
+    call("org.properdesktop.Osd", "/Osd", method);
 }
 
 } // namespace
@@ -36,7 +36,7 @@ void DBusAcceleratorDelegate::toggleAppList()
         launchpadToggle();
         return;
     }
-    call("org.cutefish.Launchpad", "/Launchpad", "toggle");
+    call("org.properdesktop.Launchpad", "/Launchpad", "toggle");
 }
 
 void DBusAcceleratorDelegate::takeScreenshot(bool toClipboard)
@@ -61,32 +61,32 @@ void DBusAcceleratorDelegate::stopScreenRecording()
 
 void DBusAcceleratorDelegate::toggleClipboardHistory()
 {
-    call("org.cutefish.ClipboardHistory", "/ClipboardHistory", "toggle");
+    call("org.properdesktop.ClipboardHistory", "/ClipboardHistory", "toggle");
 }
 
 void DBusAcceleratorDelegate::mediaPlayPause()
 {
-    call("org.cutefish.MenuBar", "/MenuBar", "mediaPlayPause");
+    call("org.properdesktop.MenuBar", "/MenuBar", "mediaPlayPause");
 }
 
 void DBusAcceleratorDelegate::mediaPause()
 {
-    call("org.cutefish.MenuBar", "/MenuBar", "mediaPause");
+    call("org.properdesktop.MenuBar", "/MenuBar", "mediaPause");
 }
 
 void DBusAcceleratorDelegate::mediaPrevious()
 {
-    call("org.cutefish.MenuBar", "/MenuBar", "mediaPrevious");
+    call("org.properdesktop.MenuBar", "/MenuBar", "mediaPrevious");
 }
 
 void DBusAcceleratorDelegate::mediaNext()
 {
-    call("org.cutefish.MenuBar", "/MenuBar", "mediaNext");
+    call("org.properdesktop.MenuBar", "/MenuBar", "mediaNext");
 }
 
 void DBusAcceleratorDelegate::mediaStop()
 {
-    call("org.cutefish.MenuBar", "/MenuBar", "mediaStop");
+    call("org.properdesktop.MenuBar", "/MenuBar", "mediaStop");
 }
 
 void DBusAcceleratorDelegate::volumeDown()
@@ -129,4 +129,4 @@ void DBusAcceleratorDelegate::keyboardBrightnessUp()
     callOsd("keyboardBrightnessUp");
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

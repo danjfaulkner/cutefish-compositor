@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_POWER_ACTIONS_H_
-#define CUTEFISH_SHELL_MENUBAR_POWER_ACTIONS_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_POWER_ACTIONS_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_POWER_ACTIONS_H_
 
 #include "base/dbus.h"
 #include "base/signal.h"
 #include "base/timer.h"
 #include "shell/common/pending_calls.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class PowerActions
 {
@@ -53,6 +53,6 @@ private:
     base::Timer m_clear;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_POWER_ACTIONS_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_POWER_ACTIONS_H_

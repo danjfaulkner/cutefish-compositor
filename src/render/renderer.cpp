@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 std::optional<Color> s_opaqueBackdrop;
@@ -43,4 +43,4 @@ const Renderer::TextureSet& Renderer::cachedTextureSet(const std::string& key,
     return m_textureCache.front().textures;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

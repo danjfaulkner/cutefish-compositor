@@ -1,4 +1,4 @@
-add_library(cutefish-shell-menubar STATIC
+add_library(properdesktop-shell-menubar STATIC
     app_menu_registrar.cpp
     app_menu_registrar.h
     application_menu.cpp
@@ -32,5 +32,5 @@ add_library(cutefish-shell-menubar STATIC
     wireless_status.cpp
     wireless_status.h
 )
-target_link_libraries(cutefish-shell-menubar PUBLIC cutefish-shell-common Cutefish::UPowerClient
-    Cutefish::PowerProfilesClient Cutefish::NetworkManagerClient)
+target_link_libraries(properdesktop-shell-menubar PUBLIC properdesktop-shell-common ProperDesktop::UPowerClient
+    ProperDesktop::PowerProfilesClient ProperDesktop::NetworkManagerClient)

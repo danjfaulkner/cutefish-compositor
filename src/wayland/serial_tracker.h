@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/wayland/serial_tracker.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_SERIAL_TRACKER_H_
-#define CUTEFISH_WAYLAND_SERIAL_TRACKER_H_
+#ifndef PROPERDESKTOP_WAYLAND_SERIAL_TRACKER_H_
+#define PROPERDESKTOP_WAYLAND_SERIAL_TRACKER_H_
 
 #include <array>
 #include <chrono>
@@ -19,7 +19,7 @@
 
 struct wl_display;
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class SerialTracker
 {
@@ -86,6 +86,6 @@ private:
     std::optional<uint32_t> m_keySerial;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_SERIAL_TRACKER_H_
+#endif // PROPERDESKTOP_WAYLAND_SERIAL_TRACKER_H_

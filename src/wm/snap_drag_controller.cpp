@@ -12,7 +12,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -178,4 +178,4 @@ void SnapDragController::clearPreview()
         m_manager->compositor()->scheduleRepaint();
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

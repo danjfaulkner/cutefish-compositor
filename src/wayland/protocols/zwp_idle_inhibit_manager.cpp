@@ -13,7 +13,7 @@
 #include "wayland/server_util.h"
 #include <idle-inhibit-unstable-v1-server-protocol.h>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 class IdleInhibitor : public compositor::SurfaceObserver
 {
@@ -103,4 +103,4 @@ wl_global *createIdleInhibitManagerGlobal(wl_display *display, IdleInhibition *i
 {
     return wl_global_create(display, &zwp_idle_inhibit_manager_v1_interface, 1, inhibition, bind);
 }
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

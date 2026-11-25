@@ -24,7 +24,7 @@
 #include "ui/bitmap.h"
 #include "ui/embedded_window.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(TextMatchTest, FoldsCaseAsQtDoes)
 {

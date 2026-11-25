@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ui/ozone/platform/drm/gpu/hardware_display_plane.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_PLANE_H_
-#define CUTEFISH_BACKEND_DRM_DRM_PLANE_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_PLANE_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_PLANE_H_
 
 #include <cstdint>
 #include <map>
@@ -15,7 +15,7 @@
 
 #include "backend/drm/drm_properties.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 struct DrmPlane {
     uint32_t id = 0;
@@ -38,6 +38,6 @@ struct DrmPlane {
     static std::vector<std::string> requiredProperties();
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_PLANE_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_PLANE_H_

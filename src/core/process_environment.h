@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_PROCESS_ENVIRONMENT_H_
-#define CUTEFISH_CORE_PROCESS_ENVIRONMENT_H_
+#ifndef PROPERDESKTOP_CORE_PROCESS_ENVIRONMENT_H_
+#define PROPERDESKTOP_CORE_PROCESS_ENVIRONMENT_H_
 
 #include <string>
 #include <vector>
 
-namespace cutefish {
+namespace properdesktop {
 
 std::vector<std::string> childEnvironment();
 
-} // namespace cutefish
+} // namespace properdesktop
 
-#endif // CUTEFISH_CORE_PROCESS_ENVIRONMENT_H_
+#endif // PROPERDESKTOP_CORE_PROCESS_ENVIRONMENT_H_

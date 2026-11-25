@@ -12,10 +12,10 @@
 #include "input/dbus_export.h"
 #include "input/types.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
-static constexpr auto service = "org.cutefish.Keyboard1";
-static constexpr auto path = "/org/cutefish/Keyboard1";
+static constexpr auto service = "org.properdesktop.Keyboard1";
+static constexpr auto path = "/org/properdesktop/Keyboard1";
 static constexpr auto group = "Keyboard/";
 
 static constexpr auto pcConvention = "pc";
@@ -192,4 +192,4 @@ bool KeyboardSettings::setShortcutConvention(const std::string &name)
     return true;
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

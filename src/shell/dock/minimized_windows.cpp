@@ -8,7 +8,7 @@
 #include "shell/dock/dock_model.h"
 #include "shell/dock/dock_settings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 MinimizedWindows::MinimizedWindows(TaskWindows &windows, DockModel &dock, DockSettings &settings)
     : m_windows(windows)
@@ -179,4 +179,4 @@ void MinimizedWindows::setLanded(uint64_t id)
     dataChanged(row, row);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

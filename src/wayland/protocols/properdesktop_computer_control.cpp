@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "wayland/protocols/cutefish_computer_control.h"
+#include "wayland/protocols/properdesktop_computer_control.h"
 
 #include "base/strings.h"
 
@@ -15,13 +15,13 @@
 #include <unistd.h>
 #include <utility>
 
-#include <cutefish-computer-control-v1-server-protocol.h>
+#include <properdesktop-computer-control-v1-server-protocol.h>
 #include <wayland-server-protocol.h>
 
 #include "computer_control/controller.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 using computer_control::Control;
@@ -36,31 +36,31 @@ struct ControlResource final : computer_control::ControlClient {
     {
     }
 
-    void granted() override { cutefish_computer_control_v1_send_granted(resource); }
+    void granted() override { properdesktop_computer_control_v1_send_granted(resource); }
 
     void revoked(RevokeReason reason) override
     {
-        cutefish_computer_control_v1_send_revoked(resource, static_cast<uint32_t>(reason));
+        properdesktop_computer_control_v1_send_revoked(resource, static_cast<uint32_t>(reason));
     }
 
     void rejected(Rejection rejection) override
     {
-        cutefish_computer_control_v1_send_rejected(resource, static_cast<uint32_t>(rejection));
+        properdesktop_computer_control_v1_send_rejected(resource, static_cast<uint32_t>(rejection));
     }
 
     void window(uint32_t handle, const WindowInfo &window) override
     {
-        cutefish_computer_control_v1_send_window(
+        properdesktop_computer_control_v1_send_window(
                 resource, handle, window.applicationId.c_str(), window.title.c_str(),
                 window.bounds.x(), window.bounds.y(),
                 window.bounds.width(), window.bounds.height(), window.flags);
     }
 
-    void windowsDone() override { cutefish_computer_control_v1_send_windows_done(resource); }
+    void windowsDone() override { properdesktop_computer_control_v1_send_windows_done(resource); }
 
     void pointer(const base::PointF &position) override
     {
-        cutefish_computer_control_v1_send_pointer(resource, wl_fixed_from_double(position.x()),
+        properdesktop_computer_control_v1_send_pointer(resource, wl_fixed_from_double(position.x()),
                                                   wl_fixed_from_double(position.y()));
     }
 
@@ -76,12 +76,12 @@ Control *controlOf(wl_resource *resource)
 // Returns the state as a press, or nothing after posting the error.
 std::optional<bool> pressed(wl_resource *resource, uint32_t state)
 {
-    if (state > CUTEFISH_COMPUTER_CONTROL_V1_STATE_PRESSED) {
-        wl_resource_post_error(resource, CUTEFISH_COMPUTER_CONTROL_V1_ERROR_INVALID_STATE,
+    if (state > PROPERDESKTOP_COMPUTER_CONTROL_V1_STATE_PRESSED) {
+        wl_resource_post_error(resource, PROPERDESKTOP_COMPUTER_CONTROL_V1_ERROR_INVALID_STATE,
                                "state must be released or pressed");
         return std::nullopt;
     }
-    return state == CUTEFISH_COMPUTER_CONTROL_V1_STATE_PRESSED;
+    return state == PROPERDESKTOP_COMPUTER_CONTROL_V1_STATE_PRESSED;
 }
 
 // Only a regular file is read at once, so the client cannot keep the
@@ -94,7 +94,7 @@ std::optional<std::string> readClipboard(wl_resource *resource, int fd)
     struct stat info {};
     if (fstat(fd, &info) < 0 || !S_ISREG(info.st_mode) || info.st_size > kClipboardLimit) {
         close(fd);
-        wl_resource_post_error(resource, CUTEFISH_COMPUTER_CONTROL_V1_ERROR_INVALID_CLIPBOARD,
+        wl_resource_post_error(resource, PROPERDESKTOP_COMPUTER_CONTROL_V1_ERROR_INVALID_CLIPBOARD,
                                "the fd must be a regular file of at most 16 MiB");
         return std::nullopt;
     }
@@ -147,7 +147,7 @@ void settle(wl_client *client, wl_resource *resource, uint32_t id, uint32_t time
     });
 }
 
-const struct cutefish_computer_control_v1_interface controlImplementation = {
+const struct properdesktop_computer_control_v1_interface controlImplementation = {
         destroy,
         [](wl_client *, wl_resource *resource, wl_fixed_t x, wl_fixed_t y) {
             controlOf(resource)->motion(
@@ -197,7 +197,7 @@ const struct cutefish_computer_control_v1_interface controlImplementation = {
 void requestControl(wl_client *client, wl_resource *manager, uint32_t id, const char *agentName)
 {
     auto *controller = getUserDataAs<Controller>(manager);
-    wl_resource *resource = wl_resource_create(client, &cutefish_computer_control_v1_interface,
+    wl_resource *resource = wl_resource_create(client, &properdesktop_computer_control_v1_interface,
                                                wl_resource_get_version(manager), id);
     if (!resource) {
         wl_client_post_no_memory(client);
@@ -215,7 +215,7 @@ void requestControl(wl_client *client, wl_resource *manager, uint32_t id, const 
                                            pid);
 }
 
-const struct cutefish_computer_control_manager_v1_interface managerImplementation = {
+const struct properdesktop_computer_control_manager_v1_interface managerImplementation = {
         destroy,
         requestControl,
 };
@@ -227,7 +227,7 @@ WaylandComputerControl::WaylandComputerControl(wl_display *display, Controller *
     : m_controller(controller)
     , m_authorize(std::move(authorize))
 {
-    m_global = wl_global_create(display, &cutefish_computer_control_manager_v1_interface, 1, this,
+    m_global = wl_global_create(display, &properdesktop_computer_control_manager_v1_interface, 1, this,
                                 bind);
 }
 
@@ -245,7 +245,7 @@ void WaylandComputerControl::bind(wl_client *client, void *data, uint32_t versio
         return;
     }
     wl_resource *resource =
-            wl_resource_create(client, &cutefish_computer_control_manager_v1_interface, version, id);
+            wl_resource_create(client, &properdesktop_computer_control_manager_v1_interface, version, id);
     if (!resource) {
         wl_client_post_no_memory(client);
         return;
@@ -253,4 +253,4 @@ void WaylandComputerControl::bind(wl_client *client, void *data, uint32_t versio
     wl_resource_set_implementation(resource, &managerImplementation, self->m_controller, nullptr);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

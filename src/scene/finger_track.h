@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SCENE_FINGER_TRACK_H_
-#define CUTEFISH_SCENE_FINGER_TRACK_H_
+#ifndef PROPERDESKTOP_SCENE_FINGER_TRACK_H_
+#define PROPERDESKTOP_SCENE_FINGER_TRACK_H_
 
 #include <deque>
 #include <optional>
 
-namespace cutefish::scene::motion {
+namespace properdesktop::scene::motion {
 
 // Positions are in the caller's unit; velocities are that unit per second.
 class FingerTrack
@@ -55,6 +55,6 @@ private:
     std::deque<Sample> m_samples;
 };
 
-} // namespace cutefish::scene::motion
+} // namespace properdesktop::scene::motion
 
-#endif // CUTEFISH_SCENE_FINGER_TRACK_H_
+#endif // PROPERDESKTOP_SCENE_FINGER_TRACK_H_

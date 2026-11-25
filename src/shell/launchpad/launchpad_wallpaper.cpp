@@ -12,7 +12,7 @@
 #include "ui/bitmap.h"
 #include "ui/painter.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr double kDimmer = 0.4;
 
@@ -218,4 +218,4 @@ LaunchpadWallpaper::Result *LaunchpadWallpaper::shrink(const ui::Bitmap &decode,
     return result;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

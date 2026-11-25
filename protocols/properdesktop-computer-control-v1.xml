@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="cutefish_computer_control_v1">
+<protocol name="properdesktop_computer_control_v1">
 
   <description summary="let an agent drive the seat once the user allows it">
-    This protocol lets the Cutefish computer-use service move the pointer and
+    This protocol lets the Proper Desktop computer-use service move the pointer and
     type on the primary seat on behalf of an agent application, after the user
     has allowed it in a dialog the compositor asks for.
 
@@ -15,9 +15,9 @@
     the control for a short while.
   </description>
 
-  <interface name="cutefish_computer_control_manager_v1" version="1">
+  <interface name="properdesktop_computer_control_manager_v1" version="1">
     <description summary="asks for control of the seat">
-      A factory for cutefish_computer_control_v1 objects.
+      A factory for properdesktop_computer_control_v1 objects.
     </description>
 
     <request name="destroy" type="destructor">
@@ -35,13 +35,13 @@
         Only one control exists at a time: while another is pending or granted,
         the new one is revoked with the busy reason at once.
       </description>
-      <arg name="id" type="new_id" interface="cutefish_computer_control_v1"/>
+      <arg name="id" type="new_id" interface="properdesktop_computer_control_v1"/>
       <arg name="agent_name" type="string"
            summary="the agent application's name, shown to the user"/>
     </request>
   </interface>
 
-  <interface name="cutefish_computer_control_v1" version="1">
+  <interface name="properdesktop_computer_control_v1" version="1">
     <description summary="one control of the seat">
       A control starts pending, becomes granted when the user allows it, and
       ends with revoked. A revoked control rejects every input request; asking

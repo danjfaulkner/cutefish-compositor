@@ -42,7 +42,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 namespace {
 
 const base::LogCategory &logs()
@@ -70,7 +70,7 @@ int constrainedExtent(int value, int base, int increment, int minimum, int maxim
 }
 
 const char *const atomNames[] = {"WL_SURFACE_SERIAL",
-                                 "_CUTEFISH_FOCUS_TIMESTAMP",
+                                 "_PROPERDESKTOP_FOCUS_TIMESTAMP",
                                  "WM_PROTOCOLS",
                                  "WM_DELETE_WINDOW",
                                  "WM_TAKE_FOCUS",
@@ -890,7 +890,7 @@ void Xwm::setup()
                           &supportMask);
         property(m_root, "_NET_SUPPORTING_WM_CHECK", XCB_ATOM_WINDOW, {m_support});
         property(m_support, "_NET_SUPPORTING_WM_CHECK", XCB_ATOM_WINDOW, {m_support});
-        const char name[] = "Cutefish";
+        const char name[] = "ProperDesktop";
         xcb_change_property(m_connection, XCB_PROP_MODE_REPLACE, m_support, atom("_NET_WM_NAME"),
                             atom("UTF8_STRING"), 8, sizeof(name) - 1, name);
         // Xwayland accepts other clients only once WM_S0 has an owner, so its first client reads
@@ -1728,7 +1728,7 @@ void Xwm::focus(X11Window &w, bool active)
         uint32_t mode = XCB_STACK_MODE_ABOVE;
         xcb_configure_window(m_connection, w.id, XCB_CONFIG_WINDOW_STACK_MODE, &mode);
         // Obtain X server time without blocking; WM_TAKE_FOCUS forbids CurrentTime.
-        property(m_support, "_CUTEFISH_FOCUS_TIMESTAMP", XCB_ATOM_INTEGER, {w.id});
+        property(m_support, "_PROPERDESKTOP_FOCUS_TIMESTAMP", XCB_ATOM_INTEGER, {w.id});
     } else {
         xcb_set_input_focus(m_connection, XCB_INPUT_FOCUS_POINTER_ROOT, XCB_NONE, XCB_CURRENT_TIME);
     }
@@ -1807,7 +1807,7 @@ void Xwm::event(xcb_generic_event_t *generic)
         return;
     if (type == XCB_PROPERTY_NOTIFY) {
         auto *event = reinterpret_cast<xcb_property_notify_event_t *>(generic);
-        if (event->window == m_support && event->atom == atom("_CUTEFISH_FOCUS_TIMESTAMP")) {
+        if (event->window == m_support && event->atom == atom("_PROPERDESKTOP_FOCUS_TIMESTAMP")) {
             for (auto &[id, window] : m_windows) {
                 if (!window->window || !window->window->isActive())
                     continue;
@@ -2130,4 +2130,4 @@ void Xwm::event(xcb_generic_event_t *generic)
     }
 }
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

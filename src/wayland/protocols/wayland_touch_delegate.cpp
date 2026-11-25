@@ -12,7 +12,7 @@
 #include "wayland/serial_tracker.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 WaylandTouchDelegate::WaylandTouchDelegate(wl_resource *touchResource,
                                            SerialTracker *serialTracker,
@@ -85,4 +85,4 @@ wl_client *WaylandTouchDelegate::client() const
     return wl_resource_get_client(m_touchResource);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

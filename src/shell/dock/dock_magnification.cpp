@@ -10,7 +10,7 @@
 
 #include "shell/dock/dock_presentation.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -163,4 +163,4 @@ bool DockMagnifier::isMoving() const
     return m_progress != m_target || (!m_held && (m_offset != 0 || m_offsetVelocity != 0));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

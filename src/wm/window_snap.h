@@ -5,13 +5,13 @@
 // Modelled on chromium/src/ash/wm/workspace/workspace_window_resizer.cc
 // (revision 7acd40ddefff49c9d36144999aafdbb674dbd07a).
 
-#ifndef CUTEFISH_WM_WINDOW_SNAP_H_
-#define CUTEFISH_WM_WINDOW_SNAP_H_
+#ifndef PROPERDESKTOP_WM_WINDOW_SNAP_H_
+#define PROPERDESKTOP_WM_WINDOW_SNAP_H_
 
 #include "base/geometry.h"
 #include "wm/types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 enum class SnapType {
     None,
@@ -38,6 +38,6 @@ bool areBoundsValidSnappedBounds(WindowStateType type, const base::Rect &bounds,
 
 const char *toString(SnapType type);
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WINDOW_SNAP_H_
+#endif // PROPERDESKTOP_WM_WINDOW_SNAP_H_

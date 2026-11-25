@@ -19,7 +19,7 @@
 #include <cerrno>
 #include <cstring>
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 
@@ -91,7 +91,7 @@ SyncFence SyncFence::merge(std::vector<SyncFence> fences)
         }
 
         sync_merge_data data = {};
-        std::strncpy(data.name, "cutefish", sizeof(data.name) - 1);
+        std::strncpy(data.name, "properdesktop", sizeof(data.name) - 1);
         data.fd2 = fence.get();
         data.fence = -1;
         if (::ioctl(merged.get(), SYNC_IOC_MERGE, &data) == 0) {
@@ -104,4 +104,4 @@ SyncFence SyncFence::merge(std::vector<SyncFence> fences)
     return merged;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

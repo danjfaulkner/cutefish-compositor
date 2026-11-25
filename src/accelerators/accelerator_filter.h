@@ -6,8 +6,8 @@
 //           chromium/src/ash/accelerators/pre_target_accelerator_handler.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_FILTER_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_FILTER_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_FILTER_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_FILTER_H_
 
 #include "accelerators/accelerator.h"
 #include "base/geometry.h"
@@ -15,16 +15,16 @@
 #include "input/event_sink.h"
 #include "input/types.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class XkbTracker;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowCycleController;
 class WindowManager;
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 class AcceleratorController;
 
@@ -89,6 +89,6 @@ private:
     Accelerator m_repeatAccelerator;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_FILTER_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_FILTER_H_

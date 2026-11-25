@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SCENE_SURFACE_NODE_H_
-#define CUTEFISH_SCENE_SURFACE_NODE_H_
+#ifndef PROPERDESKTOP_SCENE_SURFACE_NODE_H_
+#define PROPERDESKTOP_SCENE_SURFACE_NODE_H_
 
 #include <memory>
 #include <optional>
@@ -18,7 +18,7 @@
 #include "base/transform.h"
 #include "ui/path.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 // Unlike TextureNode it owns its texture.
 class SurfaceNode : public Node
@@ -146,6 +146,6 @@ private:
     std::optional<base::Region> m_contentShape;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_SURFACE_NODE_H_
+#endif // PROPERDESKTOP_SCENE_SURFACE_NODE_H_

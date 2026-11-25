@@ -26,7 +26,7 @@
 #include "wayland/protocols/wl_output.h"
 #include "wayland/protocols/wl_shm.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 class CaptureRenderer : public testsupport::FakeRenderer

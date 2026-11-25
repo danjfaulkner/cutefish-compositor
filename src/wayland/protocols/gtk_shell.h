@@ -7,8 +7,8 @@
 struct wl_display;
 struct wl_global;
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 wl_global* createGtkShellGlobal(wl_display* display);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

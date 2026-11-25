@@ -9,7 +9,7 @@
 #include "shell/notification/notifications.h"
 #include "shell/shell_window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 NotificationUi::NotificationUi(Shell *shell, std::unique_ptr<Notifications> notifications)
     : m_notifications(std::move(notifications))
@@ -55,4 +55,4 @@ bool NotificationUi::isOpen(Panel panel) const
     return panel == Panel::NotificationCenter && m_centre->isOpen();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

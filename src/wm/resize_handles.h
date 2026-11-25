@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_RESIZE_HANDLES_H_
-#define CUTEFISH_WM_RESIZE_HANDLES_H_
+#ifndef PROPERDESKTOP_WM_RESIZE_HANDLES_H_
+#define PROPERDESKTOP_WM_RESIZE_HANDLES_H_
 
 #include "base/geometry.h"
 #include "render/rounded_shape.h"
 #include "wm/types.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 struct WindowVisualStyle;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 
@@ -30,6 +30,6 @@ ResizeEdge resizeEdgeFor(const render::RoundedShape& shape, const base::Rect& fr
 ResizeEdge serverResizeEdgeAt(const Window& window, const decoration::WindowVisualStyle& style,
                               const base::PointF& location, bool touch);
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_RESIZE_HANDLES_H_
+#endif // PROPERDESKTOP_WM_RESIZE_HANDLES_H_

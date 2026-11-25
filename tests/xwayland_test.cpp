@@ -74,7 +74,7 @@
 #include "xwayland/xwm.h"
 #include "xwayland/xwayland_shell.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -265,7 +265,7 @@ TEST(SurfaceAssociation, SerialsDoNotRunOutInALongSession)
 TEST_F(XwaylandTest, MissingExecutable)
 {
     xwayland::XwaylandServer::Options options;
-    options.executable = "/nonexistent/cutefish-Xwayland";
+    options.executable = "/nonexistent/properdesktop-Xwayland";
     ASSERT_TRUE(xwayland->start(options));
     ASSERT_TRUE(until([&] {
         return !xwayland->error().empty();
@@ -288,7 +288,7 @@ TEST_F(XwaylandTest, EarlyExit)
 TEST_F(XwaylandTest, MalformedPartialAndTimeout)
 {
     for (const auto *mode : {"partial", "malformed", "timeout"}) {
-        setenv("CUTEFISH_XWAYLAND_FAULT", mode, 1);
+        setenv("PROPERDESKTOP_XWAYLAND_FAULT", mode, 1);
         xwayland::XwaylandServer::Options options;
         options.executable = XWAYLAND_FAULT_PATH;
         options.timeoutMs = 100;
@@ -299,7 +299,7 @@ TEST_F(XwaylandTest, MalformedPartialAndTimeout)
         EXPECT_FALSE(xwayland->isReady());
         EXPECT_EQ(server->trackedClientCount(), 0);
     }
-    unsetenv("CUTEFISH_XWAYLAND_FAULT");
+    unsetenv("PROPERDESKTOP_XWAYLAND_FAULT");
 }
 
 TEST_F(XwaylandTest, RealStartupRepeatedAndCrash)
@@ -1369,7 +1369,7 @@ TEST_F(XwaylandTest, NetWmSyncRequestHoldsResizesForTheClientCounter)
 TEST_F(XwaylandTest, X11CursorImagesShowAtTheCompositorCursorSize)
 {
     std::string theme = "Adwaita";
-    const double cursorScale = cutefish::xwayland::x11CursorSize(24, 1.75, theme) / 24.0;
+    const double cursorScale = properdesktop::xwayland::x11CursorSize(24, 1.75, theme) / 24.0;
     if (cursorScale == 1.75)
         GTEST_SKIP() << "no Adwaita cursor size that differs from the scale";
     xwayland->setScale(1.75);
@@ -1618,7 +1618,7 @@ TEST_F(XwaylandTest, ClipboardBothDirectionsAndIncrementalTransfers)
     auto targets = intern(c, "TARGETS");
     auto utf8 = intern(c, "UTF8_STRING");
     auto incr = intern(c, "INCR");
-    auto property = intern(c, "CUTefish_TEST_SELECTION");
+    auto property = intern(c, "PROPERDESKTOP_TEST_SELECTION");
     auto managerAtom = intern(c, "CLIPBOARD_MANAGER");
     auto saveTargets = intern(c, "SAVE_TARGETS");
     const std::string mime = "text/plain;charset=utf-8";
@@ -2039,10 +2039,10 @@ TEST_F(XwaylandTest, RealWindowMetadataConfigureAndClose)
     xcb_create_window(c, XCB_COPY_FROM_PARENT, id, screen->root, 20, 30, 320, 200, 0,
                       XCB_WINDOW_CLASS_INPUT_OUTPUT, screen->root_visual,
                       XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK, values);
-    const char title[] = "Cutefish X11 test";
+    const char title[] = "Proper Desktop X11 test";
     xcb_change_property(c, XCB_PROP_MODE_REPLACE, id, XCB_ATOM_WM_NAME, XCB_ATOM_STRING, 8,
                         sizeof(title) - 1, title);
-    const char clazz[] = "test\0CutefishTest\0";
+    const char clazz[] = "test\0ProperDesktopTest\0";
     xcb_change_property(c, XCB_PROP_MODE_REPLACE, id, XCB_ATOM_WM_CLASS, XCB_ATOM_STRING, 8,
                         sizeof(clazz) - 1, clazz);
     const auto protocols = intern(c, "WM_PROTOCOLS");
@@ -2061,7 +2061,7 @@ TEST_F(XwaylandTest, RealWindowMetadataConfigureAndClose)
     })) << xwayland->error();
     auto *window = manager->windows()[0];
     EXPECT_EQ(window->title(), title);
-    EXPECT_EQ(window->applicationId(), "cutefishtest");
+    EXPECT_EQ(window->applicationId(), "properdesktoptest");
     EXPECT_EQ(window->processId(), 0);
     EXPECT_TRUE(window->rootSurface()->hasContents());
     EXPECT_TRUE(window->isDecorated());
@@ -2239,7 +2239,7 @@ TEST_F(XwaylandTest, RealWindowMetadataConfigureAndClose)
     window = manager->windows()[0];
     EXPECT_EQ(window->transientParent(), nullptr);
     EXPECT_EQ(window->title(), "Changed");
-    EXPECT_EQ(window->applicationId(), "cutefishtest");
+    EXPECT_EQ(window->applicationId(), "properdesktoptest");
     window->minimize();
     EXPECT_TRUE(window->state()->isMinimized());
     EXPECT_EQ(manager->windows().size(), 1u);
@@ -2526,7 +2526,7 @@ TEST_F(XwaylandTest, RealSoftwareRenderingAndInput)
         output.pixelSize = base::Size(base::roundToInt(800 * scale), base::roundToInt(600 * scale));
         compositor->setOutputScale(output.scale);
         wayland::updateOutputGlobal(outputGlobal, &output);
-        const char *variable = getenv("CUTEFISH_TEST_DRM_DEVICE");
+        const char *variable = getenv("PROPERDESKTOP_TEST_DRM_DEVICE");
         const std::string devicePath = variable ? variable : "";
         int drmFd = devicePath.empty() ? -1 : open(devicePath.c_str(), O_RDWR | O_CLOEXEC);
         gbm_device *device = drmFd >= 0 ? gbm_create_device(drmFd) : nullptr;
@@ -2878,7 +2878,7 @@ TEST_F(XwaylandTest, WaylandDragDropsOnAnX11Window)
     EXPECT_NE(dropTime, xcb_timestamp_t(XCB_CURRENT_TIME));
     EXPECT_EQ(position.data.data32[3], dropTime);
     xcb_convert_selection(x.c, x.window, x["XdndSelection"], x["text/plain"],
-                          x["CUTEFISH_TEST_DROP"], dropTime);
+                          x["PROPERDESKTOP_TEST_DROP"], dropTime);
     xcb_flush(x.c);
     ASSERT_TRUE(until([&] {
         native.pump();
@@ -2962,7 +2962,7 @@ TEST_F(XwaylandTest, X11DragDropsOnAWaylandSurface)
     EXPECT_NE(std::find(offered.begin(), offered.end(), "text/plain"), offered.end());
     EXPECT_NE(std::find(offered.begin(), offered.end(), "text/plain;charset=utf-8"),
               offered.end());
-    EXPECT_EQ(native.dragEnterPosition, cutefish::base::PointF(50, 50));
+    EXPECT_EQ(native.dragEnterPosition, properdesktop::base::PointF(50, 50));
     EXPECT_EQ(x.last("XdndStatus")->data.data32[1] & 1, 0u);
 
     wl_data_offer_accept(native.dragOffer, native.dragSerial, "text/plain");
@@ -3446,7 +3446,7 @@ protected:
         EXPECT_EQ(window->processId(), client.process.pid());
         EXPECT_FALSE(window->title().empty());
         {
-            const char *variable = getenv("CUTEFISH_TEST_DRM_DEVICE");
+            const char *variable = getenv("PROPERDESKTOP_TEST_DRM_DEVICE");
             const std::string devicePath = variable ? variable : "";
             int drmFd = devicePath.empty() ? -1 : open(devicePath.c_str(), O_RDWR | O_CLOEXEC);
             gbm_device *device = drmFd >= 0 ? gbm_create_device(drmFd) : nullptr;
@@ -3545,13 +3545,13 @@ TEST_F(XwaylandApplicationTest, GtkX11)
 
 TEST_F(XwaylandApplicationTest, Xterm)
 {
-    const char *xterm = getenv("CUTEFISH_XTERM");
+    const char *xterm = getenv("PROPERDESKTOP_XTERM");
     const std::string executable = xterm ? xterm : base::paths::findExecutable("xterm");
     if (executable.empty())
-        GTEST_SKIP() << "xterm unavailable; set CUTEFISH_XTERM to a test binary";
+        GTEST_SKIP() << "xterm unavailable; set PROPERDESKTOP_XTERM to a test binary";
     exercise(executable,
-             {"-title", "Cutefish X11 terminal", "-e", "/bin/sh", "-c",
-              "printf 'Cutefish X11 rendering and input\\n'; exec cat"});
+             {"-title", "Proper Desktop X11 terminal", "-e", "/bin/sh", "-c",
+              "printf 'Proper Desktop X11 rendering and input\\n'; exec cat"});
 }
 
 class XwaylandProtocolTest : public XwaylandTest

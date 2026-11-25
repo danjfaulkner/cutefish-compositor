@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <cstddef>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 bool isAsciiLetter(char c)
@@ -69,4 +69,4 @@ bool validObjectPath(std::string_view path)
     });
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -6,8 +6,8 @@
 //           accelerator_configuration_provider.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_SERVICE_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_SERVICE_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_SERVICE_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_SERVICE_H_
 
 #include <memory>
 #include <optional>
@@ -20,12 +20,12 @@
 #include "base/json.h"
 #include "base/signal.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class DBusExport;
 class XkbTracker;
 }
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 class AcceleratorController;
 
@@ -108,6 +108,6 @@ private:
     ConflictErrorState m_conflictState = ConflictErrorState::Standby;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_SERVICE_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_SERVICE_H_

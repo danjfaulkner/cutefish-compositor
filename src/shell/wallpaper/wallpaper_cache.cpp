@@ -19,7 +19,7 @@
 #include "base/paths.h"
 #include "ui/geometry.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr char kMagic[4] = {'C', 'F', 'W', 'P'};
 static constexpr int kMaxDecodeSide = 16384;
@@ -179,7 +179,7 @@ WallpaperCache::~WallpaperCache() = default;
 
 std::string WallpaperCache::defaultDirectory()
 {
-    return base::paths::cacheHome() + "/cutefish/wallpapers";
+    return base::paths::cacheHome() + "/properdesktop/wallpapers";
 }
 
 std::string WallpaperCache::cacheKey(const std::string &path, const base::Size &deviceSize)
@@ -341,4 +341,4 @@ void WallpaperCache::scheduleExpiry(bool restart)
         m_expiry->start(m_expiryDelay);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

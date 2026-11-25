@@ -6,15 +6,15 @@
 
 #include <wayland-server-core.h>
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class Seat;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 class PrivilegedClients;
 }
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 // For Xwayland alone: an X11 client that grabs the keyboard inhibits the compositor's shortcuts while
 // its window has focus.
@@ -33,4 +33,4 @@ private:
     input::Seat* m_seat;
 };
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

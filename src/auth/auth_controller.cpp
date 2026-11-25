@@ -9,19 +9,19 @@
 #include "base/logging.h"
 #include "base/strings.h"
 #include "core/main_loop.h"
-#include "cutefish/accounts/user_account.h"
+#include "properdesktop/accounts/user_account.h"
 #include <algorithm>
 #include <cassert>
 #include <pwd.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 namespace {
 
 // Nothing logged from this category ever carries a credential.
-const base::LogCategory cfAuth("cutefish.auth", base::LogLevel::Warning);
+const base::LogCategory cfAuth("properdesktop.auth", base::LogLevel::Warning);
 
 using base::strings::trimmed;
 
@@ -199,7 +199,7 @@ void AuthController::selectSessionFor(const std::string &userName)
         return;
     const std::string remembered = userName.empty() ? std::string() : lastLoginSession(userName);
     int index = -1;
-    for (const std::string &id : {remembered, std::string("cutefish-wayland")}) {
+    for (const std::string &id : {remembered, std::string("properdesktop-wayland")}) {
         for (int i = 0; index < 0 && !id.empty() && i < int(m_sessions.size()); ++i) {
             if (m_sessions[size_t(i)].id == id)
                 index = i;
@@ -362,4 +362,4 @@ void AuthController::setState(State state, const std::string &errorMessage)
     stateChanged();
 }
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth

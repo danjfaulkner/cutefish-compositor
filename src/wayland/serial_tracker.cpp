@@ -13,7 +13,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -145,4 +145,4 @@ std::string SerialTracker::toString() const
     return ss.str();
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

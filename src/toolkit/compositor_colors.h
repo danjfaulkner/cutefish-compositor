@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TOOLKIT_COMPOSITOR_COLORS_H_
-#define CUTEFISH_TOOLKIT_COMPOSITOR_COLORS_H_
+#ifndef PROPERDESKTOP_TOOLKIT_COMPOSITOR_COLORS_H_
+#define PROPERDESKTOP_TOOLKIT_COMPOSITOR_COLORS_H_
 
 #include <cstdint>
 
 #include "ui/color_provider.h"
 
-namespace cutefish::toolkit {
+namespace properdesktop::toolkit {
 
 enum class CompositorColor : uint16_t {
     SwitcherName = uint16_t(ui::ColorId::ApplicationFirst),
@@ -40,6 +40,6 @@ void addCompositorColors(ui::ColorMixer &mixer, const ui::Theme &theme);
 // Added before main by every program that names one of the colours.
 [[maybe_unused]] inline const bool compositorColorsAdded = (ui::ColorProvider::addMixer(addCompositorColors), true);
 
-} // namespace cutefish::toolkit
+} // namespace properdesktop::toolkit
 
-#endif // CUTEFISH_TOOLKIT_COMPOSITOR_COLORS_H_
+#endif // PROPERDESKTOP_TOOLKIT_COMPOSITOR_COLORS_H_

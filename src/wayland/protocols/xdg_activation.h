@@ -15,11 +15,11 @@ struct wl_display;
 struct wl_global;
 struct wl_resource;
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowManager;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 struct WaylandSeat;
 
@@ -54,4 +54,4 @@ private:
 
 wl_global *createXdgActivationGlobal(wl_display *display, WaylandXdgActivation *activation);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

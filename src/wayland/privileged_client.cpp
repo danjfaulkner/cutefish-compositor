@@ -10,7 +10,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 PrivilegedClients::PrivilegedClients(wl_display *display)
     : m_display(display)
@@ -155,4 +155,4 @@ bool PrivilegedClients::isCaptureConnection(const wl_client *client) const
                            });
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

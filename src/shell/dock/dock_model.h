@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_DOCK_DOCK_MODEL_H_
-#define CUTEFISH_SHELL_DOCK_DOCK_MODEL_H_
+#ifndef PROPERDESKTOP_SHELL_DOCK_DOCK_MODEL_H_
+#define PROPERDESKTOP_SHELL_DOCK_DOCK_MODEL_H_
 
 #include <cstdint>
 #include <functional>
@@ -17,11 +17,11 @@
 #include "shell/common/applications.h"
 #include "shell/common/list_model.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class MenuModel;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ApplicationLauncher;
 class RunningApplications;
@@ -59,7 +59,7 @@ struct DockItem {
 class DockModel : public ListModelSignals
 {
 public:
-    static constexpr const char *kLaunchpadId = "cutefish-launchpad";
+    static constexpr const char *kLaunchpadId = "properdesktop-launchpad";
     static constexpr std::chrono::milliseconds kQuitGrace{3000};
     // An upgrade can remove a desktop file and put it back seconds later.
     static constexpr std::chrono::milliseconds kUninstallGrace{3000};
@@ -164,6 +164,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_DOCK_DOCK_MODEL_H_
+#endif // PROPERDESKTOP_SHELL_DOCK_DOCK_MODEL_H_

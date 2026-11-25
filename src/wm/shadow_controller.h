@@ -6,8 +6,8 @@
 // Upstream: chromium/src/ui/wm/core/shadow_controller.{h,cc}
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WM_SHADOW_CONTROLLER_H_
-#define CUTEFISH_WM_SHADOW_CONTROLLER_H_
+#ifndef PROPERDESKTOP_WM_SHADOW_CONTROLLER_H_
+#define PROPERDESKTOP_WM_SHADOW_CONTROLLER_H_
 
 #include <map>
 #include <memory>
@@ -19,7 +19,7 @@
 #include "wm/window_observer.h"
 #include "wm/window_shadow.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class ShadowControllerDelegate;
 class Window;
@@ -51,8 +51,8 @@ public:
     void onWindowFrameChanged(Window* window) override;
 
 private:
-    void onWindowAdded(cutefish::wm::Window* window);
-    void onWindowRemoved(cutefish::wm::Window* window);
+    void onWindowAdded(properdesktop::wm::Window* window);
+    void onWindowRemoved(properdesktop::wm::Window* window);
 
 private:
     WindowShadow* createShadowForWindow(Window* window);
@@ -65,6 +65,6 @@ private:
     base::Subscription m_windowRemoved;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_SHADOW_CONTROLLER_H_
+#endif // PROPERDESKTOP_WM_SHADOW_CONTROLLER_H_

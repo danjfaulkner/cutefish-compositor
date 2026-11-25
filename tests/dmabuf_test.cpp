@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// A Cutefish counterpart to chromium/src/components/exo/wayland/zwp_linux_dmabuf.cc
+// A Proper Desktop counterpart to chromium/src/components/exo/wayland/zwp_linux_dmabuf.cc
 // and wayland_dmabuf_feedback_manager.cc: a real libwayland client driving the
 // real server over a socket, plus unit coverage of the buffer lifetime.
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
@@ -45,7 +45,7 @@
 #include "wayland/protocols/wl_compositor.h"
 #include "wayland/server.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -342,7 +342,7 @@ private:
 // The compositor only checks a DMA-BUF's length, which a memfd stands in for.
 int makeFakeDmaBufFd(size_t size)
 {
-    const int fd = memfd_create("cutefish-dmabuf-test", MFD_CLOEXEC);
+    const int fd = memfd_create("properdesktop-dmabuf-test", MFD_CLOEXEC);
     if (fd < 0 || ftruncate(fd, static_cast<off_t>(size)) != 0) {
         if (fd >= 0)
             close(fd);
@@ -450,7 +450,7 @@ protected:
     template<class Predicate>
     bool waitFor(Predicate predicate, int timeoutMs = 5000)
     {
-        return cutefish::test::runUntil(predicate, std::chrono::milliseconds(timeoutMs));
+        return properdesktop::test::runUntil(predicate, std::chrono::milliseconds(timeoutMs));
     }
 
     bool runClient(TestClient& client, TestClient::Body body, uint32_t bindVersion = 4)
@@ -463,7 +463,7 @@ protected:
         return ok && !client.result.failed;
     }
 
-    cutefish::test::TemporaryDirectory m_runtimeDir;
+    properdesktop::test::TemporaryDirectory m_runtimeDir;
     std::optional<std::string> m_previousRuntime;
     scene::Scene m_scene;
     FakeDmaBufDevice m_device;

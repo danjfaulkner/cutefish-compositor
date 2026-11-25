@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SHELL_WINDOW_H_
-#define CUTEFISH_SHELL_SHELL_WINDOW_H_
+#ifndef PROPERDESKTOP_SHELL_SHELL_WINDOW_H_
+#define PROPERDESKTOP_SHELL_SHELL_WINDOW_H_
 
 #include <cstdint>
 #include <functional>
@@ -24,30 +24,30 @@
 #include "wm/window_manager.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Buffer;
 class Surface;
 }
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class Renderer;
 }
 
-namespace cutefish::toolkit {
+namespace properdesktop::toolkit {
 class PanelTexture;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class EmbeddedWindow;
 class View;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class ShellSurface;
 class Window;
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class PanelBuffer;
 class Shell;
@@ -195,6 +195,6 @@ private:
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SHELL_WINDOW_H_
+#endif // PROPERDESKTOP_SHELL_SHELL_WINDOW_H_

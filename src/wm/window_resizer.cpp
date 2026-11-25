@@ -10,7 +10,7 @@
 #include "wm/placement.h"
 #include "wm/window.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -168,4 +168,4 @@ void WindowResizer::revertDrag()
         m_window->setBounds(m_initialBounds);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

@@ -12,7 +12,7 @@
 #include <memory>
 #include <string>
 
-#include <cutefish-status-item-v1-server-protocol.h>
+#include <properdesktop-status-item-v1-server-protocol.h>
 
 #include "base/strings.h"
 #include "compositor/surface.h"
@@ -21,7 +21,7 @@
 #include "wayland/server_util.h"
 #include "wm/status_items.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 namespace {
 
 // The executable behind a client, which names its application for the places
@@ -51,21 +51,21 @@ public:
         wm::StatusItem::Client client;
         client.configure = [resource](int height, int maxWidth) {
             const uint32_t serial = wl_display_next_serial(wl_client_get_display(wl_resource_get_client(resource)));
-            cutefish_status_item_v1_send_configure(resource, serial, height, maxWidth);
+            properdesktop_status_item_v1_send_configure(resource, serial, height, maxWidth);
             wl_client_flush(wl_resource_get_client(resource));
             return serial;
         };
         client.appearance = [resource](bool dark, uint32_t foreground) {
-            cutefish_status_item_v1_send_appearance(resource,
-                                                    dark ? CUTEFISH_STATUS_ITEM_V1_APPEARANCE_DARK
-                                                         : CUTEFISH_STATUS_ITEM_V1_APPEARANCE_LIGHT,
+            properdesktop_status_item_v1_send_appearance(resource,
+                                                    dark ? PROPERDESKTOP_STATUS_ITEM_V1_APPEARANCE_DARK
+                                                         : PROPERDESKTOP_STATUS_ITEM_V1_APPEARANCE_LIGHT,
                                                     foreground);
         };
         client.highlight = [resource](bool highlighted) {
-            cutefish_status_item_v1_send_highlight(resource, highlighted ? 1 : 0);
+            properdesktop_status_item_v1_send_highlight(resource, highlighted ? 1 : 0);
         };
         client.placed = [resource](const base::Rect &rect) {
-            cutefish_status_item_v1_send_placed(resource, rect.x(), rect.y(), rect.width(), rect.height());
+            properdesktop_status_item_v1_send_placed(resource, rect.x(), rect.y(), rect.width(), rect.height());
             wl_client_flush(wl_resource_get_client(resource));
         };
         m_surface->addSurfaceObserver(this);
@@ -90,7 +90,7 @@ public:
     std::function<void()> onSurfaceCommitRequested(compositor::Surface *surface) override
     {
         if (!m_item->isConfigured() && surface->lastCommitAttachedBuffer()) {
-            wl_resource_post_error(m_resource, CUTEFISH_STATUS_ITEM_V1_ERROR_UNCONFIGURED_BUFFER,
+            wl_resource_post_error(m_resource, PROPERDESKTOP_STATUS_ITEM_V1_ERROR_UNCONFIGURED_BUFFER,
                                    "a buffer was committed before the first configure was acknowledged");
         }
         return {};
@@ -110,7 +110,7 @@ void itemDestroy(wl_client *, wl_resource *resource)
 void itemAckConfigure(wl_client *, wl_resource *resource, uint32_t serial)
 {
     if (!getUserDataAs<WaylandStatusItem>(resource)->item()->acknowledgeConfigure(serial)) {
-        wl_resource_post_error(resource, CUTEFISH_STATUS_ITEM_V1_ERROR_INVALID_SERIAL,
+        wl_resource_post_error(resource, PROPERDESKTOP_STATUS_ITEM_V1_ERROR_INVALID_SERIAL,
                                "the serial was never sent, or was already acknowledged");
     }
 }
@@ -123,7 +123,7 @@ void itemSetIdentifier(wl_client *, wl_resource *resource, const char *identifie
 void itemSetHighlight(wl_client *, wl_resource *resource, uint32_t highlighted)
 {
     if (highlighted > 1) {
-        wl_resource_post_error(resource, CUTEFISH_STATUS_ITEM_V1_ERROR_INVALID_VALUE,
+        wl_resource_post_error(resource, PROPERDESKTOP_STATUS_ITEM_V1_ERROR_INVALID_VALUE,
                                "highlighted must be zero or one");
         return;
     }
@@ -140,12 +140,12 @@ void itemGetPopup(wl_client *, wl_resource *resource, wl_resource *popup)
                 return item->adoptPopup(shellSurface, bounds);
             });
     if (result == ParentlessPopupResult::HasParent) {
-        wl_resource_post_error(resource, CUTEFISH_STATUS_ITEM_V1_ERROR_INVALID_POPUP,
+        wl_resource_post_error(resource, PROPERDESKTOP_STATUS_ITEM_V1_ERROR_INVALID_POPUP,
                                "the popup already has a parent");
     }
 }
 
-const struct cutefish_status_item_v1_interface itemImplementation = {
+const struct properdesktop_status_item_v1_interface itemImplementation = {
         itemDestroy, itemAckConfigure, itemSetIdentifier, itemSetHighlight, itemGetPopup};
 
 void managerDestroy(wl_client *, wl_resource *resource)
@@ -157,11 +157,11 @@ void managerGetStatusItem(wl_client *client, wl_resource *resource, uint32_t id,
 {
     auto *surface = getUserDataAs<compositor::Surface>(surfaceResource);
     if (surface->hasRole()) {
-        wl_resource_post_error(resource, CUTEFISH_STATUS_ITEM_MANAGER_V1_ERROR_ROLE,
+        wl_resource_post_error(resource, PROPERDESKTOP_STATUS_ITEM_MANAGER_V1_ERROR_ROLE,
                                "the surface already has a role");
         return;
     }
-    wl_resource *itemResource = wl_resource_create(client, &cutefish_status_item_v1_interface, 1, id);
+    wl_resource *itemResource = wl_resource_create(client, &properdesktop_status_item_v1_interface, 1, id);
     if (!itemResource) {
         wl_client_post_no_memory(client);
         return;
@@ -171,12 +171,12 @@ void managerGetStatusItem(wl_client *client, wl_resource *resource, uint32_t id,
                       std::make_unique<WaylandStatusItem>(itemResource, items, surface, clientExecutable(client)));
 }
 
-const struct cutefish_status_item_manager_v1_interface managerImplementation = {managerDestroy,
+const struct properdesktop_status_item_manager_v1_interface managerImplementation = {managerDestroy,
                                                                                   managerGetStatusItem};
 
 void bind(wl_client *client, void *data, uint32_t, uint32_t id)
 {
-    auto *resource = wl_resource_create(client, &cutefish_status_item_manager_v1_interface, 1, id);
+    auto *resource = wl_resource_create(client, &properdesktop_status_item_manager_v1_interface, 1, id);
     if (!resource) {
         wl_client_post_no_memory(client);
         return;
@@ -188,7 +188,7 @@ void bind(wl_client *client, void *data, uint32_t, uint32_t id)
 
 wl_global *createStatusItemGlobal(wl_display *display, wm::StatusItems *items)
 {
-    return wl_global_create(display, &cutefish_status_item_manager_v1_interface, 1, items, bind);
+    return wl_global_create(display, &properdesktop_status_item_manager_v1_interface, 1, items, bind);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

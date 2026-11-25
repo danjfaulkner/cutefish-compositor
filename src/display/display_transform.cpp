@@ -11,7 +11,7 @@
 #include <array>
 
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 namespace {
 
@@ -125,4 +125,4 @@ base::PointF DisplayTransform::nativeToRotated(const base::PointF& point) const
     return point;
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

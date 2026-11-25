@@ -43,7 +43,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -168,7 +168,7 @@ TEST(WallpaperCacheTest, SharesOneDecodeAndKeepsItForTheNextSession)
     EXPECT_EQ(0xff202020u, loadNow(edited, path, {32, 24}).pixel(31, 23));
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class WallpaperCacheTestAccess
 {
@@ -179,7 +179,7 @@ public:
     }
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
 namespace {
 

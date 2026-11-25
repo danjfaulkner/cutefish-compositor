@@ -17,7 +17,7 @@
 #include "scene/node.h"
 #include "scene/surface_node.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 namespace {
 
@@ -249,4 +249,4 @@ void Compositor::scheduleRepaint(bool decoration)
     repaintNeeded(decoration);
 }
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

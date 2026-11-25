@@ -79,7 +79,7 @@ Buffer createBuffer(Client* client, int width, int height)
     const int stride = width * 4;
     buffer.bytes = static_cast<size_t>(stride) * height;
 
-    const int fd = memfd_create("cutefish-xdg-demo", MFD_CLOEXEC);
+    const int fd = memfd_create("properdesktop-xdg-demo", MFD_CLOEXEC);
     if (fd < 0 || ftruncate(fd, static_cast<off_t>(buffer.bytes)) != 0) {
         if (fd >= 0)
             close(fd);
@@ -402,7 +402,7 @@ void runScriptStep(Client* client)
     switch (client->scriptStep++) {
     case 0:
         printf("script: set_title\n");
-        xdg_toplevel_set_title(client->toplevel, "Cutefish xdg demo");
+        xdg_toplevel_set_title(client->toplevel, "Proper Desktop xdg demo");
         break;
     case 1:
         printf("script: set_maximized\n");
@@ -497,8 +497,8 @@ int main(int argc, char** argv)
     xdg_surface_add_listener(client.xdgSurface, &surfaceListener, &client);
     client.toplevel = xdg_surface_get_toplevel(client.xdgSurface);
     xdg_toplevel_add_listener(client.toplevel, &toplevelListener, &client);
-    xdg_toplevel_set_title(client.toplevel, "Cutefish xdg demo");
-    xdg_toplevel_set_app_id(client.toplevel, "org.cutefish.XdgDemo");
+    xdg_toplevel_set_title(client.toplevel, "Proper Desktop xdg demo");
+    xdg_toplevel_set_app_id(client.toplevel, "org.properdesktop.XdgDemo");
     xdg_toplevel_set_min_size(client.toplevel, 200, 150);
     // The first commit carries no buffer: it asks for the initial configure.
     wl_surface_commit(client.surface);

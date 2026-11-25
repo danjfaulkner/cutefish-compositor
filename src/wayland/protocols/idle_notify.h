@@ -7,7 +7,7 @@
 struct wl_display;
 struct wl_global;
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 class IdleInhibition;
 wl_global *createIdleNotifierGlobal(wl_display *display, IdleInhibition *inhibition);
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

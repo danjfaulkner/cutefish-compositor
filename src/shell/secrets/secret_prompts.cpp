@@ -5,14 +5,14 @@
 #include "shell/secrets/secret_prompts.h"
 
 #include "base/dbus.h"
-#include "cutefish/bluez/manager.h"
-#include "cutefish/networkmanager/client.h"
+#include "properdesktop/bluez/manager.h"
+#include "properdesktop/networkmanager/client.h"
 #include "shell/secrets/bluetooth_pairing_dialog.h"
 #include "shell/secrets/network_dialogs.h"
 #include "shell/secrets/network_secret_agent.h"
 #include "ui/application.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -156,4 +156,4 @@ void SecretPrompts::pairingChanged()
     m_pairing->open();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

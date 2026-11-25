@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SCENE_NODE_H_
-#define CUTEFISH_SCENE_NODE_H_
+#ifndef PROPERDESKTOP_SCENE_NODE_H_
+#define PROPERDESKTOP_SCENE_NODE_H_
 
 #include <functional>
 #include <memory>
@@ -15,7 +15,7 @@
 #include "render/renderer.h"
 #include "base/region.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 // Geometry is relative to the parent; the first child is furthest back.
 class Node
@@ -224,6 +224,6 @@ private:
     float m_alpha = 1.0f;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_NODE_H_
+#endif // PROPERDESKTOP_SCENE_NODE_H_

@@ -16,7 +16,7 @@
 #include "wm/desks/desks_controller.h"
 #include "wm/overview/overview_controller.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -128,4 +128,4 @@ void WmGestureHandler::onGestureEnd(input::Timestamp timestamp, bool)
         m_overview->endSwipe(milliseconds(timestamp));
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

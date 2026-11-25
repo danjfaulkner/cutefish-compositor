@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_STATUS_ITEMS_H_
-#define CUTEFISH_WM_STATUS_ITEMS_H_
+#ifndef PROPERDESKTOP_WM_STATUS_ITEMS_H_
+#define PROPERDESKTOP_WM_STATUS_ITEMS_H_
 
 #include <cstdint>
 #include <deque>
@@ -17,12 +17,12 @@
 #include "base/signal.h"
 #include "compositor/surface_observer.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class SubSurface;
 class Surface;
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class ShellSurface;
 class StatusItems;
@@ -158,6 +158,6 @@ private:
     base::Subscription m_popupGrabsChanged;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_STATUS_ITEMS_H_
+#endif // PROPERDESKTOP_WM_STATUS_ITEMS_H_

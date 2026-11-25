@@ -46,7 +46,7 @@
 #include "wm/window_visual_controller.h"
 #include "wm/wm_shadow_controller_delegate.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -104,7 +104,7 @@ void acceptClient(const std::string &program, std::vector<std::string> arguments
                                                                             gbm_surface_destroy);
     std::unique_ptr<render::EglRenderer> renderer;
     std::unique_ptr<render::EglRenderTarget> target;
-    const std::string devicePath = environmentVariable("CUTEFISH_TEST_DRM_DEVICE");
+    const std::string devicePath = environmentVariable("PROPERDESKTOP_TEST_DRM_DEVICE");
     if (devicePath.empty()) {
         renderer = render::EglRendererTestAccess::create();
         ASSERT_NE(renderer, nullptr);
@@ -353,7 +353,7 @@ void acceptClient(const std::string &program, std::vector<std::string> arguments
     window->node()->render(*renderer);
     std::vector<uint8_t> image = readFrame();
     ASSERT_EQ(glGetError(), GLenum(GL_NO_ERROR));
-    const std::string artifacts = environmentVariable("CUTEFISH_VISUAL_ARTIFACT_DIR");
+    const std::string artifacts = environmentVariable("PROPERDESKTOP_VISUAL_ARTIFACT_DIR");
     if (!artifacts.empty()) {
         const std::string path =
                 artifacts + "/" + std::filesystem::path(program).filename().string();

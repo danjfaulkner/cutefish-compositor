@@ -19,17 +19,17 @@ struct wl_display;
 struct wl_global;
 struct wl_resource;
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class CaptureSource;
 class Compositor;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class Window;
 class WindowManager;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 // Only announced to clients allowed to capture.
 class ForeignToplevelList : private wm::WindowObserver
@@ -90,4 +90,4 @@ private:
     base::Subscription m_windowRemoved;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -8,7 +8,7 @@
 
 #include "clipboard/selection.h"
 
-using namespace cutefish::clipboard;
+using namespace properdesktop::clipboard;
 
 namespace {
 

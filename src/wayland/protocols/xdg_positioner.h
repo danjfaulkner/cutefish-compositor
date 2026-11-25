@@ -5,14 +5,14 @@
 // Upstream: chromium/src/components/exo/wayland/wayland_positioner.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_XDG_POSITIONER_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_XDG_POSITIONER_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_POSITIONER_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_POSITIONER_H_
 
 #include <cstdint>
 
 #include "base/geometry.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class WaylandPositioner
 {
@@ -64,6 +64,6 @@ private:
     base::Point m_offset;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_XDG_POSITIONER_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_POSITIONER_H_

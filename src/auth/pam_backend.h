@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_AUTH_PAM_BACKEND_H
-#define CUTEFISH_AUTH_PAM_BACKEND_H
+#ifndef PROPERDESKTOP_AUTH_PAM_BACKEND_H
+#define PROPERDESKTOP_AUTH_PAM_BACKEND_H
 #include "auth/auth_backend.h"
 #include "base/dbus.h"
 #include "base/process.h"
@@ -12,7 +12,7 @@
 #include <memory>
 #include <vector>
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 class PamBackend : public AuthBackend
 {
 public:
@@ -55,5 +55,5 @@ private:
     size_t m_enrollmentUnanswered = 0;
     bool m_enrollmentFound = false;
 };
-} // namespace cutefish::auth
+} // namespace properdesktop::auth
 #endif

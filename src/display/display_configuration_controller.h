@@ -16,7 +16,7 @@
 #include "display/display_manager.h"
 #include "display/display_preferences.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayConfigurationController
 {
@@ -89,4 +89,4 @@ private:
     uint64_t m_hardwareEpoch = 0;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

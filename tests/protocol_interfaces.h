@@ -11,11 +11,11 @@
 
 #include <appmenu-client-protocol.h>
 #include <cursor-shape-v1-client-protocol.h>
-#include <cutefish-main-menu-v1-client-protocol.h>
-#include <cutefish-shell-v1-client-protocol.h>
-#include <cutefish-status-item-v1-client-protocol.h>
-#include <cutefish-surface-blur-v1-client-protocol.h>
-#include <cutefish-window-hints-v1-client-protocol.h>
+#include <properdesktop-main-menu-v1-client-protocol.h>
+#include <properdesktop-shell-v1-client-protocol.h>
+#include <properdesktop-status-item-v1-client-protocol.h>
+#include <properdesktop-surface-blur-v1-client-protocol.h>
+#include <properdesktop-window-hints-v1-client-protocol.h>
 #include <ext-image-capture-source-v1-client-protocol.h>
 #include <ext-data-control-v1-client-protocol.h>
 #include <ext-foreign-toplevel-list-v1-client-protocol.h>
@@ -43,7 +43,7 @@
 #include <xdg-shell-client-protocol.h>
 #include <xdg-toplevel-drag-v1-client-protocol.h>
 
-namespace cutefish::testing {
+namespace properdesktop::testing {
 
 // A global missing here fails AdvertisedGlobalsAreKnown and cannot be fuzzed.
 inline const std::map<std::string, const wl_interface *> &knownInterfaces()
@@ -72,10 +72,10 @@ inline const std::map<std::string, const wl_interface *> &knownInterfaces()
                      &zxdg_exporter_v2_interface,
                      &zxdg_importer_v2_interface,
                      &xdg_toplevel_drag_manager_v1_interface,
-                     &cutefish_surface_blur_v1_interface,
-                     &cutefish_window_hints_v1_interface,
-                     &cutefish_status_item_manager_v1_interface,
-                     &cutefish_main_menu_manager_v1_interface,
+                     &properdesktop_surface_blur_v1_interface,
+                     &properdesktop_window_hints_v1_interface,
+                     &properdesktop_status_item_manager_v1_interface,
+                     &properdesktop_main_menu_manager_v1_interface,
                      &org_kde_kwin_appmenu_manager_interface,
                      &gtk_shell1_interface,
                      &wp_fractional_scale_manager_v1_interface,
@@ -91,7 +91,7 @@ inline const std::map<std::string, const wl_interface *> &knownInterfaces()
                      &ext_foreign_toplevel_image_capture_source_manager_v1_interface,
                      &ext_image_copy_capture_manager_v1_interface,
                      &ext_foreign_toplevel_list_v1_interface,
-                     &cutefish_shell_v1_interface,
+                     &properdesktop_shell_v1_interface,
              })
             map.emplace(interface->name, interface);
         return map;
@@ -99,4 +99,4 @@ inline const std::map<std::string, const wl_interface *> &knownInterfaces()
     return interfaces;
 }
 
-} // namespace cutefish::testing
+} // namespace properdesktop::testing

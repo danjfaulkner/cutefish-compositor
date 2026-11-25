@@ -5,12 +5,12 @@
 // Upstream: chromium/src/components/exo/surface_observer.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_COMPOSITOR_SURFACE_OBSERVER_H_
-#define CUTEFISH_COMPOSITOR_SURFACE_OBSERVER_H_
+#ifndef PROPERDESKTOP_COMPOSITOR_SURFACE_OBSERVER_H_
+#define PROPERDESKTOP_COMPOSITOR_SURFACE_OBSERVER_H_
 
 #include <functional>
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 class Surface;
 
@@ -38,6 +38,6 @@ public:
     virtual bool onSurfaceStateApplying(Surface* surface) { return true; }
 };
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor
 
-#endif // CUTEFISH_COMPOSITOR_SURFACE_OBSERVER_H_
+#endif // PROPERDESKTOP_COMPOSITOR_SURFACE_OBSERVER_H_

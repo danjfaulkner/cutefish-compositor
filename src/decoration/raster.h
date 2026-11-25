@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_DECORATION_RASTER_H_
-#define CUTEFISH_DECORATION_RASTER_H_
+#ifndef PROPERDESKTOP_DECORATION_RASTER_H_
+#define PROPERDESKTOP_DECORATION_RASTER_H_
 
 #include <cstdint>
 #include <vector>
@@ -12,7 +12,7 @@
 
 #include "render/renderer.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 // Premultiplied RGBA8888, which is what the renderer's texture path blends.
 class Image
@@ -48,6 +48,6 @@ void fillRoundedRect(Image& image, const base::RectF& rect, double radius, const
 void fillContinuousRoundedRect(Image& image, const base::RectF& rect, double radius,
                                const render::Color& color, const Corners& corners = Corners::all());
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-#endif // CUTEFISH_DECORATION_RASTER_H_
+#endif // PROPERDESKTOP_DECORATION_RASTER_H_

@@ -56,9 +56,9 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-using namespace cutefish;
-using namespace cutefish::accelerators;
-using cutefish::base::Settings;
+using namespace properdesktop;
+using namespace properdesktop::accelerators;
+using properdesktop::base::Settings;
 
 namespace {
 
@@ -805,43 +805,43 @@ TEST_F(AcceleratorTest, HeldVolumeAndBrightnessKeysRepeatAtTheKeyboardRate)
 
     press(KEY_BRIGHTNESSUP);
     EXPECT_EQ(1u, delegate.levels.size());
-    EXPECT_TRUE(cutefish::test::runUntil([this] { return delegate.levels.size() >= 3; }));
+    EXPECT_TRUE(properdesktop::test::runUntil([this] { return delegate.levels.size() >= 3; }));
     release(KEY_BRIGHTNESSUP);
     const size_t held = delegate.levels.size();
     EXPECT_GE(held, 3u);
     EXPECT_EQ(std::vector<std::string>(held, "brightness-up"), delegate.levels);
-    cutefish::test::runFor(std::chrono::milliseconds(50));
+    properdesktop::test::runFor(std::chrono::milliseconds(50));
     EXPECT_EQ(held, delegate.levels.size());
 
     delegate.levels.clear();
     press(KEY_VOLUMEDOWN);
     tap(KEY_A);
-    cutefish::test::runFor(std::chrono::milliseconds(100));
+    properdesktop::test::runFor(std::chrono::milliseconds(100));
     release(KEY_VOLUMEDOWN);
     EXPECT_EQ(1u, delegate.levels.size());
 
     delegate.levels.clear();
     press(KEY_MUTE);
-    cutefish::test::runFor(std::chrono::milliseconds(100));
+    properdesktop::test::runFor(std::chrono::milliseconds(100));
     release(KEY_MUTE);
     EXPECT_EQ(1u, delegate.levels.size());
 
     delegate.levels.clear();
     press(KEY_MICMUTE);
-    cutefish::test::runFor(std::chrono::milliseconds(100));
+    properdesktop::test::runFor(std::chrono::milliseconds(100));
     release(KEY_MICMUTE);
     EXPECT_EQ(1u, delegate.levels.size());
 
     delegate.levels.clear();
     press(KEY_KBDILLUMDOWN);
-    EXPECT_TRUE(cutefish::test::runUntil([this] { return delegate.levels.size() >= 3; }));
+    EXPECT_TRUE(properdesktop::test::runUntil([this] { return delegate.levels.size() >= 3; }));
     release(KEY_KBDILLUMDOWN);
     EXPECT_GE(delegate.levels.size(), 3u);
 
     filter->setKeyRepeatSettings({.enabled = false});
     delegate.levels.clear();
     press(KEY_VOLUMEUP);
-    cutefish::test::runFor(std::chrono::milliseconds(100));
+    properdesktop::test::runFor(std::chrono::milliseconds(100));
     release(KEY_VOLUMEUP);
     EXPECT_EQ(1u, delegate.levels.size());
 }
@@ -1011,7 +1011,7 @@ TEST_F(AcceleratorTest, UnderTheCommandConventionApplicationsGetCommandAsCtrl)
     chord({KEY_LEFTALT}, KEY_Q);
     EXPECT_EQ(0, closes);
     for (int waited = 0; closes == 0 && waited < 1000; waited += 10)
-        cutefish::test::runFor(std::chrono::milliseconds(10));
+        properdesktop::test::runFor(std::chrono::milliseconds(10));
     EXPECT_EQ(1, closes);
     chord({KEY_LEFTMETA, KEY_LEFTALT}, KEY_H);
     EXPECT_TRUE(other->isHidden());
@@ -1136,7 +1136,7 @@ TEST_F(AcceleratorTest, SendPasteTypesTheApplicationsPasteShortcut)
     keyboardDelegate->keys.clear();
     wm::Window *terminal = manager.createWindow(
             makeSurface({300, 200}),
-            {.requestedSize = {300, 200}, .applicationId = "cutefish-terminal"});
+            {.requestedSize = {300, 200}, .applicationId = "properdesktop-terminal"});
     manager.activation()->activate(terminal);
     manager.sendPaste();
     const std::vector<std::pair<uint32_t, bool>> terminalPaste = {
@@ -1150,7 +1150,7 @@ TEST_F(AcceleratorTest, SendPasteTypesTheApplicationsPasteShortcut)
     EXPECT_TRUE(keyboardDelegate->keys.empty());
     release(KEY_ENTER);
     keyboardDelegate->keys.clear();
-    cutefish::test::runFor(std::chrono::milliseconds(100));
+    properdesktop::test::runFor(std::chrono::milliseconds(100));
     EXPECT_EQ(terminalPaste, keyboardDelegate->keys);
 
     wm::Window *desktop = makeWindow(base::Rect(0, 0, 800, 600));
@@ -1793,8 +1793,8 @@ TEST_F(AcceleratorTest, ServiceListsActionsWithTheirDefaultsOverTheBus)
     base::EventLoop loop;
     AcceleratorService service(configuration.get(), controller.get(), seat.xkbTracker());
     ASSERT_TRUE(service.registerService());
-    input_test::RemoteObject proxy(loop, "org.cutefish.Shortcuts1", "/org/cutefish/Shortcuts1",
-                                   "org.cutefish.Shortcuts1");
+    input_test::RemoteObject proxy(loop, "org.properdesktop.Shortcuts1", "/org/properdesktop/Shortcuts1",
+                                   "org.properdesktop.Shortcuts1");
     ASSERT_TRUE(proxy.isValid());
     int changes = 0;
     auto counted = service.acceleratorsChanged.connect([&changes] { ++changes; });
@@ -1855,8 +1855,8 @@ TEST_F(AcceleratorTest, ARecorderThatLeavesTheBusLiftsTheAcceleratorBlock)
     ASSERT_TRUE(service.registerService());
 
     {
-        input_test::RemoteObject recorder(loop, "org.cutefish.Shortcuts1",
-                                          "/org/cutefish/Shortcuts1", "org.cutefish.Shortcuts1");
+        input_test::RemoteObject recorder(loop, "org.properdesktop.Shortcuts1",
+                                          "/org/properdesktop/Shortcuts1", "org.properdesktop.Shortcuts1");
         ASSERT_TRUE(recorder.isValid());
         EXPECT_FALSE(recorder.call("preventProcessingAccelerators", true).isError());
         EXPECT_TRUE(controller->shouldPreventProcessingAccelerators());

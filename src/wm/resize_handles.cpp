@@ -13,7 +13,7 @@
 #include "wm/window_state.h"
 #include "wm/window_visual_controller.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -92,4 +92,4 @@ ResizeEdge serverResizeEdgeAt(const Window &window, const decoration::WindowVisu
                          kResizeAreaCornerSize);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

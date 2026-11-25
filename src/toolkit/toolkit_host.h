@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TOOLKIT_TOOLKIT_HOST_H_
-#define CUTEFISH_TOOLKIT_TOOLKIT_HOST_H_
+#ifndef PROPERDESKTOP_TOOLKIT_TOOLKIT_HOST_H_
+#define PROPERDESKTOP_TOOLKIT_TOOLKIT_HOST_H_
 
 #include <cstdint>
 #include <memory>
@@ -12,17 +12,17 @@
 #include "ui/bitmap.h"
 #include "ui/embedded_gpu.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 class Renderer;
 class Texture;
-} // namespace cutefish::render
+} // namespace properdesktop::render
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Application;
 class EmbeddedWindow;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::toolkit {
+namespace properdesktop::toolkit {
 
 // One per process, created on first use and kept for the process's life.
 ui::Application &application();
@@ -93,6 +93,6 @@ private:
     const render::Renderer *m_cpuRenderer = nullptr;
 };
 
-} // namespace cutefish::toolkit
+} // namespace properdesktop::toolkit
 
-#endif // CUTEFISH_TOOLKIT_TOOLKIT_HOST_H_
+#endif // PROPERDESKTOP_TOOLKIT_TOOLKIT_HOST_H_

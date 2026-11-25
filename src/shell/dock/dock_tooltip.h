@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_DOCK_DOCK_TOOLTIP_H_
-#define CUTEFISH_SHELL_DOCK_DOCK_TOOLTIP_H_
+#ifndef PROPERDESKTOP_SHELL_DOCK_DOCK_TOOLTIP_H_
+#define PROPERDESKTOP_SHELL_DOCK_DOCK_TOOLTIP_H_
 
 #include <memory>
 #include <string>
@@ -11,12 +11,12 @@
 #include "base/geometry.h"
 #include "ui/geometry.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Label;
 class Window;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class DockWindow;
 class Shell;
@@ -50,6 +50,6 @@ private:
     std::string m_text;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_DOCK_DOCK_TOOLTIP_H_
+#endif // PROPERDESKTOP_SHELL_DOCK_DOCK_TOOLTIP_H_

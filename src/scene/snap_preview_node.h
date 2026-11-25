@@ -11,7 +11,7 @@
 #include "scene/node.h"
 #include "base/geometry.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 class SnapPreviewNode : public Node
 {
@@ -52,4 +52,4 @@ private:
     render::Color m_highlight {1, 1, 1, 0.16f};
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

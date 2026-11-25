@@ -4,13 +4,13 @@
 
 #include <memory>
 
-#include "cutefish/audio/audio_model.h"
-#include "cutefish/audio/audio_object.h"
-#include "cutefish/audio/backend.h"
+#include "properdesktop/audio/audio_model.h"
+#include "properdesktop/audio/audio_object.h"
+#include "properdesktop/audio/backend.h"
 #include "shell/osd/osd.h"
 #include "shell/menubar/brightness.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -88,4 +88,4 @@ std::unique_ptr<OsdLevels> createSessionOsdLevels(base::dbus::Connection *sessio
     return std::make_unique<SessionOsdLevels>(sessionBus);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

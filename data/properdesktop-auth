@@ -1,4 +1,4 @@
-# PAM stack for the Cutefish authentication screen.
+# PAM stack for the Proper Desktop authentication screen.
 #
 # Its own service rather than reusing "login": the lock screen re-checks the
 # credential of a session that is already running, so it authenticates and

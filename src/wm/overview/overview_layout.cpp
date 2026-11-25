@@ -9,7 +9,7 @@
 #include <cmath>
 #include <numeric>
 
-namespace cutefish::wm::overview {
+namespace properdesktop::wm::overview {
 
 namespace {
 
@@ -209,4 +209,4 @@ std::vector<base::RectF> spreadLayout(const std::vector<base::Rect> &windows, co
     return result;
 }
 
-} // namespace cutefish::wm::overview
+} // namespace properdesktop::wm::overview

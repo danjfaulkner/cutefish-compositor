@@ -7,7 +7,7 @@
 
 #include "display/mirror_transform.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 MirrorTransform::MirrorTransform(base::Rect logicalBounds, base::Rect nativeContent,
                                  DisplayRotation rotation)
@@ -77,4 +77,4 @@ std::optional<base::PointF> MirrorTransform::nativeToLogical(const base::PointF&
                    m_logicalBounds.y() + normalized.y() * m_logicalBounds.height());
 }
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_AUTH_AUTH_VIEW_H
-#define CUTEFISH_AUTH_AUTH_VIEW_H
+#ifndef PROPERDESKTOP_AUTH_AUTH_VIEW_H
+#define PROPERDESKTOP_AUTH_AUTH_VIEW_H
 
 #include <ctime>
 #include <memory>
@@ -15,13 +15,13 @@
 #include "base/timer.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Animation;
 class ColumnLayout;
 class Window;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 class AuthController;
 class ChoiceMenu;
@@ -92,6 +92,6 @@ private:
     double m_pickerFrom = 0;
 };
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth
 
-#endif // CUTEFISH_AUTH_AUTH_VIEW_H
+#endif // PROPERDESKTOP_AUTH_AUTH_VIEW_H

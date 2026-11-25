@@ -8,7 +8,7 @@
 
 #include "wm/placement.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -91,4 +91,4 @@ base::Rect placeAtAnchor(const base::Size &size, const compositor::PlacementAnch
     return bounds;
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

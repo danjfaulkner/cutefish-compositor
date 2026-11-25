@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ash/display/extended_mouse_warp_controller.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_INPUT_MANAGER_H_
-#define CUTEFISH_INPUT_INPUT_MANAGER_H_
+#ifndef PROPERDESKTOP_INPUT_INPUT_MANAGER_H_
+#define PROPERDESKTOP_INPUT_INPUT_MANAGER_H_
 
 #include <map>
 #include <optional>
@@ -22,15 +22,15 @@
 #include "input/seat_observer.h"
 #include "input/types.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 class DisplayManager;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class EventSink;
 struct RelativeMotion;
@@ -176,6 +176,6 @@ private:
     base::WeakPtrFactory<InputManager> m_weakFactory {this};
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_INPUT_MANAGER_H_
+#endif // PROPERDESKTOP_INPUT_INPUT_MANAGER_H_

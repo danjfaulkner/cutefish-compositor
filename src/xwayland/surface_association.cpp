@@ -6,7 +6,7 @@
 
 #include "base/logging.h"
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 namespace {
 
@@ -79,4 +79,4 @@ void SurfaceAssociation::removeWindow(uint32_t window)
     });
 }
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

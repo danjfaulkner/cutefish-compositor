@@ -4,7 +4,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 DmaBufScanoutPolicy::DmaBufScanoutPolicy(DmaBufFeedbackManager* manager,
                                          wm::WindowManager* windowManager)
@@ -54,4 +54,4 @@ void DmaBufScanoutPolicy::apply(wm::Window* window, bool removed)
     m_manager->setScanoutCandidate(window->rootSurface(), candidate);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

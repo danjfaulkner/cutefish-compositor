@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WAYLAND_STATUS_ITEM_H
-#define CUTEFISH_WAYLAND_STATUS_ITEM_H
+#ifndef PROPERDESKTOP_WAYLAND_STATUS_ITEM_H
+#define PROPERDESKTOP_WAYLAND_STATUS_ITEM_H
 
 #include <wayland-server-core.h>
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class StatusItems;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 wl_global *createStatusItemGlobal(wl_display *display, wm::StatusItems *items);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
 #endif

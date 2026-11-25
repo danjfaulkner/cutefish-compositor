@@ -14,7 +14,7 @@
 
 #include "core/logging.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 std::unique_ptr<DmaBufBuffer> DmaBufBuffer::create(render::DmaBufDevice* device,
                                                    render::DmaBufAttributes attributes)
@@ -69,4 +69,4 @@ std::vector<render::SyncFence> DmaBufBuffer::implicitFences() const
     return fences;
 }
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

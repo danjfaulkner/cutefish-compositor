@@ -36,7 +36,7 @@
 #include "core/main_loop.h"
 #include "render/egl_renderer.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -782,4 +782,4 @@ void DrmBackend::onSessionActiveChanged(bool active)
     invalidateOutputs();
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

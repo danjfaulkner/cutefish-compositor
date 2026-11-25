@@ -6,11 +6,11 @@
 
 #include <cmath>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static std::string &dataDirectory()
 {
-    static std::string directory = CUTEFISH_SHELL_DATA_DIR;
+    static std::string directory = PROPERDESKTOP_SHELL_DATA_DIR;
     return directory;
 }
 
@@ -75,4 +75,4 @@ render::GlassParams popupGlass(double red, double green, double blue, double alp
     return glass;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

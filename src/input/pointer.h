@@ -5,8 +5,8 @@
 // Upstream: chromium/src/components/exo/pointer.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_INPUT_POINTER_H_
-#define CUTEFISH_INPUT_POINTER_H_
+#ifndef PROPERDESKTOP_INPUT_POINTER_H_
+#define PROPERDESKTOP_INPUT_POINTER_H_
 
 #include <memory>
 #include <optional>
@@ -19,7 +19,7 @@
 #include "input/pointer_gesture_delegate.h"
 #include "input/types.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class PointerDelegate;
 class RelativePointerDelegate;
@@ -130,6 +130,6 @@ private:
     bool m_hasLocation = false;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input
 
-#endif // CUTEFISH_INPUT_POINTER_H_
+#endif // PROPERDESKTOP_INPUT_POINTER_H_

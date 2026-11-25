@@ -5,7 +5,7 @@
 #pragma once
 #include <wayland-server-core.h>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 struct WaylandSeat;
 wl_global *createPrimarySelectionGlobal(wl_display *display, WaylandSeat *seat);
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -12,12 +12,12 @@
 #include "scene/scene.h"
 #include "base/geometry.h"
 
-using namespace cutefish;
-using namespace cutefish::scene;
+using namespace properdesktop;
+using namespace properdesktop::scene;
 
 namespace {
 
-using RecordingRenderer = cutefish::testsupport::FakeRenderer;
+using RecordingRenderer = properdesktop::testsupport::FakeRenderer;
 
 class NamedNode : public Node
 {

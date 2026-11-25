@@ -16,7 +16,7 @@
 #include "input_test_util.h"
 #include "scene/scene.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(CursorTheme, EveryStandardShapeLoadsWithPremultipliedPixels)
 {

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SCREENSHOT_SCREEN_RECORDING_H_
-#define CUTEFISH_SHELL_SCREENSHOT_SCREEN_RECORDING_H_
+#ifndef PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_RECORDING_H_
+#define PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_RECORDING_H_
 
 #include <cstdint>
 #include <functional>
@@ -15,11 +15,11 @@
 #include "base/signal.h"
 #include "base/timer.h"
 
-namespace cutefish::base {
+namespace properdesktop::base {
 class Process;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // "started" on its output once the first frame is in; "stop" or the end of its
 // input ends it.
@@ -72,6 +72,6 @@ private:
     base::Timer m_killTimer;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SCREENSHOT_SCREEN_RECORDING_H_
+#endif // PROPERDESKTOP_SHELL_SCREENSHOT_SCREEN_RECORDING_H_

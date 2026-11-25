@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CONTROLCENTER_STATUS_PANEL_H_
-#define CUTEFISH_SHELL_CONTROLCENTER_STATUS_PANEL_H_
+#ifndef PROPERDESKTOP_SHELL_CONTROLCENTER_STATUS_PANEL_H_
+#define PROPERDESKTOP_SHELL_CONTROLCENTER_STATUS_PANEL_H_
 
 #include <functional>
 #include <memory>
@@ -15,16 +15,16 @@
 #include "shell/controlcenter/control_center_services.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Animation;
 class BusyIndicator;
 class Icon;
 class Label;
 class ScrollView;
 class Switch;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class LevelSlider;
 class PanelRowList;
@@ -282,6 +282,6 @@ private:
     std::vector<std::string> m_profiles;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CONTROLCENTER_STATUS_PANEL_H_
+#endif // PROPERDESKTOP_SHELL_CONTROLCENTER_STATUS_PANEL_H_

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SECRETS_SECRET_STORE_H_
-#define CUTEFISH_SHELL_SECRETS_SECRET_STORE_H_
+#ifndef PROPERDESKTOP_SHELL_SECRETS_SECRET_STORE_H_
+#define PROPERDESKTOP_SHELL_SECRETS_SECRET_STORE_H_
 
 #include <cstdint>
 #include <functional>
@@ -14,7 +14,7 @@
 
 #include "base/dbus.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // Items carry connection-uuid, setting-name and setting-key, the attributes other
 // NetworkManager agents use. Callbacks never run once the store is gone.
@@ -64,6 +64,6 @@ private:
     uint64_t m_nextId = 0;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SECRETS_SECRET_STORE_H_
+#endif // PROPERDESKTOP_SHELL_SECRETS_SECRET_STORE_H_

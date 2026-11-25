@@ -19,7 +19,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using cutefish::render::OutputScheduler;
+using properdesktop::render::OutputScheduler;
 using namespace std::chrono_literals;
 using Reason = OutputScheduler::Reason;
 using State = OutputScheduler::State;
@@ -712,11 +712,11 @@ TEST_F(SchedulerTest, SuspendCancelsWakeupAndOldCompletionCannotCompleteNewFrame
 }
 
 struct ScheduledSceneTest : SchedulerTest {
-    cutefish::scene::Node root;
-    cutefish::compositor::Compositor compositor {&root};
-    cutefish::base::Subscription repaintNeeded;
-    cutefish::testsupport::FakeRenderer renderer;
-    std::shared_ptr<cutefish::compositor::ShmPool> pool = cutefish::testsupport::makePool(4096);
+    properdesktop::scene::Node root;
+    properdesktop::compositor::Compositor compositor {&root};
+    properdesktop::base::Subscription repaintNeeded;
+    properdesktop::testsupport::FakeRenderer renderer;
+    std::shared_ptr<properdesktop::compositor::ShmPool> pool = properdesktop::testsupport::makePool(4096);
 
     ScheduledSceneTest()
     {
@@ -732,7 +732,7 @@ struct ScheduledSceneTest : SchedulerTest {
     {
         auto s = compositor.createSurface();
         s->attach(
-            pool->createBuffer({16, 16}, 0, 64, cutefish::render::PixelFormat::Bgra8888, nullptr),
+            pool->createBuffer({16, 16}, 0, 64, properdesktop::render::PixelFormat::Bgra8888, nullptr),
             {});
         s->commit();
         return s;
@@ -811,7 +811,7 @@ TEST_F(ScheduledSceneTest, SynchronizedCachedCallbackCannotRequestOrCompleteUnti
 {
     auto parent = surface();
     auto child = surface();
-    auto sub = cutefish::compositor::SubSurface::create(child.get(), parent.get());
+    auto sub = properdesktop::compositor::SubSurface::create(child.get(), parent.get());
     ASSERT_NE(sub, nullptr);
     parent->commit();
     scheduler.resume();
@@ -831,7 +831,7 @@ TEST_F(ScheduledSceneTest, SynchronizedCachedCallbackCannotRequestOrCompleteUnti
 
 TEST_F(ScheduledSceneTest, CursorGeometryAndRemovalRequestRepaint)
 {
-    auto cursor = root.addChild(std::make_unique<cutefish::scene::Node>("cursor"));
+    auto cursor = root.addChild(std::make_unique<properdesktop::scene::Node>("cursor"));
     scheduler.resume();
     present(draw());
     cursor->setPosition({10, 10});
@@ -902,7 +902,7 @@ TEST_F(ScheduledSceneTest, AnOutputOwesAFrameOnlyToSurfacesItShows)
     present(draw());
     s->requestFrameCallback([](auto) {});
     s->commit();
-    const cutefish::base::Rect bounds = s->node()->absoluteGeometry();
+    const properdesktop::base::Rect bounds = s->node()->absoluteGeometry();
     EXPECT_TRUE(compositor.awaitsFrame(bounds));
     EXPECT_FALSE(compositor.awaitsFrame(bounds.translated(bounds.width() + 1000, 0)));
     draw();
@@ -923,7 +923,7 @@ TEST_F(ScheduledSceneTest, OnlySurfacesThatMovedAreReportedForOutputUpdates)
     const auto moved = compositor.takeMovedSurfaces();
     ASSERT_EQ(moved.size(), 1u);
     EXPECT_EQ(*moved.front(), a.get());
-    b->attach(pool->createBuffer({16, 16}, 0, 64, cutefish::render::PixelFormat::Bgra8888,
+    b->attach(pool->createBuffer({16, 16}, 0, 64, properdesktop::render::PixelFormat::Bgra8888,
                                  nullptr),
               {});
     b->commit();
@@ -949,9 +949,9 @@ TEST_F(SchedulerTest, SuspensionDuringRenderingDoesNotConsumeResumeWork)
 
 TEST_F(ScheduledSceneTest, DecorationOnlyTitleChangeAndWindowDestructionRequestFrames)
 {
-    cutefish::decoration::Theme theme;
-    cutefish::decoration::DecorationProvider provider(&theme);
-    cutefish::wm::WindowManager wm(&compositor, nullptr);
+    properdesktop::decoration::Theme theme;
+    properdesktop::decoration::DecorationProvider provider(&theme);
+    properdesktop::wm::WindowManager wm(&compositor, nullptr);
     wm.setFrameProvider(&provider);
     wm.setOutputBounds({0, 0, 800, 600});
     auto s = surface();
@@ -977,10 +977,10 @@ TEST_F(ScheduledSceneTest, DecorationOnlyTitleChangeAndWindowDestructionRequestF
 
 TEST_F(ScheduledSceneTest, RaisingAWindowChangesOnlyThatWindow)
 {
-    cutefish::wm::WindowManager wm(&compositor, nullptr);
+    properdesktop::wm::WindowManager wm(&compositor, nullptr);
     wm.setOutputBounds({0, 0, 800, 600});
-    std::vector<std::unique_ptr<cutefish::compositor::Surface>> surfaces;
-    std::vector<cutefish::wm::Window*> windows;
+    std::vector<std::unique_ptr<properdesktop::compositor::Surface>> surfaces;
+    std::vector<properdesktop::wm::Window*> windows;
     for (int i = 0; i < 4; ++i) {
         surfaces.push_back(surface());
         windows.push_back(wm.createWindow(surfaces.back().get(), {.requestedSize = {200, 100}}));
@@ -1003,9 +1003,9 @@ TEST_F(ScheduledSceneTest, RaisingAWindowChangesOnlyThatWindow)
 
 TEST_F(ScheduledSceneTest, ShadowTransitionsRequestOneRepaintAndSettle)
 {
-    cutefish::decoration::Theme theme;
-    cutefish::decoration::DecorationProvider provider(&theme);
-    cutefish::wm::WindowManager wm(&compositor, nullptr);
+    properdesktop::decoration::Theme theme;
+    properdesktop::decoration::DecorationProvider provider(&theme);
+    properdesktop::wm::WindowManager wm(&compositor, nullptr);
     wm.setFrameProvider(&provider);
     wm.setOutputBounds({0, 0, 800, 600});
     auto s = surface();

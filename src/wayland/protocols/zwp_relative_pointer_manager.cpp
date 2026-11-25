@@ -14,7 +14,7 @@
 #include "wayland/protocols/wl_seat.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -111,4 +111,4 @@ wl_global *createRelativePointerManagerGlobal(wl_display *display)
                             bind_relative_pointer_manager);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

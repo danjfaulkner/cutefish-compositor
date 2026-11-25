@@ -29,7 +29,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::switcher {
+namespace properdesktop::switcher {
 
 namespace {
 
@@ -329,7 +329,7 @@ int SwitcherView::iconPixels(double scale)
 void SwitcherView::followIconTheme()
 {
     const base::Settings settings(preferencesFile("services"));
-    const std::string theme = settings.stringValue("Appearance/IconTheme", "Cutefish");
+    const std::string theme = settings.stringValue("Appearance/IconTheme", "ProperDesktop");
     if (theme == m_iconTheme)
         return;
     m_iconTheme = theme;
@@ -491,4 +491,4 @@ void SwitcherView::releaseRenderResources()
         m_panelTexture->releaseRenderResources();
 }
 
-} // namespace cutefish::switcher
+} // namespace properdesktop::switcher

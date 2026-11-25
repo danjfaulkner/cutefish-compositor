@@ -4,7 +4,7 @@
 
 #pragma once
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 // Applied to the encoded values the display is sent, after composition.
 struct ColorTransform {
@@ -17,4 +17,4 @@ struct ColorTransform {
     friend bool operator==(const ColorTransform &, const ColorTransform &) = default;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

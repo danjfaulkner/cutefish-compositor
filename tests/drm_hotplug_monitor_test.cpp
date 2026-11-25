@@ -10,7 +10,7 @@
 #include "backend/drm/drm_hotplug_monitor.h"
 #include "loop_test_util.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(DrmHotplugMonitor, CoalescesEventBurst)
 {

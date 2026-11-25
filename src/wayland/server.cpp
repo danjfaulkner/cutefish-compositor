@@ -18,7 +18,7 @@
 #include "core/client_work.h"
 #include "core/logging.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -190,4 +190,4 @@ void Server::onSocketActivated()
     flush();
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

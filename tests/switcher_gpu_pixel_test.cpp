@@ -21,8 +21,8 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
-using namespace cutefish::render;
+using namespace properdesktop;
+using namespace properdesktop::render;
 
 namespace {
 
@@ -81,7 +81,7 @@ protected:
         const display::LogicalDisplay logical {
                 display::DisplayId("a"),
                 {display::DisplayId("a")},
-                "Cutefish-a",
+                "ProperDesktop-a",
                 kOutput,
                 kOutput,
                 *compositor::OutputScale::fromNumerator(uint32_t(base::roundToInt(scale * 120))),
@@ -187,13 +187,13 @@ protected:
 
 TEST_P(SwitcherGpuPixels, GpuPanelCompositesAsTheCpuOne)
 {
-    view->showWindowCycle(windows, 1, "Cutefish-a");
+    view->showWindowCycle(windows, 1, "ProperDesktop-a");
     marker->setGeometry(view->bounds().adjusted(-20, -20, 20, 20));
 
     toolkit::setGpuRenderingAllowed(false);
     const ui::Bitmap cpu = composite();
     view->hideWindowCycle();
-    view->showWindowCycle(windows, 1, "Cutefish-a");
+    view->showWindowCycle(windows, 1, "ProperDesktop-a");
     toolkit::setGpuRenderingAllowed(true);
     const ui::Bitmap gpu = composite();
     const ui::Bitmap again = composite();

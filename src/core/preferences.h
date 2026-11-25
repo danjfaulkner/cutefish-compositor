@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_CORE_PREFERENCES_H_
-#define CUTEFISH_CORE_PREFERENCES_H_
+#ifndef PROPERDESKTOP_CORE_PREFERENCES_H_
+#define PROPERDESKTOP_CORE_PREFERENCES_H_
 
 #include <string>
 #include <string_view>
 
-namespace cutefish {
+namespace properdesktop {
 
 std::string preferencesDirectory();
 
@@ -18,6 +18,6 @@ std::string preferencesFile(std::string_view process);
 // Empty restores the user's.
 void setConfigHomeForTesting(std::string configHome);
 
-} // namespace cutefish
+} // namespace properdesktop
 
-#endif // CUTEFISH_CORE_PREFERENCES_H_
+#endif // PROPERDESKTOP_CORE_PREFERENCES_H_

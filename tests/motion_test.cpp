@@ -10,7 +10,7 @@
 
 #include "scene/motion.h"
 
-using namespace cutefish::scene::motion;
+using namespace properdesktop::scene::motion;
 
 namespace {
 

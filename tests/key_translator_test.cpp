@@ -9,7 +9,7 @@
 #include "input/key_translator.h"
 #include "input/xkb_tracker.h"
 
-using namespace cutefish::input;
+using namespace properdesktop::input;
 
 namespace {
 
@@ -409,7 +409,7 @@ TEST_F(KeyTranslatorTest, DeliveredKeysIncludeTheSentModifiers)
 
 TEST(IsTerminal, KnownTerminalsAreRecognised)
 {
-    EXPECT_TRUE(isTerminal("cutefish-terminal"));
+    EXPECT_TRUE(isTerminal("properdesktop-terminal"));
     EXPECT_TRUE(isTerminal("org.gnome.Console"));
     EXPECT_FALSE(isTerminal("google-chrome"));
     EXPECT_FALSE(isTerminal("code"));

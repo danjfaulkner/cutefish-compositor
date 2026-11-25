@@ -15,7 +15,7 @@
 #include "wm/shell_surface.h"
 #include "wm/toplevel_drag.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -100,4 +100,4 @@ wl_global *createXdgToplevelDragGlobal(wl_display *display, wm::WindowManager *w
                             &bindXdgToplevelDragManager);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

@@ -17,12 +17,12 @@
 #include "input/dbus_export.h"
 #include "input/xkb_tracker.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 namespace {
 
-constexpr auto kService = "org.cutefish.Shortcuts1";
-constexpr auto kPath = "/org/cutefish/Shortcuts1";
+constexpr auto kService = "org.properdesktop.Shortcuts1";
+constexpr auto kPath = "/org/properdesktop/Shortcuts1";
 
 constexpr size_t kMaxAcceleratorsAllowed = 5;
 
@@ -437,4 +437,4 @@ bool AcceleratorService::hasCustomAccelerators()
     return m_configuration->hasCustomAccelerators();
 }
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators

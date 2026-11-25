@@ -12,7 +12,7 @@
 #include "base/signal.h"
 #include "display/display_types.h"
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class NativeDisplayDelegate
 {
@@ -49,4 +49,4 @@ public:
     base::Signal<uint64_t> hardwareInvalidated;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

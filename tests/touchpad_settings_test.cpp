@@ -11,9 +11,9 @@
 #include "base/settings.h"
 #include "input_test_util.h"
 
-using cutefish::base::EventLoop;
-using cutefish::base::Settings;
-using cutefish::input::TouchpadSettings;
+using properdesktop::base::EventLoop;
+using properdesktop::base::Settings;
+using properdesktop::input::TouchpadSettings;
 using input_test::RemoteObject;
 using input_test::TemporaryDirectory;
 
@@ -124,8 +124,8 @@ TEST(TouchpadSettings, DBusPropertiesMethodsAndServiceRestart)
     for (int iteration = 0; iteration < 2; ++iteration) {
         TouchpadSettings settings(file);
         ASSERT_TRUE(settings.registerService());
-        RemoteObject proxy(loop, "org.cutefish.Touchpad1", "/org/cutefish/Touchpad1",
-                           "org.cutefish.Touchpad1");
+        RemoteObject proxy(loop, "org.properdesktop.Touchpad1", "/org/properdesktop/Touchpad1",
+                           "org.properdesktop.Touchpad1");
         ASSERT_TRUE(proxy.isValid());
         EXPECT_EQ(proxy.property<bool>("tapToClick"), iteration != 0);
         const auto invoke = [&proxy](const std::string &method, auto value) {

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SCREENSHOT_CAPTURE_TOOLBAR_H_
-#define CUTEFISH_SHELL_SCREENSHOT_CAPTURE_TOOLBAR_H_
+#ifndef PROPERDESKTOP_SHELL_SCREENSHOT_CAPTURE_TOOLBAR_H_
+#define PROPERDESKTOP_SHELL_SCREENSHOT_CAPTURE_TOOLBAR_H_
 
 #include <chrono>
 #include <functional>
@@ -16,17 +16,17 @@
 #include "ui/geometry.h"
 #include "ui/view.h"
 
-namespace cutefish::audio {
+namespace properdesktop::audio {
 class AudioModel;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Label;
 class Menu;
 class Window;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class CaptureOverlay;
 class CaptureTooltip;
@@ -191,6 +191,6 @@ private:
     bool m_released = false;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SCREENSHOT_CAPTURE_TOOLBAR_H_
+#endif // PROPERDESKTOP_SHELL_SCREENSHOT_CAPTURE_TOOLBAR_H_

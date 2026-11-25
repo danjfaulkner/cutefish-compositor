@@ -5,15 +5,15 @@
 // Upstream: chromium/src/components/exo/wayland/wayland_keyboard_delegate.h
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_WAYLAND_KEYBOARD_DELEGATE_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_WAYLAND_KEYBOARD_DELEGATE_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_WAYLAND_KEYBOARD_DELEGATE_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_WAYLAND_KEYBOARD_DELEGATE_H_
 
 #include <wayland-server-core.h>
 
 #include "clipboard/selection.h"
 #include "input/keyboard_delegate.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class SerialTracker;
 
@@ -52,6 +52,6 @@ private:
 // The rate in Hz that wl_keyboard.repeat_info carries.
 int32_t waylandRepeatRate(bool enabled, std::chrono::milliseconds interval);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_WAYLAND_KEYBOARD_DELEGATE_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_WAYLAND_KEYBOARD_DELEGATE_H_

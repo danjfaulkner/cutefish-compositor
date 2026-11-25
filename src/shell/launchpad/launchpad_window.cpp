@@ -17,7 +17,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 LaunchpadWindow::LaunchpadWindow(Shell *shell, std::unique_ptr<Launchpad> launchpad, Dock *dock,
                                  Wallpaper *wallpaper)
@@ -134,4 +134,4 @@ void LaunchpadWindow::activeChanged()
     });
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

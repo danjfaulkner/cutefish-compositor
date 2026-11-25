@@ -24,10 +24,10 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr double kIconSize = 48;
 static constexpr double kRowSpacing = 14;
@@ -318,4 +318,4 @@ uint64_t NotRespondingSheets::parentWindow(int64_t application) const
     return it == m_sheets.end() ? 0 : it->second.parentWindow;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_SELECTION_H_
-#define CUTEFISH_BACKEND_DRM_DRM_SELECTION_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_SELECTION_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_SELECTION_H_
 
 #include <xf86drmMode.h>
 
@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 struct ConnectorInfo {
     uint32_t id = 0;
@@ -57,6 +57,6 @@ double refreshRate(const drmModeModeInfo& mode);
 
 std::string connectorName(uint32_t type, uint32_t typeId);
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_SELECTION_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_SELECTION_H_

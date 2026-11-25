@@ -6,11 +6,11 @@
 //           chromium/src/ash/accelerators/accelerator_table.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 //
-// Adapted for Cutefish: without a key-ack extension, every accelerator here is
+// Adapted for Proper Desktop: without a key-ack extension, every accelerator here is
 // handled before the focused window sees it.
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_TABLE_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_TABLE_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_TABLE_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_TABLE_H_
 
 #include <array>
 
@@ -19,7 +19,7 @@
 #include "accelerators/accelerator.h"
 #include "accelerators/accelerator_actions.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 struct AcceleratorData {
     bool triggerOnPress;
@@ -261,6 +261,6 @@ inline constexpr std::array kActionsBlockedInOverview = {
         AcceleratorAction::HideOtherApplications,
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_TABLE_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_TABLE_H_

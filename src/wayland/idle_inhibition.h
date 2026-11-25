@@ -9,11 +9,11 @@
 #include "base/signal.h"
 #include "base/weak_ptr.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class InputManager;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 // Wayland inhibitors and the org.freedesktop.ScreenSaver service share this count.
 class IdleInhibition
@@ -43,4 +43,4 @@ private:
     bool m_ignored = false;
     base::WeakPtrFactory<IdleInhibition> m_weakFactory {this};
 };
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

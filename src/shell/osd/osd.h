@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_OSD_OSD_H_
-#define CUTEFISH_SHELL_OSD_OSD_H_
+#ifndef PROPERDESKTOP_SHELL_OSD_OSD_H_
+#define PROPERDESKTOP_SHELL_OSD_OSD_H_
 
 #include <memory>
 #include <string>
@@ -12,11 +12,11 @@
 #include "base/timer.h"
 #include "shell/shell.h"
 
-namespace cutefish::base::dbus {
+namespace properdesktop::base::dbus {
 class Object;
 }
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class LevelTrack;
 class ShellWindow;
@@ -56,7 +56,7 @@ public:
 
 std::unique_ptr<OsdLevels> createSessionOsdLevels(base::dbus::Connection *sessionBus);
 
-// Serves org.cutefish.Osd at /Osd, which the compositor's media keys call.
+// Serves org.properdesktop.Osd at /Osd, which the compositor's media keys call.
 class Osd : public Component
 {
 public:
@@ -132,6 +132,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_OSD_OSD_H_
+#endif // PROPERDESKTOP_SHELL_OSD_OSD_H_

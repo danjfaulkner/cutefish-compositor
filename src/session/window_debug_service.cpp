@@ -21,7 +21,7 @@
 #include "wm/window_frame.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 namespace {
 
@@ -30,8 +30,8 @@ const base::LogCategory &logs()
     return base::LogCategory::defaultCategory();
 }
 
-const std::string serviceName = "org.cutefish.WindowDebug1";
-const std::string objectPath = "/org/cutefish/WindowDebug1";
+const std::string serviceName = "org.properdesktop.WindowDebug1";
+const std::string objectPath = "/org/properdesktop/WindowDebug1";
 
 using base::json::Value;
 
@@ -302,4 +302,4 @@ bool WindowDebugService::Key(uint32_t code, bool pressed)
     return true;
 }
 
-} // namespace cutefish::session
+} // namespace properdesktop::session

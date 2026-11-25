@@ -11,7 +11,7 @@
 #include "wayland/server_util.h"
 #include "xwayland-shell-v1-server-protocol.h"
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 namespace {
 
 void destroy(wl_client*, wl_resource* resource)
@@ -161,4 +161,4 @@ void XwaylandShell::getSurface(wl_client* client, wl_resource* resource, uint32_
     self->m_roles.push_back(std::move(role));
 }
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

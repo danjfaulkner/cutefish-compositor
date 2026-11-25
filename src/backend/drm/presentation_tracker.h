@@ -10,7 +10,7 @@
 
 #include "render/presentation.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 class PresentationTracker
 {
@@ -87,4 +87,4 @@ private:
     std::map<uint64_t, Pending> m_pending;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

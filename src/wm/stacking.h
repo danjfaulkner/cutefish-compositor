@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_STACKING_H_
-#define CUTEFISH_WM_STACKING_H_
+#ifndef PROPERDESKTOP_WM_STACKING_H_
+#define PROPERDESKTOP_WM_STACKING_H_
 
 #include "wm/types.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 
@@ -31,6 +31,6 @@ enum class StackingLayer {
 StackingLayer layerFor(WindowRole role, PanelBehavior behavior);
 StackingLayer layerFor(const Window *window);
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_STACKING_H_
+#endif // PROPERDESKTOP_WM_STACKING_H_

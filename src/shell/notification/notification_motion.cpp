@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static double cubicBezier(double x1, double y1, double x2, double y2, double x)
 {
@@ -111,4 +111,4 @@ void Tween::tick(uint64_t frameTimeNs)
         onFinished();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

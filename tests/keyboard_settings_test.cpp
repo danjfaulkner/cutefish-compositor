@@ -10,10 +10,10 @@
 #include "base/settings.h"
 #include "input_test_util.h"
 
-using cutefish::base::EventLoop;
-using cutefish::base::Settings;
-using cutefish::input::KeyboardSettings;
-using cutefish::input::ShortcutConvention;
+using properdesktop::base::EventLoop;
+using properdesktop::base::Settings;
+using properdesktop::input::KeyboardSettings;
+using properdesktop::input::ShortcutConvention;
 using input_test::RemoteObject;
 using input_test::TemporaryDirectory;
 
@@ -162,8 +162,8 @@ TEST(KeyboardSettings, DBusPropertiesAndMethods)
         return name != "broken";
     });
     ASSERT_TRUE(settings.registerService());
-    RemoteObject proxy(loop, "org.cutefish.Keyboard1", "/org/cutefish/Keyboard1",
-                       "org.cutefish.Keyboard1");
+    RemoteObject proxy(loop, "org.properdesktop.Keyboard1", "/org/properdesktop/Keyboard1",
+                       "org.properdesktop.Keyboard1");
     ASSERT_TRUE(proxy.isValid());
     const auto invoke = [&proxy](const std::string &method, auto value) {
         const auto reply = proxy.call(method, value);
@@ -191,8 +191,8 @@ TEST(KeyboardSettings, IntrospectionNamesTheArguments)
     ASSERT_TRUE(directory.isValid());
     KeyboardSettings settings(directory.filePath("compositor.conf"));
     ASSERT_TRUE(settings.registerService());
-    RemoteObject proxy(loop, "org.cutefish.Keyboard1", "/org/cutefish/Keyboard1",
-                       "org.cutefish.Keyboard1");
+    RemoteObject proxy(loop, "org.properdesktop.Keyboard1", "/org/properdesktop/Keyboard1",
+                       "org.properdesktop.Keyboard1");
     ASSERT_TRUE(proxy.isValid());
     const std::string xml = proxy.introspect();
     EXPECT_NE(xml.find("<method name=\"setRepeatDelay\">\n"

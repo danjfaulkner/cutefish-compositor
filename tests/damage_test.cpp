@@ -14,7 +14,7 @@
 #include "shm_test_util.h"
 #include "base/region.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(Damage, OldNewRemovedAndRestoredCoverage)
 {

@@ -17,7 +17,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 DeskAnimationBase::DeskAnimationBase(DesksController *controller, int endingDesk,
                                      bool isContinuousGestureAnimation)
@@ -281,4 +281,4 @@ void DeskRemovalAnimation::onDeskSwitchAnimationFinishedInternal()
     m_controller->removeDeskInternal(removed, /*deskSwitched=*/true);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

@@ -30,7 +30,7 @@
 #include "wayland/protocols/wl_shm.h"
 #include "wayland/protocols/wp_presentation.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

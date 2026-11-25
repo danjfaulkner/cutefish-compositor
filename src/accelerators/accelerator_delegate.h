@@ -2,38 +2,38 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_DELEGATE_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_DELEGATE_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_DELEGATE_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_DELEGATE_H_
 
 #include <functional>
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 class AcceleratorDelegate
 {
 public:
     virtual ~AcceleratorDelegate() = default;
 
-    // org.cutefish.Launchpad.toggle.
+    // org.properdesktop.Launchpad.toggle.
     virtual void toggleAppList() = 0;
 
-    // org.cutefish.Screenshot.
+    // org.properdesktop.Screenshot.
     virtual void takeScreenshot(bool toClipboard) = 0;
     virtual void takePartialScreenshot(bool toClipboard) = 0;
     virtual void startCaptureMode() = 0;
     virtual void stopScreenRecording() = 0;
 
-    // org.cutefish.ClipboardHistory.toggle.
+    // org.properdesktop.ClipboardHistory.toggle.
     virtual void toggleClipboardHistory() = 0;
 
-    // org.cutefish.MenuBar: control the current MPRIS player.
+    // org.properdesktop.MenuBar: control the current MPRIS player.
     virtual void mediaPlayPause() = 0;
     virtual void mediaPause() = 0;
     virtual void mediaPrevious() = 0;
     virtual void mediaNext() = 0;
     virtual void mediaStop() = 0;
 
-    // org.cutefish.Osd: changes the level and shows it.
+    // org.properdesktop.Osd: changes the level and shows it.
     virtual void volumeDown() = 0;
     virtual void volumeUp() = 0;
     virtual void toggleMute() = 0;
@@ -71,6 +71,6 @@ public:
     void keyboardBrightnessUp() override;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_DELEGATE_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_DELEGATE_H_

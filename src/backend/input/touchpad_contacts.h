@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_INPUT_TOUCHPAD_CONTACTS_H_
-#define CUTEFISH_BACKEND_INPUT_TOUCHPAD_CONTACTS_H_
+#ifndef PROPERDESKTOP_BACKEND_INPUT_TOUCHPAD_CONTACTS_H_
+#define PROPERDESKTOP_BACKEND_INPUT_TOUCHPAD_CONTACTS_H_
 
 #include "base/geometry.h"
 #include "input/touchpad_click.h"
@@ -12,7 +12,7 @@
 #include <memory>
 #include <vector>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 // libinput does not hand out a touchpad's contacts, so the kernel's multitouch
 // slots are queried on the fd libinput has open.
@@ -55,6 +55,6 @@ private:
     std::vector<Slot> m_slots;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_INPUT_TOUCHPAD_CONTACTS_H_
+#endif // PROPERDESKTOP_BACKEND_INPUT_TOUCHPAD_CONTACTS_H_

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SECRETS_NETWORK_SECRET_AGENT_H_
-#define CUTEFISH_SHELL_SECRETS_NETWORK_SECRET_AGENT_H_
+#ifndef PROPERDESKTOP_SHELL_SECRETS_NETWORK_SECRET_AGENT_H_
+#define PROPERDESKTOP_SHELL_SECRETS_NETWORK_SECRET_AGENT_H_
 
 #include <cstdint>
 #include <deque>
@@ -16,15 +16,15 @@
 #include "base/dbus.h"
 #include "base/signal.h"
 #include "base/timer.h"
-#include "cutefish/networkmanager/types.h"
+#include "properdesktop/networkmanager/types.h"
 #include "shell/secrets/vpn_secret_fields.h"
 
-namespace cutefish::networkmanager {
+namespace properdesktop::networkmanager {
 class Client;
 class Handler;
-} // namespace cutefish::networkmanager
+} // namespace properdesktop::networkmanager
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class SecretStore;
 
@@ -138,6 +138,6 @@ private:
     std::shared_ptr<char> m_alive = std::make_shared<char>();
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SECRETS_NETWORK_SECRET_AGENT_H_
+#endif // PROPERDESKTOP_SHELL_SECRETS_NETWORK_SECRET_AGENT_H_

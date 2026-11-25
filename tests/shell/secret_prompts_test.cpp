@@ -17,9 +17,9 @@
 #include "compositor/compositor.h"
 #include "compositor/surface.h"
 #include "core/main_loop.h"
-#include "cutefish/bluez/manager.h"
-#include "cutefish/networkmanager/client.h"
-#include "cutefish/networkmanager/variants.h"
+#include "properdesktop/bluez/manager.h"
+#include "properdesktop/networkmanager/client.h"
+#include "properdesktop/networkmanager/variants.h"
 #include "dbus_test_client.h"
 #include "fake_renderer.h"
 #include "input/input_manager.h"
@@ -47,7 +47,7 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using base::dbus::MethodCall;
 using base::dbus::ObjectPath;
 using base::dbus::Variant;
@@ -517,7 +517,7 @@ TEST(WirelessPasswordTest, ValidKeysAndWhatCanBeTyped)
 TEST_F(SecretPromptsTest, RegistersAsTheSessionsAgent)
 {
     start();
-    EXPECT_EQ("org.cutefish.network", networkManager->agentIdentifier);
+    EXPECT_EQ("org.properdesktop.network", networkManager->agentIdentifier);
     EXPECT_EQ(1u, networkManager->last("RegisterWithCapabilities")->argument<uint32_t>(1).value_or(0));
 
     networkManager->stop();
@@ -529,7 +529,7 @@ TEST_F(SecretPromptsTest, RegistersAsTheSessionsAgent)
     const std::string xml = other.introspect(systemBus->uniqueName(), kAgentPath);
     EXPECT_NE(std::string::npos, xml.find("<method name=\"GetSecrets\">")) << xml;
     EXPECT_NE(std::string::npos, xml.find("name=\"settingName\"")) << xml;
-    const std::string prompt = other.introspect("org.cutefish.SecretAgent", "/SecretAgent");
+    const std::string prompt = other.introspect("org.properdesktop.SecretAgent", "/SecretAgent");
     EXPECT_NE(std::string::npos, prompt.find("<method name=\"ConnectWireless\">")) << prompt;
     EXPECT_NE(std::string::npos, prompt.find("name=\"accessPointPath\"")) << prompt;
 }
@@ -692,7 +692,7 @@ TEST_F(SecretPromptsTest, AsksBeforeANetworkIsAddedAndAnotherNetworkTakesOver)
     start();
     test::DBusTestClient controlCentre;
     EXPECT_FALSE(controlCentre
-                         .call("org.cutefish.SecretAgent", "/SecretAgent", "org.cutefish.SecretAgent", "ConnectWireless",
+                         .call("org.properdesktop.SecretAgent", "/SecretAgent", "org.properdesktop.SecretAgent", "ConnectWireless",
                                kDevice, kAccessPoint, std::string("Old router"), true)
                          .isError());
     ASSERT_TRUE(agent->pending());

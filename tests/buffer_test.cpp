@@ -16,16 +16,16 @@
 #include "scene/surface_node.h"
 #include "shm_test_util.h"
 
-using namespace cutefish;
-using namespace cutefish::compositor;
-using cutefish::testsupport::makePool;
+using namespace properdesktop;
+using namespace properdesktop::compositor;
+using properdesktop::testsupport::makePool;
 
 namespace {
 
 class RetainingBuffer : public Buffer
 {
 public:
-    cutefish::base::Size size() const override { return {8, 8}; }
+    properdesktop::base::Size size() const override { return {8, 8}; }
 
     render::PixelFormat format() const override { return render::PixelFormat::Bgra8888; }
 
@@ -60,7 +60,7 @@ protected:
     Compositor m_compositor {m_scene.root()};
     std::vector<std::unique_ptr<Surface>> m_surfaces;
     std::shared_ptr<ShmPool> m_pool = makePool(1024 * 1024);
-    cutefish::testsupport::FakeRenderer m_renderer;
+    properdesktop::testsupport::FakeRenderer m_renderer;
 };
 
 TEST_F(BufferTest, ANewBufferOwesNoRelease)

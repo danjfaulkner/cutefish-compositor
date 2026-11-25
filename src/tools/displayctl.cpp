@@ -19,9 +19,9 @@
 #include "base/timer.h"
 #include "ipc/display_dbus_types.h"
 
-namespace ipc = cutefish::display::ipc;
-namespace base = cutefish::base;
-namespace dbus = cutefish::base::dbus;
+namespace ipc = properdesktop::display::ipc;
+namespace base = properdesktop::base;
+namespace dbus = properdesktop::base::dbus;
 using base::json::Value;
 
 namespace {
@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 {
     base::CommandLineParser parser;
     parser.addHelpOption();
-    parser.addOption({"service", "D-Bus service name", "name", "org.cutefish.DisplayConfig"});
+    parser.addOption({"service", "D-Bus service name", "name", "org.properdesktop.DisplayConfig"});
     parser.addPositionalArgument("command", "list, test, apply, confirm, revert, reset, or power");
     parser.addPositionalArgument("arguments", "Command arguments", "[arguments...]");
     parser.process(argc, argv);
@@ -189,7 +189,7 @@ int main(int argc, char **argv)
         return 1;
     }
     const dbus::Proxy service(bus, parser.value("service"),
-                              "/org/cutefish/DisplayConfig1", "org.cutefish.DisplayConfig1");
+                              "/org/properdesktop/DisplayConfig1", "org.properdesktop.DisplayConfig1");
 
     const std::string &command = args.front();
     std::string powerToken;

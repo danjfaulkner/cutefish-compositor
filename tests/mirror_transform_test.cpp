@@ -9,7 +9,7 @@
 
 #include "display/mirror_transform.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(MirrorTransform, MapsLogicalSourceIntoLetterboxedDestination)
 {

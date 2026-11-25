@@ -5,8 +5,8 @@
 // The pause follows remoting/host/remote_input_filter.cc at Chromium revision
 // 8abbac30b9cf2fe976422c58c000c94685648b65.
 
-#ifndef CUTEFISH_COMPUTER_CONTROL_CONTROLLER_H_
-#define CUTEFISH_COMPUTER_CONTROL_CONTROLLER_H_
+#ifndef PROPERDESKTOP_COMPUTER_CONTROL_CONTROLLER_H_
+#define PROPERDESKTOP_COMPUTER_CONTROL_CONTROLLER_H_
 
 #include <chrono>
 #include <cstdint>
@@ -24,13 +24,13 @@
 #include "input/types.h"
 #include "input/xkb_tracker.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 class InputManager;
 }
 
-namespace cutefish::computer_control {
+namespace properdesktop::computer_control {
 
-// The values are cutefish_computer_control_v1's.
+// The values are properdesktop_computer_control_v1's.
 enum class RevokeReason : uint32_t {
     Denied = 0,
     Stopped = 1,
@@ -48,7 +48,7 @@ enum class Rejection : uint32_t {
 };
 
 struct WindowInfo {
-    // The value is cutefish_computer_control_v1's window_state.
+    // The value is properdesktop_computer_control_v1's window_state.
     enum Flag : uint32_t {
         Active = 1,
         Minimized = 2,
@@ -247,6 +247,6 @@ private:
     std::map<uint32_t, uint64_t> m_handleWindows;
 };
 
-} // namespace cutefish::computer_control
+} // namespace properdesktop::computer_control
 
-#endif // CUTEFISH_COMPUTER_CONTROL_CONTROLLER_H_
+#endif // PROPERDESKTOP_COMPUTER_CONTROL_CONTROLLER_H_

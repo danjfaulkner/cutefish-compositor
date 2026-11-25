@@ -10,7 +10,7 @@
 #include "display/display_types.h"
 #include "session/secure_container.h"
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 const char *toString(SessionState state)
 {
@@ -200,4 +200,4 @@ bool SessionController::allowsActivation() const
     return !isBlocked();
 }
 
-} // namespace cutefish::session
+} // namespace properdesktop::session

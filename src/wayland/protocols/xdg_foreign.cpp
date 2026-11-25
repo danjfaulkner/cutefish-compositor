@@ -17,11 +17,11 @@
 #include "wayland/server_util.h"
 #include "wm/shell_surface.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
-using cutefish::wm::ShellSurface;
+using properdesktop::wm::ShellSurface;
 
 class ExportedSurface;
 
@@ -328,4 +328,4 @@ wl_global *createXdgImporterV2Global(wl_display *display)
                             &bindXdgImporter);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

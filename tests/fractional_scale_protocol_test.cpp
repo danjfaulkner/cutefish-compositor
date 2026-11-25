@@ -33,7 +33,7 @@
 #include "wayland/protocols/wp_fractional_scale.h"
 #include "wayland/protocols/wp_viewporter.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

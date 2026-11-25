@@ -11,7 +11,7 @@
 #include "base/region.h"
 struct gbm_surface;
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 class EglSwapState
 {
@@ -65,4 +65,4 @@ private:
     PFNEGLSWAPBUFFERSWITHDAMAGEKHRPROC m_swapBuffersWithDamage = nullptr;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

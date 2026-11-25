@@ -13,7 +13,7 @@
 #include "compositor/surface.h"
 #include "wayland/server_util.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -98,4 +98,4 @@ wl_global* createSubcompositorGlobal(wl_display* display)
 {
     return wl_global_create(display, &wl_subcompositor_interface, 1, nullptr, bind_subcompositor);
 }
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

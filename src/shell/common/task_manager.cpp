@@ -9,7 +9,7 @@
 
 #include "shell/common/task_windows.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 TaskManager::TaskManager(TaskWindows &windows, Applications &applications, CommandReader commandReader,
                          ParentReader parentReader)
@@ -272,4 +272,4 @@ void TaskManager::updateReady()
     readyChanged();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

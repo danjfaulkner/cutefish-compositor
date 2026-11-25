@@ -14,7 +14,7 @@
 #include "base/transform.h"
 #include "ui/bitmap_painter.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 namespace {
 
@@ -112,4 +112,4 @@ ui::Bitmap rasterizeShapeOutline(const ui::Path &path, const ShapeRaster &raster
     return image;
 }
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

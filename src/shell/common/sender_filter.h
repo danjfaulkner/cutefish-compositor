@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_COMMON_SENDER_FILTER_H_
-#define CUTEFISH_SHELL_COMMON_SENDER_FILTER_H_
+#ifndef PROPERDESKTOP_SHELL_COMMON_SENDER_FILTER_H_
+#define PROPERDESKTOP_SHELL_COMMON_SENDER_FILTER_H_
 
 #include <string>
 
 #include "base/dbus.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // sd-bus cannot match a well-known sender name, so rules with the same path and
 // interface hear each other's signals.
@@ -39,6 +39,6 @@ private:
     base::dbus::NameWatch m_watch;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_COMMON_SENDER_FILTER_H_
+#endif // PROPERDESKTOP_SHELL_COMMON_SENDER_FILTER_H_

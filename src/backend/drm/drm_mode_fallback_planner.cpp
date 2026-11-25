@@ -11,7 +11,7 @@
 #include <deque>
 #include <set>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 namespace {
 
 std::vector<DrmModeCandidate> sortedModes(const DrmFallbackHead &head)
@@ -90,4 +90,4 @@ DrmModeFallbackPlanner::choose(const std::vector<DrmFallbackHead> &heads, Tester
     return std::nullopt;
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

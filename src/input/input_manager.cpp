@@ -23,7 +23,7 @@
 #include "base/event_loop.h"
 #include "scene/node.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 InputManager::InputManager(Seat *seat)
     : m_seat(seat)
@@ -580,4 +580,4 @@ void InputManager::onKey(Timestamp timestamp, uint32_t physicalCode, bool presse
         m_seat->dispatchKey(timestamp, evdevCode, pressed);
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

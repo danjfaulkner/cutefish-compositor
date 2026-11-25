@@ -15,7 +15,7 @@
 #include "auth/auth_controller.h"
 #include "base/i18n.h"
 #include "base/locale.h"
-#include "cutefish/accounts/account_picture.h"
+#include "properdesktop/accounts/account_picture.h"
 #include "ui/animation.h"
 #include "ui/application.h"
 #include "ui/image_view.h"
@@ -27,9 +27,9 @@
 #include "ui/text_field.h"
 #include "ui/window.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 namespace {
 
@@ -1632,4 +1632,4 @@ void AuthScreen::childrenLaidOut()
     m_sessions->placeList();
 }
 
-} // namespace cutefish::auth
+} // namespace properdesktop::auth

@@ -22,10 +22,10 @@
 #include "wm/window.h"
 #include "wm/window_manager.h"
 
-using cutefish::i18n::format;
-using cutefish::i18n::tr;
+using properdesktop::i18n::format;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 AppMenusModel::AppMenusModel(Shell *shell, AppMenuRegistrar *registrar, PowerActions *power)
     : m_shell(shell)
@@ -385,4 +385,4 @@ void AppMenusModel::trigger(size_t row)
         m_shown->activate(item->id);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

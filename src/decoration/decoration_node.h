@@ -4,8 +4,8 @@
 
 // WindowVisualNode owns the shared body clip and final exterior outline.
 
-#ifndef CUTEFISH_DECORATION_DECORATION_NODE_H_
-#define CUTEFISH_DECORATION_DECORATION_NODE_H_
+#ifndef PROPERDESKTOP_DECORATION_DECORATION_NODE_H_
+#define PROPERDESKTOP_DECORATION_DECORATION_NODE_H_
 
 #include <memory>
 #include <vector>
@@ -14,7 +14,7 @@
 
 #include "scene/node.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 class Decoration;
 class Theme;
@@ -51,6 +51,6 @@ private:
     mutable std::vector<Caption> m_captions;
 };
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration
 
-#endif // CUTEFISH_DECORATION_DECORATION_NODE_H_
+#endif // PROPERDESKTOP_DECORATION_DECORATION_NODE_H_

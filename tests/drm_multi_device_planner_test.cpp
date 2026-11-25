@@ -9,7 +9,7 @@
 
 #include "backend/drm/drm_multi_device_planner.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 TEST(DrmMultiDevicePlanner, RollsBackEarlierDeviceAfterPartialCommitFailure)
 {

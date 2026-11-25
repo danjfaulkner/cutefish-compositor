@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TESTS_SHELL_DBUS_TEST_CLIENT_H_
-#define CUTEFISH_TESTS_SHELL_DBUS_TEST_CLIENT_H_
+#ifndef PROPERDESKTOP_TESTS_SHELL_DBUS_TEST_CLIENT_H_
+#define PROPERDESKTOP_TESTS_SHELL_DBUS_TEST_CLIENT_H_
 
 #include <memory>
 #include <optional>
@@ -16,7 +16,7 @@
 #include "core/main_loop.h"
 #include "loop_test_util.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 class DBusTestClient
 {
@@ -81,6 +81,6 @@ inline void roundTrip(base::dbus::Connection *bus)
     EXPECT_TRUE(runUntil([&done] { return done; }));
 }
 
-} // namespace cutefish::test
+} // namespace properdesktop::test
 
-#endif // CUTEFISH_TESTS_SHELL_DBUS_TEST_CLIENT_H_
+#endif // PROPERDESKTOP_TESTS_SHELL_DBUS_TEST_CLIENT_H_

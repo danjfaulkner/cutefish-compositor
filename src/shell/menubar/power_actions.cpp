@@ -8,14 +8,14 @@
 
 #include "base/logging.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfPower("cutefish.shell.power");
+static const base::LogCategory cfPower("properdesktop.shell.power");
 
 PowerActions::PowerActions(dbus::Connection *bus)
-    : m_session(bus, "org.cutefish.Session", "/Session", "org.cutefish.Session")
+    : m_session(bus, "org.properdesktop.Session", "/Session", "org.properdesktop.Session")
     , m_screenSaver(bus, "org.freedesktop.ScreenSaver", "/ScreenSaver", "org.freedesktop.ScreenSaver")
 {
     m_clear.setSingleShot(true);
@@ -108,4 +108,4 @@ void PowerActions::lockScreen()
     });
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

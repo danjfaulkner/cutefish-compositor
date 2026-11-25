@@ -2,23 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WAYLAND_PROTOCOLS_XDG_TOPLEVEL_DRAG_H_
-#define CUTEFISH_WAYLAND_PROTOCOLS_XDG_TOPLEVEL_DRAG_H_
+#ifndef PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_TOPLEVEL_DRAG_H_
+#define PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_TOPLEVEL_DRAG_H_
 
 #include <wayland-server-core.h>
 
 #include <cstdint>
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowManager;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 constexpr uint32_t kXdgToplevelDragManagerVersion = 1;
 
 wl_global *createXdgToplevelDragGlobal(wl_display *display, wm::WindowManager *windowManager);
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland
 
-#endif // CUTEFISH_WAYLAND_PROTOCOLS_XDG_TOPLEVEL_DRAG_H_
+#endif // PROPERDESKTOP_WAYLAND_PROTOCOLS_XDG_TOPLEVEL_DRAG_H_

@@ -13,7 +13,7 @@ int main(int argc, char** argv)
         if (strcmp(argv[i], "-displayfd") == 0)
             fd = atoi(argv[i + 1]);
     }
-    const char* mode = getenv("CUTEFISH_XWAYLAND_FAULT");
+    const char* mode = getenv("PROPERDESKTOP_XWAYLAND_FAULT");
     if (fd < 0 || !mode)
         return 1;
     if (strcmp(mode, "partial") == 0) {

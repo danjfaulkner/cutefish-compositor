@@ -10,7 +10,7 @@
 
 #include <algorithm>
 
-namespace cutefish::cursor {
+namespace properdesktop::cursor {
 
 static bool contains(const base::Rect &bounds, const base::PointF &position)
 {
@@ -97,4 +97,4 @@ void OutputCursorRouter::moveCursor(const base::PointF& position)
                 : position - base::PointF(m_targets[target].logicalBounds.topLeft()));
 }
 
-} // namespace cutefish::cursor
+} // namespace properdesktop::cursor

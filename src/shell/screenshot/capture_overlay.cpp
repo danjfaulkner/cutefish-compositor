@@ -24,7 +24,7 @@
 #include "ui/path.h"
 #include "ui/theme.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace {
 
@@ -859,4 +859,4 @@ void CaptureOverlay::updateCursor()
     m_window->setCursor(std::move(cursor));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

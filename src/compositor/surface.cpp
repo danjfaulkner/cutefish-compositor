@@ -27,7 +27,7 @@
 #include "render/renderer.h"
 #include "scene/surface_node.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 
 namespace {
 
@@ -1373,4 +1373,4 @@ void Surface::notifyMenuChanged()
     }
 }
 
-} // namespace cutefish::compositor
+} // namespace properdesktop::compositor

@@ -42,7 +42,7 @@
 #include "wm/desks/desks_controller.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using session::SessionState;
 
 namespace {

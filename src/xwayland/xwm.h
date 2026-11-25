@@ -32,11 +32,11 @@
 #include "wm/window_observer.h"
 
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowManager;
 }
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 class SurfaceAssociation;
 class SelectionBridge;
@@ -181,4 +181,4 @@ private:
     base::WeakPtrFactory<Xwm> m_weakFactory {this};
 };
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

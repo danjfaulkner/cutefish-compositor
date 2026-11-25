@@ -20,11 +20,11 @@
 #include "wayland/server_util.h"
 #include "wm/shell_surface.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
-using cutefish::wm::ShellSurface;
+using properdesktop::wm::ShellSurface;
 using DecorationMode = ShellSurface::DecorationMode;
 
 uint32_t toWayland(DecorationMode mode)
@@ -248,4 +248,4 @@ wl_global* createXdgDecorationGlobal(wl_display* display)
                             kZxdgDecorationManagerVersion, nullptr, &bindXdgDecorationManager);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

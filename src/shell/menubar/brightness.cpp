@@ -8,15 +8,15 @@
 
 #include "shell/common/service_owner.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
 Brightness::Brightness(dbus::Connection *bus)
-    : m_proxy(bus, "org.cutefish.Services", "/org/cutefish/Services/Brightness", "org.cutefish.Services.Brightness")
+    : m_proxy(bus, "org.properdesktop.Services", "/org/properdesktop/Services/Brightness", "org.properdesktop.Services.Brightness")
 {
     m_changed = m_proxy.onSignal("brightnessChanged", [this](const dbus::Message &) { refresh(); });
-    m_owner = followServiceOwner(bus, "org.cutefish.Services", [this] { refresh(); });
+    m_owner = followServiceOwner(bus, "org.properdesktop.Services", [this] { refresh(); });
 }
 
 void Brightness::refresh()
@@ -101,4 +101,4 @@ void KeyboardBrightness::setValue(int value)
     m_proxy.send("SetBrightness", int32_t(std::clamp(value, 0, m_maximum)));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -6,7 +6,7 @@
 
 #include <xf86drmMode.h>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 DrmPropertyMap DrmPropertyMap::fromObject(int fd, uint32_t objectId, uint32_t objectType)
 {
@@ -63,4 +63,4 @@ std::vector<std::string> DrmPropertyMap::missing(const std::vector<std::string>&
     return result;
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

@@ -151,7 +151,7 @@ bool createBuffers(State* state)
 {
     const size_t poolSize = kBufferBytes * kBufferCount;
 
-    state->fd = memfd_create("cutefish-shm-demo", MFD_CLOEXEC);
+    state->fd = memfd_create("properdesktop-shm-demo", MFD_CLOEXEC);
     if (state->fd < 0 || ftruncate(state->fd, static_cast<off_t>(poolSize)) != 0) {
         std::fprintf(stderr, "failed to create the shm backing store\n");
         return false;

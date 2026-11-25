@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_DOCK_DOCK_H_
-#define CUTEFISH_SHELL_DOCK_DOCK_H_
+#ifndef PROPERDESKTOP_SHELL_DOCK_DOCK_H_
+#define PROPERDESKTOP_SHELL_DOCK_DOCK_H_
 
 #include <functional>
 #include <memory>
@@ -18,9 +18,9 @@
 #include "shell/dock/minimized_windows.h"
 #include "shell/dock/trash_monitor.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
-// Exports org.cutefish.Dock at /Dock, through which Settings changes the dock's
+// Exports org.properdesktop.Dock at /Dock, through which Settings changes the dock's
 // settings.
 class Dock
 {
@@ -57,6 +57,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_DOCK_DOCK_H_
+#endif // PROPERDESKTOP_SHELL_DOCK_DOCK_H_

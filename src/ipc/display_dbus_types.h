@@ -16,7 +16,7 @@
 #include "base/dbus_types.h"
 #include "display/display_types.h"
 
-namespace cutefish::display::ipc {
+namespace properdesktop::display::ipc {
 
 // (iiiiiiubbs)
 struct Mode {
@@ -140,9 +140,9 @@ std::vector<PhysicalDisplay> toWire(const std::vector<display::DisplaySnapshot>&
 std::vector<LogicalDisplay> toWire(const std::vector<display::LogicalDisplay>& displays);
 std::vector<Placement> toWire(const std::vector<display::DisplayPlacement>& placements);
 
-} // namespace cutefish::display::ipc
+} // namespace properdesktop::display::ipc
 
-namespace cutefish::base::dbus {
+namespace properdesktop::base::dbus {
 
 // A struct whose tie() lists its members in the order of its D-Bus tuple.
 template<typename T>
@@ -180,4 +180,4 @@ template<> struct Type<display::ipc::LogicalDisplay> : TiedDisplayType<display::
 template<> struct Type<display::ipc::DisplayRequest> : TiedDisplayType<display::ipc::DisplayRequest> {};
 template<> struct Type<display::ipc::Placement> : TiedDisplayType<display::ipc::Placement> {};
 
-} // namespace cutefish::base::dbus
+} // namespace properdesktop::base::dbus

@@ -6,7 +6,7 @@
 #include "core/logging.h"
 
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 std::unique_ptr<DBusExport> DBusExport::create(std::string service, std::string path,
                                                std::string interface)
@@ -51,4 +51,4 @@ void DBusExport::emitSignal(const char *member) const
     m_object.emitSignal(member);
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

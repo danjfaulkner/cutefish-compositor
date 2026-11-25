@@ -8,8 +8,8 @@
 //           chromium/src/ui/gfx/geometry/cubic_bezier.cc
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_SCENE_SCREEN_TRANSITION_NODE_H_
-#define CUTEFISH_SCENE_SCREEN_TRANSITION_NODE_H_
+#ifndef PROPERDESKTOP_SCENE_SCREEN_TRANSITION_NODE_H_
+#define PROPERDESKTOP_SCENE_SCREEN_TRANSITION_NODE_H_
 
 #include <functional>
 #include <map>
@@ -21,7 +21,7 @@
 #include "base/geometry.h"
 #include "base/transform.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 class ScreenTransitionNode : public Node
 {
@@ -92,6 +92,6 @@ private:
     mutable int64_t m_animationStarted = -1;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_SCREEN_TRANSITION_NODE_H_
+#endif // PROPERDESKTOP_SCENE_SCREEN_TRANSITION_NODE_H_

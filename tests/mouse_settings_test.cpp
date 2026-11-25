@@ -11,9 +11,9 @@
 #include "base/settings.h"
 #include "input_test_util.h"
 
-using cutefish::base::EventLoop;
-using cutefish::base::Settings;
-using cutefish::input::MouseSettings;
+using properdesktop::base::EventLoop;
+using properdesktop::base::Settings;
+using properdesktop::input::MouseSettings;
 using input_test::RemoteObject;
 using input_test::TemporaryDirectory;
 
@@ -136,8 +136,8 @@ TEST(MouseSettings, DBusPropertiesMethodsAndServiceRestart)
     for (int iteration = 0; iteration < 2; ++iteration) {
         MouseSettings settings(file);
         ASSERT_TRUE(settings.registerService());
-        RemoteObject proxy(loop, "org.cutefish.Mouse1", "/org/cutefish/Mouse1",
-                           "org.cutefish.Mouse1");
+        RemoteObject proxy(loop, "org.properdesktop.Mouse1", "/org/properdesktop/Mouse1",
+                           "org.properdesktop.Mouse1");
         ASSERT_TRUE(proxy.isValid());
         EXPECT_EQ(proxy.property<bool>("leftHanded"), iteration != 0);
         const auto invoke = [&proxy](const std::string &method, auto value) {
@@ -164,12 +164,12 @@ TEST(MouseSettings, SendsTheChangeSignalsSettingsListensTo)
     ASSERT_TRUE(directory.isValid());
     MouseSettings settings(directory.filePath("compositor.conf"));
     ASSERT_TRUE(settings.registerService());
-    RemoteObject proxy(loop, "org.cutefish.Mouse1", "/org/cutefish/Mouse1", "org.cutefish.Mouse1");
+    RemoteObject proxy(loop, "org.properdesktop.Mouse1", "/org/properdesktop/Mouse1", "org.properdesktop.Mouse1");
     ASSERT_TRUE(proxy.isValid());
     std::vector<std::string> received;
-    cutefish::base::dbus::MatchRule rule;
-    rule.path = "/org/cutefish/Mouse1";
-    rule.interface = "org.cutefish.Mouse1";
+    properdesktop::base::dbus::MatchRule rule;
+    rule.path = "/org/properdesktop/Mouse1";
+    rule.interface = "org.properdesktop.Mouse1";
     auto match = proxy.connection()->subscribe(rule, [&received](const auto &message) {
         received.push_back(message.member() + "(" + message.signature() + ")");
     });

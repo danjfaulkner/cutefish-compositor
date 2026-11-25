@@ -8,8 +8,8 @@
 //
 // A drop on a window of its own process activates that window, which the client cannot do.
 
-#ifndef CUTEFISH_WM_TOPLEVEL_DRAG_H_
-#define CUTEFISH_WM_TOPLEVEL_DRAG_H_
+#ifndef PROPERDESKTOP_WM_TOPLEVEL_DRAG_H_
+#define PROPERDESKTOP_WM_TOPLEVEL_DRAG_H_
 
 #include <cstdint>
 #include <memory>
@@ -21,11 +21,11 @@
 #include "input/drag.h"
 #include "scene/window_animation.h"
 
-namespace cutefish::clipboard {
+namespace properdesktop::clipboard {
 class DataSource;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 class WindowManager;
@@ -91,6 +91,6 @@ private:
     base::Subscription m_windowRemoved;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_TOPLEVEL_DRAG_H_
+#endif // PROPERDESKTOP_WM_TOPLEVEL_DRAG_H_

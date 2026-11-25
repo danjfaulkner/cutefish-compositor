@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_MENUBAR_APP_MENU_REGISTRAR_H_
-#define CUTEFISH_SHELL_MENUBAR_APP_MENU_REGISTRAR_H_
+#ifndef PROPERDESKTOP_SHELL_MENUBAR_APP_MENU_REGISTRAR_H_
+#define PROPERDESKTOP_SHELL_MENUBAR_APP_MENU_REGISTRAR_H_
 
 #include <cstdint>
 #include <map>
@@ -15,7 +15,7 @@
 #include "base/signal.h"
 #include "shell/common/pending_calls.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 // A registration is the window id with the exporter's unique bus name: Wayland
 // has no shared window id, and toolkits hand out a per-process counter.
@@ -61,6 +61,6 @@ private:
     std::map<std::string, base::dbus::NameWatch> m_watches;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_MENUBAR_APP_MENU_REGISTRAR_H_
+#endif // PROPERDESKTOP_SHELL_MENUBAR_APP_MENU_REGISTRAR_H_

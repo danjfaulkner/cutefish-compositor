@@ -6,14 +6,14 @@
 //           desk_animation_impl.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_WM_DESKS_DESK_ANIMATION_H_
-#define CUTEFISH_WM_DESKS_DESK_ANIMATION_H_
+#ifndef PROPERDESKTOP_WM_DESKS_DESK_ANIMATION_H_
+#define PROPERDESKTOP_WM_DESKS_DESK_ANIMATION_H_
 
 #include "base/timer.h"
 #include "base/weak_ptr.h"
 #include "wm/desks/desks_controller.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Desk;
 
@@ -106,6 +106,6 @@ private:
     const int m_deskToRemove;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_DESKS_DESK_ANIMATION_H_
+#endif // PROPERDESKTOP_WM_DESKS_DESK_ANIMATION_H_

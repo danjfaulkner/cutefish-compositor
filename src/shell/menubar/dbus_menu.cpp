@@ -9,7 +9,7 @@
 
 #include "base/strings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
@@ -335,4 +335,4 @@ void DBusMenu::sendEvent(int32_t id, const std::string &event)
     m_proxy.send("Event", id, event, dbus::Variant(std::string()), uint32_t(0));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

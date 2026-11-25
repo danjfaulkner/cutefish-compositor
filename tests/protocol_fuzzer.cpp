@@ -42,7 +42,7 @@
 #include "wayland/server.h"
 #include "wm/window_manager.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 
@@ -71,11 +71,11 @@ public:
     {
         for (const char *variable : {"XDG_DATA_HOME", "XDG_RUNTIME_DIR"})
             setenv(variable, m_home.path().c_str(), 1);
-        cutefish::setConfigHomeForTesting(m_home.path());
-        m_scene.setSize(cutefish::base::Size(1280, 800));
-        m_manager.setBounds(cutefish::base::Size(1280, 800));
-        m_windowManager.setOutputBounds(cutefish::base::Rect(0, 0, 1280, 800));
-        m_output.pixelSize = cutefish::base::Size(1280, 800);
+        properdesktop::setConfigHomeForTesting(m_home.path());
+        m_scene.setSize(properdesktop::base::Size(1280, 800));
+        m_manager.setBounds(properdesktop::base::Size(1280, 800));
+        m_windowManager.setOutputBounds(properdesktop::base::Rect(0, 0, 1280, 800));
+        m_output.pixelSize = properdesktop::base::Size(1280, 800);
         m_output.refreshMilliHz = 60000;
 
         wayland::ProtocolGlobals::Dependencies dependencies;
@@ -211,7 +211,7 @@ struct Object {
 
 const wl_interface *interfaceNamed(const std::string &name)
 {
-    const auto &interfaces = cutefish::testing::knownInterfaces();
+    const auto &interfaces = properdesktop::testing::knownInterfaces();
     const auto found = interfaces.find(name);
     return found == interfaces.end() ? nullptr : found->second;
 }
@@ -474,7 +474,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     return 0;
 }
 
-#ifndef CUTEFISH_LIBFUZZER
+#ifndef PROPERDESKTOP_LIBFUZZER
 // `protocol_fuzzer [files...]` replays inputs; `--random N SEED` runs N random ones; no arguments run 400 from a fixed seed.
 int main(int argc, char **argv)
 {

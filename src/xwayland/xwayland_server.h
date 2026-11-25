@@ -16,19 +16,19 @@
 #include "base/timer.h"
 #include "surface_association.h"
 
-namespace cutefish::base {
+namespace properdesktop::base {
 class EventLoop;
 }
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 class PrivilegedClients;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 class WindowManager;
 }
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 class XwaylandKeyboardGrab;
 class XwaylandShell;
@@ -149,4 +149,4 @@ private:
     bool m_ready = false, m_stopping = false, m_xwmReady = false, m_published = false;
 };
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

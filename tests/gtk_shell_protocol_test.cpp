@@ -26,7 +26,7 @@
 #include "wayland/protocols/wl_compositor.h"
 #include "wayland/server.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 
 namespace {
 

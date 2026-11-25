@@ -9,7 +9,7 @@
 
 #include "render/rounded_shape.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 namespace {
 
@@ -171,4 +171,4 @@ void fillContinuousRoundedRect(Image& image, const base::RectF& rect, double rad
         color);
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

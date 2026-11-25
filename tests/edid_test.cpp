@@ -10,8 +10,8 @@
 #include "base/strings.h"
 #include "display/edid.h"
 
-using namespace cutefish::display;
-using cutefish::base::strings::fromHex;
+using namespace properdesktop::display;
+using properdesktop::base::strings::fromHex;
 
 namespace {
 

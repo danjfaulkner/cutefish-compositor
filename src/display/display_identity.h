@@ -8,7 +8,7 @@
 #include <set>
 #include <vector>
 
-namespace cutefish::display {
+namespace properdesktop::display {
 
 class DisplayIdentity
 {
@@ -23,4 +23,4 @@ private:
     std::set<std::string> m_ambiguous;
 };
 
-} // namespace cutefish::display
+} // namespace properdesktop::display

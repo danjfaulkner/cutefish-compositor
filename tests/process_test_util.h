@@ -16,7 +16,7 @@
 
 #include "base/process.h"
 
-namespace cutefish::test {
+namespace properdesktop::test {
 
 // This process's environment without `removed` and with `added`, as NAME=value entries.
 inline std::vector<std::string> environmentWith(const std::vector<std::string_view> &removed,
@@ -114,4 +114,4 @@ private:
     size_t m_read = 0;
 };
 
-} // namespace cutefish::test
+} // namespace properdesktop::test

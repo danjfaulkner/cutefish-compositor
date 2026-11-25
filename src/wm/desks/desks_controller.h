@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ash/wm/desks/desks_controller.h and desks_util.cc
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_WM_DESKS_DESKS_CONTROLLER_H_
-#define CUTEFISH_WM_DESKS_DESKS_CONTROLLER_H_
+#ifndef PROPERDESKTOP_WM_DESKS_DESKS_CONTROLLER_H_
+#define PROPERDESKTOP_WM_DESKS_DESKS_CONTROLLER_H_
 
 #include <algorithm>
 #include <functional>
@@ -20,11 +20,11 @@
 #include "wm/activation.h"
 #include "wm/window_observer.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class SlideOutNode;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Desk;
 class DeskAnimationBase;
@@ -213,6 +213,6 @@ private:
     std::vector<DesksObserver *> m_observers;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_DESKS_DESKS_CONTROLLER_H_
+#endif // PROPERDESKTOP_WM_DESKS_DESKS_CONTROLLER_H_

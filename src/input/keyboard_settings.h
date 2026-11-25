@@ -13,7 +13,7 @@
 #include "base/signal.h"
 #include "input/types.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 class DBusExport;
 
@@ -80,4 +80,4 @@ private:
     std::unique_ptr<DBusExport> m_object;
 };
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

@@ -26,7 +26,7 @@
 #include "wayland/protocols/wl_output.h"
 #include "wayland/protocols/wl_shm.h"
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 namespace {
 
@@ -842,4 +842,4 @@ void ImageCaptureManager::discarded(uint64_t generation)
             frame->fail(EXT_IMAGE_COPY_CAPTURE_FRAME_V1_FAILURE_REASON_UNKNOWN);
 }
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

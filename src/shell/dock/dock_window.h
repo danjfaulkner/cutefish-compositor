@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_DOCK_DOCK_WINDOW_H_
-#define CUTEFISH_SHELL_DOCK_DOCK_WINDOW_H_
+#ifndef PROPERDESKTOP_SHELL_DOCK_DOCK_WINDOW_H_
+#define PROPERDESKTOP_SHELL_DOCK_DOCK_WINDOW_H_
 
 #include <cstdint>
 #include <map>
@@ -27,18 +27,18 @@
 #include "ui/geometry.h"
 #include "shell/shell.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class MenuModel;
 }
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class DropOffer;
 class Menu;
 struct PointerEvent;
 class View;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class Dock;
 class DockIcon;
@@ -81,9 +81,9 @@ public:
     ui::Menu *openMenu() const { return m_menuOpen ? m_menu.get() : nullptr; }
     const DockMagnifier &magnifier() const { return m_magnifier; }
 
-    static constexpr const char *kApplicationMime = "application/x-cutefish-dock-app-id";
-    static constexpr const char *kWindowMime = "application/x-cutefish-dock-window-id";
-    static constexpr const char *kDesktopMime = "application/x-cutefish-desktop-id";
+    static constexpr const char *kApplicationMime = "application/x-properdesktop-dock-app-id";
+    static constexpr const char *kWindowMime = "application/x-properdesktop-dock-window-id";
+    static constexpr const char *kDesktopMime = "application/x-properdesktop-desktop-id";
 
     DockPresentation *applicationPresentation() const { return m_applications.get(); }
     DockPresentation *minimizedPresentation() const { return m_minimized.get(); }
@@ -265,6 +265,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_DOCK_DOCK_WINDOW_H_
+#endif // PROPERDESKTOP_SHELL_DOCK_DOCK_WINDOW_H_

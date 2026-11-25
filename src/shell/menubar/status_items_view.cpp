@@ -12,7 +12,7 @@
 #include "core/main_loop.h"
 #include "wm/status_items.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr double kInset = BarContext::kHighlightGap / 2;
 
@@ -116,4 +116,4 @@ ui::RectF StatusItemSlot::itemRect() const
     return {kInset, 0, double(m_item->width()), geometry().height};
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

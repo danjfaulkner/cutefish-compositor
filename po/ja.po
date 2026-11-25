@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: cutefish-compositor\n"
-"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"Project-Id-Version: properdesktop-compositor\n"
+"Report-Msgid-Bugs-To: https://github.com/danjfaulkner\n"
 "POT-Creation-Date: 2026-11-18 12:59+0800\n"
 "PO-Revision-Date: 2026-11-13 15:22+0800\n"
 "Last-Translator: \n"
@@ -444,7 +444,7 @@ msgstr "待つ"
 msgid "Screen Recording"
 msgstr "画面収録"
 
-#: src/shell/screenshot/capture_notifier.cpp data/cutefish-screenshot.desktop
+#: src/shell/screenshot/capture_notifier.cpp data/properdesktop-screenshot.desktop
 msgid "Screenshot"
 msgstr "スクリーンショット"
 
@@ -747,10 +747,10 @@ msgstr "ワンタイムパスワード"
 msgid "Desk {number}"
 msgstr "デスク {number}"
 
-#: data/cutefish-screenshot.desktop
+#: data/properdesktop-screenshot.desktop
 msgid "Capture or record the screen, a window or a selected portion"
 msgstr "画面全体、ウインドウ、または選択部分を取り込んだり収録したりします"
 
-#: data/cutefish-screenshot.desktop
+#: data/properdesktop-screenshot.desktop
 msgid "screenshot;screen recording;capture;record;"
 msgstr "screenshot;screen recording;capture;record;スクリーンショット;画面収録;キャプチャ;録画;"

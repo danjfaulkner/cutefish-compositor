@@ -5,14 +5,14 @@
 // Upstream: chromium/src/ash/accelerators/accelerator_history_impl.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_HISTORY_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_HISTORY_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_HISTORY_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_HISTORY_H_
 
 #include <set>
 
 #include "accelerators/accelerator.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 class AcceleratorHistory
 {
@@ -37,6 +37,6 @@ private:
     std::set<uint32_t> m_currentlyPressedKeys;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_HISTORY_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_HISTORY_H_

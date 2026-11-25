@@ -11,10 +11,10 @@
 #include "core/preferences.h"
 #include "input/dbus_export.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
-static constexpr auto service = "org.cutefish.Touchpad1";
-static constexpr auto path = "/org/cutefish/Touchpad1";
+static constexpr auto service = "org.properdesktop.Touchpad1";
+static constexpr auto path = "/org/properdesktop/Touchpad1";
 static constexpr auto group = "Touchpad/";
 
 TouchpadSettings::TouchpadSettings(const std::string &settingsFile)
@@ -214,4 +214,4 @@ void TouchpadSettings::setTwoFingerSecondaryClick(bool enabled)
     save("twoFingerSecondaryClick", enabled);
     notify(twoFingerSecondaryClickChanged, "twoFingerSecondaryClickChanged");
 }
-} // namespace cutefish::input
+} // namespace properdesktop::input

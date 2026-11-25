@@ -6,7 +6,7 @@
 
 #include <wayland-server-core.h>
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 class ResourceReference
 {
@@ -38,4 +38,4 @@ private:
     wl_resource *m_resource = nullptr;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

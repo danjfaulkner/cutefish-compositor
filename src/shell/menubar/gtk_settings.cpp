@@ -8,11 +8,11 @@
 
 #include "base/logging.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfGtkSettings("cutefish.shell.gtksettings");
+static const base::LogCategory cfGtkSettings("properdesktop.shell.gtksettings");
 
 static constexpr const char *kService = "org.gtk.Settings";
 static constexpr const char *kPath = "/org/gtk/Settings";
@@ -45,4 +45,4 @@ bool GtkSettings::registerService()
     return true;
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

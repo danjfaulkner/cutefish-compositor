@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: cutefish-compositor\n"
-"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"Project-Id-Version: properdesktop-compositor\n"
+"Report-Msgid-Bugs-To: https://github.com/danjfaulkner\n"
 "POT-Creation-Date: 2026-11-18 12:59+0800\n"
 "PO-Revision-Date: 2026-11-14 10:16+0800\n"
 "Last-Translator: \n"
@@ -444,7 +444,7 @@ msgstr "Chờ"
 msgid "Screen Recording"
 msgstr "Quay màn hình"
 
-#: src/shell/screenshot/capture_notifier.cpp data/cutefish-screenshot.desktop
+#: src/shell/screenshot/capture_notifier.cpp data/properdesktop-screenshot.desktop
 msgid "Screenshot"
 msgstr "Chụp màn hình"
 
@@ -747,10 +747,10 @@ msgstr "Mật khẩu dùng một lần"
 msgid "Desk {number}"
 msgstr "Bàn làm việc {number}"
 
-#: data/cutefish-screenshot.desktop
+#: data/properdesktop-screenshot.desktop
 msgid "Capture or record the screen, a window or a selected portion"
 msgstr "Chụp hoặc quay màn hình, một cửa sổ hoặc một vùng đã chọn"
 
-#: data/cutefish-screenshot.desktop
+#: data/properdesktop-screenshot.desktop
 msgid "screenshot;screen recording;capture;record;"
 msgstr "chụp màn hình;quay màn hình;chụp;quay;screenshot;screen recording;"

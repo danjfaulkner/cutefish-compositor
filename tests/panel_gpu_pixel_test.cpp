@@ -15,8 +15,8 @@
 #include "ui/bitmap.h"
 #include "ui/embedded_window.h"
 
-using namespace cutefish;
-using namespace cutefish::render;
+using namespace properdesktop;
+using namespace properdesktop::render;
 
 namespace {
 

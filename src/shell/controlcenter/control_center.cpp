@@ -24,7 +24,7 @@
 #include "ui/theme.h"
 #include "ui/window.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr int kBarHeight = 32;
 
@@ -509,4 +509,4 @@ void ControlCenter::updatePower()
                                                             : PowerDialog::Action::Logout);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

@@ -9,8 +9,8 @@
 #include <tuple>
 #include "display/display_layout.h"
 
-using namespace cutefish::display;
-namespace base = cutefish::base;
+using namespace properdesktop::display;
+namespace base = properdesktop::base;
 
 class TwoDisplays : public testing::TestWithParam<
     std::tuple<base::Rect, base::Rect, LayoutEdge, int, int, base::Rect, base::Rect>> {};

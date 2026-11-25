@@ -11,7 +11,7 @@
 #include "render/egl_context.h"
 #include "base/region.h"
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 EglRenderTarget::EglRenderTarget(EGLDisplay display, EGLSurface surface, gbm_surface *gbmSurface,
                                  const base::Size &size)
@@ -150,4 +150,4 @@ void EglRenderTarget::invalidate()
     m_damageHistory.reset();
     m_damageValid = false;
 }
-} // namespace cutefish::render
+} // namespace properdesktop::render

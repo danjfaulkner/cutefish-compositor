@@ -9,7 +9,7 @@
 
 #include "display/recommended_scale.h"
 
-namespace cutefish::display::ipc {
+namespace properdesktop::display::ipc {
 
 DisplayConfiguration fromWire(const std::string& instanceId, uint64_t topologyGeneration,
                               uint64_t appliedRevision, const std::vector<DisplayRequest>& displays,
@@ -106,4 +106,4 @@ std::vector<Placement> toWire(const std::vector<display::DisplayPlacement>& plac
     return result;
 }
 
-} // namespace cutefish::display::ipc
+} // namespace properdesktop::display::ipc

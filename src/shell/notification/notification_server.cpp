@@ -15,11 +15,11 @@
 #include "shell/common/task_manager.h"
 #include "shell/notification/notification_settings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 namespace dbus = base::dbus;
 
-static const base::LogCategory cfNotifications("cutefish.shell.notifications");
+static const base::LogCategory cfNotifications("properdesktop.shell.notifications");
 
 static constexpr const char *kService = "org.freedesktop.Notifications";
 static constexpr const char *kPath = "/org/freedesktop/Notifications";
@@ -125,7 +125,7 @@ bool NotificationServer::registerService()
             dbus::ArgumentNames{{}, {"capabilities"}});
     object->addMethod(
             "GetServerInformation",
-            [] { return std::tuple<std::string, std::string, std::string, std::string>("Cutefish", "CutefishOS", "1.0", "1.2"); },
+            [] { return std::tuple<std::string, std::string, std::string, std::string>("ProperDesktop", "Proper Desktop", "1.0", "1.2"); },
             dbus::ArgumentNames{{}, {"name", "vendor", "version", "spec_version"}});
     object->addSignal("ActionInvoked", "us");
     object->addSignal("NotificationClosed", "uu");
@@ -433,4 +433,4 @@ void NotificationServer::closeNotification(uint32_t id, CloseReason reason)
         m_object->emitSignal("NotificationClosed", id, uint32_t(reason));
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

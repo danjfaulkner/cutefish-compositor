@@ -12,7 +12,7 @@
 
 #include "base/strings.h"
 
-namespace cutefish::shell::clock_format {
+namespace properdesktop::shell::clock_format {
 
 static std::string bestPattern(icu::DateTimePatternGenerator *generator, const char *skeleton)
 {
@@ -135,4 +135,4 @@ std::string pattern(const std::string &localeName, bool twentyFourHour)
     return twentyFourHour ? "ddd MMM d  HH:mm" : "ddd MMM d  h:mm AP";
 }
 
-} // namespace cutefish::shell::clock_format
+} // namespace properdesktop::shell::clock_format

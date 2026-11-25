@@ -10,7 +10,7 @@
 #include "input/seat.h"
 #include "input/session_gate.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
 namespace {
 
@@ -108,4 +108,4 @@ void ShortcutsInhibition::onSurfaceDestroying(compositor::Surface *surface)
     }
 }
 
-} // namespace cutefish::input
+} // namespace properdesktop::input

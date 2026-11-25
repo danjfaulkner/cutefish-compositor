@@ -21,7 +21,7 @@
 #include "render/shape_mask.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 namespace {
 
@@ -399,4 +399,4 @@ void paintStretchedShadow(render::Renderer &renderer, const ShadowGeometry &geom
     renderer.drawTextureMappedRects(image, slices, opacity);
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

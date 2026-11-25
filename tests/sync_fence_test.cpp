@@ -22,7 +22,7 @@
 #include "fake_fence.h"
 #include "render/sync_fence.h"
 
-namespace cutefish {
+namespace properdesktop {
 
 namespace {
 
@@ -46,7 +46,7 @@ public:
 class RetainingBuffer final : public compositor::Buffer
 {
 public:
-    cutefish::base::Size size() const override { return {64, 64}; }
+    properdesktop::base::Size size() const override { return {64, 64}; }
     render::PixelFormat format() const override { return render::PixelFormat::Bgrx8888; }
     const uint8_t* pixels() const override { return nullptr; }
     int stride() const override { return 256; }
@@ -281,4 +281,4 @@ TEST(BufferSyncTest, TheSameBufferOnTwoSurfacesOwesTwoReleases)
     EXPECT_EQ(second->signalCount, 1);
 }
 
-} // namespace cutefish
+} // namespace properdesktop

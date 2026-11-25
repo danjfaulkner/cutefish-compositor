@@ -9,7 +9,7 @@
 
 #include <xf86drm.h>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 bool isDesktopOutput(const ConnectorInfo& connector)
 {
@@ -143,4 +143,4 @@ std::string connectorName(uint32_t type, uint32_t typeId)
     return std::string(name ? name : "Unknown") + '-' + std::to_string(typeId);
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

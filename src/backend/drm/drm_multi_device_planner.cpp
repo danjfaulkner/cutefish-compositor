@@ -11,7 +11,7 @@
 #include <map>
 #include <set>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 DrmMultiDeviceResult
 DrmMultiDeviceCommitCoordinator::run(const std::vector<DrmDeviceTransaction> &devices,
@@ -110,4 +110,4 @@ bool hardwareCloneEligible(const std::string &firstDevice, const std::string &se
             && firstMode == secondMode && (firstPossibleCrtcs & secondPossibleCrtcs) != 0;
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

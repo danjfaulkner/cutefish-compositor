@@ -15,12 +15,12 @@
 #include "base/timer.h"
 #include "core/process_environment.h"
 
-namespace cutefish::base {
+namespace properdesktop::base {
 class EventLoop;
 class Process;
-} // namespace cutefish::base
+} // namespace properdesktop::base
 
-namespace cutefish::wayland {
+namespace properdesktop::wayland {
 
 // Its connection is the only one allowed to act as the input method.
 class InputMethodLauncher
@@ -78,4 +78,4 @@ private:
     int m_failures = 0;
 };
 
-} // namespace cutefish::wayland
+} // namespace properdesktop::wayland

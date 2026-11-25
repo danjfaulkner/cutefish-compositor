@@ -14,10 +14,10 @@ int main(int argc, char** argv)
 {
     setlocale(LC_ALL, "");
     testing::InitGoogleTest(&argc, argv);
-    const cutefish::test::TemporaryDirectory configHome;
-    cutefish::setConfigHomeForTesting(configHome.path());
-    const cutefish::core::MainLoop loop;
+    const properdesktop::test::TemporaryDirectory configHome;
+    properdesktop::setConfigHomeForTesting(configHome.path());
+    const properdesktop::core::MainLoop loop;
     const int result = RUN_ALL_TESTS();
-    cutefish::setConfigHomeForTesting({});
+    properdesktop::setConfigHomeForTesting({});
     return result;
 }

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_WM_WINDOW_H_
-#define CUTEFISH_WM_WINDOW_H_
+#ifndef PROPERDESKTOP_WM_WINDOW_H_
+#define PROPERDESKTOP_WM_WINDOW_H_
 
 #include <cstdint>
 #include <functional>
@@ -20,15 +20,15 @@
 #include "wm/types.h"
 #include "wm/window_frame.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class WindowManager;
 class WindowObserver;
@@ -377,6 +377,6 @@ private:
     std::vector<WindowObserver *> m_observers;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_WINDOW_H_
+#endif // PROPERDESKTOP_WM_WINDOW_H_

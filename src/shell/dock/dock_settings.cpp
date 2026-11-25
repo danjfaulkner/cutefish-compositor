@@ -12,7 +12,7 @@
 #include "base/settings.h"
 #include "shell/common/file_thread.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr std::chrono::milliseconds kIconSizeSaveDelay(300);
 
@@ -154,4 +154,4 @@ void DockSettings::setMagnifiedIconSize(int size)
     magnifiedIconSizeChanged();
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

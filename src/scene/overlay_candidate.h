@@ -8,8 +8,8 @@
 //               overlay_strategy_single_on_top.cc
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_SCENE_OVERLAY_CANDIDATE_H_
-#define CUTEFISH_SCENE_OVERLAY_CANDIDATE_H_
+#ifndef PROPERDESKTOP_SCENE_OVERLAY_CANDIDATE_H_
+#define PROPERDESKTOP_SCENE_OVERLAY_CANDIDATE_H_
 
 #include <memory>
 #include <vector>
@@ -20,7 +20,7 @@
 #include "render/sync_fence.h"
 #include "base/geometry.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 class Node;
 void removeOccludedPresentation(Node& root, const base::Size& logicalSize,
@@ -76,6 +76,6 @@ struct OverlayPlan {
 OverlayPlan proposeOverlays(Node& root, const base::Size& outputSize, size_t maxOverlays,
                             double outputScale = 1);
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_OVERLAY_CANDIDATE_H_
+#endif // PROPERDESKTOP_SCENE_OVERLAY_CANDIDATE_H_

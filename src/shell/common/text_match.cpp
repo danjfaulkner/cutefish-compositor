@@ -12,7 +12,7 @@
 
 #include "base/strings.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static std::u32string folded(std::string_view text)
 {
@@ -52,4 +52,4 @@ std::string toLower(std::string_view text)
     return std::string(text);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

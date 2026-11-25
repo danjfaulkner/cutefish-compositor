@@ -9,7 +9,7 @@
 #include "scene/overlay_candidate.h"
 #include "base/region.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 Scene::Scene()
     : m_root(std::make_unique<Node>("root"))
@@ -84,4 +84,4 @@ void Scene::render(render::Renderer &renderer) const
         m_root->collectRetired();
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

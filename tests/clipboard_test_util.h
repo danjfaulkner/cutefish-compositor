@@ -32,7 +32,7 @@
 
 namespace clipboard_test {
 
-using namespace cutefish;
+using namespace properdesktop;
 
 struct Client {
     wl_display* display = nullptr;
@@ -66,8 +66,8 @@ struct Client {
     std::map<wl_data_offer*, std::vector<std::string>> formats;
     wl_data_offer* selection = nullptr;
     std::vector<std::string> events;
-    cutefish::base::PointF dragEnterPosition;
-    cutefish::base::PointF dragMotionPosition;
+    properdesktop::base::PointF dragEnterPosition;
+    properdesktop::base::PointF dragMotionPosition;
     std::map<std::string, std::string> payloads;
     size_t cancelled = 0;
     size_t sends = 0;
@@ -217,7 +217,7 @@ struct Client {
                 auto& c = *static_cast<Client*>(data);
                 c.dragOffer = offer;
                 c.dragSerial = serial;
-                c.dragEnterPosition = cutefish::base::PointF(wl_fixed_to_double(x), wl_fixed_to_double(y));
+                c.dragEnterPosition = properdesktop::base::PointF(wl_fixed_to_double(x), wl_fixed_to_double(y));
                 c.events.push_back("drag-enter");
             },
             [](void* data, wl_data_device*) {
@@ -225,7 +225,7 @@ struct Client {
             },
             [](void* data, wl_data_device*, uint32_t, wl_fixed_t x, wl_fixed_t y) {
                 static_cast<Client*>(data)->dragMotionPosition =
-                    cutefish::base::PointF(wl_fixed_to_double(x), wl_fixed_to_double(y));
+                    properdesktop::base::PointF(wl_fixed_to_double(x), wl_fixed_to_double(y));
                 static_cast<Client*>(data)->events.push_back("drag-motion");
             },
             [](void* data, wl_data_device*) {

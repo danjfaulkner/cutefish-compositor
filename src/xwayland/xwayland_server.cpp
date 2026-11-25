@@ -41,7 +41,7 @@
 #include "xwayland_shell.h"
 #include "xwm.h"
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 namespace {
 
@@ -109,7 +109,7 @@ bool XwaylandServer::start(const Options& options)
     m_readinessFile = options.readinessFile;
     const char* runtime = getenv("XDG_RUNTIME_DIR");
     std::string pattern = std::string(runtime && *runtime ? runtime : "/tmp")
-            + "/cutefish-xwayland-XXXXXX";
+            + "/properdesktop-xwayland-XXXXXX";
     if (!mkdtemp(pattern.data())) {
         fail("cannot create private runtime directory");
         return false;
@@ -702,4 +702,4 @@ void XwaylandServer::teardown(bool keepSession)
     m_stopping = false;
 }
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

@@ -6,7 +6,7 @@
 
 #include "base/event_loop.h"
 
-namespace cutefish::core {
+namespace properdesktop::core {
 
 namespace {
 
@@ -33,4 +33,4 @@ base::EventLoop *mainLoop()
     return s_instance ? &s_instance->loop() : nullptr;
 }
 
-} // namespace cutefish::core
+} // namespace properdesktop::core

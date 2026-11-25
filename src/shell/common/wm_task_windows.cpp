@@ -13,7 +13,7 @@
 #include "wm/window_manager.h"
 #include "wm/window_state.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 WmTaskWindows::WmTaskWindows(wm::WindowManager &manager)
     : m_manager(manager)
@@ -329,4 +329,4 @@ void WmTaskWindows::onSurfaceWindowHintsChanged(compositor::Surface *surface)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

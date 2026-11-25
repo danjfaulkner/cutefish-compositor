@@ -30,7 +30,7 @@
 #include "wm/window_state.h"
 #include "wm/wm_event.h"
 
-namespace cutefish::accelerators::commands {
+namespace properdesktop::accelerators::commands {
 
 wm::Window *targetWindow(const CommandContext &context)
 {
@@ -381,4 +381,4 @@ void toggleAssignToAllDesks(const CommandContext &context)
     desks->setVisibleOnAllDesks(window, !desks->isVisibleOnAllDesks(window));
 }
 
-} // namespace cutefish::accelerators::commands
+} // namespace properdesktop::accelerators::commands

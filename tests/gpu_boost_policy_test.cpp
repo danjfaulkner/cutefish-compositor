@@ -6,7 +6,7 @@
 
 #include "backend/drm/gpu_boost_policy.h"
 
-using cutefish::backend::GpuBoostPolicy;
+using properdesktop::backend::GpuBoostPolicy;
 using namespace std::chrono_literals;
 
 TEST(GpuBoostPolicyTest, NothingIsHeldBeforeAFrame)

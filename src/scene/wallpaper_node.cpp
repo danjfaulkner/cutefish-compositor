@@ -10,7 +10,7 @@
 
 #include "render/texture.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 static double gradientStrength(double position)
 {
@@ -155,4 +155,4 @@ void WallpaperNode::renderMapped(render::Renderer &renderer, const base::RectF &
     paintInto(renderer, target, true);
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

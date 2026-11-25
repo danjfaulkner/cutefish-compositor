@@ -4,7 +4,7 @@
 
 #include "decoration/caption_button.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 CaptionButton::CaptionButton(CaptionButtonType type)
     : m_type(type)
@@ -27,4 +27,4 @@ bool CaptionButton::setPressed(bool pressed)
     return true;
 }
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

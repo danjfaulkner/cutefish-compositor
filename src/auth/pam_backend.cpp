@@ -9,9 +9,9 @@
 #include <pwd.h>
 #include <unistd.h>
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::auth {
+namespace properdesktop::auth {
 
 namespace {
 
@@ -38,7 +38,7 @@ const char *const fprintService = "net.reactivated.Fprint";
 // has answered again.
 bool lastKnownEnrolled = false;
 
-// cutefish-auth-helper's exit status for a finger that was read and did not match.
+// properdesktop-auth-helper's exit status for a finger that was read and did not match.
 constexpr int kFingerprintNoMatch = 2;
 
 // Soon enough after a finger that did not match that a second touch is not lost.
@@ -122,7 +122,7 @@ void PamBackend::authenticate(const std::string &userName, Secret secret)
     // The helper reads only this inherited pipe, never argv or a public socket.
     m_process->setStandardInput(std::string(secret.constData(), secret.size()));
     secret.clear();
-    if (!m_process->start(CUTEFISH_AUTH_HELPER)) {
+    if (!m_process->start(PROPERDESKTOP_AUTH_HELPER)) {
         m_pending = false;
         m_process.reset();
         failed(tr("Authentication service unavailable"));
@@ -255,7 +255,7 @@ void PamBackend::launchFingerprint()
         if (now < m_fingerprintWantedUntil)
             m_fingerprintRetry.start(rest);
     };
-    if (!m_fingerprint->start(CUTEFISH_AUTH_HELPER, {"--fingerprint"})) {
+    if (!m_fingerprint->start(PROPERDESKTOP_AUTH_HELPER, {"--fingerprint"})) {
         m_fingerprint.reset();
         m_fingerprintRestsUntil = std::chrono::steady_clock::now() + kFingerprintMissingRest;
     }
@@ -269,4 +269,4 @@ void PamBackend::stopFingerprint()
     if (std::unique_ptr<base::Process> process = std::exchange(m_fingerprint, nullptr))
         process->terminate();
 }
-} // namespace cutefish::auth
+} // namespace properdesktop::auth

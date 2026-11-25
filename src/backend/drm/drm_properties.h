@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_DRM_DRM_PROPERTIES_H_
-#define CUTEFISH_BACKEND_DRM_DRM_PROPERTIES_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_DRM_PROPERTIES_H_
+#define PROPERDESKTOP_BACKEND_DRM_DRM_PROPERTIES_H_
 
 #include <cstdint>
 #include <optional>
@@ -11,7 +11,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 // Property ids are per-object and driver-assigned, so every atomic property has
 // to be looked up by name before it can be set.
@@ -46,6 +46,6 @@ private:
     std::unordered_map<std::string, Property> m_properties;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_DRM_PROPERTIES_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_DRM_PROPERTIES_H_

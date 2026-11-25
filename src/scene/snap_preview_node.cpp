@@ -10,7 +10,7 @@
 #include "scene/motion.h"
 #include "base/geometry.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 namespace {
 
@@ -103,4 +103,4 @@ void SnapPreviewNode::paint(render::Renderer &renderer, const base::Rect &absolu
         notifyChanged();
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

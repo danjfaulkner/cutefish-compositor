@@ -26,7 +26,7 @@
 #include "core/logging.h"
 #include "scene/surface_node.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 namespace {
 
@@ -433,4 +433,4 @@ bool ScanoutController::disable()
     return true;
 }
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend

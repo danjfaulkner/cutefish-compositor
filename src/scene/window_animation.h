@@ -8,8 +8,8 @@
 //           chromium/src/ui/gfx/animation/tween.cc
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_SCENE_WINDOW_ANIMATION_H_
-#define CUTEFISH_SCENE_WINDOW_ANIMATION_H_
+#ifndef PROPERDESKTOP_SCENE_WINDOW_ANIMATION_H_
+#define PROPERDESKTOP_SCENE_WINDOW_ANIMATION_H_
 
 #include <functional>
 #include <map>
@@ -22,7 +22,7 @@
 #include "base/geometry.h"
 #include "ui/bitmap.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 // The parent scene owns the node until its last frame.
 class WindowAnimation : public Node
@@ -286,6 +286,6 @@ private:
     std::vector<TargetAdjustment> m_minimizeAdjustments;
 };
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene
 
-#endif // CUTEFISH_SCENE_WINDOW_ANIMATION_H_
+#endif // PROPERDESKTOP_SCENE_WINDOW_ANIMATION_H_

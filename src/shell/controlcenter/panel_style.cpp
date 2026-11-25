@@ -10,7 +10,7 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-namespace cutefish::shell::panel {
+namespace properdesktop::shell::panel {
 
 static ui::Color rgba(double red, double green, double blue, double alpha)
 {
@@ -142,4 +142,4 @@ double glide(double t)
     return cubicBezier(0.25, 1, 0.5, 1, t);
 }
 
-} // namespace cutefish::shell::panel
+} // namespace properdesktop::shell::panel

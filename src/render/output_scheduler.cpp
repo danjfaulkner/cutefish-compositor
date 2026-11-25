@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <stdexcept>
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 OutputScheduler::OutputScheduler(Duration period, std::function<Time()> now)
     : m_period(period)
@@ -279,4 +279,4 @@ void OutputScheduler::failed(uint64_t frame)
     m_next = std::max(m_next, m_now() + backoff);
     settle();
 }
-} // namespace cutefish::render
+} // namespace properdesktop::render

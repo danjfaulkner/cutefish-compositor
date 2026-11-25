@@ -14,9 +14,9 @@
 #include "shell/menubar/dbus_menu.h"
 #include "shell/menubar/gtk_menu.h"
 
-using cutefish::i18n::tr;
+using properdesktop::i18n::tr;
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 ApplicationMenu::ApplicationMenu(base::dbus::Connection *bus, TaskWindows &windows, TaskManager &tasks,
                                  AppMenuRegistrar *registrar)
@@ -341,4 +341,4 @@ void ApplicationMenu::hideOtherApplications()
     m_windows.hideOtherApplications(keepActive ? window : 0);
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

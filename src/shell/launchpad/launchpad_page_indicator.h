@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_PAGE_INDICATOR_H_
-#define CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_PAGE_INDICATOR_H_
+#ifndef PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_PAGE_INDICATOR_H_
+#define PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_PAGE_INDICATOR_H_
 
 #include <functional>
 #include <vector>
@@ -11,7 +11,7 @@
 #include "shell/launchpad/launchpad_tween.h"
 #include "ui/view.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class LaunchpadPageIndicator final : public ui::View
 {
@@ -47,6 +47,6 @@ private:
     LaunchpadTween m_colorTween;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_LAUNCHPAD_LAUNCHPAD_PAGE_INDICATOR_H_
+#endif // PROPERDESKTOP_SHELL_LAUNCHPAD_LAUNCHPAD_PAGE_INDICATOR_H_

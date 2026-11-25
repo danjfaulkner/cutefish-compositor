@@ -8,7 +8,7 @@
 #include "base/logging.h"
 #include <linux/input-event-codes.h>
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 namespace {
 
@@ -78,7 +78,7 @@ void PowerButton::inhibit()
                 }
                 m_inhibitor = reply.value<base::dbus::UnixFd>().value_or(base::dbus::UnixFd());
             },
-            std::string("handle-power-key"), std::string("Cutefish"),
+            std::string("handle-power-key"), std::string("ProperDesktop"),
             std::string("The power button locks the screen"), std::string("block"));
 }
 
@@ -156,4 +156,4 @@ void PowerButton::onTouchCancel(input::Timestamp timestamp)
     if (m_next)
         m_next->onTouchCancel(timestamp);
 }
-} // namespace cutefish::session
+} // namespace properdesktop::session

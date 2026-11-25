@@ -8,11 +8,11 @@
 #include <functional>
 #include <map>
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::xwayland {
+namespace properdesktop::xwayland {
 
 // One instance belongs to one Xwayland generation. Xwayland hands out serials
 // in increasing order, so a matched or abandoned serial cannot come back.
@@ -46,4 +46,4 @@ private:
     uint64_t m_lastWindowSerial = 0;
 };
 
-} // namespace cutefish::xwayland
+} // namespace properdesktop::xwayland

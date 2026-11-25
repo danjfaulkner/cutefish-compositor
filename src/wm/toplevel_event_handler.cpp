@@ -22,7 +22,7 @@
 #include "wm/window_state.h"
 #include "wm/wm_event.h"
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 namespace {
 
@@ -356,4 +356,4 @@ void ToplevelEventHandler::onWindowRemoving(Window *window)
         completeDrag(DragResult::WindowDestroyed);
 }
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm

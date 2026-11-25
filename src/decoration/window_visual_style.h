@@ -8,7 +8,7 @@
 
 #include "render/renderer.h"
 
-namespace cutefish::decoration {
+namespace properdesktop::decoration {
 
 // Every tunable lives in window_visual_style.cpp, so changing one only relinks.
 struct WindowVisualStyle {
@@ -33,4 +33,4 @@ struct WindowVisualStyle {
     render::Color snapPreviewHighlight;
 };
 
-} // namespace cutefish::decoration
+} // namespace properdesktop::decoration

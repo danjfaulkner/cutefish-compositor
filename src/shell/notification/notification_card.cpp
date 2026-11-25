@@ -17,7 +17,7 @@
 #include "ui/theme.h"
 #include "toolkit/compositor_colors.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 static constexpr const char *kFallbackIcon = "preferences-desktop-notification";
 static constexpr int kBodyLines = 4;
@@ -611,4 +611,4 @@ void NotificationCard::paint(ui::Painter &painter)
     }
 }
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell

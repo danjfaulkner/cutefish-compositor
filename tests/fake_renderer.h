@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_TESTS_FAKE_RENDERER_H_
-#define CUTEFISH_TESTS_FAKE_RENDERER_H_
+#ifndef PROPERDESKTOP_TESTS_FAKE_RENDERER_H_
+#define PROPERDESKTOP_TESTS_FAKE_RENDERER_H_
 
 #include <algorithm>
 #include <cstring>
@@ -14,7 +14,7 @@
 #include "render/renderer.h"
 #include "base/region.h"
 
-namespace cutefish::testsupport {
+namespace properdesktop::testsupport {
 
 class FakeTexture : public render::Texture
 {
@@ -172,6 +172,6 @@ public:
     std::vector<render::ShadowLobe> lastShadowLobes;
 };
 
-} // namespace cutefish::testsupport
+} // namespace properdesktop::testsupport
 
-#endif // CUTEFISH_TESTS_FAKE_RENDERER_H_
+#endif // PROPERDESKTOP_TESTS_FAKE_RENDERER_H_

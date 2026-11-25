@@ -8,9 +8,9 @@ from gi.repository import Gdk, GLib, Gtk
 window = Gtk.Window(title=sys.argv[1])
 window.set_default_size(180, 120)
 area = Gtk.EventBox()
-area.add(Gtk.Label(label="Cutefish drag"))
+area.add(Gtk.Label(label="Proper Desktop drag"))
 window.add(area)
-targets = [Gtk.TargetEntry.new("application/x-cutefish-dnd", 0, 0)]
+targets = [Gtk.TargetEntry.new("application/x-properdesktop-dnd", 0, 0)]
 actions = Gdk.DragAction.COPY | Gdk.DragAction.MOVE
 
 if sys.argv[1].endswith("source"):

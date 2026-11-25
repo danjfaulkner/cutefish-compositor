@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SESSION_SESSION_CONTROLLER_H_
-#define CUTEFISH_SESSION_SESSION_CONTROLLER_H_
+#ifndef PROPERDESKTOP_SESSION_SESSION_CONTROLLER_H_
+#define PROPERDESKTOP_SESSION_SESSION_CONTROLLER_H_
 
 #include <set>
 #include <string>
@@ -14,19 +14,19 @@
 #include "session/secure_container.h"
 #include "session/session_state.h"
 
-namespace cutefish::compositor {
+namespace properdesktop::compositor {
 class Surface;
 }
 
-namespace cutefish::display {
+namespace properdesktop::display {
 struct AppliedConfiguration;
 }
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 class Node;
 }
 
-namespace cutefish::session {
+namespace properdesktop::session {
 
 class SecureContainer;
 
@@ -98,6 +98,6 @@ private:
     SessionState m_unlockingFrom = SessionState::Locked;
 };
 
-} // namespace cutefish::session
+} // namespace properdesktop::session
 
-#endif // CUTEFISH_SESSION_SESSION_CONTROLLER_H_
+#endif // PROPERDESKTOP_SESSION_SESSION_CONTROLLER_H_

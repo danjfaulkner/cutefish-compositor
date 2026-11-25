@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ui/base/accelerators/accelerator.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_H_
 
 #include <cstddef>
 #include <cstdint>
@@ -16,7 +16,7 @@
 #include <string>
 #include <string_view>
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 enum Modifier : uint32_t {
     NoModifier = 0,
@@ -125,16 +125,16 @@ uint32_t positionalUsKeysym(uint32_t evdevCode, uint32_t layoutKeysym);
 bool isModifierKeysym(uint32_t keysym);
 bool isFunctionKeysym(uint32_t keysym);
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
 namespace std {
 template<>
-struct hash<cutefish::accelerators::Accelerator> {
-    size_t operator()(const cutefish::accelerators::Accelerator &accelerator) const
+struct hash<properdesktop::accelerators::Accelerator> {
+    size_t operator()(const properdesktop::accelerators::Accelerator &accelerator) const
     {
         return accelerator.hash();
     }
 };
 } // namespace std
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_H_

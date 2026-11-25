@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_PICKER_VIEW_H_
-#define CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_PICKER_VIEW_H_
+#ifndef PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_PICKER_VIEW_H_
+#define PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_PICKER_VIEW_H_
 
 #include <functional>
 #include <map>
@@ -17,14 +17,14 @@
 #include "ui/text_field.h"
 #include "ui/view.h"
 
-namespace cutefish::ui {
+namespace properdesktop::ui {
 class Button;
 class ImageView;
 class Label;
 class ListView;
-} // namespace cutefish::ui
+} // namespace properdesktop::ui
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ClipboardHistory;
 
@@ -112,6 +112,6 @@ private:
     std::vector<base::Subscription> m_subscriptions;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_CLIPBOARD_CLIPBOARD_PICKER_VIEW_H_
+#endif // PROPERDESKTOP_SHELL_CLIPBOARD_CLIPBOARD_PICKER_VIEW_H_

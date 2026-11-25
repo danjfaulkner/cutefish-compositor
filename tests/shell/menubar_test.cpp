@@ -28,10 +28,10 @@
 #include "shell_test_util.h"
 #include "menubar_fakes.h"
 #include "temporary_directory.h"
-#include "cutefish/upower/battery_status.h"
+#include "properdesktop/upower/battery_status.h"
 #include "ui/bitmap.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 namespace dbus = base::dbus;
 using test::FakeGtkActions;
 using test::FakeGtkMenus;
@@ -779,20 +779,20 @@ TEST(BatteryTest, ShowsOnceTheServiceComesUp)
     EXPECT_FALSE(battery.isAvailable());
 
     test::DBusTestClient services;
-    dbus::Object object(services.connection.get(), "/org/cutefish/Services/Battery",
-                        "org.cutefish.Services.Battery");
+    dbus::Object object(services.connection.get(), "/org/properdesktop/Services/Battery",
+                        "org.properdesktop.Services.Battery");
     object.addProperty("chargePercent", [] { return int32_t(70); });
     object.addProperty("chargeState", [] { return int32_t(1); });
     ASSERT_TRUE(object.publish());
     int changes = 0;
     auto subscription = battery.changed.connect([&] { ++changes; });
-    ASSERT_TRUE(services.connection->requestName("org.cutefish.Services"));
+    ASSERT_TRUE(services.connection->requestName("org.properdesktop.Services"));
     EXPECT_TRUE(test::runUntil([&] { return battery.isAvailable(); }));
     EXPECT_EQ(70, battery.chargePercent());
     EXPECT_GT(changes, 0);
 }
 
-TEST(MenuBarTest, ServesOrgCutefishMenuBar)
+TEST(MenuBarTest, ServesOrgProperDesktopMenuBar)
 {
     test::TemporaryDirectory directory;
     directory.write("services.conf", "[Language]\nlanguage=en_US\n\n[Region]\nregion=US\ntwentyFourHour=true\n");
@@ -805,11 +805,11 @@ TEST(MenuBarTest, ServesOrgCutefishMenuBar)
 
     directory.write("services.conf", "[Language]\nlanguage=en_US\n\n[Region]\nregion=US\n");
     test::DBusTestClient services;
-    dbus::Object language(services.connection.get(), "/org/cutefish/Services/Language",
-                          "org.cutefish.Services.Language");
+    dbus::Object language(services.connection.get(), "/org/properdesktop/Services/Language",
+                          "org.properdesktop.Services.Language");
     language.addSignal("languageChanged", "");
     ASSERT_TRUE(language.publish());
-    ASSERT_TRUE(services.connection->requestName("org.cutefish.Services"));
+    ASSERT_TRUE(services.connection->requestName("org.properdesktop.Services"));
     language.emitSignal("languageChanged");
     ASSERT_TRUE(test::runUntil([&] { return !menuBar.twentyFourTime(); }));
     EXPECT_EQ(menuBar.timeFormat().find('H'), std::string::npos);
@@ -820,21 +820,21 @@ TEST(MenuBarTest, ServesOrgCutefishMenuBar)
                                                      "Modules");
     EXPECT_EQ(modules.value<dbus::Variant>().value_or(dbus::Variant()).value<std::string>(), "appmenu-gtk-module");
 
-    settings.call("org.cutefish.MenuBar", "/MenuBar", "org.cutefish.MenuBar", "setBatteryPercentage", true);
+    settings.call("org.properdesktop.MenuBar", "/MenuBar", "org.properdesktop.MenuBar", "setBatteryPercentage", true);
     EXPECT_TRUE(menuBar.battery().showPercentage());
     EXPECT_TRUE(menuBar.isControlShown(shell::MenuBar::Control::Battery));
-    settings.call("org.cutefish.MenuBar", "/MenuBar", "org.cutefish.MenuBar", "setControlShown",
+    settings.call("org.properdesktop.MenuBar", "/MenuBar", "org.properdesktop.MenuBar", "setControlShown",
                   std::string("battery"), false);
     EXPECT_FALSE(menuBar.isControlShown(shell::MenuBar::Control::Battery));
     EXPECT_TRUE(menuBar.isControlShown(shell::MenuBar::Control::WiFi));
     EXPECT_FALSE(menuBar.isControlShown(shell::MenuBar::Control::Bluetooth));
-    settings.call("org.cutefish.MenuBar", "/MenuBar", "org.cutefish.MenuBar", "setControlShown",
+    settings.call("org.properdesktop.MenuBar", "/MenuBar", "org.properdesktop.MenuBar", "setControlShown",
                   std::string("bluetooth"), true);
     EXPECT_TRUE(menuBar.isControlShown(shell::MenuBar::Control::Bluetooth));
 
     bool requested = false;
     auto subscription = menuBar.powerActions().requested.connect([&] { requested = true; });
-    settings.call("org.cutefish.MenuBar", "/MenuBar", "org.cutefish.MenuBar", "requestReboot");
+    settings.call("org.properdesktop.MenuBar", "/MenuBar", "org.properdesktop.MenuBar", "requestReboot");
     EXPECT_TRUE(requested);
     EXPECT_EQ(menuBar.powerActions().pending(), shell::PowerActions::Reboot);
     menuBar.powerActions().cancel();
@@ -848,7 +848,7 @@ TEST(MenuBarTest, ServesOrgCutefishMenuBar)
     EXPECT_FALSE(saved.contains("MenuBar/ShowWiFi"));
     EXPECT_TRUE(saved.boolValue("MenuBar/ShowBluetooth", false));
 
-    const std::string xml = settings.introspect("org.cutefish.MenuBar", "/MenuBar");
+    const std::string xml = settings.introspect("org.properdesktop.MenuBar", "/MenuBar");
     EXPECT_NE(xml.find("name=\"batteryPercentage\""), std::string::npos);
 }
 
@@ -884,7 +884,7 @@ TEST(VpnNotifierTest, TellsAFailedVpnAndOpensItsPage)
     EXPECT_EQ((std::vector<std::string>{"network-vpn", "VPN connection failed",
                                         "\u201COffice\u201D could not connect. The VPN service stopped.", "default"}),
               shown);
-    EXPECT_EQ("cutefish-settings", entry);
+    EXPECT_EQ("properdesktop-settings", entry);
     test::runFor(std::chrono::milliseconds(20));
     notifications.emitSignal("ActionInvoked", uint32_t(3), std::string("default"));
     test::runFor(std::chrono::milliseconds(50));
@@ -899,12 +899,12 @@ TEST(MenuBarTest, PlaybackShortcutsControlCurrentPlayerAndNoPlayerIsHarmless)
     shell::MenuBar bar(sessionBus(), nullptr, nullptr, directory.filePath("shell.conf"));
     ASSERT_TRUE(bar.registerServices());
     test::DBusTestClient caller;
-    caller.call("org.cutefish.MenuBar", "/MenuBar", "org.cutefish.MenuBar", "mediaPlayPause");
+    caller.call("org.properdesktop.MenuBar", "/MenuBar", "org.properdesktop.MenuBar", "mediaPlayPause");
     test::DBusTestClient app;
     FakePlayer music(app.connection.get(), "shortcut_test");
     ASSERT_TRUE(test::runUntil([&] { return bar.mpris().current() && bar.mpris().current()->isReady(); }));
     for (const char *method : {"mediaPlayPause", "mediaPause", "mediaPrevious", "mediaNext", "mediaStop"})
-        caller.call("org.cutefish.MenuBar", "/MenuBar", "org.cutefish.MenuBar", method);
+        caller.call("org.properdesktop.MenuBar", "/MenuBar", "org.properdesktop.MenuBar", method);
     ASSERT_TRUE(test::runUntil([&] { return music.calls.size() == 5; }));
     EXPECT_EQ((std::vector<std::string>{"PlayPause", "Pause", "Previous", "Next", "Stop"}), music.calls);
 }

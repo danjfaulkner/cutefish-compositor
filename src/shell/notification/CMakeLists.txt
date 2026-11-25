@@ -1,4 +1,4 @@
-add_library(cutefish-shell-notification STATIC
+add_library(properdesktop-shell-notification STATIC
     notification.cpp
     notification.h
     notification_images.cpp
@@ -12,4 +12,4 @@ add_library(cutefish-shell-notification STATIC
     notifications.cpp
     notifications.h
 )
-target_link_libraries(cutefish-shell-notification PUBLIC cutefish-shell-common)
+target_link_libraries(properdesktop-shell-notification PUBLIC properdesktop-shell-common)

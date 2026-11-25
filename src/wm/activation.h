@@ -5,12 +5,12 @@
 // Upstream: chromium/src/ui/wm/core/focus_controller.* and base_focus_rules.*
 // Revision: 7acd40ddefff49c9d36144999aafdbb674dbd07a
 
-#ifndef CUTEFISH_WM_ACTIVATION_H_
-#define CUTEFISH_WM_ACTIVATION_H_
+#ifndef PROPERDESKTOP_WM_ACTIVATION_H_
+#define PROPERDESKTOP_WM_ACTIVATION_H_
 
 #include <vector>
 
-namespace cutefish::wm {
+namespace properdesktop::wm {
 
 class Window;
 class WindowManager;
@@ -63,6 +63,6 @@ private:
     bool m_updating = false;
 };
 
-} // namespace cutefish::wm
+} // namespace properdesktop::wm
 
-#endif // CUTEFISH_WM_ACTIVATION_H_
+#endif // PROPERDESKTOP_WM_ACTIVATION_H_

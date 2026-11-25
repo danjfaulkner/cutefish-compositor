@@ -15,7 +15,7 @@
 #include <utility>
 #include <vector>
 
-namespace cutefish::render {
+namespace properdesktop::render {
 
 struct PresentationOutput {
 };
@@ -159,4 +159,4 @@ private:
     std::vector<PresentationParticipant> m_participants;
 };
 
-} // namespace cutefish::render
+} // namespace properdesktop::render

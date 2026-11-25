@@ -9,10 +9,10 @@
 #include "core/preferences.h"
 #include "input/dbus_export.h"
 
-namespace cutefish::input {
+namespace properdesktop::input {
 
-static constexpr auto service = "org.cutefish.Touchscreen1";
-static constexpr auto path = "/org/cutefish/Touchscreen1";
+static constexpr auto service = "org.properdesktop.Touchscreen1";
+static constexpr auto path = "/org/properdesktop/Touchscreen1";
 static constexpr auto disabledDevicesKey = "Touchscreen/disabledDevices";
 
 TouchscreenSettings::TouchscreenSettings(const std::string &settingsFile)
@@ -78,4 +78,4 @@ void TouchscreenSettings::setDeviceEnabled(const std::string &name, bool enabled
     notify(disabledDevicesChanged, "disabledDevicesChanged");
     notify(settingsChanged, "settingsChanged");
 }
-} // namespace cutefish::input
+} // namespace properdesktop::input

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_BACKEND_DRM_AMDGPU_BOOST_H_
-#define CUTEFISH_BACKEND_DRM_AMDGPU_BOOST_H_
+#ifndef PROPERDESKTOP_BACKEND_DRM_AMDGPU_BOOST_H_
+#define PROPERDESKTOP_BACKEND_DRM_AMDGPU_BOOST_H_
 
 #include <condition_variable>
 #include <cstdint>
@@ -15,7 +15,7 @@
 #include "base/timer.h"
 #include "core/main_loop.h"
 
-namespace cutefish::backend {
+namespace properdesktop::backend {
 
 // Holds an amdgpu device at its peak stable pstate: under CPU load the SMU
 // otherwise gives the power budget to the CPU and frames are missed.
@@ -56,6 +56,6 @@ private:
     std::thread m_thread;
 };
 
-} // namespace cutefish::backend
+} // namespace properdesktop::backend
 
-#endif // CUTEFISH_BACKEND_DRM_AMDGPU_BOOST_H_
+#endif // PROPERDESKTOP_BACKEND_DRM_AMDGPU_BOOST_H_

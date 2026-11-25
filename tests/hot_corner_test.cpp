@@ -11,8 +11,8 @@
 #include "base/settings.h"
 #include "input_test_util.h"
 
-using namespace cutefish::accelerators;
-namespace base = cutefish::base;
+using namespace properdesktop::accelerators;
+namespace base = properdesktop::base;
 
 namespace {
 
@@ -149,7 +149,7 @@ TEST(HotCornerSettingsTest, KeepsCornersInTheSettingsFile)
 
     reloaded.setCorner("top-left", "no-such-action", 0);
     EXPECT_TRUE(reloaded.topLeft().empty());
-    cutefish::base::Settings raw(file);
+    properdesktop::base::Settings raw(file);
     EXPECT_FALSE(raw.contains("HotCorners/TopLeft"));
     EXPECT_EQ(raw.stringValue("HotCorners/BottomRight"), "lock-screen");
 }

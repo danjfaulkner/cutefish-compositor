@@ -5,8 +5,8 @@
 // Upstream: chromium/src/ui/base/accelerators/accelerator_manager.h
 // Revision: 8abbac30b9cf2fe976422c58c000c94685648b65
 
-#ifndef CUTEFISH_ACCELERATORS_ACCELERATOR_MANAGER_H_
-#define CUTEFISH_ACCELERATORS_ACCELERATOR_MANAGER_H_
+#ifndef PROPERDESKTOP_ACCELERATORS_ACCELERATOR_MANAGER_H_
+#define PROPERDESKTOP_ACCELERATORS_ACCELERATOR_MANAGER_H_
 
 #include <list>
 #include <vector>
@@ -14,7 +14,7 @@
 #include "accelerators/accelerator.h"
 #include "accelerators/accelerator_map.h"
 
-namespace cutefish::accelerators {
+namespace properdesktop::accelerators {
 
 class AcceleratorTarget
 {
@@ -74,6 +74,6 @@ private:
     AcceleratorMap<TargetInfo> m_accelerators;
 };
 
-} // namespace cutefish::accelerators
+} // namespace properdesktop::accelerators
 
-#endif // CUTEFISH_ACCELERATORS_ACCELERATOR_MANAGER_H_
+#endif // PROPERDESKTOP_ACCELERATORS_ACCELERATOR_MANAGER_H_

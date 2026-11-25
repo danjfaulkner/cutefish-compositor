@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CUTEFISH_SHELL_SHELL_TEXT_INPUT_H_
-#define CUTEFISH_SHELL_SHELL_TEXT_INPUT_H_
+#ifndef PROPERDESKTOP_SHELL_SHELL_TEXT_INPUT_H_
+#define PROPERDESKTOP_SHELL_SHELL_TEXT_INPUT_H_
 
 #include "ui/event.h"
 #include "wayland/protocols/text_input.h"
 
-namespace cutefish::shell {
+namespace properdesktop::shell {
 
 class ShellWindow;
 
@@ -35,6 +35,6 @@ private:
     ShellWindow *m_window = nullptr;
 };
 
-} // namespace cutefish::shell
+} // namespace properdesktop::shell
 
-#endif // CUTEFISH_SHELL_SHELL_TEXT_INPUT_H_
+#endif // PROPERDESKTOP_SHELL_SHELL_TEXT_INPUT_H_

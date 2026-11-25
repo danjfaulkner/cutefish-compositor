@@ -19,7 +19,7 @@
 #include "scene/window_animation.h"
 #include "base/region.h"
 
-namespace cutefish::scene {
+namespace properdesktop::scene {
 
 namespace {
 
@@ -211,4 +211,4 @@ OverlayPlan proposeOverlays(Node &root, const base::Size &outputSize, size_t max
     return plan;
 }
 
-} // namespace cutefish::scene
+} // namespace properdesktop::scene

@@ -17,7 +17,7 @@
 #include "scene/window_visual_node.h"
 #include "base/region.h"
 
-using namespace cutefish;
+using namespace properdesktop;
 using Animation = scene::WindowAnimation;
 using Type = Animation::Type;
 
