@@ -13,6 +13,7 @@
 #include "shell/common/app_launcher.h"
 #include "shell/common/file_thread.h"
 #include "shell/common/task_manager.h"
+#include "shell/common/task_windows.h"
 #include "shell/notification/notification_settings.h"
 
 namespace properdesktop::shell {
@@ -128,6 +129,8 @@ bool NotificationServer::registerService()
             [] { return std::tuple<std::string, std::string, std::string, std::string>("ProperDesktop", "Proper Desktop", "1.0", "1.2"); },
             dbus::ArgumentNames{{}, {"name", "vendor", "version", "spec_version"}});
     object->addSignal("ActionInvoked", "us");
+    // Spec 1.2: sent before ActionInvoked, with a token the application raises its window with.
+    object->addSignal("ActivationToken", "us");
     object->addSignal("NotificationClosed", "uu");
     if (!object->publish()) {
         CF_WARNING(cfNotifications) << "Cannot export" << kPath;
@@ -399,6 +402,27 @@ void NotificationServer::invokeAction(uint32_t id, const std::string &actionKey)
     const auto it = m_open.find(id);
     if (it != m_open.end())
         relaunchIfGone(it->second, id, actionKey);
+}
+
+void NotificationServer::open(const Notification &notification)
+{
+    std::vector<uint64_t> windows;
+    if (m_tasks)
+        windows = m_tasks->windowsOfEntry(notification.desktopEntry);
+    if (!windows.empty())
+        m_tasks->taskWindows().activate(windows.front());
+
+    if (isOpen(notification.id) && notification.hasAction("default")) {
+        const std::string token = m_launcher ? m_launcher->activationToken() : std::string();
+        if (m_object && !token.empty())
+            m_object->emitSignal("ActivationToken", notification.id, token);
+        invokeAction(notification.id, "default");
+        return;
+    }
+    if (!windows.empty() || !m_launcher || notification.desktopEntry.empty())
+        return;
+    if (const DesktopEntryPtr entry = m_applications.byId(notification.desktopEntry))
+        m_launcher->launch(*entry);
 }
 
 // A sender that asked for it and has left the bus gets its application

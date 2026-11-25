@@ -57,6 +57,11 @@ public:
     const std::string &imageDirectory() const { return m_imageDirectory; }
 
     void invokeAction(uint32_t id, const std::string &actionKey);
+    // The notification was clicked: its application comes forward. Its most recent window is
+    // activated; a notification still open with a default action has it invoked as well, after an
+    // ActivationToken so the window the application raises for it may come forward; and an
+    // application with no window and nothing to invoke is started.
+    void open(const Notification &notification);
     void closeNotification(uint32_t id, CloseReason reason);
 
     base::Signal<const Notification &> notificationAdded;

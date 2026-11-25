@@ -290,9 +290,9 @@ void NotificationBanners::close(uint32_t id)
         m_server.closeNotification(id, NotificationServer::CloseReason::DismissedByUser);
 }
 
-void NotificationBanners::invokeDefaultAction(uint32_t id)
+void NotificationBanners::open(const Notification &notification)
 {
-    invokeAction(id, "default");
+    m_server.open(notification);
 }
 
 void NotificationBanners::invokeAction(uint32_t id, const std::string &actionKey)

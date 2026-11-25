@@ -132,12 +132,14 @@ NotificationCentre::Row::Row(NotificationCentre *centre, ui::Window *window)
     m_scale.onChanged = [this] { placeContent(); };
     m_frameHeight.onChanged = [this] { placeContent(); };
 
+    // A stack opens to show its notifications; a notification takes the user to its application.
     m_card->onClicked = [this] {
         if (isStacked())
             m_centre->setExpanded(m_groupKey, true);
         else
-            m_centre->toggleDetail(this);
+            m_centre->openRow(this);
     };
+    m_card->onDetailClicked = [this] { m_centre->toggleDetail(this); };
     m_card->onCloseClicked = [this] {
         if (isStacked())
             m_centre->dismissGroup(m_groupKey);
@@ -865,6 +867,17 @@ void NotificationCentre::dismissRows(const std::function<bool(const Row &)> &pre
 void NotificationCentre::dismissGroup(const std::string &key)
 {
     dismissRows([&key](const Row &row) { return row.groupKey() == key; });
+}
+
+void NotificationCentre::openRow(Row *row)
+{
+    const Notification notification = row->notification();
+    m_banners.open(notification);
+    // Done with: off the screen and out of the list, as the application is in front now.
+    if (m_banners.rowOf(notification.id) >= 0)
+        m_banners.close(notification.id);
+    dismissRows([row](const Row &other) { return &other == row; });
+    close();
 }
 
 void NotificationCentre::toggleDetail(Row *row)

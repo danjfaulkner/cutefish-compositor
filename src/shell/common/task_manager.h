@@ -46,6 +46,9 @@ public:
     // Null for an application no desktop entry claims.
     DesktopEntryPtr entry(const std::string &application) const;
 
+    // The windows the desktop entry `desktopId` claims, most recently active first.
+    std::vector<uint64_t> windowsOfEntry(const std::string &desktopId) const;
+
     // Empty for a window off the task list.
     std::string applicationOf(uint64_t window) const;
     DesktopEntryPtr entryForWindow(uint64_t window) const;
@@ -94,6 +97,8 @@ private:
     ParentReader m_parentReader;
     std::unordered_map<uint64_t, Window> m_windows;
     std::vector<uint64_t> m_arrival;
+    // Windows in the order they were last active, the most recent first.
+    std::vector<uint64_t> m_recent;
     std::unordered_map<std::string, std::vector<uint64_t>> m_groups;
     std::vector<std::string> m_order;
     std::map<int64_t, std::string> m_claims;

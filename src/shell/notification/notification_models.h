@@ -77,7 +77,9 @@ public:
 
     void expired(uint32_t id);
     void close(uint32_t id);
-    void invokeDefaultAction(uint32_t id);
+    // Brings the notification's application forward (NotificationServer::open); for a banner and
+    // for one in the history alike.
+    void open(const Notification &notification);
     void invokeAction(uint32_t id, const std::string &actionKey);
 
 private:

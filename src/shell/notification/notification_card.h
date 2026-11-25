@@ -23,6 +23,7 @@ class ThemeIcon;
 namespace properdesktop::shell {
 
 class ClearButton;
+class DetailButton;
 class Tween;
 
 class NotificationCard : public ui::View
@@ -52,6 +53,7 @@ public:
     ui::Color controlTint(int state) const;
     void disarmUnless(ui::PointF windowPoint);
     ClearButton *closeButton() const { return m_close; }
+    DetailButton *detailButton() const { return m_detail; }
     // In the card's coordinates.
     std::vector<ui::RectF> actionRects() const;
 
@@ -61,6 +63,8 @@ public:
 
     std::function<void()> onClicked;
     std::function<void()> onCloseClicked;
+    // Set, a card whose text is cut short offers the whole of it on hover (and less again).
+    std::function<void()> onDetailClicked;
     std::function<void(const std::string &key)> onActionClicked;
     std::function<void()> onHoveredChanged;
     std::function<void()> onImplicitHeightChanged;
@@ -80,6 +84,7 @@ private:
     struct Geometry {
         double headerWidth = 0;
         double closeX = 0;
+        double detailX = 0;
         double closeY = 0;
         double contentWidth = 0;
         double titleY = -1;
@@ -114,6 +119,9 @@ private:
     ui::Label *m_appName = nullptr;
     ui::Label *m_when = nullptr;
     ClearButton *m_close = nullptr;
+    DetailButton *m_detail = nullptr;
+    // The text is cut short, or shown whole: the detail button has something to do.
+    bool m_hasDetail = false;
     ui::Label *m_title = nullptr;
     ui::Label *m_body = nullptr;
     ui::Label *m_more = nullptr;

@@ -35,6 +35,9 @@ public:
     void launchCommand(const std::vector<std::string> &command, const std::string &workingDirectory,
                        const std::string &appId, Done done = {});
     void quitApplication(const std::string &appId);
+    // An activation token for an application that is already running, so a window it raises in
+    // answer to the user (a notification clicked) may come forward. Empty without a token source.
+    std::string activationToken() const { return newToken(); }
     // For a bundle while nothing runs bundles: the file manager offers to
     // install what does.
     static void openInFileManager(const std::string &path);

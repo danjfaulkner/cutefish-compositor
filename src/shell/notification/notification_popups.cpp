@@ -86,10 +86,10 @@ NotificationPopups::Banner::Banner(NotificationPopups *popups, const Notificatio
 
     NotificationBanners &model = popups->m_model;
     const uint32_t bannerId = id();
+    // A click takes the user to the notification's application.
     m_card->onClicked = [&model, bannerId] {
-        if (const int row = model.rowOf(bannerId); row >= 0
-            && model.notifications()[size_t(row)].hasAction("default"))
-            model.invokeDefaultAction(bannerId);
+        if (const int row = model.rowOf(bannerId); row >= 0)
+            model.open(model.notifications()[size_t(row)]);
         model.close(bannerId);
     };
     m_card->onCloseClicked = [&model, bannerId] { model.close(bannerId); };

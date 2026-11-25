@@ -84,6 +84,7 @@ protected:
         shell::ShellEnvironment environment {&compositor, &manager, &seat,
                                              dbus::Connection::session(core::mainLoop())};
         environment.servicesSettings = directory.filePath("services.conf");
+        environment.createActivationToken = [] { return std::string("token-1"); };
         shell = std::make_unique<shell::Shell>(environment);
         auto apps = std::make_unique<test::FakeApplications>();
         apps->addSimple("org.example.Chat", "Chat", "chat-icon");
@@ -100,7 +101,8 @@ protected:
         auto backend = std::make_unique<shell::Notifications>(
                 shell->bus(), shell->applications(), &shell->tasks(),
                 shell::Notifications::Files {directory.filePath("shell.conf"), directory.filePath("history"),
-                                             directory.filePath("images")});
+                                             directory.filePath("images")},
+                &shell->launcher());
         notifications = backend.get();
         ui = shell->addComponent(std::make_unique<shell::NotificationUi>(shell.get(), std::move(backend)));
         ASSERT_TRUE(ui->registerServices());
@@ -495,10 +497,115 @@ TEST_F(NotificationViewTest, TheCentreStacksEachApplicationAndFansItOut)
     EXPECT_TRUE(rows[0]->isStacked());
     frames(450);
 
-    click(centreOf(rows[3]->card(), origin).x(), centreOf(rows[3]->card(), origin).y());
-    EXPECT_TRUE(rows[3]->isDetailed());
-    click(centreOf(rows[3]->card(), origin).x(), centreOf(rows[3]->card(), origin).y());
-    EXPECT_FALSE(rows[3]->isDetailed());
+}
+
+TEST_F(NotificationViewTest, ANotificationInTheCentreTakesYouToItsApplication)
+{
+    auto &windows = static_cast<test::FakeTaskWindows &>(shell->taskWindows());
+    shell::TaskWindow chat;
+    chat.appId = "org.example.Chat";
+    chat.title = "Chat A";
+    const uint64_t first = windows.add(chat);
+    chat.title = "Chat B";
+    const uint64_t second = windows.add(chat);
+    windows.setActive(second);
+    windows.setActive(first);
+    ASSERT_TRUE(test::runUntil([&] { return shell->tasks().windowsOfEntry("org.example.Chat").size() == 2; }));
+    EXPECT_EQ((std::vector<uint64_t> {first, second}), shell->tasks().windowsOfEntry("org.example.Chat"));
+
+    addHistory("org.example.Mail", "Mail", "Mail 1");
+    addHistory("org.example.Chat", "Chat", "Chat 1");
+    centre().open(menuBar.get(), base::Point(1440 - 120, kMenuBar));
+    frames(100);
+    ASSERT_EQ(2u, centre().rows().size());
+    shell::NotificationCentre::Row *row = centre().rows()[0];
+    ASSERT_EQ("Chat 1", row->notification().summary);
+    ASSERT_FALSE(row->isStacked());
+
+    const base::Point origin = centre().geometry().topLeft();
+    windows.requests.clear();
+    click(centreOf(row->card(), origin).x(), centreOf(row->card(), origin).y());
+    // The window last used comes forward, the centre closes, and the notification is done with.
+    EXPECT_EQ((std::vector<std::string> {"activate " + std::to_string(first)}), windows.requests);
+    EXPECT_FALSE(centre().isOpen());
+    frames(600);
+    ASSERT_EQ(1, notifications->history().count());
+    EXPECT_EQ("Mail 1", notifications->history().notifications().front().summary);
+}
+
+TEST_F(NotificationViewTest, ClickingABannerHandsTheApplicationATokenThenItsDefaultAction)
+{
+    const uint32_t id = notify("Message", "Hi", {"default", "Open"});
+    ASSERT_EQ(1u, popups().banners().size());
+    shell::NotificationCard *card = popups().banners().front()->card();
+    const base::Point origin = popups().banners().front()->window()->wmWindow()->bounds().topLeft();
+    client.signalsSeen.clear();
+    click(centreOf(card, origin).x(), centreOf(card, origin).y());
+    ASSERT_TRUE(test::runUntil([&] { return client.signalsSeen.size() >= 2; }));
+    std::vector<std::string> members;
+    for (const dbus::Message &message : client.signalsSeen)
+        members.push_back(message.member());
+    ASSERT_GE(members.size(), 2u);
+    EXPECT_EQ("ActivationToken", members[0]);
+    EXPECT_EQ("ActionInvoked", members[1]);
+    uint32_t tokenId = 0;
+    std::string token;
+    ASSERT_TRUE(client.signalsSeen[0].read(tokenId, token));
+    EXPECT_EQ(id, tokenId);
+    EXPECT_EQ("token-1", token);
+    uint32_t actionId = 0;
+    std::string action;
+    ASSERT_TRUE(client.signalsSeen[1].read(actionId, action));
+    EXPECT_EQ(id, actionId);
+    EXPECT_EQ("default", action);
+    frames(600);
+    EXPECT_TRUE(popups().banners().empty() || !popups().banners().front()->isShown());
+}
+
+TEST_F(NotificationViewTest, TheArrowShowsALongNotificationWhole)
+{
+    shell::Notification notification;
+    notification.service = ":1.99";
+    notification.appName = "Mail";
+    notification.desktopEntry = "org.example.Mail";
+    notification.summary = "Long";
+    for (int i = 0; i < 12; ++i)
+        notification.body += "A line of a long message that goes on and on. ";
+    notification.created = int64_t(1700000000000);
+    notifications->history().add(notification);
+    addHistory("org.example.Chat", "Chat", "Short");
+    centre().open(menuBar.get(), base::Point(1440 - 120, kMenuBar));
+    frames(100);
+    ASSERT_EQ(2u, centre().rows().size());
+    shell::NotificationCentre::Row *longRow = centre().rows()[1];
+    shell::NotificationCentre::Row *shortRow = centre().rows()[0];
+    ASSERT_EQ("Long", longRow->notification().summary);
+    const base::Point origin = centre().geometry().topLeft();
+
+    // Only on hover, and only where the text is cut short.
+    EXPECT_FALSE(longRow->card()->detailButton()->isVisible());
+    const base::PointF onLong = centreOf(longRow->card(), origin);
+    move(onLong.x(), onLong.y());
+    frames();
+    ASSERT_TRUE(longRow->card()->detailButton()->isVisible());
+    const base::PointF onShort = centreOf(shortRow->card(), origin);
+    move(onShort.x(), onShort.y());
+    frames();
+    EXPECT_FALSE(shortRow->card()->detailButton()->isVisible());
+
+    move(onLong.x(), onLong.y());
+    frames();
+    const base::PointF arrow = centreOf(longRow->card()->detailButton(), origin);
+    click(arrow.x(), arrow.y());
+    frames(450);
+    EXPECT_TRUE(longRow->isDetailed());
+    EXPECT_TRUE(centre().isOpen());
+    EXPECT_TRUE(longRow->card()->detailButton()->isExpanded());
+    const base::PointF again = centreOf(longRow->card()->detailButton(), origin);
+    click(again.x(), again.y());
+    frames(450);
+    EXPECT_FALSE(longRow->isDetailed());
+    EXPECT_EQ(2, notifications->history().count());
 }
 
 TEST_F(NotificationViewTest, ALongGroupGlidesOnlyTheCardsInView)
@@ -592,7 +699,8 @@ TEST_F(NotificationViewTest, ClosingCommitsPendingRemovalsAndFoldsGroups)
     auto rows = centre().rows();
     click(centreOf(rows[1]->card(), origin).x(), centreOf(rows[1]->card(), origin).y());
     EXPECT_TRUE(centre().isExpanded("org.example.Chat"));
-    click(centreOf(rows[0]->card(), origin).x(), centreOf(rows[0]->card(), origin).y());
+    // Shown whole (the arrow's doing; a click on the card opens the application now).
+    rows[0]->setDetailed(true);
     EXPECT_TRUE(rows[0]->isDetailed());
     move(centreOf(rows[0]->card(), origin).x(), centreOf(rows[0]->card(), origin).y());
     frames();

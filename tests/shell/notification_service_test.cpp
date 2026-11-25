@@ -278,7 +278,8 @@ TEST_F(NotificationServiceTest, ClosesWithTheSpecsSignalOrError)
     const uint32_t expiring = notify("Later", 0, {}, {"default", "Open"});
     settle();
     client.signalsSeen.clear();
-    notifications->banners().invokeDefaultAction(expiring);
+    notifications->banners().open(notifications->banners().notifications()[size_t(
+            notifications->banners().rowOf(expiring))]);
     ASSERT_TRUE(test::runUntil([&] { return !client.signalsSeen.empty(); }));
     EXPECT_EQ(client.signalsSeen.front().member(), "ActionInvoked");
     notifications->banners().expired(expiring);

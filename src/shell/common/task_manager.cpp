@@ -24,6 +24,12 @@ TaskManager::TaskManager(TaskWindows &windows, Applications &applications, Comma
             [this](uint64_t id, uint32_t changes) { onWindowChanged(id, changes); }));
     m_subscriptions.push_back(m_taskWindows.windowRemoved.connect([this](uint64_t id) { onWindowRemoved(id); }));
     m_subscriptions.push_back(m_applications.changed.connect([this] { onApplicationsChanged(); }));
+    m_subscriptions.push_back(m_taskWindows.activeWindowChanged.connect([this](uint64_t id) {
+        if (!id)
+            return;
+        std::erase(m_recent, id);
+        m_recent.insert(m_recent.begin(), id);
+    }));
 
     for (uint64_t id : m_taskWindows.windows())
         onWindowAdded(id);
@@ -32,6 +38,25 @@ TaskManager::TaskManager(TaskWindows &windows, Applications &applications, Comma
 }
 
 TaskManager::~TaskManager() = default;
+
+std::vector<uint64_t> TaskManager::windowsOfEntry(const std::string &desktopId) const
+{
+    std::vector<uint64_t> found;
+    if (desktopId.empty())
+        return found;
+    const auto claims = [&](uint64_t id) {
+        const DesktopEntryPtr entry = entryForWindow(id);
+        return entry && entry->id == desktopId;
+    };
+    for (uint64_t id : m_recent)
+        if (claims(id))
+            found.push_back(id);
+    // Windows never active yet, oldest first.
+    for (uint64_t id : m_arrival)
+        if (std::find(found.begin(), found.end(), id) == found.end() && claims(id))
+            found.push_back(id);
+    return found;
+}
 
 std::vector<uint64_t> TaskManager::windows(const std::string &application) const
 {
@@ -160,6 +185,7 @@ void TaskManager::onWindowRemoved(uint64_t id)
     leave(id);
     m_windows.erase(id);
     std::erase(m_arrival, id);
+    std::erase(m_recent, id);
 }
 
 void TaskManager::onApplicationsChanged()

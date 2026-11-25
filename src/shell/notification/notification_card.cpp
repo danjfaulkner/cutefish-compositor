@@ -299,6 +299,14 @@ NotificationCard::NotificationCard(ui::Window *window)
     m_close->onWidthChanged = [this] { requestLayout(); };
     m_close->onArmedChanged = [this] { updateClose(); };
 
+    m_detail = addChild<DetailButton>();
+    m_detail->setTint([this](int state) { return controlTint(state); });
+    m_detail->setVisible(false);
+    m_detail->onClicked = [this] {
+        if (onDetailClicked)
+            onDetailClicked();
+    };
+
     m_progress->onChanged = [this] { requestPaint(); };
     m_progress->snap(0);
 }
@@ -377,6 +385,7 @@ void NotificationCard::setDetailed(bool detailed)
         return;
     m_detailed = detailed;
     m_body->setMaximumLineCount(detailed ? 1000 : kBodyLines);
+    m_detail->setExpanded(detailed);
     requestLayout();
     heightMayHaveChanged();
 }
@@ -431,7 +440,8 @@ NotificationCard::Geometry NotificationCard::computeGeometry(double width) const
     Geometry g;
     g.closeY = kPadding + (kHeaderHeight - m_close->buttonHeight()) / 2 - 3;
     g.closeX = width - g.closeY - m_close->currentWidth();
-    g.headerWidth = g.closeX - theme.smallSpacing - kPadding;
+    g.detailX = g.closeX - DetailButton::buttonSize();
+    g.headerWidth = (m_detail->isVisible() ? g.detailX : g.closeX) - theme.smallSpacing - kPadding;
 
     const bool thumbnail = showsThumbnail();
     g.thumbnailX = width - kPadding - kThumbnailSize;
@@ -500,6 +510,12 @@ void NotificationCard::updateClose()
     m_close->setVisible(isHovered() || m_close->isArmed());
     if (!m_close->isVisible())
         m_close->reset();
+    // Not while the close button stretches into its "Clear" pill over it.
+    const bool detail = onDetailClicked && m_hasDetail && isHovered() && !m_close->isArmed();
+    if (detail != m_detail->isVisible()) {
+        m_detail->setVisible(detail);
+        requestLayout();
+    }
 }
 
 void NotificationCard::hoverChanged()
@@ -550,6 +566,7 @@ void NotificationCard::layout()
     const Geometry g = computeGeometry(width);
 
     m_close->setGeometry({g.closeX, g.closeY, m_close->currentWidth(), m_close->buttonHeight()});
+    m_detail->setGeometry({g.detailX, g.closeY, DetailButton::buttonSize(), DetailButton::buttonSize()});
 
     const double iconY = kPadding + (kHeaderHeight - kIconSize) / 2;
     m_themeIcon->setGeometry({kPadding, iconY, kIconSize, kIconSize});
@@ -569,6 +586,11 @@ void NotificationCard::layout()
         m_title->setGeometry({kPadding, g.titleY, g.contentWidth, m_title->sizeHint().height});
     if (g.bodyY >= 0)
         m_body->setGeometry({kPadding, g.bodyY, g.contentWidth, g.bodyHeight});
+    const bool hasDetail = g.bodyY >= 0 && (m_detailed || m_body->isElided());
+    if (hasDetail != m_hasDetail) {
+        m_hasDetail = hasDetail;
+        updateClose();
+    }
     m_more->setVisible(g.moreY >= 0);
     if (g.moreY >= 0)
         m_more->setGeometry({kPadding, g.moreY, g.contentWidth, m_more->sizeHint().height});

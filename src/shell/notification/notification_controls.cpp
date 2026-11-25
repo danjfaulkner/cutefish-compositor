@@ -134,6 +134,76 @@ void ClearButton::reset()
     updateLabel();
 }
 
+// A chevron of two 1 px strokes meeting at the centre's bottom (down) or top (up).
+static void paintChevron(ui::Painter &painter, ui::PointF centre, double width, bool up, ui::Color color)
+{
+    const double half = width / 2;
+    const double rise = half / 2;
+    const double tip = up ? -rise / 2 : rise / 2;
+    const ui::PointF point {centre.x, centre.y + tip};
+    const double thickness = 0.5;
+    for (const double side : {-1.0, 1.0}) {
+        const ui::PointF end {centre.x + side * half, centre.y - tip};
+        const double dx = point.x - end.x;
+        const double dy = point.y - end.y;
+        const double length = std::hypot(dx, dy);
+        const ui::PointF across {-dy / length * thickness, dx / length * thickness};
+        ui::Path path;
+        path.addPolygon({end - across, point - across, point + across, end + across});
+        painter.fillPath(path, color);
+    }
+}
+
+void DetailButton::setExpanded(bool expanded)
+{
+    if (expanded == m_expanded)
+        return;
+    m_expanded = expanded;
+    requestPaint();
+}
+
+void DetailButton::pointerEnter()
+{
+    m_hovered = true;
+    requestPaint();
+}
+
+void DetailButton::pointerLeave()
+{
+    m_hovered = false;
+    requestPaint();
+}
+
+void DetailButton::pointerPress(const ui::PointerEvent &event)
+{
+    if (event.button != ui::MouseButton::Left)
+        return;
+    m_pressed = true;
+    requestPaint();
+}
+
+void DetailButton::pointerRelease(const ui::PointerEvent &event)
+{
+    if (!m_pressed)
+        return;
+    m_pressed = false;
+    requestPaint();
+    if (localRect().contains(event.position) && onClicked)
+        onClicked();
+}
+
+void DetailButton::paint(ui::Painter &painter)
+{
+    const ui::Theme &theme = ui::Theme::current();
+    const ui::RectF rect = localRect();
+    if (m_hovered && m_tint)
+        painter.drawSmoothRectangle(rect, rect.height / 2, m_tint(m_pressed ? 2 : 1));
+    painter.save();
+    painter.multiplyOpacity(0.7);
+    paintChevron(painter, {rect.width / 2, rect.height / 2}, 9, m_expanded, theme.text);
+    painter.restore();
+}
+
 double ClearButton::buttonHeight() const
 {
     return m_kind == Kind::Clear ? 26 : 24;

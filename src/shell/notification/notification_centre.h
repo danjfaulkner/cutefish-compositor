@@ -107,6 +107,8 @@ private:
     void beginMotion(std::chrono::milliseconds duration = std::chrono::milliseconds(410));
     void dismissRows(const std::function<bool(const Row &)> &predicate);
     void dismissGroup(const std::string &key);
+    // The notification's application comes forward; the notification leaves the list.
+    void openRow(Row *row);
     void toggleDetail(Row *row);
     void commitRemovals();
     void disarmClears(std::optional<ui::PointF> windowPoint);

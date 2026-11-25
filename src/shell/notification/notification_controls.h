@@ -25,6 +25,35 @@ bool inkIsDark(ui::Color surface);
 ui::Color inkOn(ui::Color surface, double alpha);
 ui::Color rgba(double red, double green, double blue, double alpha);
 
+// The round button beside a card's close button that shows a notification's whole text, or
+// shows less again: a chevron, down while the text is cut short and up while it is whole.
+class DetailButton : public ui::View
+{
+public:
+    // The plate's fill for hover (1) and press (2).
+    void setTint(std::function<ui::Color(int state)> tint) { m_tint = std::move(tint); }
+    void setExpanded(bool expanded);
+    bool isExpanded() const { return m_expanded; }
+    static double buttonSize() { return 24; }
+
+    std::function<void()> onClicked;
+
+    bool acceptsPointer() const override { return true; }
+
+protected:
+    void pointerEnter() override;
+    void pointerLeave() override;
+    void pointerPress(const ui::PointerEvent &event) override;
+    void pointerRelease(const ui::PointerEvent &event) override;
+    void paint(ui::Painter &painter) override;
+
+private:
+    std::function<ui::Color(int)> m_tint;
+    bool m_expanded = false;
+    bool m_hovered = false;
+    bool m_pressed = false;
+};
+
 class ClearButton : public ui::View
 {
 public:
