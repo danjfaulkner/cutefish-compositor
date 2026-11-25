@@ -6,19 +6,14 @@
 
 #include <optional>
 
-#include <pwd.h>
-#include <unistd.h>
 
 #include "core/logging.h"
 #include "core/main_loop.h"
-#include "properdesktop/accounts/account_picture.h"
-#include "properdesktop/accounts/user_account.h"
 #include "shell/common/task_windows.h"
 #include "shell/shell.h"
 #include "shell/shell_data.h"
 #include "shell/menubar/bar_item.h"
 #include "shell/menubar/menu_bar.h"
-#include "ui/image_view.h"
 #include "ui/menu.h"
 #include "ui/painter.h"
 #include "ui/window.h"
@@ -38,15 +33,8 @@ public:
             setInsets(BarContext::kEdgeMargin - (BarContext::kItemGap - BarContext::kHighlightGap) / 2,
                       BarContext::kHighlightGap / 2);
             setGlyphWidth(BarContext::kIconSize);
-            m_disc = addChild<Disc>();
-            m_avatar = addChild<ui::ImageView>();
-            m_avatar->setFillMode(ui::ImageView::FillMode::Stretch);
-            m_avatar->setMipmap(true);
-            m_avatar->setCornerRadius(BarContext::kIconSize / 2);
-            m_avatar->setRendering(ui::ImageView::Rendering::MaskedLayer);
-            m_avatar->onStatusChanged = [this](ui::ImageView::Status status) {
-                m_disc->setVisible(status != ui::ImageView::Status::Ready);
-            };
+            // The Proper Desktop tile in grey, white or black as the bar's other icons are.
+            m_logo = addChild<BarIcon>();
         } else {
             setInsets(BarContext::kHighlightGap / 2, BarContext::kHighlightGap / 2);
             m_label = addChild<BarLabel>();
@@ -59,19 +47,10 @@ public:
 
     double preferredWidth() const
     {
-        if (m_avatar)
+        if (m_logo)
             return BarContext::kItemGap / 2 + BarContext::kEdgeMargin + BarContext::kIconSize
                     + BarContext::kSmallSpacing * 2;
         return BarContext::kItemGap + m_label->sizeHint().width + BarContext::kSmallSpacing * 2;
-    }
-
-    void setAvatar(const std::string &file, ui::Color color)
-    {
-        if (!m_avatar)
-            return;
-        m_disc->setColor(color);
-        m_avatar->setSource(file);
-        m_disc->setVisible(m_avatar->status() != ui::ImageView::Status::Ready);
     }
 
     void updateLook()
@@ -82,43 +61,28 @@ public:
             m_label->setTextColor(bar()->menuTextColor());
             m_label->setDropShadow(bar()->lightContents());
         }
+        if (m_logo) {
+            m_logo->setSource(shellDataFile(bar()->lightContents() ? "menubar/properdesktop-light.svg"
+                                                                    : "menubar/properdesktop-dark.svg"));
+            m_logo->setColor(ui::Color::rgb(0xFFFFFF));
+            m_logo->setDropShadow(bar()->lightContents());
+        }
         barChanged();
     }
 
 protected:
     void layout() override
     {
-        if (m_avatar) {
-            m_disc->setGeometry(centred({BarContext::kIconSize, BarContext::kIconSize}));
-            m_avatar->setGeometry(centred({BarContext::kIconSize, BarContext::kIconSize}));
-        }
+        if (m_logo)
+            m_logo->setGeometry(centred({BarContext::kIconSize, BarContext::kIconSize}));
         if (m_label)
             m_label->setGeometry(centred(m_label->sizeHint()));
     }
 
 private:
-    class Disc final : public ui::View
-    {
-    public:
-        void setColor(ui::Color color)
-        {
-            if (color == m_color)
-                return;
-            m_color = color;
-            requestPaint();
-        }
-
-    protected:
-        void paint(ui::Painter &painter) override { painter.fillEllipse(localRect(), m_color); }
-
-    private:
-        ui::Color m_color;
-    };
-
     const AppMenusModel::Row m_row;
     BarLabel *m_label = nullptr;
-    Disc *m_disc = nullptr;
-    ui::ImageView *m_avatar = nullptr;
+    BarIcon *m_logo = nullptr;
 };
 
 // Enters or leaves fullscreen on a desk of its own for the active window.
@@ -198,16 +162,6 @@ AppMenusView::AppMenusView(Shell *shell, MenuBarAppMenusHost host)
         m_subscriptions.push_back(
                 manager->fullscreenDesks()->changed.connect([this] { updateFullscreenButton(); }));
 
-    if (const passwd *entry = getpwuid(getuid()))
-        m_userColor = ui::Color::rgb(accounts::pictureColor(entry->pw_name));
-    setUserIcon({});
-    if (shell->bus()) {
-        if (base::dbus::Connection *system = base::dbus::Connection::system(core::mainLoop())) {
-            m_account = std::make_unique<accounts::UserAccount>(system);
-            m_subscriptions.push_back(m_account->changed.connect([this] { setUserIcon(m_account->iconFileName()); }));
-            setUserIcon(m_account->iconFileName());
-        }
-    }
     rebuildEntries();
 }
 
@@ -229,13 +183,6 @@ BarItem *AppMenusView::entry(size_t index) const
 BarItem *AppMenusView::fullscreenButton() const
 {
     return m_fullscreen;
-}
-
-void AppMenusView::setUserIcon(const std::string &file)
-{
-    m_userIcon = file;
-    if (!m_entries.empty())
-        m_entries.front()->setAvatar(m_userIcon, m_userColor);
 }
 
 void AppMenusView::barChanged()
@@ -296,8 +243,6 @@ void AppMenusView::rebuildEntries()
         };
         m_entries.push_back(entry);
     }
-    if (!m_entries.empty())
-        m_entries.front()->setAvatar(m_userIcon, m_userColor);
 
     if (m_currentIndex >= 0) {
         const std::optional<size_t> row =

@@ -14,10 +14,6 @@
 #include "shell/menubar/menu_bar_app_menus.h"
 #include "ui/geometry.h"
 
-namespace properdesktop::accounts {
-class UserAccount;
-}
-
 namespace properdesktop::ui {
 class Menu;
 }
@@ -49,8 +45,6 @@ public:
     BarItem *entry(size_t index) const;
     // The fullscreen button after the menus.
     BarItem *fullscreenButton() const;
-    // Empty shows the account's colour.
-    void setUserIcon(const std::string &file);
 
 protected:
     void layout() override;
@@ -66,11 +60,8 @@ private:
 
     MenuBarAppMenusHost m_host;
     std::unique_ptr<AppMenusModel> m_model;
-    std::unique_ptr<accounts::UserAccount> m_account;
     std::vector<Entry *> m_entries;
     FullscreenButton *m_fullscreen = nullptr;
-    std::string m_userIcon;
-    ui::Color m_userColor;
     int m_currentIndex = -1;
     ui::Menu *m_openMenu = nullptr;
     bool m_switching = false;

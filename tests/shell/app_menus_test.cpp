@@ -451,6 +451,27 @@ TEST_F(AppMenusTest, TheUserEntryAloneWithNothingFocusedAndNoDesktopMenu)
     EXPECT_EQ(3, view->entry(1)->leftInset());
 }
 
+TEST_F(AppMenusTest, TheUserEntryShowsTheGreyTileInTheBarsColour)
+{
+    const auto logo = [&]() -> std::string {
+        for (const auto &child : view->entry(0)->children())
+            if (auto *icon = dynamic_cast<shell::BarIcon *>(child.get()))
+                return icon->source();
+        return {};
+    };
+    const auto endsWith = [](const std::string &text, const std::string &end) {
+        return text.size() >= end.size() && text.compare(text.size() - end.size(), end.size(), end) == 0;
+    };
+    // Dark contents over a light wallpaper: the black tile.
+    EXPECT_TRUE(endsWith(logo(), "menubar/properdesktop-dark.svg")) << logo();
+    bar->light = true;
+    view->barChanged();
+    EXPECT_TRUE(endsWith(logo(), "menubar/properdesktop-light.svg")) << logo();
+    bar->light = false;
+    view->barChanged();
+    EXPECT_TRUE(endsWith(logo(), "menubar/properdesktop-dark.svg")) << logo();
+}
+
 TEST_F(AppMenusTest, TheUserMenuOpensUnderItsPlateAndClosesOnASecondClick)
 {
     click(entryCentre(0).x(), 16);

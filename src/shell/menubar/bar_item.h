@@ -108,6 +108,7 @@ public:
 
     // Empty draws nothing.
     void setSource(std::string file, bool monochrome = false);
+    const std::string &source() const { return m_file; }
     void setGlyph(std::string name);
     void setColor(ui::Color color);
     void setDropShadow(bool shadow);

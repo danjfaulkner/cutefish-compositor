@@ -1,5 +1,3 @@
-find_package(ProperDesktopClients REQUIRED COMPONENTS accounts)
-
 add_library(properdesktop-shell-app-menus STATIC
     src/shell/menubar/app_menus_model.cpp
     src/shell/menubar/app_menus_model.h
@@ -7,5 +5,5 @@ add_library(properdesktop-shell-app-menus STATIC
     src/shell/menubar/app_menus_view.h
 )
 target_link_libraries(properdesktop-shell-app-menus PUBLIC properdesktop-shell properdesktop-shell-menubar
-    properdesktop-shell-menubar-view ProperDesktop::AccountsClient)
+    properdesktop-shell-menubar-view)
 target_link_libraries(properdesktop-compositor PRIVATE properdesktop-shell-app-menus)
