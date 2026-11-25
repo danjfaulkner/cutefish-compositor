@@ -288,6 +288,7 @@ private:
     std::vector<base::Subscription> m_windowManagerSignals;
     base::Subscription m_hotCornerBindings;
     base::Subscription m_hotCornerPointer;
+    base::Subscription m_edgePush;
     // In front of the whole chain, so the key reaches neither a shortcut nor a client.
     std::unique_ptr<session::PowerButton> m_powerButton;
     std::unique_ptr<wm::QuitAll> m_quitAll;

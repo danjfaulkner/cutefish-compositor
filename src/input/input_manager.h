@@ -121,6 +121,9 @@ public:
     // Every pointer move while the desktop has the input, clamped to the
     // layout, before any sink, drag or grab sees it.
     base::Signal<base::PointF> pointerMoved;
+    // How far a free relative move went past the edge of the layout, which the clamp took off:
+    // pushing against an edge. Not while a client locks or confines the pointer.
+    base::Signal<base::PointF> pointerPushedPastEdge;
 
 private:
     void synthesizePendingMotion();

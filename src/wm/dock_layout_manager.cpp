@@ -152,6 +152,8 @@ DockLayoutManager::DockLayoutManager(WindowManager *manager)
     m_managerSignals.push_back(m_manager->pointerMoved.connect([this](const base::PointF &location) {
         onPointerMoved(location);
     }));
+    m_managerSignals.push_back(m_manager->pointerPushedPastEdge.connect(
+            [this](const base::PointF &overshoot) { onPointerPushedPastEdge(overshoot); }));
     if (input::Seat *seat = m_manager->seat())
         m_pointer = seat->pointerLocation();
     for (Window *window : m_manager->windows())
@@ -344,6 +346,10 @@ DockAutoHideState DockLayoutManager::computeAutoHideState(const Window *dock, co
         }
         if (revealing && region.contains(m_pointer->toPoint()))
             return DockAutoHideState::Shown;
+        // Over a fullscreen window the top bar wants a push past the top, not just the pointer
+        // resting there (see onPointerPushedPastEdge).
+        if (isOverFullscreen(dock, entry, output))
+            return m_pushRevealed ? DockAutoHideState::Shown : DockAutoHideState::Hidden;
         if (revealStripFor(dock, entry, output).contains(m_pointer->toPoint()))
             return DockAutoHideState::Shown;
     }
@@ -452,6 +458,9 @@ void DockLayoutManager::updateDock(Window *dock, Dock &entry)
 void DockLayoutManager::applyAutoHideState(Window *dock, Dock &entry, DockAutoHideState state)
 {
     entry.autoHide = state;
+    // A push brings the bar out once; from then on the pointer keeps it there or lets it go.
+    if (isTopBar(dock, entry, m_manager->outputBoundsFor(dock)))
+        m_pushRevealed = false;
     m_manager->setDockHidden(dock, state == DockAutoHideState::Hidden);
     const base::Rect output = m_manager->outputBoundsFor(dock);
     slideTo(dock, entry,
@@ -610,7 +619,44 @@ void DockLayoutManager::onWindowRemoved(Window *window)
 void DockLayoutManager::onPointerMoved(const base::PointF &location)
 {
     m_pointer = location;
+    // Off the top, the push starts over; a reveal it earned lasts while the bar is out.
+    bool atTop = false, barShown = false;
+    for (const auto &[dock, entry] : m_docks) {
+        const base::Rect output = m_manager->outputBoundsFor(dock);
+        if (!isTopBar(dock, *entry, output))
+            continue;
+        atTop = atTop || revealStripFor(dock, *entry, output).contains(location.toPoint());
+        barShown = barShown || entry->autoHide == DockAutoHideState::Shown;
+    }
+    if (!atTop) {
+        m_topPush = 0;
+        if (!barShown)
+            m_pushRevealed = false;
+    }
     update();
+}
+
+void DockLayoutManager::onPointerPushedPastEdge(const base::PointF &overshoot)
+{
+    if (overshoot.y() >= 0 || !m_pointer)
+        return;
+    for (const auto &[dock, entry] : m_docks) {
+        const base::Rect output = m_manager->outputBoundsFor(dock);
+        if (!isOverFullscreen(dock, *entry, output) || entry->autoHide != DockAutoHideState::Hidden
+            || !revealStripFor(dock, *entry, output).contains(m_pointer->toPoint()))
+            continue;
+        const auto now = std::chrono::steady_clock::now();
+        if (now - m_lastTopPush > std::chrono::milliseconds(kRevealPushResetMs))
+            m_topPush = 0;
+        m_lastTopPush = now;
+        m_topPush += -overshoot.y();
+        if (m_topPush >= kFullscreenRevealPushPx) {
+            m_topPush = 0;
+            m_pushRevealed = true;
+            update();
+        }
+        return;
+    }
 }
 
 void DockLayoutManager::onWindowBoundsChanged(Window *, const base::Rect &)

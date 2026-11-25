@@ -345,6 +345,9 @@ public:
     base::Signal<> popupGrabsChanged;
     // The reach into the window, then the slide duration in milliseconds.
     base::Signal<Window *, int, int> fullscreenRevealChanged;
+    // A free pointer pushed past the outer edge of the outputs by this much (fed by the shell from
+    // the input manager): what it takes to bring the top bar in over a fullscreen window.
+    base::Signal<const base::PointF &> pointerPushedPastEdge;
 
 private:
     bool hasApplicationWindow(int64_t process) const;

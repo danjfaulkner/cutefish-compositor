@@ -9,6 +9,7 @@
 #ifndef CUTEFISH_WM_DOCK_LAYOUT_MANAGER_H_
 #define CUTEFISH_WM_DOCK_LAYOUT_MANAGER_H_
 
+#include <chrono>
 #include <map>
 #include <memory>
 #include <optional>
@@ -54,9 +55,12 @@ class DockLayoutManager : public WindowObserver
 public:
     static constexpr int kRevealStripPx = 5;
     static constexpr int kAutoHideDelayMs = 200;
-    // Over a fullscreen window the top bar needs the pointer held against the very top of the
-    // output this long, like macOS's resistance, so passing near the edge does not bring it.
-    static constexpr int kFullscreenRevealDelayMs = 500;
+    // Over a fullscreen window the top bar comes in only when the pointer at the very top of the
+    // output keeps pushing up past it this far, like macOS's resistance: resting on the edge or
+    // passing along it does not bring it. Pushes further apart than kRevealPushResetMs start over.
+    static constexpr double kFullscreenRevealPushPx = 150;
+    static constexpr int kRevealPushResetMs = 700;
+    static constexpr int kFullscreenRevealDelayMs = 0;
     static constexpr int kFullscreenRevealStripPx = 1;
     static constexpr int kSlideDurationMs = 200;
 
@@ -91,6 +95,7 @@ private:
     void onWindowAdded(cutefish::wm::Window *window);
     void onWindowRemoved(cutefish::wm::Window *window);
     void onPointerMoved(const base::PointF &location);
+    void onPointerPushedPastEdge(const base::PointF &overshoot);
 
 private:
     struct Dock {
@@ -140,6 +145,10 @@ private:
     bool m_sessionEnding = false;
     std::map<Window *, std::unique_ptr<Dock>> m_docks;
     std::optional<base::PointF> m_pointer;
+    // Upward push gathered against the top over a fullscreen window, and whether it was enough.
+    double m_topPush = 0;
+    std::chrono::steady_clock::time_point m_lastTopPush;
+    bool m_pushRevealed = false;
     double m_overviewProgress = 0;
     std::vector<base::Subscription> m_managerSignals;
 };

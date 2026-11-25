@@ -487,6 +487,8 @@ void CompositorShell::initAccelerators()
         applyOutputs();
         m_hotCornerBindings = m_hotCornerSettings->changed.connect(applyBindings);
         m_windowManagerSignals.push_back(m_windowManager.outputsChanged.connect(applyOutputs));
+        m_edgePush = m_inputManager.pointerPushedPastEdge.connect(
+                [this](base::PointF overshoot) { m_windowManager.pointerPushedPastEdge.emit(overshoot); });
         m_hotCornerPointer = m_inputManager.pointerMoved.connect([this](base::PointF position) {
             m_hotCorners->onPointerMoved(position,
                                          m_inputManager.isPointerButtonHeld()

@@ -210,12 +210,17 @@ void InputManager::dispatchMotion(Timestamp timestamp, const RelativeMotion *rel
 void InputManager::movePointer(Timestamp timestamp, base::PointF target, const RelativeMotion &relative)
 {
     const PointerConstraints *constraints = m_seat->pointerConstraints();
+    const base::PointF wanted = target;
     if (constraints->isLocked())
         target = m_pointerPosition;
     else
         target = constraints->confine(m_pointerPosition, target);
+    const bool free = !constraints->isLocked() && target.x() == wanted.x() && target.y() == wanted.y();
     m_pointerPosition = clamp(target);
     dispatchMotion(timestamp, &relative);
+    const base::PointF overshoot(wanted.x() - m_pointerPosition.x(), wanted.y() - m_pointerPosition.y());
+    if (free && (overshoot.x() != 0 || overshoot.y() != 0))
+        pointerPushedPastEdge(overshoot);
 }
 
 void InputManager::onPointerMotion(Timestamp timestamp, const base::PointF &delta,

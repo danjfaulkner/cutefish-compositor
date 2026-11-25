@@ -91,6 +91,14 @@ protected:
         test::runFor(std::chrono::milliseconds(DockLayoutManager::kAutoHideDelayMs + 200));
     }
 
+    // At the top of the output and pushing up past it, far enough to bring the bar in.
+    void pushAgainstTop(double x = 500)
+    {
+        moveTo(base::PointF(x, 0));
+        for (double pushed = 0; pushed < DockLayoutManager::kFullscreenRevealPushPx; pushed += 40)
+            manager.pointerPushedPastEdge.emit(base::PointF(0, -40));
+    }
+
     void waitForFullscreenReveal()
     {
         test::runFor(std::chrono::milliseconds(DockLayoutManager::kFullscreenRevealDelayMs + 200));
@@ -158,7 +166,7 @@ TEST_F(DockLayoutTest, PanelOnlyGivesWayToFullscreen)
     EXPECT_TRUE(panel->isPresentationHidden());
     EXPECT_EQ(base::Point(0, -30), panel->presentationOffset());
 
-    moveTo(base::PointF(500, 0));
+    pushAgainstTop();
     waitForFullscreenReveal();
     EXPECT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
     window->rootSurface()->setFullscreenBars(0, false);
@@ -640,7 +648,7 @@ TEST_F(DockLayoutTest, TopPanelTellsAFullscreenWindowAndPushesItWhenAsked)
     EXPECT_TRUE(reveals.empty());
 
     window->rootSurface()->setFullscreenBars(40, true);
-    moveTo(base::PointF(500, 0));
+    pushAgainstTop();
     waitForFullscreenReveal();
     ASSERT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
     ASSERT_EQ(1u, reveals.size());
@@ -661,7 +669,7 @@ TEST_F(DockLayoutTest, TopPanelTellsAFullscreenWindowAndPushesItWhenAsked)
     EXPECT_EQ(base::Point(), window->presentationOffset());
 
     window->rootSurface()->setFullscreenBars(40, false);
-    moveTo(base::PointF(500, 0));
+    pushAgainstTop();
     waitForFullscreenReveal();
     finishSlide();
     EXPECT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
@@ -689,7 +697,7 @@ TEST_F(DockLayoutTest, OnlyTheActiveFullscreenWindowIsPushedAndOnlyByTheBar)
     window->setFullscreen(true);
     window->rootSurface()->setFullscreenBars(40, true);
     finishSlide();
-    moveTo(base::PointF(500, 0));
+    pushAgainstTop();
     waitForFullscreenReveal();
     finishSlide();
     ASSERT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
@@ -713,7 +721,7 @@ TEST_F(DockLayoutTest, OnlyTheActiveFullscreenWindowIsPushedAndOnlyByTheBar)
     moveTo(base::PointF(500, 300));
     waitForReveal();
     finishSlide();
-    moveTo(base::PointF(500, 0));
+    pushAgainstTop();
     waitForFullscreenReveal();
     finishSlide();
     EXPECT_EQ(30, reveals.back());
@@ -722,7 +730,7 @@ TEST_F(DockLayoutTest, OnlyTheActiveFullscreenWindowIsPushedAndOnlyByTheBar)
 
 } // namespace
 
-TEST_F(DockLayoutTest, OverFullscreenTheTopBarNeedsThePointerHeldAgainstTheTop)
+TEST_F(DockLayoutTest, OverFullscreenTheTopBarNeedsAPushPastTheTop)
 {
     Window *panel = makeWindow(base::Rect(0, 0, 1000, 30));
     panel->setRole(WindowRole::Panel);
@@ -734,22 +742,48 @@ TEST_F(DockLayoutTest, OverFullscreenTheTopBarNeedsThePointerHeldAgainstTheTop)
     ASSERT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
     const auto shown = [&] { return layout.autoHideState(panel) == DockAutoHideState::Shown; };
 
-    // Near the top is not against it.
+    // Resting on the top, however long, or passing along it, brings nothing.
+    moveTo(base::PointF(500, 0));
+    waitForFullscreenReveal();
+    test::runFor(std::chrono::milliseconds(1000));
+    moveTo(base::PointF(800, 0));
+    waitForFullscreenReveal();
+    EXPECT_FALSE(shown());
+
+    // A push from just below the top counts for nothing.
     moveTo(base::PointF(500, 3));
+    manager.pointerPushedPastEdge.emit(base::PointF(0, -200));
     waitForFullscreenReveal();
     EXPECT_FALSE(shown());
 
-    // Passing over the top on the way somewhere else brings nothing.
+    // Small pushes far apart start over each time.
     moveTo(base::PointF(500, 0));
-    test::runFor(std::chrono::milliseconds(DockLayoutManager::kFullscreenRevealDelayMs / 2));
-    moveTo(base::PointF(500, 300));
+    for (int i = 0; i < 6; ++i) {
+        manager.pointerPushedPastEdge.emit(base::PointF(0, -40));
+        test::runFor(std::chrono::milliseconds(DockLayoutManager::kRevealPushResetMs + 100));
+    }
+    EXPECT_FALSE(shown());
+
+    // Sideways pushes along the top are not up.
+    manager.pointerPushedPastEdge.emit(base::PointF(-400, 0));
     waitForFullscreenReveal();
     EXPECT_FALSE(shown());
 
-    // Held there, it comes, after the longer delay.
-    moveTo(base::PointF(500, 0));
-    test::runFor(std::chrono::milliseconds(DockLayoutManager::kAutoHideDelayMs + 100));
-    EXPECT_FALSE(shown());
+    // One determined push brings it.
+    pushAgainstTop();
     waitForFullscreenReveal();
     EXPECT_TRUE(shown());
+
+    // It stays while the pointer is on it, and goes when the pointer leaves.
+    moveTo(base::PointF(500, 20));
+    waitForReveal();
+    EXPECT_TRUE(shown());
+    moveTo(base::PointF(500, 400));
+    waitForReveal();
+    finishSlide();
+    EXPECT_FALSE(shown());
+    // Back at the top it needs a new push.
+    moveTo(base::PointF(500, 0));
+    waitForFullscreenReveal();
+    EXPECT_FALSE(shown());
 }
