@@ -698,6 +698,36 @@ TEST_F(DeskAnimationTest, AScrollSlideFollowsTheFingersAndSettlesOnTheNearestDes
     EXPECT_EQ(desk(2), desks->activeDesk());
 }
 
+TEST_F(DeskAnimationTest, TheDeskMostlyInViewIsReportedAsTheStripPassesHalfway)
+{
+    addDesks(1);
+    struct Watcher : DesksObserver {
+        std::vector<int> seen;
+        void onVisibleDeskChanged(int desk) override { seen.push_back(desk); }
+    } watcher;
+    desks->addObserver(&watcher);
+    DeskScrollSlide slide(desks);
+    const auto scroll = [&](double deskTotal, int steps) {
+        for (int i = 0; i < steps; ++i) {
+            now += 40;
+            slide.scroll(at(now), deskTotal / steps * DeskScrollSlide::kScrollPerDesk);
+            paint();
+            test::runFor(std::chrono::milliseconds(1));
+        }
+    };
+    // Slowly, so what is shown is where the fingers are (a quick slide runs on ahead of them).
+    scroll(0.4, 40);
+    EXPECT_TRUE(watcher.seen.empty() || watcher.seen == std::vector<int> {0}) << ::testing::PrintToString(watcher.seen);
+    scroll(0.2, 20);
+    EXPECT_EQ(1, watcher.seen.empty() ? -1 : watcher.seen.back());
+    scroll(-0.3, 30);
+    EXPECT_EQ(0, watcher.seen.back());
+    now += 40;
+    slide.end(at(now));
+    finish();
+    desks->removeObserver(&watcher);
+}
+
 TEST_F(DeskAnimationTest, AShortFlickSwitchesDesksAndAShortHeldSwipeDoesNot)
 {
     addDesks(1);

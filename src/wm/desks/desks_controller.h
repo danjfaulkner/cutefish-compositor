@@ -62,6 +62,8 @@ public:
     virtual void onDeskSwitchAnimationLaunching() { }
     virtual void onDeskSwitchAnimationFinished() { }
     virtual void onChosenDeskChanged() { }
+    // While a switch animation moves the desks, the desk that now fills most of the output.
+    virtual void onVisibleDeskChanged(int deskIndex) { }
     virtual void onWindowDeskChanged(Window *window) { }
 };
 

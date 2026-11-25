@@ -364,17 +364,43 @@ DockAutoHideState DockLayoutManager::computeAutoHideState(const Window *dock, co
 void DockLayoutManager::onDeskSwitchAnimationLaunching()
 {
     m_deskSliding = true;
+    // The desk in view is the active one until the strip reports otherwise.
+    const DesksController *desks = m_manager->desks();
+    m_visibleDesk = desks ? desks->activeDeskIndex() : -1;
 }
 
 void DockLayoutManager::onDeskSwitchAnimationFinished()
 {
     m_deskSliding = false;
+    m_visibleDesk = -1;
     update();
+}
+
+void DockLayoutManager::onVisibleDeskChanged(int deskIndex)
+{
+    if (!m_deskSliding)
+        return;
+    m_visibleDesk = deskIndex;
+    update();
+}
+
+void DockLayoutManager::onDeskActivationChanged(const Desk *, const Desk *)
+{
+    if (m_deskSliding)
+        update();
+}
+
+bool DockLayoutManager::holdsForSlide() const
+{
+    if (!m_deskSliding)
+        return false;
+    const DesksController *desks = m_manager->desks();
+    return !desks || m_visibleDesk != desks->activeDeskIndex();
 }
 
 void DockLayoutManager::update()
 {
-    if (m_deskSliding)
+    if (holdsForSlide())
         return;
     m_manager->updateWorkAreas();
     for (Window *window : m_manager->windows()) {

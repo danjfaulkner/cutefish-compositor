@@ -71,6 +71,8 @@ public:
     // DesksObserver
     void onDeskSwitchAnimationLaunching() override;
     void onDeskSwitchAnimationFinished() override;
+    void onVisibleDeskChanged(int deskIndex) override;
+    void onDeskActivationChanged(const Desk *activated, const Desk *deactivated) override;
 
     DockAutoHideBehavior behavior() const { return m_behavior; }
     void setBehavior(DockAutoHideBehavior behavior);
@@ -156,9 +158,12 @@ private:
     bool m_pushRevealed = false;
     double m_overviewProgress = 0;
     std::vector<base::Subscription> m_managerSignals;
-    // While desks slide, the docks keep the look of the desk the slide began on (the active desk
-    // changes as the slide starts): an update waits for the slide to settle.
+    // While desks slide, the docks show the desk that fills most of the output: the active desk
+    // changes as the slide starts, so they keep the look of the desk the slide began on until the
+    // active desk is the one mostly in view, and only then update.
     bool m_deskSliding = false;
+    int m_visibleDesk = -1;
+    bool holdsForSlide() const;
 };
 
 } // namespace properdesktop::wm

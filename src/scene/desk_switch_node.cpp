@@ -90,6 +90,7 @@ void DeskSwitchNode::start(Type type, int desks, int startingDesk, int endingDes
         m_frames[output][startingDesk] = std::move(texture);
     }
     m_strip = {startingDesk};
+    m_visibleDesk = startingDesk;
     notifyChanged();
 }
 
@@ -585,6 +586,13 @@ void DeskSwitchNode::render(render::Renderer &renderer) const
     renderStrip(renderer, viewport, now);
     if (renderer.capturing)
         return;
+    if (m_visibleDeskChanged) {
+        const int visible = mostVisibleDesk();
+        if (visible != m_visibleDesk) {
+            m_visibleDesk = visible;
+            m_visibleDeskChanged(visible);
+        }
+    }
     if (m_motion == Motion::Tracking) {
         const double pixels = slotDistance(viewport.width()) * std::max(context.scale, 1.0);
         const bool coasting = m_coast

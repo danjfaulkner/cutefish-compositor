@@ -102,6 +102,9 @@ public:
         m_endingScreenshotTaken = std::move(callback);
     }
     void setFinishedCallback(std::function<void()> callback) { m_finished = std::move(callback); }
+    // Called from inside a frame with the desk index that now fills most of the output, each time
+    // it changes while the strip moves (the starting desk first).
+    void setVisibleDeskCallback(std::function<void(int desk)> callback) { m_visibleDeskChanged = std::move(callback); }
 
     void paintCoveredContent(render::Renderer &renderer) const;
 
@@ -163,6 +166,8 @@ private:
     motion::Spring m_spring;
     mutable double m_animationStart = -1;
     mutable bool m_finishNotified = false;
+    std::function<void(int)> m_visibleDeskChanged;
+    mutable int m_visibleDesk = -1;
     bool m_reachedEdge = false;
     std::optional<bool> m_hitTheWall;
     std::function<void()> m_endingScreenshotTaken;

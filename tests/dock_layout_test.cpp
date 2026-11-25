@@ -730,7 +730,7 @@ TEST_F(DockLayoutTest, OnlyTheActiveFullscreenWindowIsPushedAndOnlyByTheBar)
 
 } // namespace
 
-TEST_F(DockLayoutTest, WhileDesksSlideTheBarsKeepTheLookOfTheDeskTheSlideBeganOn)
+TEST_F(DockLayoutTest, WhileDesksSlideTheBarsFollowTheDeskMostlyInView)
 {
     Window *panel = makeWindow(base::Rect(0, 0, 1000, 30));
     panel->setRole(WindowRole::Panel);
@@ -741,16 +741,33 @@ TEST_F(DockLayoutTest, WhileDesksSlideTheBarsKeepTheLookOfTheDeskTheSlideBeganOn
     window->setFullscreen(true);
     finishSlide();
     ASSERT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
+    const int active = manager.desks()->activeDeskIndex();
 
-    // A slide to a desk without the fullscreen window starts: the active window changes at once,
-    // the bar stays away until the slide settles.
+    // The slide starts; the active window changes at once, but the strip still shows another desk
+    // (the fullscreen one), so the bar stays away.
     layout.onDeskSwitchAnimationLaunching();
+    layout.onVisibleDeskChanged(active + 1);
     other->activate();
+    finishSlide();
+    EXPECT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
+    // Past halfway the active desk fills most of the output: the bar comes in there and then.
+    layout.onVisibleDeskChanged(active);
+    finishSlide();
+    EXPECT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
+
+    // The other way: the fullscreen window's desk comes in; the bar stays until it is mostly in view.
+    layout.onDeskSwitchAnimationFinished();
+    layout.onDeskSwitchAnimationLaunching();
+    layout.onVisibleDeskChanged(active + 1);
+    window->activate();
+    finishSlide();
+    EXPECT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
+    layout.onVisibleDeskChanged(active);
     finishSlide();
     EXPECT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
     layout.onDeskSwitchAnimationFinished();
     finishSlide();
-    EXPECT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
+    EXPECT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
 }
 
 TEST_F(DockLayoutTest, OverFullscreenTheTopBarNeedsAPushPastTheTop)

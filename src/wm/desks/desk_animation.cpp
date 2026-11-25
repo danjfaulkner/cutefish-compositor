@@ -46,6 +46,7 @@ void DeskAnimationBase::releaseNode()
     if (m_node) {
         m_node->setEndingScreenshotCallback({});
         m_node->setFinishedCallback({});
+        m_node->setVisibleDeskCallback({});
         m_node->stop();
     }
     m_controller->notify([](DesksObserver *observer) {
@@ -68,6 +69,13 @@ void DeskAnimationBase::launch()
         core::mainLoop()->post([animation = m_weakFactory.getWeakPtr()] {
             if (animation)
                 animation->onEndingDeskScreenshotTaken();
+        });
+    });
+    m_node->setVisibleDeskCallback([this](int desk) {
+        core::mainLoop()->post([animation = m_weakFactory.getWeakPtr(), desk] {
+            if (animation)
+                animation->m_controller->notify(
+                        [desk](DesksObserver *observer) { observer->onVisibleDeskChanged(desk); });
         });
     });
     m_node->setFinishedCallback([this] {
