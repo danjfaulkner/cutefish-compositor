@@ -344,7 +344,7 @@ DockAutoHideState DockLayoutManager::computeAutoHideState(const Window *dock, co
         }
         if (revealing && region.contains(m_pointer->toPoint()))
             return DockAutoHideState::Shown;
-        if (revealStrip(output, entry.edge).contains(m_pointer->toPoint()))
+        if (revealStripFor(dock, entry, output).contains(m_pointer->toPoint()))
             return DockAutoHideState::Shown;
     }
 
@@ -413,11 +413,11 @@ void DockLayoutManager::updateDock(Window *dock, Dock &entry)
     const bool wasPointerOver = entry.pointerOver;
     entry.pointerOver = m_pointer
             && (shownRegion(reachedBounds(dock, entry.edge), output, entry.edge).contains(m_pointer->toPoint())
-                || revealStrip(output, entry.edge).contains(m_pointer->toPoint()));
+                || revealStripFor(dock, entry, output).contains(m_pointer->toPoint()));
 
     if (entry.visibility == DockVisibilityState::AutoHide
         && entry.autoHide == DockAutoHideState::Shown && wasPointerOver && !entry.pointerOver) {
-        entry.autoHideTimer.start();
+        entry.autoHideTimer.start(std::chrono::milliseconds(kAutoHideDelayMs));
     }
 
     const bool revealing =
@@ -443,7 +443,8 @@ void DockLayoutManager::updateDock(Window *dock, Dock &entry)
     if (entry.autoHideTimer.isActive())
         return;
     if (autoHide == DockAutoHideState::Shown)
-        entry.autoHideTimer.start();
+        entry.autoHideTimer.start(std::chrono::milliseconds(
+                isOverFullscreen(dock, entry, output) ? kFullscreenRevealDelayMs : kAutoHideDelayMs));
     else
         applyAutoHideState(dock, entry, autoHide);
 }
@@ -464,6 +465,18 @@ bool DockLayoutManager::isTopBar(const Window *dock, const Dock &entry, const ba
 {
     return dock->role() == WindowRole::Panel && entry.edge == ScreenEdge::Top
             && dock->bounds().width() >= output.width();
+}
+
+bool DockLayoutManager::isOverFullscreen(const Window *dock, const Dock &entry, const base::Rect &output) const
+{
+    return isTopBar(dock, entry, output) && fullscreenWindowFor(output);
+}
+
+base::Rect DockLayoutManager::revealStripFor(const Window *dock, const Dock &entry, const base::Rect &output) const
+{
+    if (!isOverFullscreen(dock, entry, output))
+        return revealStrip(output, entry.edge);
+    return base::Rect(output.left(), output.top(), output.width(), kFullscreenRevealStripPx);
 }
 
 void DockLayoutManager::updateReveal(Window *dock, Dock &entry)

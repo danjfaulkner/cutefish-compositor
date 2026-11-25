@@ -15,6 +15,8 @@
 #include "core/logging.h"
 #include "core/preferences.h"
 #include "wm/desks/desk.h"
+#include "wm/window_manager.h"
+#include "wm/desks/fullscreen_desks.h"
 
 namespace cutefish::wm {
 
@@ -24,6 +26,13 @@ const char kCount[] = "Desks/Count";
 const char kActive[] = "Desks/Active";
 // One entry per desk, empty for a desk with its default name.
 const char kNames[] = "Desks/Names";
+// Applications left fullscreen on a desk of their own, to reopen that way.
+const char kFullscreenApplications[] = "Desks/FullscreenApplications";
+
+FullscreenDesks *fullscreenDesksOf(DesksController *desks)
+{
+    return desks && desks->windowManager() ? desks->windowManager()->fullscreenDesks() : nullptr;
+}
 
 } // namespace
 
@@ -38,10 +47,13 @@ DeskPreferences::DeskPreferences(DesksController *desks, const std::string &file
 {
     restore();
     m_desks->addObserver(this);
+    if (FullscreenDesks *fullscreen = fullscreenDesksOf(m_desks))
+        m_rememberedChanged = fullscreen->rememberedChanged.connect([this] { save(); });
 }
 
 DeskPreferences::~DeskPreferences()
 {
+    m_rememberedChanged.reset();
     m_desks->removeObserver(this);
 }
 
@@ -59,6 +71,10 @@ void DeskPreferences::restore()
     }
     if (Desk *active = m_desks->deskAt(int(m_settings.intValue(kActive, 0))))
         m_desks->activateDesk(active, DesksSwitchSource::DeskRestored);
+    if (FullscreenDesks *fullscreen = fullscreenDesksOf(m_desks)) {
+        const std::vector<std::string> applications = m_settings.stringListValue(kFullscreenApplications);
+        fullscreen->setRememberedApplications({applications.begin(), applications.end()});
+    }
 }
 
 void DeskPreferences::save()
@@ -82,6 +98,10 @@ void DeskPreferences::save()
     m_settings.setValue(kCount, int(names.size()));
     m_settings.setValue(kActive, active);
     m_settings.setValue(kNames, names);
+    if (FullscreenDesks *fullscreen = fullscreenDesksOf(m_desks)) {
+        const auto &remembered = fullscreen->rememberedApplications();
+        m_settings.setValue(kFullscreenApplications, std::vector<std::string>(remembered.begin(), remembered.end()));
+    }
     m_settings.sync();
 }
 

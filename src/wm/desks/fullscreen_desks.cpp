@@ -30,10 +30,46 @@ FullscreenDesks::FullscreenDesks(WindowManager *manager)
             return isFullscreenDesk(desk) ? originOf(desk) : nullptr;
         });
     }
+    m_windowAdded = m_manager->windowAdded.connect([this](Window *window) { onWindowAdded(window); });
+}
+
+void FullscreenDesks::setRememberedApplications(std::set<std::string> applications)
+{
+    m_remembered = std::move(applications);
+}
+
+void FullscreenDesks::remember(const std::string &application, bool remembered)
+{
+    if (application.empty())
+        return;
+    const bool changed = remembered ? m_remembered.insert(application).second : m_remembered.erase(application) != 0;
+    if (changed)
+        rememberedChanged.emit();
+}
+
+void FullscreenDesks::onWindowAdded(Window *window)
+{
+    const std::string application = window->applicationId();
+    if (!m_remembered.count(application) || m_reopened.count(application))
+        return;
+    // Once the client has set its state: one restoring fullscreen asks for it before it maps.
+    const uint64_t id = window->id();
+    m_manager->runLater(std::chrono::milliseconds(0), [this, id, application] {
+        Window *window = m_manager->windowById(id);
+        if (!window || owns(window) || m_reopened.count(application))
+            return;
+        const bool adopting = window->stateType() == WindowStateType::Fullscreen;
+        if (!adopting && !canEnter(window))
+            return;
+        m_reopened.insert(application);
+        CF_INFO(cfCompositor) << application << "was left fullscreen; reopening it on a desk of its own";
+        enterInternal(window, adopting);
+    });
 }
 
 FullscreenDesks::~FullscreenDesks()
 {
+    m_windowAdded.reset();
     if (DesksController *controller = desks()) {
         controller->setNewWindowDeskOverride(nullptr);
         controller->removeObserver(this);
@@ -232,16 +268,28 @@ bool FullscreenDesks::toggle(Window *window)
 
 bool FullscreenDesks::enter(Window *window)
 {
+    return enterInternal(window, /*adopting=*/false);
+}
+
+bool FullscreenDesks::enterInternal(Window *window, bool adopting)
+{
     DesksController *controller = desks();
-    if (!canEnter(window))
+    if (adopting) {
+        if (!window || !controller || !m_manager->hasWindow(window) || owns(window)
+            || window->role() != WindowRole::Normal || window->isPopup() || window->transientParent()
+            || window->stateType() != WindowStateType::Fullscreen)
+            return false;
+    } else if (!canEnter(window)) {
         return false;
+    }
     if (DeskAnimationBase *animation = controller->animation())
         animation->finishNow();
 
     if (!controller->canCreateDesks()) {
         // Every desk is taken: fullscreen in place rather than nothing.
         CF_DEBUG(cfCompositor) << "no desk left for fullscreen, staying in place";
-        window->state()->onEvent(WMEvent(WMEventType::Fullscreen));
+        if (!adopting)
+            window->state()->onEvent(WMEvent(WMEventType::Fullscreen));
         changed.emit();
         return true;
     }
@@ -262,12 +310,16 @@ bool FullscreenDesks::enter(Window *window)
     controller->reorderDesk(controller->deskIndex(desk), controller->deskIndex(origin) + 1);
 
     CF_INFO(cfCompositor) << window->applicationId() << "goes fullscreen on desk" << desk->id();
-    m_entries[window] = {desk->id(), origin->id(), false, window->stateType(),
+    m_entries[window] = {desk->id(), origin->id(), false,
+                         adopting ? WindowStateType::Normal : window->stateType(),
                          std::chrono::steady_clock::now()};
     window->addObserver(this);
+    remember(window->applicationId(), true);
     // Fullscreen where it is first; its desk is switched to without a slide once it has drawn
     // at the new size, when it covers the output and the switch shows nothing.
-    if (prefersFill(window))
+    if (adopting)
+        ;
+    else if (prefersFill(window))
         applyFill(window);
     else
         window->state()->onEvent(WMEvent(WMEventType::Fullscreen));
@@ -338,6 +390,7 @@ void FullscreenDesks::exit(Window *window)
     const Entry entry = it->second;
     forget(window);
     CF_INFO(cfCompositor) << window->applicationId() << "leaves fullscreen on desk" << entry.desk;
+    remember(window->applicationId(), false);
 
     DesksController *controller = desks();
     Desk *desk = controller->deskById(entry.desk);

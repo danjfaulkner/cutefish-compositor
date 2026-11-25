@@ -75,6 +75,13 @@ public:
     // After entering or leaving.
     base::Signal<> changed;
 
+    // Applications left fullscreen on a desk of their own (closed or logged out that way):
+    // their first window opens on a desk of its own again, as on macOS. Leaving fullscreen
+    // forgets the application. Kept by DeskPreferences across sessions.
+    const std::set<std::string> &rememberedApplications() const { return m_remembered; }
+    void setRememberedApplications(std::set<std::string> applications);
+    base::Signal<> rememberedChanged;
+
     void onWindowRemoving(Window *window);
 
     // DesksObserver
@@ -98,6 +105,10 @@ private:
 
 
     bool prefersFill(const Window *window) const;
+    // `adopting`: the window is fullscreen already (a client restoring its own state).
+    bool enterInternal(Window *window, bool adopting);
+    void onWindowAdded(Window *window);
+    void remember(const std::string &application, bool remembered);
     void applyFill(Window *window);
     // Once fullscreen where it is, the window goes to its own desk, switched to at once.
     void moveToOwnDesk(Window *window);
@@ -121,6 +132,10 @@ private:
     std::function<std::string(const Window *)> m_nameResolver;
     // Applications seen refusing fullscreen in this session.
     std::set<std::string> m_fillApplications;
+    std::set<std::string> m_remembered;
+    // Remembered applications whose window has reopened on its own desk this session.
+    std::set<std::string> m_reopened;
+    base::Subscription m_windowAdded;
     bool m_changing = false;
 };
 

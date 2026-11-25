@@ -91,6 +91,11 @@ protected:
         test::runFor(std::chrono::milliseconds(DockLayoutManager::kAutoHideDelayMs + 200));
     }
 
+    void waitForFullscreenReveal()
+    {
+        test::runFor(std::chrono::milliseconds(DockLayoutManager::kFullscreenRevealDelayMs + 200));
+    }
+
     void finishSlide()
     {
         layout.advance(1000);
@@ -153,12 +158,12 @@ TEST_F(DockLayoutTest, PanelOnlyGivesWayToFullscreen)
     EXPECT_TRUE(panel->isPresentationHidden());
     EXPECT_EQ(base::Point(0, -30), panel->presentationOffset());
 
-    moveTo(base::PointF(500, 2));
-    waitForReveal();
+    moveTo(base::PointF(500, 0));
+    waitForFullscreenReveal();
     EXPECT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
     window->rootSurface()->setFullscreenBars(0, false);
     layout.update();
-    waitForReveal();
+    waitForFullscreenReveal();
     EXPECT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
 
     window->setFullscreen(false);
@@ -635,8 +640,8 @@ TEST_F(DockLayoutTest, TopPanelTellsAFullscreenWindowAndPushesItWhenAsked)
     EXPECT_TRUE(reveals.empty());
 
     window->rootSurface()->setFullscreenBars(40, true);
-    moveTo(base::PointF(500, 2));
-    waitForReveal();
+    moveTo(base::PointF(500, 0));
+    waitForFullscreenReveal();
     ASSERT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
     ASSERT_EQ(1u, reveals.size());
     EXPECT_EQ(std::make_pair(30, DockLayoutManager::kSlideDurationMs), reveals.back());
@@ -656,8 +661,8 @@ TEST_F(DockLayoutTest, TopPanelTellsAFullscreenWindowAndPushesItWhenAsked)
     EXPECT_EQ(base::Point(), window->presentationOffset());
 
     window->rootSurface()->setFullscreenBars(40, false);
-    moveTo(base::PointF(500, 2));
-    waitForReveal();
+    moveTo(base::PointF(500, 0));
+    waitForFullscreenReveal();
     finishSlide();
     EXPECT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
     EXPECT_EQ(base::Point(), window->presentationOffset());
@@ -684,8 +689,8 @@ TEST_F(DockLayoutTest, OnlyTheActiveFullscreenWindowIsPushedAndOnlyByTheBar)
     window->setFullscreen(true);
     window->rootSurface()->setFullscreenBars(40, true);
     finishSlide();
-    moveTo(base::PointF(500, 2));
-    waitForReveal();
+    moveTo(base::PointF(500, 0));
+    waitForFullscreenReveal();
     finishSlide();
     ASSERT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
     EXPECT_EQ(std::vector<int>({30}), reveals);
@@ -708,11 +713,43 @@ TEST_F(DockLayoutTest, OnlyTheActiveFullscreenWindowIsPushedAndOnlyByTheBar)
     moveTo(base::PointF(500, 300));
     waitForReveal();
     finishSlide();
-    moveTo(base::PointF(500, 2));
-    waitForReveal();
+    moveTo(base::PointF(500, 0));
+    waitForFullscreenReveal();
     finishSlide();
     EXPECT_EQ(30, reveals.back());
     EXPECT_EQ(base::Point(0, 30), window->presentationOffset());
 }
 
 } // namespace
+
+TEST_F(DockLayoutTest, OverFullscreenTheTopBarNeedsThePointerHeldAgainstTheTop)
+{
+    Window *panel = makeWindow(base::Rect(0, 0, 1000, 30));
+    panel->setRole(WindowRole::Panel);
+    Window *window = makeWindow(base::Rect(100, 100, 300, 200));
+    window->activate();
+    window->rootSurface()->setFullscreenBars(0, false);
+    window->setFullscreen(true);
+    finishSlide();
+    ASSERT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
+    const auto shown = [&] { return layout.autoHideState(panel) == DockAutoHideState::Shown; };
+
+    // Near the top is not against it.
+    moveTo(base::PointF(500, 3));
+    waitForFullscreenReveal();
+    EXPECT_FALSE(shown());
+
+    // Passing over the top on the way somewhere else brings nothing.
+    moveTo(base::PointF(500, 0));
+    test::runFor(std::chrono::milliseconds(DockLayoutManager::kFullscreenRevealDelayMs / 2));
+    moveTo(base::PointF(500, 300));
+    waitForFullscreenReveal();
+    EXPECT_FALSE(shown());
+
+    // Held there, it comes, after the longer delay.
+    moveTo(base::PointF(500, 0));
+    test::runFor(std::chrono::milliseconds(DockLayoutManager::kAutoHideDelayMs + 100));
+    EXPECT_FALSE(shown());
+    waitForFullscreenReveal();
+    EXPECT_TRUE(shown());
+}

@@ -54,6 +54,10 @@ class DockLayoutManager : public WindowObserver
 public:
     static constexpr int kRevealStripPx = 5;
     static constexpr int kAutoHideDelayMs = 200;
+    // Over a fullscreen window the top bar needs the pointer held against the very top of the
+    // output this long, like macOS's resistance, so passing near the edge does not bring it.
+    static constexpr int kFullscreenRevealDelayMs = 500;
+    static constexpr int kFullscreenRevealStripPx = 1;
     static constexpr int kSlideDurationMs = 200;
 
     explicit DockLayoutManager(WindowManager *manager);
@@ -120,6 +124,9 @@ private:
     Window *fullscreenWindowFor(const base::Rect &output) const;
     bool ownsDesk(const Window *window) const;
     bool isTopBar(const Window *dock, const Dock &entry, const base::Rect &output) const;
+    // The strip the pointer reveals the dock from: thinner for the top bar over fullscreen.
+    base::Rect revealStripFor(const Window *dock, const Dock &entry, const base::Rect &output) const;
+    bool isOverFullscreen(const Window *dock, const Dock &entry, const base::Rect &output) const;
     void updateReveal(Window *dock, Dock &entry);
     bool isLaunchpadShowing(const base::Rect &output) const;
     void applyAutoHideState(Window *dock, Dock &entry, DockAutoHideState state);

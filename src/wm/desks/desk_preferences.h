@@ -11,6 +11,7 @@
 #include <string>
 
 #include "base/settings.h"
+#include "base/signal.h"
 
 #include "wm/desks/desks_controller.h"
 
@@ -37,6 +38,7 @@ private:
 
     DesksController *m_desks = nullptr;
     base::Settings m_settings;
+    base::Subscription m_rememberedChanged;
     bool m_restoring = false;
 };
 

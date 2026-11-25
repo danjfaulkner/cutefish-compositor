@@ -1726,3 +1726,71 @@ TEST_F(FullscreenDesksTest, ACutefishApplicationFullscreenInPlaceGetsTheTitleBar
     other->setFullscreen(true);
     EXPECT_FALSE(fullscreen->wantsTitleBar(other));
 }
+
+TEST_F(FullscreenDesksTest, AnApplicationLeftFullscreenReopensOnADeskOfItsOwn)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+    EXPECT_EQ(1u, fullscreen->rememberedApplications().count("claude"));
+    settle();
+    // Closed while fullscreen: remembered.
+    manager.destroyWindow(window);
+    flush();
+    EXPECT_EQ(1u, fullscreen->rememberedApplications().count("claude"));
+    ASSERT_EQ(1u, desks->desks().size());
+
+    // Its next window restores fullscreen by itself before mapping.
+    Window *reopened = makeWindow("claude");
+    reopened->setFullscreen(true);
+    flush();
+    EXPECT_TRUE(fullscreen->owns(reopened));
+    settle();
+    ASSERT_EQ(2u, desks->desks().size());
+    EXPECT_EQ(desk(1), desks->deskOf(reopened));
+    EXPECT_TRUE(desk(1)->isFullscreenDesk());
+
+    // Only the first window: another one opens as usual.
+    Window *second = makeWindow("claude");
+    flush();
+    EXPECT_FALSE(fullscreen->owns(second));
+
+    // Leaving fullscreen forgets the application.
+    manager.activation()->activate(reopened);
+    fullscreen->exit(reopened);
+    flush();
+    EXPECT_EQ(0u, fullscreen->rememberedApplications().count("claude"));
+    EXPECT_EQ(WindowStateType::Normal, reopened->stateType());
+}
+
+TEST_F(FullscreenDesksTest, ARememberedApplicationOpeningNormallyGoesFullscreenOnItsOwnDesk)
+{
+    fullscreen->setRememberedApplications({"helium"});
+    Window *window = makeWindow("helium");
+    flush();
+    EXPECT_TRUE(fullscreen->owns(window));
+    EXPECT_TRUE(fullscreen->fills(window));
+    settle();
+    EXPECT_EQ(desk(1), desks->deskOf(window));
+}
+
+TEST_F(DesksTest, PreferencesRememberApplicationsLeftFullscreen)
+{
+    char directory[] = "/tmp/desks_test-XXXXXX";
+    ASSERT_NE(nullptr, mkdtemp(directory));
+    const std::string file = std::string(directory) + "/compositor.conf";
+    {
+        DeskPreferences preferences(desks, file);
+        Window *window = makeWindow("claude");
+        ASSERT_TRUE(manager.fullscreenDesks()->enter(window));
+        test::runFor(std::chrono::milliseconds(FullscreenDesks::kSettleTimeout.count() + 200));
+        flush();
+    }
+    {
+        WindowManager restored(&compositor, &seat);
+        DeskPreferences preferences(restored.desks(), file);
+        EXPECT_EQ(std::set<std::string>({"claude"}), restored.fullscreenDesks()->rememberedApplications());
+        // The fullscreen desk itself is not kept.
+        EXPECT_EQ(1u, restored.desks()->desks().size());
+    }
+    std::filesystem::remove_all(directory);
+}
