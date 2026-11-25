@@ -140,6 +140,8 @@ double easeOut(double t)
 DockLayoutManager::DockLayoutManager(WindowManager *manager)
     : m_manager(manager)
 {
+    if (m_manager->desks())
+        m_manager->desks()->addObserver(this);
     m_managerSignals.push_back(m_manager->windowAdded.connect([this](Window *window) {
         onWindowAdded(window);
     }));
@@ -162,6 +164,8 @@ DockLayoutManager::DockLayoutManager(WindowManager *manager)
 
 DockLayoutManager::~DockLayoutManager()
 {
+    if (m_manager->desks())
+        m_manager->desks()->removeObserver(this);
     for (Window *window : m_manager->windows()) {
         if (window->hasObserver(this))
             window->removeObserver(this);
@@ -357,8 +361,21 @@ DockAutoHideState DockLayoutManager::computeAutoHideState(const Window *dock, co
     return DockAutoHideState::Hidden;
 }
 
+void DockLayoutManager::onDeskSwitchAnimationLaunching()
+{
+    m_deskSliding = true;
+}
+
+void DockLayoutManager::onDeskSwitchAnimationFinished()
+{
+    m_deskSliding = false;
+    update();
+}
+
 void DockLayoutManager::update()
 {
+    if (m_deskSliding)
+        return;
     m_manager->updateWorkAreas();
     for (Window *window : m_manager->windows()) {
         if (window->role() == WindowRole::Desktop)

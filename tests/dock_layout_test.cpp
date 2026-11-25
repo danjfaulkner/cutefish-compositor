@@ -730,6 +730,29 @@ TEST_F(DockLayoutTest, OnlyTheActiveFullscreenWindowIsPushedAndOnlyByTheBar)
 
 } // namespace
 
+TEST_F(DockLayoutTest, WhileDesksSlideTheBarsKeepTheLookOfTheDeskTheSlideBeganOn)
+{
+    Window *panel = makeWindow(base::Rect(0, 0, 1000, 30));
+    panel->setRole(WindowRole::Panel);
+    Window *other = makeWindow(base::Rect(300, 300, 300, 200));
+    Window *window = makeWindow(base::Rect(100, 100, 300, 200));
+    window->activate();
+    window->rootSurface()->setFullscreenBars(0, false);
+    window->setFullscreen(true);
+    finishSlide();
+    ASSERT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
+
+    // A slide to a desk without the fullscreen window starts: the active window changes at once,
+    // the bar stays away until the slide settles.
+    layout.onDeskSwitchAnimationLaunching();
+    other->activate();
+    finishSlide();
+    EXPECT_EQ(DockAutoHideState::Hidden, layout.autoHideState(panel));
+    layout.onDeskSwitchAnimationFinished();
+    finishSlide();
+    EXPECT_EQ(DockAutoHideState::Shown, layout.autoHideState(panel));
+}
+
 TEST_F(DockLayoutTest, OverFullscreenTheTopBarNeedsAPushPastTheTop)
 {
     Window *panel = makeWindow(base::Rect(0, 0, 1000, 30));

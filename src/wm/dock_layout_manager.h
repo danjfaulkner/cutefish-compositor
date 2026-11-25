@@ -20,6 +20,7 @@
 #include "base/timer.h"
 #include "core/main_loop.h"
 #include "wm/types.h"
+#include "wm/desks/desks_controller.h"
 #include "wm/window_observer.h"
 
 namespace properdesktop::wm {
@@ -50,7 +51,7 @@ enum class WorkspaceState {
 };
 
 // Must be destroyed before the WindowManager it observes.
-class DockLayoutManager : public WindowObserver
+class DockLayoutManager : public WindowObserver, public DesksObserver
 {
 public:
     static constexpr int kRevealStripPx = 5;
@@ -66,6 +67,10 @@ public:
 
     explicit DockLayoutManager(WindowManager *manager);
     ~DockLayoutManager() override;
+
+    // DesksObserver
+    void onDeskSwitchAnimationLaunching() override;
+    void onDeskSwitchAnimationFinished() override;
 
     DockAutoHideBehavior behavior() const { return m_behavior; }
     void setBehavior(DockAutoHideBehavior behavior);
@@ -151,6 +156,9 @@ private:
     bool m_pushRevealed = false;
     double m_overviewProgress = 0;
     std::vector<base::Subscription> m_managerSignals;
+    // While desks slide, the docks keep the look of the desk the slide began on (the active desk
+    // changes as the slide starts): an update waits for the slide to settle.
+    bool m_deskSliding = false;
 };
 
 } // namespace properdesktop::wm
