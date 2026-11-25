@@ -1794,3 +1794,35 @@ TEST_F(DesksTest, PreferencesRememberApplicationsLeftFullscreen)
     }
     std::filesystem::remove_all(directory);
 }
+
+TEST_F(FullscreenDesksTest, AClientQuittingFromFullscreenStaysRemembered)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+    settle();
+    test::runFor(FullscreenDesks::kRefusalWindow);
+
+    // Electron leaves fullscreen on its way out, then its window goes.
+    window->restore();
+    flush();
+    EXPECT_FALSE(fullscreen->owns(window));
+    manager.destroyWindow(window);
+    test::runFor(FullscreenDesks::kQuitGrace + std::chrono::milliseconds(200));
+    flush();
+    EXPECT_EQ(1u, fullscreen->rememberedApplications().count("claude"));
+}
+
+TEST_F(FullscreenDesksTest, AClientLeavingFullscreenAndStayingIsForgotten)
+{
+    Window *window = makeWindow("claude");
+    ASSERT_TRUE(fullscreen->enter(window));
+    settle();
+    test::runFor(FullscreenDesks::kRefusalWindow);
+
+    window->restore();
+    flush();
+    EXPECT_EQ(1u, fullscreen->rememberedApplications().count("claude"));
+    test::runFor(FullscreenDesks::kQuitGrace + std::chrono::milliseconds(200));
+    flush();
+    EXPECT_EQ(0u, fullscreen->rememberedApplications().count("claude"));
+}

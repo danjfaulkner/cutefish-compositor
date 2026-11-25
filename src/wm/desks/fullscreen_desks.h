@@ -66,6 +66,11 @@ public:
     bool enter(Window *window);
     void exit(Window *window);
 
+    // A client leaving fullscreen by itself may be quitting (Electron apps leave it on the way
+    // out, having saved that they were in it): the application stays remembered unless its window
+    // is still there this long after.
+    static constexpr std::chrono::milliseconds kQuitGrace {3000};
+
     // The desk's name for a window; the shell installs one that reads the desktop entry.
     void setNameResolver(std::function<std::string(const Window *)> resolver)
     {
@@ -109,6 +114,8 @@ private:
     bool enterInternal(Window *window, bool adopting);
     void onWindowAdded(Window *window);
     void remember(const std::string &application, bool remembered);
+    // `forgetApplication` false keeps the application remembered (see kQuitGrace).
+    void exitInternal(Window *window, bool forgetApplication);
     void applyFill(Window *window);
     // Once fullscreen where it is, the window goes to its own desk, switched to at once.
     void moveToOwnDesk(Window *window);

@@ -4,6 +4,7 @@
 
 #include "wm/desks/fullscreen_desks.h"
 
+#include <algorithm>
 #include <cctype>
 #include <chrono>
 #include <set>
@@ -384,13 +385,19 @@ void FullscreenDesks::onWindowContentChanged(Window *window)
 
 void FullscreenDesks::exit(Window *window)
 {
+    exitInternal(window, /*forgetApplication=*/true);
+}
+
+void FullscreenDesks::exitInternal(Window *window, bool forgetApplication)
+{
     const auto it = m_entries.find(window);
     if (it == m_entries.end())
         return;
     const Entry entry = it->second;
     forget(window);
     CF_INFO(cfCompositor) << window->applicationId() << "leaves fullscreen on desk" << entry.desk;
-    remember(window->applicationId(), false);
+    if (forgetApplication)
+        remember(window->applicationId(), false);
 
     DesksController *controller = desks();
     Desk *desk = controller->deskById(entry.desk);
@@ -531,10 +538,18 @@ void FullscreenDesks::onWindowStateTypeChanged(Window *window, WindowStateType o
         });
         return;
     }
-    // It left fullscreen some other way (the client, a shortcut, minimizing): it goes home.
+    // It left fullscreen some other way (the client, a shortcut, minimizing): it goes home. The
+    // client may be quitting, so the application is forgotten only if the window stays.
+    const std::string application = window->applicationId();
     m_manager->runLater(std::chrono::milliseconds(0), [this, id] {
         if (Window *window = m_manager->windowById(id); window && owns(window))
-            exit(window);
+            exitInternal(window, /*forgetApplication=*/false);
+    });
+    m_manager->runLater(kQuitGrace, [this, id, application] {
+        if (m_manager->windowById(id) && !std::any_of(m_entries.begin(), m_entries.end(), [&](const auto &entry) {
+                return entry.first->applicationId() == application;
+            }))
+            remember(application, false);
     });
 }
 
